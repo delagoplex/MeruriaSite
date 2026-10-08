@@ -1,15 +1,15 @@
 :root {
-  --bg2: #0a0820;
-  --border: rgba(var(--accent-rgb),0.13);
+  --bg2: rgb(var(--panel-rgb));
+  --border: rgba(var(--accent-rgb),calc(0.13*var(--ka)));
   --purple: #7c4dff;
-  --purple-dim: rgba(124,77,255,0.12);
-  --muted: rgba(var(--text-rgb),0.45);
+  --purple-dim: rgba(var(--purple-rgb),calc(0.12*var(--kp)));
+  --muted: rgba(var(--text-rgb),calc(0.45*var(--kt)));
   --nav-h: 52px;
   --filter-w: 220px;
 }
 
 html, body { overflow: hidden; }
-#root { height: 100vh; display: flex; flex-direction: column; }
+#root { height: calc(var(--vh, 1vh) * 100); display: flex; flex-direction: column; }
 
 @keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
 @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -17,8 +17,8 @@ html, body { overflow: hidden; }
 
 ::-webkit-scrollbar { width: 3px; height: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(124,77,255,0.25); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(124,77,255,0.45); }
+::-webkit-scrollbar-thumb { background: rgba(var(--purple-rgb),calc(0.25*var(--kp))); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(var(--purple-rgb),calc(0.45*var(--kp))); }
 
 .zauber-link {
   background: none;
@@ -30,14 +30,14 @@ html, body { overflow: hidden; }
   font-weight: 400;
   line-height: inherit;
   letter-spacing: inherit;
-  color: rgba(140,180,255,0.9);
+  color: color-mix(in srgb, rgba(140,180,255,0.9), rgb(var(--ink-rgb)) var(--cm));
   text-decoration: underline;
   text-decoration-style: dotted;
   text-decoration-color: rgba(140,180,255,0.45);
   transition: color 0.15s, text-decoration-color 0.15s;
 }
 .zauber-link:hover {
-  color: rgba(180,210,255,1);
+  color: color-mix(in srgb, rgba(180,210,255,1), rgb(var(--ink-rgb)) var(--cm));
   text-decoration-color: rgba(180,210,255,0.7);
 }
 

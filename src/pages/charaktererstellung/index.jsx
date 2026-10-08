@@ -234,7 +234,7 @@ function ParticleField({
         if (p.y > 1) p.y = 0;
         ctx.beginPath();
         ctx.arc(p.x * w + shiftX, p.y * h + shiftY, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`;
+        ctx.fillStyle = `rgba(${themeRgb('--accent-rgb')},${p.alpha})`;
         ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
@@ -553,21 +553,21 @@ function NeuerCharakterCard() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
-      background: 'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(15,8,40,0.92) 50%, rgba(5,4,15,0.98) 100%)',
-      border: `1px solid ${hov ? 'rgba(160,140,255,0.65)' : 'rgba(160,140,255,0.3)'}`,
+      background: 'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(var(--panel-rgb),0.92) 50%, rgba(var(--bg-rgb),0.98) 100%)',
+      border: `1px solid ${hov ? 'rgba(var(--accent-rgb),calc(0.65*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
       borderRadius: '4px',
       overflow: 'hidden',
       padding: '38px 44px 36px',
       minHeight: '200px',
       transition: 'border-color 0.3s, box-shadow 0.3s',
-      boxShadow: hov ? '0 0 56px rgba(124,77,255,0.22), inset 0 0 64px rgba(124,77,255,0.08), 0 12px 40px rgba(0,0,0,0.6)' : '0 0 24px rgba(124,77,255,0.08), inset 0 0 40px rgba(124,77,255,0.04), 0 6px 24px rgba(0,0,0,0.45)'
+      boxShadow: hov ? '0 0 56px rgba(var(--purple-rgb),calc(0.22*var(--kp))), inset 0 0 64px rgba(var(--purple-rgb),calc(0.08*var(--kp))), 0 12px 40px rgba(var(--shadow-rgb),calc(0.6 * var(--shadow-k)))' : '0 0 24px rgba(var(--purple-rgb),calc(0.08*var(--kp))), inset 0 0 40px rgba(var(--purple-rgb),calc(0.04*var(--kp))), 0 6px 24px rgba(0,0,0,0.45)'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
       inset: 0,
       pointerEvents: 'none',
-      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 22px, rgba(160,140,255,0.04) 22px, rgba(160,140,255,0.04) 23px)`
+      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 22px, rgba(var(--accent-rgb),calc(0.04*var(--ka))) 22px, rgba(var(--accent-rgb),calc(0.04*var(--ka))) 23px)`
     }
   }), glitchActive && /*#__PURE__*/React.createElement("div", {
     key: `hs-${glitchKey}`,
@@ -590,7 +590,7 @@ function NeuerCharakterCard() {
       left: '-40px',
       width: '280px',
       height: '280px',
-      background: 'radial-gradient(circle, rgba(124,77,255,0.22), transparent 70%)',
+      background: 'radial-gradient(circle, rgba(var(--purple-rgb),calc(0.22*var(--kp))), transparent 70%)',
       pointerEvents: 'none'
     }
   }), /*#__PURE__*/React.createElement("div", {
@@ -643,7 +643,7 @@ function NeuerCharakterCard() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8.5px',
       letterSpacing: '0.32em',
-      color: 'rgba(160,140,255,0.55)',
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '14px',
       display: 'flex',
@@ -654,7 +654,7 @@ function NeuerCharakterCard() {
     style: {
       width: '24px',
       height: '1px',
-      background: 'rgba(160,140,255,0.4)'
+      background: 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))'
     }
   }), "Gef\xFChrter Prozess", /*#__PURE__*/React.createElement("span", {
     style: {
@@ -677,7 +677,7 @@ function NeuerCharakterCard() {
       fontSize: 'clamp(28px,3.4vw,40px)',
       fontWeight: '400',
       letterSpacing: '0.16em',
-      color: '#a78bff',
+      color: 'var(--lav2)',
       textTransform: 'uppercase',
       lineHeight: 1.1,
       pointerEvents: 'none',
@@ -708,10 +708,10 @@ function NeuerCharakterCard() {
       fontSize: 'clamp(28px,3.4vw,40px)',
       fontWeight: '400',
       letterSpacing: '0.16em',
-      color: hov ? '#f0eeff' : '#e8e0ff',
+      color: hov ? 'var(--white)' : 'var(--white)',
       textTransform: 'uppercase',
       lineHeight: 1.1,
-      textShadow: hov ? '0 0 24px rgba(124,77,255,0.7), 0 0 40px rgba(124,77,255,0.3)' : '0 0 14px rgba(124,77,255,0.3)',
+      textShadow: hov ? '0 0 24px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 40px rgba(var(--purple-rgb),calc(0.3*var(--kp)))' : '0 0 14px rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
       transition: glitchActive ? 'none' : 'color 0.3s, text-shadow 0.3s',
       position: 'relative',
       zIndex: 2,
@@ -725,7 +725,7 @@ function NeuerCharakterCard() {
       fontWeight: '300',
       fontSize: '13px',
       lineHeight: 1.85,
-      color: 'rgba(220,210,255,0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       letterSpacing: '0.03em',
       maxWidth: '520px',
       marginBottom: '22px',
@@ -761,25 +761,25 @@ function NeuerCharakterCard() {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.15em',
-      color: 'rgba(124,77,255,0.85)',
+      color: 'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))',
       padding: '3px 7px',
-      border: '1px solid rgba(124,77,255,0.45)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))',
       borderRadius: '2px',
-      background: 'rgba(124,77,255,0.08)'
+      background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))'
     }
   }, s.n), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9.5px',
       letterSpacing: '0.18em',
-      color: 'rgba(220,210,255,0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, s.l)), i < arr.length - 1 && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '10px',
-      color: 'rgba(124,77,255,0.4)'
+      color: 'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))'
     }
   }, "\u2192")))), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -793,16 +793,16 @@ function NeuerCharakterCard() {
       fontFamily: 'var(--font-display)',
       fontSize: '10px',
       letterSpacing: '0.28em',
-      color: hov ? '#f0eeff' : '#c9b8ff',
+      color: hov ? 'var(--white)' : 'var(--lav)',
       textTransform: 'uppercase',
-      textShadow: hov ? '0 0 12px rgba(124,77,255,0.6)' : 'none',
+      textShadow: hov ? '0 0 12px rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'none',
       transition: 'color 0.25s, text-shadow 0.25s'
     }
   }, "Erstellung starten"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '14px',
-      color: hov ? '#f0eeff' : '#c9b8ff',
+      color: hov ? 'var(--white)' : 'var(--lav)',
       transform: hov ? 'translateX(4px)' : 'translateX(0)',
       transition: 'transform 0.25s, color 0.25s'
     }
@@ -833,7 +833,7 @@ function SectionCard({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
-      background: 'linear-gradient(160deg, rgba(20,12,42,0.7) 0%, rgba(8,5,22,0.95) 100%)',
+      background: 'linear-gradient(160deg, rgba(var(--panel-rgb),0.7) 0%, rgba(var(--panel-rgb),0.95) 100%)',
       border: `1px solid ${hov ? acc + '55' : acc + '20'}`,
       borderLeft: `3px solid ${hov ? acc : acc + '80'}`,
       borderRadius: '4px',
@@ -907,7 +907,7 @@ function SectionCard({
       fontSize: '17px',
       fontWeight: '400',
       letterSpacing: '0.16em',
-      color: hov ? '#f0eeff' : 'rgba(240,238,255,0.88)',
+      color: hov ? 'var(--white)' : 'rgba(var(--text-hi-rgb),calc(0.88*var(--kt)))',
       textShadow: hov ? `0 0 18px ${acc}55` : 'none',
       transition: 'color 0.3s, text-shadow 0.3s',
       marginBottom: '4px',
@@ -928,7 +928,7 @@ function SectionCard({
       fontWeight: '300',
       fontSize: '12.5px',
       lineHeight: 1.8,
-      color: 'rgba(220,210,255,0.55)',
+      color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
       textWrap: 'pretty',
       position: 'relative',
@@ -983,7 +983,7 @@ function App() {
     onMouseMove: handleMouseMove,
     style: {
       position: 'relative',
-      minHeight: '100vh'
+      minHeight: 'calc(var(--vh, 1vh) * 100)'
     }
   }, /*#__PURE__*/React.createElement(ParticleField, {
     mouseX: mouse.x,
@@ -991,44 +991,7 @@ function App() {
   }), /*#__PURE__*/React.createElement(FloatingHexField, {
     mouseX: mouse.x,
     mouseY: mouse.y
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'relative',
-      zIndex: 10,
-      width: '100%',
-      height: '160px',
-      background: 'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
-      borderBottom: '1px solid rgba(160,140,255,0.15)',
-      overflow: 'hidden',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0,
-      background: `radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
-      pointerEvents: 'none'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0,
-      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
-      pointerEvents: 'none'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
-      color: 'rgba(160,140,255,0.3)',
-      letterSpacing: '0.3em',
-      textTransform: 'uppercase',
-      position: 'relative',
-      zIndex: 1
-    }
-  }, "Kopfbild \u2014 Artwork hier ablegen")), /*#__PURE__*/React.createElement(SiteNav, {
+  }), /*#__PURE__*/React.createElement(SiteNav, {
     rightLabel: "CHARAKTERERSTELLUNG"
   }), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1050,7 +1013,7 @@ function App() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.32em',
-      color: 'rgba(160,140,255,0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '14px'
     }
@@ -1060,8 +1023,8 @@ function App() {
       fontSize: 'clamp(30px,4vw,50px)',
       fontWeight: '300',
       letterSpacing: '0.22em',
-      color: '#f0eeff',
-      textShadow: '0 0 50px rgba(124,77,255,0.4)',
+      color: 'var(--white)',
+      textShadow: '0 0 50px rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
       marginBottom: '18px',
       lineHeight: 1.15,
       textTransform: 'uppercase'
@@ -1078,7 +1041,7 @@ function App() {
     style: {
       width: '60px',
       height: '1px',
-      background: 'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)'
+      background: 'linear-gradient(270deg, rgba(var(--purple-rgb),calc(0.6*var(--kp))), transparent)'
     }
   }), /*#__PURE__*/React.createElement("svg", {
     width: "8",
@@ -1086,14 +1049,14 @@ function App() {
     viewBox: "0 0 8 8"
   }, /*#__PURE__*/React.createElement("polygon", {
     points: hexPoints(8),
-    fill: "rgba(124,77,255,0.35)",
-    stroke: "rgba(160,140,255,0.6)",
+    fill: "rgba(var(--purple-rgb),calc(0.35*var(--kp)))",
+    stroke: "rgba(var(--accent-rgb),calc(0.6*var(--ka)))",
     strokeWidth: "0.8"
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '8px',
       height: '1px',
-      background: 'rgba(124,77,255,0.4)',
+      background: 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
       animation: 'pulse-glow 2s infinite'
     }
   }), /*#__PURE__*/React.createElement("svg", {
@@ -1102,14 +1065,14 @@ function App() {
     viewBox: "0 0 5 5"
   }, /*#__PURE__*/React.createElement("polygon", {
     points: hexPoints(5),
-    fill: "rgba(160,140,255,0.2)",
-    stroke: "rgba(160,140,255,0.4)",
+    fill: "rgba(var(--accent-rgb),calc(0.2*var(--ka)))",
+    stroke: "rgba(var(--accent-rgb),calc(0.4*var(--ka)))",
     strokeWidth: "0.6"
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '8px',
       height: '1px',
-      background: 'rgba(124,77,255,0.4)',
+      background: 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
       animation: 'pulse-glow 2s infinite 0.4s'
     }
   }), /*#__PURE__*/React.createElement("svg", {
@@ -1118,14 +1081,14 @@ function App() {
     viewBox: "0 0 8 8"
   }, /*#__PURE__*/React.createElement("polygon", {
     points: hexPoints(8),
-    fill: "rgba(124,77,255,0.35)",
-    stroke: "rgba(160,140,255,0.6)",
+    fill: "rgba(var(--purple-rgb),calc(0.35*var(--kp)))",
+    stroke: "rgba(var(--accent-rgb),calc(0.6*var(--ka)))",
     strokeWidth: "0.8"
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '60px',
       height: '1px',
-      background: 'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)'
+      background: 'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.6*var(--kp))), transparent)'
     }
   })), /*#__PURE__*/React.createElement("p", {
     style: {
@@ -1133,7 +1096,7 @@ function App() {
       fontWeight: '300',
       fontSize: '13px',
       lineHeight: 1.9,
-      color: 'rgba(220,210,255,0.5)',
+      color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
       letterSpacing: '0.05em',
       maxWidth: '580px',
       margin: '0 auto',
@@ -1157,19 +1120,20 @@ function App() {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.28em',
-      color: 'rgba(160,140,255,0.55)',
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Oder einzelne Bereiche durchst\xF6bern"), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1,
       height: '1px',
-      background: 'linear-gradient(90deg, rgba(160,140,255,0.2) 0%, transparent 100%)'
+      background: 'linear-gradient(90deg, rgba(var(--accent-rgb),calc(0.2*var(--ka))) 0%, transparent 100%)'
     }
   })), /*#__PURE__*/React.createElement("div", {
+    className: "section-grid",
     style: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)',
+      gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
       gap: '18px'
     }
   }, SECTIONS.map((sec, i) => /*#__PURE__*/React.createElement(SectionCard, {
@@ -1181,7 +1145,7 @@ function App() {
       position: 'relative',
       zIndex: 10,
       padding: '10px 32px',
-      borderTop: '1px solid rgba(160,140,255,0.07)',
+      borderTop: '1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)))',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center'
@@ -1190,14 +1154,14 @@ function App() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '7px',
-      color: 'rgba(160,140,255,0.22)',
+      color: 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em'
     }
   }, "\u25C8 ARCHIV-STATUS: NOMINAL \u25C8 EPOCHE: UNBEKANNT"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '7px',
-      color: 'rgba(160,140,255,0.22)',
+      color: 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em'
     }
   }, "MERURIA // CHARAKTER-ARCHIV")));

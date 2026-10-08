@@ -1,10 +1,11 @@
 // Page entry for /dm/kollektikon.html
 import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
+import '../../components/ressourcen-ui.jsx';
 
 ;(function () {
 // top-level functions were global in the old classic-script setup
-Object.assign(window, { _rarFromSg, _rarFromStaerke, _rarFromCr, computeStage, buildResources, ThresholdRow, ThresholdsSection, nextStageInfo, CountRow, CountsSection, App });
+Object.assign(window, { _rarFromSg, _rarFromStaerke, _rarFromCr, computeStage, buildResources, ThresholdRow, ThresholdsSection, nextStageInfo, CountRow, CountsSection, RandomizerSection, App });
 
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
 const { SiteNav, SiteGate } = window;
@@ -265,78 +266,213 @@ function CountRow({ catId, resource, initialData, thresholdsMap, onSaved }) {
   );
 }
 
-// ── Counts section ────────────────────────────────────────────────────────────
+// ── Counts section: Liste + Detailansicht ───────────────────────────────────
 function CountsSection({ countsMap, thresholdsMap, onSaved }) {
+  const Kat = window.RessourcenKatalog;
   const [activeCat, setActiveCat] = useState('fische');
   const [search, setSearch] = useState('');
-  const resources = useMemo(() => buildResources(), []);
+  const [rarFilter, setRarFilter] = useState('');
+  const [sel, setSel] = useState({});
+  const [tagsOpen, setTagsOpen] = useState(false);
+  const [onlyFound, setOnlyFound] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
-  const filtered = useMemo(() => {
-    const pool = resources[activeCat] || [];
-    const q = search.trim().toLowerCase();
-    if (!q) return pool;
-    return pool.filter(r => r.name.toLowerCase().includes(q));
-  }, [resources, activeCat, search]);
+  const all = useMemo(() => Kat.entries(activeCat), [activeCat]);
+  const isFound = r => { const d = countsMap[`${activeCat}:${r.id}`] || {}; return (d.menge || 0) > 0 || !!d.reveal_mode; };
 
   const displayed = useMemo(() => {
-    return [...filtered].sort((a, b) => {
-      const da = countsMap[`${activeCat}:${a.id}`] || {};
-      const db = countsMap[`${activeCat}:${b.id}`] || {};
-      const ca = da.menge || 0, cb = db.menge || 0;
-      const ra = da.reveal_mode, rb = db.reveal_mode;
-      // Found first, then stage-0, then unknown, then alphabetical
-      if (ca > 0 && cb === 0) return -1;
-      if (cb > 0 && ca === 0) return 1;
-      if (ra && !rb) return -1;
-      if (rb && !ra) return 1;
-      return a.name.localeCompare(b.name, 'de');
-    });
-  }, [filtered, countsMap, activeCat]);
+    const q = search.trim().toLowerCase();
+    return all
+      .filter(r => (!q || r.name.toLowerCase().includes(q)) && (!rarFilter || r.rarity === rarFilter) && Kat.matches(r, sel) && (!onlyFound || isFound(r)))
+      .sort((a, b) => {
+        const da = countsMap[`${activeCat}:${a.id}`] || {}, db = countsMap[`${activeCat}:${b.id}`] || {};
+        const ca = da.menge || 0, cb = db.menge || 0;
+        if (ca > 0 && cb === 0) return -1;
+        if (cb > 0 && ca === 0) return 1;
+        if (da.reveal_mode && !db.reveal_mode) return -1;
+        if (db.reveal_mode && !da.reveal_mode) return 1;
+        return a.name.localeCompare(b.name, 'de');
+      });
+  }, [all, search, rarFilter, sel, onlyFound, countsMap, activeCat]);
 
-  const total = resources[activeCat]?.length || 0;
-  const found = useMemo(() => (resources[activeCat] || []).filter(r => {
-    const d = countsMap[`${activeCat}:${r.id}`] || {};
-    return (d.menge || 0) > 0 || d.reveal_mode;
-  }).length, [resources, activeCat, countsMap]);
+  const found = useMemo(() => all.filter(isFound).length, [all, countsMap, activeCat]);
+  const activeTags = Object.values(sel).reduce((n, v) => n + v.length, 0);
+  const selected = displayed.find(r => r.id === selectedId) || null;
+
+  function switchCat(id) { setActiveCat(id); setSearch(''); setSel({}); setRarFilter(''); setSelectedId(null); }
 
   return (
     <div>
-      <div className="dm-section-label">Gesammelte Mengen pro Ressource</div>
-      <div className="counts-toolbar">
-        <input
-          className="counts-search"
-          placeholder="▸ Ressource suchen…"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'rgba(160,140,255,0.45)', whiteSpace: 'nowrap' }}>
-          {found}/{total} entdeckt
-        </span>
-      </div>
       <div className="counts-cat-tabs" style={{ marginBottom: '16px' }}>
         {CATS.map(c => (
-          <button key={c.id} className={`counts-cat-tab${activeCat === c.id ? ' active' : ''}`} onClick={() => { setActiveCat(c.id); setSearch(''); }}>
+          <button key={c.id} className={`counts-cat-tab${activeCat === c.id ? ' active' : ''}`} onClick={() => switchCat(c.id)}>
             {c.label}
           </button>
         ))}
       </div>
-      <div className="counts-list">
-        {displayed.length === 0 ? (
-          <div className="counts-empty">Keine Einträge gefunden.</div>
-        ) : displayed.map(r => (
-          <CountRow
-            key={`${activeCat}:${r.id}`}
-            catId={activeCat}
-            resource={r}
-            initialData={countsMap[`${activeCat}:${r.id}`] || null}
-            thresholdsMap={thresholdsMap}
-            onSaved={onSaved}
-          />
+      <div className="counts-toolbar">
+        <input className="counts-search" placeholder="▸ Ressource suchen…" value={search} onChange={e => setSearch(e.target.value)} />
+        <select className="counts-search" style={{ flex: '0 0 150px' }} value={rarFilter} onChange={e => setRarFilter(e.target.value)}>
+          <option value="">Seltenheit: alle</option>
+          {Kat.RARITY_ORDER.map(r => <option key={r} value={r}>{Kat.RARITY_META[r].label}</option>)}
+        </select>
+        <button className={`reveal-mode-btn${tagsOpen || activeTags ? ' active' : ''}`} onClick={() => setTagsOpen(o => !o)}>
+          Tags{activeTags ? ` (${activeTags})` : ''} {tagsOpen ? '▴' : '▾'}
+        </button>
+        <button className={`reveal-mode-btn${onlyFound ? ' active' : ''}`} onClick={() => setOnlyFound(o => !o)}>Nur entdeckte</button>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', whiteSpace: 'nowrap' }}>
+          {found}/{all.length} entdeckt · {displayed.length} angezeigt
+        </span>
+      </div>
+      {tagsOpen && (
+        <div style={{ marginBottom: 16 }}>
+          <window.TagFilters cat={activeCat} sel={sel} onChange={setSel} />
+          {activeTags > 0 && <button className="reveal-mode-btn" style={{ marginTop: 8 }} onClick={() => setSel({})}>✕ Tags zurücksetzen</button>}
+        </div>
+      )}
+
+      <div className="kol-split">
+        <div className="kol-list">
+          {displayed.length === 0 ? (
+            <div className="counts-empty">Keine Einträge gefunden.</div>
+          ) : displayed.map(r => {
+            const d = countsMap[`${activeCat}:${r.id}`] || {};
+            return (
+              <button key={r.id} className={`kol-list-row${r.id === selectedId ? ' active' : ''}`} onClick={() => setSelectedId(r.id)}>
+                <window.ResThumb entry={r} size={34} />
+                <span className="kol-list-name">{r.name}</span>
+                <window.RarityPill rarity={r.rarity} />
+                <span className="kol-list-menge">{(d.menge || 0) > 0 ? d.menge.toLocaleString('de') : d.reveal_mode ? '•' : ''}</span>
+              </button>
+            );
+          })}
+        </div>
+        <div className="kol-detail">
+          {!selected ? (
+            <div className="counts-empty">Eintrag links auswählen, um Details und Mengen zu sehen.</div>
+          ) : (
+            <React.Fragment>
+              <window.ResDetail entry={selected} />
+              <div className="dm-section-label" style={{ marginTop: 22 }}>Menge &amp; Aufdeckung</div>
+              <CountRow
+                key={`${activeCat}:${selected.id}`}
+                catId={activeCat}
+                resource={selected}
+                initialData={countsMap[`${activeCat}:${selected.id}`] || null}
+                thresholdsMap={thresholdsMap}
+                onSaved={onSaved}
+              />
+              <div className="counts-hint">Eingabe bestätigen mit Enter oder OK-Button. Gelbe Umrandung = ungespeicherte Änderung.</div>
+            </React.Fragment>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Randomizer: Tags wählen, würfeln, einem Ort zuweisen ─────────────────────
+const POOL_CATS = CATS.filter(c => c.id !== 'kreaturen');
+
+function RandomizerSection() {
+  const [activeCat, setActiveCat] = useState('fische');
+  const [orte, setOrte] = useState(null);         // [{ key, hex_id|area_id, label, map }]
+  const [ortFilter, setOrtFilter] = useState('');
+  const [ortKey, setOrtKey] = useState('');
+  const [pool, setPool] = useState([]);           // karte_pools-Zeilen des gewählten Ortes
+  const [msg, setMsg] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      const sb = window._sb;
+      const [maps, hexes, areas] = await Promise.all([
+        sb.from('karte_maps').select('id, name, ebene'),
+        sb.from('karte_hexes').select('id, map_id, name').neq('name', ''),
+        sb.from('karte_areas').select('id, map_id, name').eq('has_submap', true).neq('name', ''),
+      ]);
+      // Wie in der Karte: Pools gibt es nur auf Orts-Ebene, also an Hexfeldern der
+      // Gebiets-Karten (führen in einen Ort) und an Bereichen, die in einen Unterort führen.
+      const mapName = {}, gebietMaps = new Set();
+      (maps.data || []).forEach(m => { mapName[m.id] = m.name; if (m.ebene === 'Gebiet') gebietMaps.add(m.id); });
+      const list = [
+        ...(hexes.data || []).filter(h => gebietMaps.has(h.map_id)).map(h => ({ key: 'h:' + h.id, hex_id: h.id, area_id: null, label: h.name, map: mapName[h.map_id] || '?' })),
+        ...(areas.data || []).map(a => ({ key: 'a:' + a.id, hex_id: null, area_id: a.id, label: a.name, map: mapName[a.map_id] || '?' })),
+      ].sort((x, y) => (x.map + x.label).localeCompare(y.map + y.label, 'de'));
+      setOrte(list);
+    })();
+  }, []);
+
+  const ort = (orte || []).find(o => o.key === ortKey) || null;
+
+  async function loadPool() {
+    if (!ort) { setPool([]); return; }
+    const q = window._sb.from('karte_pools').select('*');
+    const { data } = await (ort.hex_id ? q.eq('hex_id', ort.hex_id) : q.eq('area_id', ort.area_id));
+    setPool(data || []);
+  }
+  useEffect(() => { loadPool(); }, [ortKey]);
+
+  const exclude = useMemo(() => new Set(pool.filter(p => p.cat === activeCat).map(p => String(p.resource_id))), [pool, activeCat]);
+
+  async function addToOrt(entries) {
+    if (!ort) return;
+    const rows = entries.map(e => ({ cat: activeCat, resource_id: String(e.id), hex_id: ort.hex_id, area_id: ort.area_id }));
+    const { error } = await window._sb.from('karte_pools').insert(rows);
+    setMsg(error ? 'Fehler: ' + error.message : `${rows.length} ${rows.length === 1 ? 'Eintrag' : 'Einträge'} zu „${ort.label}“ hinzugefügt.`);
+    loadPool();
+  }
+  async function removeFromOrt(p) {
+    await window._sb.from('karte_pools').delete().eq('id', p.id);
+    loadPool();
+  }
+
+  const visibleOrte = (orte || []).filter(o => !ortFilter || (o.label + ' ' + o.map).toLowerCase().includes(ortFilter.toLowerCase()));
+  const Kat = window.RessourcenKatalog;
+  const poolHere = pool.filter(p => p.cat === activeCat).map(p => Kat.get(activeCat, p.resource_id) ? { row: p, e: Kat.get(activeCat, p.resource_id) } : null).filter(Boolean);
+
+  return (
+    <div>
+      <div className="dm-section-label">Randomizer · Ressourcen einem Ort zuweisen</div>
+      <div className="counts-cat-tabs" style={{ marginBottom: 16 }}>
+        {POOL_CATS.map(c => (
+          <button key={c.id} className={`counts-cat-tab${activeCat === c.id ? ' active' : ''}`} onClick={() => { setActiveCat(c.id); setMsg(''); }}>{c.label}</button>
         ))}
       </div>
-      <div className="counts-hint">
-        Eingabe bestätigen mit Enter oder OK-Button. Gelbe Umrandung = ungespeicherte Änderung.
+
+      <div className="counts-toolbar">
+        <input className="counts-search" placeholder="▸ Ort suchen…" value={ortFilter} onChange={e => setOrtFilter(e.target.value)} />
+        <select className="counts-search" value={ortKey} onChange={e => { setOrtKey(e.target.value); setMsg(''); }}>
+          <option value="">{orte ? 'Ort wählen …' : 'Lädt …'}</option>
+          {visibleOrte.map(o => <option key={o.key} value={o.key}>{o.map} › {o.label}{o.area_id ? ' (Bereich)' : ''}</option>)}
+        </select>
       </div>
+
+      <window.ResRandomizer
+        cat={activeCat}
+        excludeIds={exclude}
+        onAdd={addToOrt}
+        addLabel={ort ? `Zu „${ort.label}“ hinzufügen` : 'Hinzufügen'}
+        disabledReason={ort ? '' : 'Erst einen Ort wählen'}
+      />
+      {msg && <div className="counts-hint" style={{ marginTop: 10 }}>{msg}</div>}
+
+      {ort && (
+        <div style={{ marginTop: 26 }}>
+          <div className="dm-section-label">Pool von „{ort.label}“ · {CATS.find(c => c.id === activeCat).label} ({poolHere.length})</div>
+          {poolHere.length === 0 ? <div className="counts-empty">Noch nichts im Pool.</div> : (
+            <div className="kol-list" style={{ maxHeight: 360 }}>
+              {poolHere.map(({ row, e }) => (
+                <div key={row.id} className="kol-list-row" style={{ cursor: 'default' }}>
+                  <window.ResThumb entry={e} size={34} />
+                  <span className="kol-list-name">{e.name}</span>
+                  <window.RarityPill rarity={e.rarity} />
+                  <button className="reveal-mode-btn" title="Aus dem Pool entfernen" onClick={() => removeFromOrt(row)}>×</button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -394,12 +530,17 @@ function App() {
           <button className={`dm-kol-tab${activeTab === 'schwellen' ? ' active' : ''}`} onClick={() => setActiveTab('schwellen')}>
             Schwellen
           </button>
+          <button className={`dm-kol-tab${activeTab === 'randomizer' ? ' active' : ''}`} onClick={() => setActiveTab('randomizer')}>
+            Randomizer
+          </button>
         </div>
 
         {loading ? (
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'rgba(160,140,255,0.4)', padding: '24px 0' }}>Lädt…</div>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', padding: '24px 0' }}>Lädt…</div>
         ) : activeTab === 'mengen' ? (
           <CountsSection countsMap={countsMap} thresholdsMap={thresholdsMap} onSaved={handleCountSaved} />
+        ) : activeTab === 'randomizer' ? (
+          <RandomizerSection />
         ) : (
           <ThresholdsSection thresholdsMap={thresholdsMap} onThresholdSaved={handleThresholdSaved} />
         )}

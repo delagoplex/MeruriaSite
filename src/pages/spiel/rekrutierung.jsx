@@ -2,6 +2,7 @@
 import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/page-hero.jsx';
+import '../../components/rasse-picker.jsx';
 
 ;(function () {
 (function () {
@@ -12,7 +13,7 @@ const { SiteNav, SiteGate, NscStatblock, Rekrutierungsrechner, PageHero } = wind
 const DIVS = window.DIVISIONS_DATA || [];
 
 // ── Styles ──────────────────────────────────────────────────
-const PAGE_BG    = '#05040f';
+const PAGE_BG    = 'var(--bg)';
 
 // ── DivisionTab ─────────────────────────────────────────────
 function DivisionTab(props) {
@@ -31,8 +32,8 @@ function DivisionTab(props) {
       alignItems:    'center',
       gap:           8,
       padding:       '8px 14px',
-      background:    active ? cA(0.18) : 'rgba(10,8,28,0.5)',
-      border:        '1px solid ' + (active ? div.accent : 'rgba(124,77,255,0.15)'),
+      background:    active ? cA(0.18) : 'rgba(var(--panel-rgb),0.5)',
+      border:        '1px solid ' + (active ? div.accent : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'),
       borderRadius:  3,
       cursor:        'pointer',
       flexShrink:    0,
@@ -52,7 +53,7 @@ function DivisionTab(props) {
         fontSize:      9,
         letterSpacing: '0.18em',
         textTransform: 'uppercase',
-        color:         active ? div.accent : 'rgba(180,170,220,0.5)',
+        color:         active ? div.accent : 'color-mix(in srgb, rgba(180,170,220,0.5), rgb(var(--ink-rgb)) var(--cm))',
         whiteSpace:    'nowrap',
       },
     }, div.name.replace(/^Die\s+/, ''))
@@ -67,13 +68,16 @@ function App() {
   var _rang   = useState(5);
   var selectedRang = _rang[0];
   var setRang = _rang[1];
+  var _rasse  = useState(null);
+  var rasse   = _rasse[0];
+  var setRasse = _rasse[1];
 
   var division = DIVS[divIdx] || DIVS[0];
 
   return h(SiteGate, null,
     h('div', {
       className: 'page-root',
-      style: { background: PAGE_BG, minHeight: '100vh' },
+      style: { background: PAGE_BG, minHeight: 'calc(var(--vh, 1vh) * 100)' },
     },
       h(SiteNav, null),
 
@@ -97,7 +101,7 @@ function App() {
         h('div', {
           style: {
             height:     1,
-            background: 'linear-gradient(to right, rgba(124,77,255,0.4), transparent)',
+            background: 'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.4*var(--kp))), transparent)',
             marginBottom: 28,
           },
         }),
@@ -109,7 +113,7 @@ function App() {
             fontSize:      8.5,
             letterSpacing: '0.22em',
             textTransform: 'uppercase',
-            color:         'rgba(124,77,255,0.5)',
+            color:         'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
             marginBottom:  12,
           },
         }, 'Division'),
@@ -135,7 +139,7 @@ function App() {
         h('div', {
           style: {
             display:             'grid',
-            gridTemplateColumns: '1fr 1fr',
+            gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)',
             gap:                 28,
             alignItems:          'start',
           },
@@ -149,7 +153,7 @@ function App() {
                 fontSize:      8.5,
                 letterSpacing: '0.22em',
                 textTransform: 'uppercase',
-                color:         'rgba(124,77,255,0.5)',
+                color:         'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
                 marginBottom:  12,
               },
             }, 'NSC Statblock'),
@@ -157,34 +161,47 @@ function App() {
               division:      division,
               selectedRang:  selectedRang,
               onRangChange:  setRang,
+              rasse:         rasse,
+              onRasseChange: setRasse,
             })
           ),
 
-          // Right: Calculator
-          h('div', null,
+          // Right: Calculator (als Karte, läuft beim Scrollen mit)
+          h('div', {
+            style: {
+              position: 'sticky', top: 'calc(var(--nav-h, 52px) + 16px)', maxHeight: 'calc(100vh - var(--nav-h, 52px) - 32px)', overflowY: 'auto', overflowX: 'hidden', minWidth: 0,
+              padding: '24px 26px 28px', borderRadius: 8,
+              border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
+              background: 'rgba(var(--panel-rgb),0.5)',
+            },
+          },
             h('div', {
               style: {
-                fontFamily:    'var(--font-mono)',
-                fontSize:      8.5,
-                letterSpacing: '0.22em',
+                fontFamily:    'var(--font-display)',
+                fontSize:      19,
+                letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                color:         'rgba(124,77,255,0.5)',
-                marginBottom:  12,
+                color:         'var(--white)',
+                marginBottom:  4,
+                overflowWrap:  'anywhere',
               },
             }, 'Rekrutierungsrechner'),
             h('div', {
               style: {
                 fontFamily:    'var(--font-body)',
-                fontSize:      11,
+                fontSize:      13,
                 fontWeight:    300,
-                color:         'rgba(160,140,255,0.45)',
+                color:         'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
                 lineHeight:    1.5,
-                marginBottom:  14,
+                marginBottom:  20,
+                paddingBottom: 16,
+                borderBottom:  '1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
               },
-            }, 'Basierend auf dem links gewählten NSC-Rang.'),
+            }, 'Was kostet es, den links gewählten NSC zu rekrutieren — oder einzubringen?'),
             h(Rekrutierungsrechner, {
               division: division,
               nscRang:  selectedRang,
+              rasse:    rasse,
             })
           )
         )

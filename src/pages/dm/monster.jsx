@@ -3,6 +3,7 @@ import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/particle-field.jsx';
 import '../../components/filter-utils.jsx';
+import '../../components/rasse-picker.jsx';
 
 ;(function () {
 (function () {
@@ -117,7 +118,7 @@ function Chip({
   onClick,
   color
 }) {
-  const c = color || 'rgba(var(--accent-rgb),0.9)';
+  const c = color || 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))';
   return /*#__PURE__*/React.createElement("button", {
     onClick: onClick,
     style: {
@@ -126,8 +127,8 @@ function Chip({
       letterSpacing: '0.15em',
       padding: '0 10px',
       height: '16px',
-      border: `1px solid ${active ? c : 'rgba(var(--accent-rgb),0.2)'}`,
-      background: active ? 'rgba(var(--accent-rgb),0.18)' : 'transparent',
+      border: `1px solid ${active ? c : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))'}`,
+      background: active ? 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))' : 'transparent',
       color: active ? 'var(--white)' : 'var(--muted)',
       cursor: 'pointer',
       borderRadius: '2px',
@@ -164,9 +165,17 @@ function FilterSidebar({
       [key]: arr.includes(val) ? arr.filter(x => x !== val) : [...arr, val]
     };
   });
+  // Unterart: neutral -> include -> exclude -> neutral
+  const cycleUnterart = u => setFilters(f => {
+    const inc = f.unterart || [], exc = f.unterartNot || [];
+    if (inc.includes(u)) return { ...f, unterart: inc.filter(x => x !== u), unterartNot: [...exc, u] };
+    if (exc.includes(u)) return { ...f, unterartNot: exc.filter(x => x !== u) };
+    return { ...f, unterart: [...inc, u] };
+  });
   const reset = () => setFilters({
     art: [],
     unterart: [],
+    unterartNot: [],
     cr: [],
     groesse: [],
     moral: [],
@@ -176,9 +185,10 @@ function FilterSidebar({
     hortaktionen: null,
     sort: 'cr-asc'
   });
-  const hasAny = filters.art.length || filters.unterart.length || filters.cr.length || filters.groesse.length || filters.moral.length || filters.umgebung.length || filters.source.length || filters.legendaer !== null || filters.hortaktionen !== null || filters.sort !== 'cr-asc';
+  const hasAny = filters.art.length || filters.unterart.length || (filters.unterartNot || []).length || filters.cr.length || filters.groesse.length || filters.moral.length || filters.umgebung.length || filters.source.length || filters.legendaer !== null || filters.hortaktionen !== null || filters.sort !== 'cr-asc';
   return /*#__PURE__*/React.createElement("div", {
     ref: dragRef.ref,
+    "data-mobile-drawer": "",
     onMouseDown: dragRef.onMouseDown,
     onClickCapture: dragRef.onClickCapture,
     style: {
@@ -209,8 +219,8 @@ function FilterSidebar({
       fontSize: '11.5px',
       fontWeight: '300',
       padding: '6px 10px 6px 28px',
-      background: 'rgba(var(--accent-rgb),0.06)',
-      border: '1px solid rgba(var(--accent-rgb),0.18)',
+      background: 'rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
       borderRadius: '3px',
       color: 'var(--white)',
       outline: 'none',
@@ -218,8 +228,8 @@ function FilterSidebar({
       letterSpacing: '0.03em',
       transition: 'border-color 0.2s'
     },
-    onFocus: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),0.5)',
-    onBlur: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),0.18)'
+    onFocus: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))',
+    onBlur: e => e.target.style.borderColor = 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'
   }), /*#__PURE__*/React.createElement("svg", {
     style: {
       position: 'absolute',
@@ -237,14 +247,14 @@ function FilterSidebar({
     cx: "5",
     cy: "5",
     r: "3.5",
-    stroke: "rgba(var(--accent-rgb),1)",
+    stroke: "rgba(var(--accent-rgb),calc(1*var(--ka)))",
     strokeWidth: "1.2"
   }), /*#__PURE__*/React.createElement("line", {
     x1: "8",
     y1: "8",
     x2: "11",
     y2: "11",
-    stroke: "rgba(var(--accent-rgb),1)",
+    stroke: "rgba(var(--accent-rgb),calc(1*var(--ka)))",
     strokeWidth: "1.2"
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -258,7 +268,7 @@ function FilterSidebar({
       fontFamily: 'var(--font-display)',
       fontSize: '10px',
       letterSpacing: '0.25em',
-      color: 'rgba(var(--text-rgb),0.7)',
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Filter"), hasAny && /*#__PURE__*/React.createElement(XBtn, {
@@ -286,8 +296,8 @@ function FilterSidebar({
       letterSpacing: '0.12em',
       padding: '0 8px',
       height: '16px',
-      border: `1px solid ${filters.cr.includes(cr) ? 'rgba(var(--accent-rgb),0.6)' : 'rgba(var(--accent-rgb),0.18)'}`,
-      background: filters.cr.includes(cr) ? 'rgba(var(--accent-rgb),0.18)' : 'transparent',
+      border: `1px solid ${filters.cr.includes(cr) ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
+      background: filters.cr.includes(cr) ? 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))' : 'transparent',
       color: filters.cr.includes(cr) ? 'var(--white)' : 'var(--muted)',
       cursor: 'pointer',
       borderRadius: '2px',
@@ -317,7 +327,7 @@ function FilterSidebar({
         alignItems: 'center',
         gap: '7px',
         padding: '5px 7px',
-        background: filters.art.includes(t) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent',
+        background: filters.art.includes(t) ? 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))' : 'transparent',
         border: `1px solid ${filters.art.includes(t) ? tc + '55' : 'transparent'}`,
         borderRadius: '2px',
         cursor: 'pointer',
@@ -346,10 +356,11 @@ function FilterSidebar({
     }, t));
   }))), /*#__PURE__*/React.createElement(FilterGroup, {
     title: "Unterart",
-    active: (filters.unterart || []).length > 0,
+    active: (filters.unterart || []).length > 0 || (filters.unterartNot || []).length > 0,
     onReset: () => setFilters(f => ({
       ...f,
-      unterart: []
+      unterart: [],
+      unterartNot: []
     })),
     collapsible: true
   }, /*#__PURE__*/React.createElement("div", {
@@ -358,30 +369,55 @@ function FilterSidebar({
       flexDirection: 'column',
       gap: '3px'
     }
-  }, allUnterarten.map(u => /*#__PURE__*/React.createElement("button", {
-    key: u,
-    onClick: () => toggle('unterart', u),
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '7px',
-      padding: '5px 7px',
-      background: (filters.unterart || []).includes(u) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent',
-      border: `1px solid ${(filters.unterart || []).includes(u) ? 'rgba(var(--accent-rgb),0.4)' : 'transparent'}`,
-      borderRadius: '2px',
-      cursor: 'pointer',
-      transition: 'all 0.15s',
-      textAlign: 'left'
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontFamily: 'var(--font-body)',
-      fontSize: '11px',
-      fontWeight: '300',
-      color: (filters.unterart || []).includes(u) ? 'var(--white)' : 'var(--silver)',
-      letterSpacing: '0.03em'
-    }
-  }, u))))), /*#__PURE__*/React.createElement(FilterGroup, {
+  }, allUnterarten.map(u => {
+    const isOn = (filters.unterart || []).includes(u);
+    const isOff = (filters.unterartNot || []).includes(u);
+    const boxBg = isOn ? 'rgba(60,180,90,0.15)' : isOff ? 'rgba(200,60,60,0.12)' : 'transparent';
+    const boxBorder = isOn ? 'rgba(60,200,90,0.5)' : isOff ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))';
+    return /*#__PURE__*/React.createElement("button", {
+      key: u,
+      onClick: () => cycleUnterart(u),
+      title: isOn ? 'Nur diese (Klick: ausschließen)' : isOff ? 'Ausgeschlossen (Klick: zurücksetzen)' : 'Klick: nur diese anzeigen',
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '5px 7px',
+        background: isOn ? 'rgba(60,180,90,0.07)' : isOff ? 'rgba(200,60,60,0.07)' : 'transparent',
+        border: `1px solid ${isOn || isOff ? boxBorder : 'transparent'}`,
+        borderRadius: '2px',
+        cursor: 'pointer',
+        transition: 'all 0.18s',
+        textAlign: 'left',
+        width: '100%'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: '14px',
+        height: '14px',
+        border: `1px solid ${boxBorder}`,
+        borderRadius: '2px',
+        background: boxBg,
+        flexShrink: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'all 0.18s',
+        fontSize: '9px',
+        color: isOn ? 'rgba(80,220,110,0.9)' : isOff ? 'rgba(230,90,90,0.9)' : 'transparent',
+        fontFamily: 'var(--font-mono)'
+      }
+    }, isOn ? '✓' : isOff ? '✕' : ''), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: 'var(--font-body)',
+        fontSize: '11px',
+        fontWeight: '300',
+        color: isOn || isOff ? 'var(--white)' : 'var(--silver)',
+        letterSpacing: '0.03em',
+        textDecoration: isOff ? 'line-through' : 'none'
+      }
+    }, u));
+  }))), /*#__PURE__*/React.createElement(FilterGroup, {
     title: "Gr\xF6\xDFe",
     active: filters.groesse.length > 0,
     onReset: () => setFilters(f => ({
@@ -405,8 +441,8 @@ function FilterSidebar({
       letterSpacing: '0.05em',
       padding: '0 8px',
       height: '16px',
-      border: `1px solid ${filters.groesse.includes(s) ? 'rgba(var(--accent-rgb),0.6)' : 'rgba(var(--accent-rgb),0.18)'}`,
-      background: filters.groesse.includes(s) ? 'rgba(var(--accent-rgb),0.14)' : 'transparent',
+      border: `1px solid ${filters.groesse.includes(s) ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
+      background: filters.groesse.includes(s) ? 'rgba(var(--accent-rgb),calc(0.14*var(--ka)))' : 'transparent',
       color: filters.groesse.includes(s) ? 'var(--white)' : 'var(--muted)',
       cursor: 'pointer',
       borderRadius: '2px',
@@ -436,8 +472,8 @@ function FilterSidebar({
       letterSpacing: '0.05em',
       padding: '0 8px',
       height: '16px',
-      border: `1px solid ${filters.moral.includes(m) ? 'rgba(var(--accent-rgb),0.6)' : 'rgba(var(--accent-rgb),0.18)'}`,
-      background: filters.moral.includes(m) ? 'rgba(var(--accent-rgb),0.14)' : 'transparent',
+      border: `1px solid ${filters.moral.includes(m) ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
+      background: filters.moral.includes(m) ? 'rgba(var(--accent-rgb),calc(0.14*var(--ka)))' : 'transparent',
       color: filters.moral.includes(m) ? 'var(--white)' : 'var(--muted)',
       cursor: 'pointer',
       borderRadius: '2px',
@@ -465,8 +501,8 @@ function FilterSidebar({
       alignItems: 'center',
       gap: '7px',
       padding: '5px 7px',
-      background: filters.umgebung.includes(e) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent',
-      border: `1px solid ${filters.umgebung.includes(e) ? 'rgba(var(--accent-rgb),0.4)' : 'transparent'}`,
+      background: filters.umgebung.includes(e) ? 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))' : 'transparent',
+      border: `1px solid ${filters.umgebung.includes(e) ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' : 'transparent'}`,
       borderRadius: '2px',
       cursor: 'pointer',
       transition: 'all 0.15s',
@@ -502,8 +538,8 @@ function FilterSidebar({
       alignItems: 'center',
       gap: '7px',
       padding: '5px 7px',
-      background: filters.source.includes(s) ? 'rgba(var(--accent-rgb),0.08)' : 'transparent',
-      border: `1px solid ${filters.source.includes(s) ? 'rgba(var(--accent-rgb),0.4)' : 'transparent'}`,
+      background: filters.source.includes(s) ? 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))' : 'transparent',
+      border: `1px solid ${filters.source.includes(s) ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' : 'transparent'}`,
       borderRadius: '2px',
       cursor: 'pointer',
       transition: 'all 0.15s',
@@ -537,7 +573,7 @@ function FilterSidebar({
     const next = val === null ? true : val === true ? false : null;
     const isTrue = val === true;
     const isFalse = val === false;
-    const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),0.2)';
+    const boxBorder = isTrue ? 'rgba(60,200,90,0.5)' : isFalse ? 'rgba(220,80,80,0.5)' : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))';
     const icon = isTrue ? '✓' : isFalse ? '✕' : '';
     const iconColor = isTrue ? 'rgba(80,220,110,0.9)' : isFalse ? 'rgba(230,90,90,0.9)' : 'transparent';
     return /*#__PURE__*/React.createElement("button", {
@@ -589,7 +625,7 @@ function FilterSidebar({
         fontFamily: 'var(--font-mono)',
         fontSize: '7.5px',
         letterSpacing: '0.1em',
-        color: isTrue ? 'rgba(80,220,110,0.6)' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),0.25)',
+        color: isTrue ? 'color-mix(in srgb, rgba(80,220,110,0.6), rgb(var(--ink-rgb)) var(--cm))' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
         transition: 'color 0.18s'
       }
     }, isTrue ? 'JA' : isFalse ? 'NEIN' : '—'));
@@ -618,7 +654,7 @@ function FilterSidebar({
     style: {
       marginTop: 'auto',
       paddingTop: '14px',
-      borderTop: '1px solid rgba(var(--accent-rgb),0.08)'
+      borderTop: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))'
     }
   }, /*#__PURE__*/React.createElement("button", {
     onClick: reset,
@@ -657,7 +693,7 @@ function MonsterRow({
   onKolToggle
 }) {
   const tc = typeColor(monster.art);
-  const kolC = kolVisible ? 'oklch(0.72 0.18 160)' : 'rgba(160,140,255,0.28)';
+  const kolC = kolVisible ? 'oklch(0.72 0.18 160)' : 'rgba(var(--accent-rgb),calc(0.28*var(--ka)))';
   return /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -665,14 +701,14 @@ function MonsterRow({
       gap: '10px',
       padding: compact ? '7px 12px' : '10px 12px',
       cursor: 'pointer',
-      borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
-      background: active ? 'rgba(var(--accent-rgb),0.1)' : 'transparent',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
+      background: active ? 'rgba(var(--accent-rgb),calc(0.1*var(--ka)))' : 'transparent',
       borderLeft: active ? `2px solid ${tc}` : '2px solid transparent',
       transition: 'all 0.15s'
     },
     onMouseEnter: e => {
       if (!active) {
-        e.currentTarget.style.background = 'rgba(var(--accent-rgb),0.05)';
+        e.currentTarget.style.background = 'rgba(var(--accent-rgb),calc(0.05*var(--ka)))';
         e.currentTarget.style.borderLeftColor = tc + '55';
       }
     },
@@ -688,8 +724,8 @@ function MonsterRow({
       width: '28px',
       height: '22px',
       borderRadius: '2px',
-      background: active ? 'rgba(var(--accent-rgb),0.18)' : 'rgba(var(--accent-rgb),0.08)',
-      border: `1px solid ${active ? 'rgba(var(--accent-rgb),0.5)' : 'rgba(var(--accent-rgb),0.25)'}`,
+      background: active ? 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
+      border: `1px solid ${active ? 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))'}`,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -715,7 +751,7 @@ function MonsterRow({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: active ? '400' : '300',
-      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),0.85)',
+      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       letterSpacing: '0.03em',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
@@ -737,10 +773,10 @@ function MonsterRow({
       fontSize: '7px',
       letterSpacing: '0.1em',
       padding: '2px 5px',
-      background: 'rgba(var(--accent-rgb),0.1)',
-      border: '1px solid rgba(var(--accent-rgb),0.25)',
+      background: 'rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
       borderRadius: '2px',
-      color: 'rgba(var(--accent-rgb),0.7)',
+      color: 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',
       flexShrink: 0
     }
   }, "L"), /*#__PURE__*/React.createElement("button", {
@@ -767,7 +803,7 @@ function MonsterRow({
       lineHeight: 1
     },
     onMouseEnter: e => {
-      e.currentTarget.style.background = kolVisible ? 'oklch(0.72 0.18 160 / 0.22)' : 'rgba(160,140,255,0.08)';
+      e.currentTarget.style.background = kolVisible ? 'oklch(0.72 0.18 160 / 0.22)' : 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))';
     },
     onMouseLeave: e => {
       e.currentTarget.style.background = kolVisible ? 'oklch(0.72 0.18 160 / 0.12)' : 'transparent';
@@ -783,7 +819,7 @@ function MetaRow({
   color
 }) {
   if (!value) return null;
-  const lc = color ? alpha(color, 0.5) : 'rgba(var(--accent-rgb),0.5)';
+  const lc = color ? alpha(color, 0.5) : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))';
   return /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -803,7 +839,7 @@ function MetaRow({
       fontFamily: 'var(--font-body)',
       fontSize: '11.5px',
       fontWeight: '300',
-      color: accent || 'rgba(var(--text-rgb),0.8)',
+      color: accent || 'rgba(var(--text-rgb),calc(0.8*var(--kt)))',
       letterSpacing: '0.02em',
       lineHeight: 1.5,
       maxWidth: '80px'
@@ -815,13 +851,13 @@ function HPRow({
   onRoll,
   color
 }) {
-  const lc = color ? alpha(color, 0.5) : 'rgba(var(--accent-rgb),0.5)';
-  const dc = color ? alpha(color, 0.4) : 'rgba(var(--accent-rgb),0.4)';
+  const lc = color ? alpha(color, 0.5) : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))';
+  const dc = color ? alpha(color, 0.4) : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))';
   const bc = color ? alpha(color, 0.75) : 'rgba(180,160,255,0.75)';
-  const bb = color ? alpha(color, 0.08) : 'rgba(var(--accent-rgb),0.08)';
-  const bbd = color ? alpha(color, 0.3) : 'rgba(var(--accent-rgb),0.3)';
-  const bbh = color ? alpha(color, 0.2) : 'rgba(var(--accent-rgb),0.2)';
-  const bdh = color ? alpha(color, 0.6) : 'rgba(var(--accent-rgb),0.6)';
+  const bb = color ? alpha(color, 0.08) : 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))';
+  const bbd = color ? alpha(color, 0.3) : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))';
+  const bbh = color ? alpha(color, 0.2) : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))';
+  const bdh = color ? alpha(color, 0.6) : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))';
   return /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -849,7 +885,7 @@ function HPRow({
       fontWeight: '300',
       letterSpacing: '0.02em',
       lineHeight: 1.5,
-      color: 'rgba(var(--text-rgb),0.8)'
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))'
     }
   }, monster.tp, /*#__PURE__*/React.createElement("span", {
     style: {
@@ -919,7 +955,7 @@ function AbilityScore({
   score,
   color
 }) {
-  const lc = color ? alpha(color, 0.55) : 'rgba(var(--accent-rgb),0.55)';
+  const lc = color ? alpha(color, 0.55) : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))';
   return /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -947,7 +983,7 @@ function AbilityScore({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(var(--text-rgb),0.7)'
+      color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))'
     }
   }, mod(score)));
 }
@@ -985,7 +1021,7 @@ function SectionLabel({
   title,
   color
 }) {
-  const c = color || 'rgba(var(--accent-rgb),0.9)';
+  const c = color || 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))';
   return /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -1082,7 +1118,7 @@ function EffectBlock({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: '0 0 10px'
     }
@@ -1113,7 +1149,7 @@ function EffectBlock({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.78)',
+      color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       lineHeight: 1.75
     }
@@ -1126,7 +1162,7 @@ function MonsterRollTable({
   const [rolling, setRolling] = React.useState(false);
   const [highlight, setHighlight] = React.useState(null);
   const rows = tabelle.rows;
-  const ac = accentColor || 'rgba(var(--accent-rgb),0.9)';
+  const ac = accentColor || 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))';
   const a = opacity => {
     const m = ac.match(/oklch\(([^)]+)\)/);
     if (m) return `oklch(${m[1].replace(/\s+\d*\.?\d+\s*$/, '')} / ${opacity})`;
@@ -1260,7 +1296,7 @@ function MonsterRollTable({
     key: j,
     style: {
       padding: '5px 10px',
-      color: highlight === k ? 'rgba(var(--text-rgb),0.95)' : j === 0 ? a(0.75) : 'rgba(var(--text-rgb),0.75)',
+      color: highlight === k ? 'rgba(var(--text-rgb),calc(0.95*var(--kt)))' : j === 0 ? a(0.75) : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))',
       fontFamily: j === 0 ? 'var(--font-mono)' : 'var(--font-body)',
       fontSize: j === 0 ? '10px' : '11px',
       letterSpacing: j === 0 ? '0.08em' : '0',
@@ -1323,7 +1359,7 @@ function ActionBlock({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: '500',
-      color: accentColor || 'rgba(180,160,255,0.9)',
+      color: accentColor || 'color-mix(in srgb, rgba(180,160,255,0.9), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '0.04em'
     }
   }, a.name, ". "), /*#__PURE__*/React.createElement("span", {
@@ -1331,7 +1367,7 @@ function ActionBlock({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.78)',
+      color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       lineHeight: 1.75
     }
@@ -1345,8 +1381,8 @@ function TagList({
   color
 }) {
   if (!items || items.length === 0) return null;
-  const bg = color ? alpha(color, 0.08) : 'rgba(var(--accent-rgb),0.08)';
-  const bdr = color ? alpha(color, 0.2) : 'rgba(var(--accent-rgb),0.2)';
+  const bg = color ? alpha(color, 0.08) : 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))';
+  const bdr = color ? alpha(color, 0.2) : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))';
   return /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -1363,7 +1399,7 @@ function TagList({
       background: bg,
       border: `1px solid ${bdr}`,
       borderRadius: '2px',
-      color: 'rgba(210,200,255,0.8)',
+      color: 'color-mix(in srgb, rgba(210,200,255,0.8), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '0.03em'
     }
   }, item)));
@@ -1441,12 +1477,14 @@ function MonsterDetail({
       animation: 'fadeIn 0.22s ease'
     }
   }, /*#__PURE__*/React.createElement("div", {
+    className: "md-stat-row",
     style: {
       display: 'flex',
       position: 'relative',
       alignItems: 'flex-start'
     }
   }, /*#__PURE__*/React.createElement("div", {
+    className: "md-stat-col",
     ref: leftColRef,
     style: {
       flex: 1,
@@ -1522,7 +1560,7 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: '300',
-      color: 'rgba(200,185,255,0.55)',
+      color: 'color-mix(in srgb, rgba(200,185,255,0.55), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '0.04em',
       fontStyle: 'italic'
     }
@@ -1601,7 +1639,7 @@ function MonsterDetail({
       fontFamily: 'var(--font-mono)',
       fontSize: '13px',
       fontWeight: '400',
-      color: rolledHP !== null ? 'rgba(255,210,100,0.95)' : 'rgba(255,210,100,0.35)',
+      color: rolledHP !== null ? 'color-mix(in srgb, rgba(255,210,100,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(255,210,100,0.35), rgb(var(--ink-rgb)) var(--cm))',
       position: 'relative',
       zIndex: 1,
       lineHeight: 1,
@@ -1659,7 +1697,7 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.8)',
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em'
     }
   }, attr, " ", bonus >= 0 ? `+${bonus}` : bonus)).reduce((acc, el, i) => i === 0 ? [el] : [...acc, /*#__PURE__*/React.createElement("span", {
@@ -1689,7 +1727,7 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.8)',
+      color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em'
     }
   }, sk, " ", bonus >= 0 ? `+${bonus}` : bonus)).reduce((acc, el, i) => i === 0 ? [el] : [...acc, /*#__PURE__*/React.createElement("span", {
@@ -1717,7 +1755,7 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: '300',
-      color: 'rgba(200,180,255,0.8)'
+      color: 'rgba(200,180,255,calc(0.8*var(--ka) + var(--tb)))'
     }
   }, monster.verwundbarkeiten.join(', '))), (monster.schadensresistenzen || []).length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1739,7 +1777,7 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.75)'
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
   }, monster.schadensresistenzen.join('; '))), (monster.schadensimmunitaeten || []).length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1761,7 +1799,7 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.75)'
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
   }, monster.schadensimmunitaeten.join('; '))), (monster.zustandsimmunitaeten || []).length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1783,7 +1821,7 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.75)'
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
   }, monster.zustandsimmunitaeten.join(', '))), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1805,7 +1843,7 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.75)'
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
   }, [...monster.sinne, `passive Wahrnehmung ${monster.passiveWahrnehmung}`].join(', '))), (monster.sprachen || []).length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1827,7 +1865,7 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.75)'
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
   }, monster.sprachen.join(', '))), (monster.umgebung || []).length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1849,6 +1887,7 @@ function MonsterDetail({
     items: monster.umgebung,
     color: tc
   })))), imgSrc && /*#__PURE__*/React.createElement("div", {
+    className: "md-stat-img",
     style: {
       width: '450px',
       flexShrink: 0,
@@ -1954,7 +1993,7 @@ function MonsterDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: '0 0 10px'
     }
@@ -1970,14 +2009,14 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.78)',
+      color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       lineHeight: 1.75
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontWeight: '600',
-      color: 'rgba(var(--text-rgb),0.9)'
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'
     }
   }, r.name, ". "), r.beschreibung)))), monster.korruption && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1992,7 +2031,7 @@ function MonsterDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: '0 0 8px'
     }
@@ -2002,14 +2041,14 @@ function MonsterDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: '0 0 6px'
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontWeight: '600',
-      color: 'rgba(var(--text-rgb),0.9)'
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'
     }
   }, "Progression. "), monster.korruption.progression), monster.korruption.tod_effekt && /*#__PURE__*/React.createElement("p", {
     style: {
@@ -2017,14 +2056,14 @@ function MonsterDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: '0 0 6px'
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontWeight: '600',
-      color: 'rgba(var(--text-rgb),0.9)'
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'
     }
   }, "Tod. "), monster.korruption.tod_effekt), monster.korruption.heilung && /*#__PURE__*/React.createElement("p", {
     style: {
@@ -2032,14 +2071,14 @@ function MonsterDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: '0 0 12px'
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontWeight: '600',
-      color: 'rgba(var(--text-rgb),0.9)'
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'
     }
   }, "Heilung. "), monster.korruption.heilung), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2095,7 +2134,7 @@ function MonsterDetail({
   }, s.name), /*#__PURE__*/React.createElement("td", {
     style: {
       padding: '5px 10px',
-      color: 'rgba(var(--text-rgb),0.75)',
+      color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       borderBottom: '1px solid rgba(255,255,255,0.04)',
@@ -2149,7 +2188,7 @@ function MonsterDetail({
     key: j,
     style: {
       padding: '5px 10px',
-      color: j === 0 ? a(0.75) : 'rgba(var(--text-rgb),0.75)',
+      color: j === 0 ? a(0.75) : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))',
       fontFamily: j === 0 ? 'var(--font-mono)' : 'var(--font-body)',
       fontSize: j === 0 ? '10px' : '11px',
       letterSpacing: j === 0 ? '0.08em' : '0',
@@ -2170,7 +2209,7 @@ function MonsterDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.75,
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: '0 0 10px'
     }
@@ -2186,14 +2225,14 @@ function MonsterDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: '300',
-      color: 'rgba(var(--text-rgb),0.78)',
+      color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       lineHeight: 1.75
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontWeight: '600',
-      color: 'rgba(var(--text-rgb),0.9)'
+      color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'
     }
   }, aend.name, ". "), aend.beschreibung))))), monster.beschreibung && monster.beschreibung.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2215,7 +2254,7 @@ function MonsterDetail({
       fontSize: '12px',
       fontWeight: '300',
       lineHeight: 1.85,
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
       margin: 0
     }
@@ -2236,7 +2275,7 @@ function MonsterDetail({
         fontSize: '12px',
         fontWeight: '300',
         lineHeight: 1.85,
-        color: 'rgba(var(--text-rgb),0.65)',
+        color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
         letterSpacing: '0.015em',
         margin: '0 0 14px'
       }
@@ -2289,7 +2328,7 @@ function MonsterDetail({
       key: ci,
       style: {
         padding: '4px 10px',
-        color: 'rgba(var(--text-rgb),0.7)',
+        color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
         fontWeight: '300',
         lineHeight: 1.6
       }
@@ -2299,7 +2338,7 @@ function MonsterDetail({
         fontSize: '12px',
         fontWeight: '300',
         lineHeight: 1.85,
-        color: 'rgba(var(--text-rgb),0.55)',
+        color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
         letterSpacing: '0.015em',
         margin: 0
       }
@@ -2321,7 +2360,7 @@ function MonsterDetail({
         fontSize: '12px',
         fontWeight: '300',
         lineHeight: 1.85,
-        color: 'rgba(var(--text-rgb),0.65)',
+        color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
         letterSpacing: '0.015em',
         margin: '0 0 14px'
       }
@@ -2374,7 +2413,7 @@ function MonsterDetail({
       key: ci,
       style: {
         padding: '4px 10px',
-        color: 'rgba(var(--text-rgb),0.7)',
+        color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
         fontWeight: '300',
         lineHeight: 1.6
       }
@@ -2384,7 +2423,7 @@ function MonsterDetail({
         fontSize: '12px',
         fontWeight: '300',
         lineHeight: 1.85,
-        color: 'rgba(var(--text-rgb),0.55)',
+        color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
         letterSpacing: '0.015em',
         margin: 0
       }
@@ -2410,15 +2449,27 @@ function MonsterDetail({
     onClick: e => e.stopPropagation(),
     style: {
       maxWidth: '90vw',
-      maxHeight: '90vh',
+      maxHeight: 'calc(var(--vh, 1vh) * 90)',
       objectFit: 'contain',
       borderRadius: '3px',
-      boxShadow: '0 0 60px rgba(0,0,0,0.8)'
+      boxShadow: '0 0 60px rgba(var(--shadow-rgb),calc(0.8 * var(--shadow-k)))'
     }
   })), document.body));
 }
 
 // ─── EMPTY STATE ──────────────────────────────────────────────────────────────
+// NSC-Statblock mit Rasse, Talent und Waffe: Auswahlleiste + berechneter Statblock
+function MonsterMitRasse({ monster }) {
+  const [opt, setOpt] = useState(null);
+  useEffect(() => { setOpt(null); }, [monster.name]);
+  const shown = useMemo(() => (opt && window.RasseAnwenden ? window.RasseAnwenden.anwenden(monster, opt) : monster), [monster, opt]);
+  return (
+    <React.Fragment>
+      <window.RassePicker monster={monster} value={opt} onChange={setOpt} />
+      <MonsterDetail monster={shown} />
+    </React.Fragment>
+  );
+}
 function EmptyState({
   msg
 }) {
@@ -2440,14 +2491,14 @@ function EmptyState({
   }, /*#__PURE__*/React.createElement("polygon", {
     points: "18,2 33,11 33,25 18,34 3,25 3,11",
     fill: "none",
-    stroke: "rgba(var(--accent-rgb),0.6)",
+    stroke: "rgba(var(--accent-rgb),calc(0.6*var(--ka)))",
     strokeWidth: "1.5"
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--accent-rgb),0.6)',
+      color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       textAlign: 'center'
     }
@@ -2460,7 +2511,7 @@ function AccessDenied() {
     style: {
       position: 'fixed',
       inset: 0,
-      background: '#05040f',
+      background: 'var(--bg)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -2475,13 +2526,13 @@ function AccessDenied() {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.18em',
-      color: 'rgba(200,190,240,0.4)',
+      color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       textDecoration: 'none',
       textTransform: 'uppercase',
       transition: 'color 0.15s'
     },
     onMouseEnter: e => e.currentTarget.style.color = 'var(--white)',
-    onMouseLeave: e => e.currentTarget.style.color = 'rgba(200,190,240,0.4)'
+    onMouseLeave: e => e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))'
   }, "\u2190 Zur\xFCck"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -2494,7 +2545,7 @@ function AccessDenied() {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.42em',
-      color: 'rgba(var(--accent-rgb),0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Kein Zugriff"), /*#__PURE__*/React.createElement("div", {
@@ -2502,7 +2553,7 @@ function AccessDenied() {
       fontFamily: 'var(--font-display)',
       fontSize: '14px',
       letterSpacing: '0.3em',
-      color: 'rgba(var(--text-rgb),0.25)',
+      color: 'rgba(var(--text-rgb),calc(0.25*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Meruria \u2014 Monster")));
@@ -2532,6 +2583,7 @@ function App() {
   const [filters, setFilters] = useState({
     art: [],
     unterart: [],
+    unterartNot: [],
     cr: [],
     groesse: [],
     moral: [],
@@ -2583,7 +2635,9 @@ function App() {
     const r = allMonster.filter(m => {
       if (search && !m.name.toLowerCase().includes(search.toLowerCase())) return false;
       if (filters.art.length && !filters.art.includes(m.art)) return false;
-      if ((filters.unterart || []).length && !filters.unterart.some(u => (m.unterart ? m.unterart.split(', ') : []).includes(u))) return false;
+      const mUnter = m.unterart ? m.unterart.split(', ') : [];
+      if ((filters.unterart || []).length && !filters.unterart.some(u => mUnter.includes(u))) return false;
+      if ((filters.unterartNot || []).length && filters.unterartNot.some(u => mUnter.includes(u))) return false;
       if (filters.cr.length && !filters.cr.includes(m.cr)) return false;
       if (filters.groesse.length && !filters.groesse.includes(m.groesse)) return false;
       if (filters.moral.length && !filters.moral.includes(moralAxis(m.gesinnung))) return false;
@@ -2684,7 +2738,7 @@ function App() {
     style: {
       display: 'flex',
       flexDirection: 'column',
-      height: '100vh',
+      height: 'calc(var(--vh, 1vh) * 100)',
       position: 'relative',
       zIndex: 1
     }
@@ -2703,6 +2757,7 @@ function App() {
       alignItems: 'stretch'
     }
   }, /*#__PURE__*/React.createElement("div", {
+    className: "md-head-title",
     style: {
       width: 'var(--filter-w)',
       flexShrink: 0,
@@ -2719,14 +2774,14 @@ function App() {
       fontSize: '14px',
       fontWeight: '400',
       letterSpacing: '0.3em',
-      color: 'rgba(var(--text-rgb),0.65)',
+      color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Monster"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(var(--accent-rgb),0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '0.15em'
     }
   }, filtered.length, " / ", allMonster.length)), /*#__PURE__*/React.createElement("div", {
@@ -2758,6 +2813,7 @@ function App() {
   })), typeFilter && /*#__PURE__*/React.createElement(XBtn, {
     onClick: () => setTypeFilter(null)
   }))), /*#__PURE__*/React.createElement("div", {
+    className: "md-body",
     style: {
       flex: 1,
       display: 'flex',
@@ -2773,6 +2829,7 @@ function App() {
     setSearch: setSearch,
     dragRef: sidebarDrag
   }), /*#__PURE__*/React.createElement("div", {
+    className: "md-list",
     ref: listDrag.ref,
     onMouseDown: listDrag.onMouseDown,
     onClickCapture: listDrag.onClickCapture,
@@ -2781,7 +2838,7 @@ function App() {
       flexShrink: 0,
       borderRight: '1px solid var(--border)',
       overflowY: 'auto',
-      background: 'rgba(6,5,18,0.5)',
+      background: 'rgba(var(--panel-rgb),0.5)',
       cursor: 'grab',
       ...listDrag.fadeStyle
     }
@@ -2795,10 +2852,10 @@ function App() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.25em',
-      color: 'rgba(var(--accent-rgb),0.45)',
+      color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
-      background: 'rgba(var(--accent-rgb),0.04)',
-      borderBottom: '1px solid rgba(var(--accent-rgb),0.06)',
+      background: 'rgba(var(--accent-rgb),calc(0.04*var(--ka)))',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
       position: 'sticky',
       top: 0,
       backdropFilter: 'blur(4px)',
@@ -2818,6 +2875,7 @@ function App() {
     kolVisible: kolSet.has(_monsterKolId(m.name)),
     onKolToggle: toggleKol
   }))))), /*#__PURE__*/React.createElement("div", {
+    className: "md-detail",
     style: {
       flex: 1,
       display: 'flex',
@@ -2825,7 +2883,7 @@ function App() {
       overflow: 'hidden',
       background: 'rgba(var(--bg2-rgb),0.4)'
     }
-  }, selected ? /*#__PURE__*/React.createElement(MonsterDetail, {
+  }, selected ? /*#__PURE__*/React.createElement(MonsterMitRasse, {
     monster: selected
   }) : /*#__PURE__*/React.createElement(EmptyState, {
     msg: "Monster ausw\xE4hlen"

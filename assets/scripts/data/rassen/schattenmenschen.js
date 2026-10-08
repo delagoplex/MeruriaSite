@@ -132,6 +132,8 @@
       { name:'Verblassen',          text:'Während du vollkommen still stehst, kannst du eine Aktion nutzen, um unsichtbar zu werden. Du wirst wieder sichtbar, wenn du dich bewegst oder eine Aktion ausführst. Du kannst diese Fähigkeit so oft pro Tag nutzen, wie dein Übungsbonus beträgt.' },
       { name:'— Beschenkte: Verfluchte Infusion', text:'Zusätzlich zu Dunkler Infusion hast du Resistenz gegen nekrotischen Schaden.' },
       { name:'— Beschenkte: Schattengeschenk', text:'Du hast einen Handel mit einer Schattenfe abgeschlossen. Wähle eine Option: (1) Übung+Vorteil in einer Fertigkeit, Nachteil in einer anderen. (2) Kein Essen/Atmen nötig, 4h für lange Rast, aber eine permanente Erschöpfungsstufe. (3) Halbe Bewegungsrate, dafür Flug-/Schwimm-/Klettergeschwindigkeit gleich halber Basis. (4) +6 auf einen Attributwert (max 20), -2 auf zwei andere. (5) TP = KON-Wert bei Dämmerung täglich, aber keine Trefferwürfel in kurzen Rasten.' },
+      { name:'Angeborenes Talent', text:'Wähle eines der allgemeinen oder das Talent deiner Linie.', talente:["Halbschattenhaut","Schattenzweiter"] },
+      { name:'Linien-Talente', text:'Je nach gewählter Linie steht dir eines dieser Talente zur Verfügung:', talente:["Zwielichtschritt","Gunst der Schattenfe"] },
     ],
   },
 };

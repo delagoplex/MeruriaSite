@@ -74,7 +74,7 @@ function _OctSvg({ size = 10, color = 'currentColor', fill = 'none', strokeWidth
 }
 
 function _SectionLabel({ title, color }) {
-  const c = color || 'rgba(160,140,255,0.9)';
+  const c = color || 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))';
   return (
     <div style={{ display:'flex', alignItems:'center', gap:'7px', marginBottom:'8px' }}>
       <_OctSvg size={8} color={_alpha(c, 0.6)} fill={_alpha(c, 0.12)} strokeWidth={1} />
@@ -86,28 +86,28 @@ function _SectionLabel({ title, color }) {
 
 function _MetaRow({ label, value, accent, color }) {
   if (!value) return null;
-  const lc = color ? _alpha(color, 0.5) : 'rgba(160,140,255,0.5)';
+  const lc = color ? _alpha(color, 0.5) : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))';
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.26em', color: lc, textTransform:'uppercase' }}>{label}</div>
-      <div style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color: accent || 'rgba(var(--text-rgb),0.8)', letterSpacing:'0.02em', lineHeight:1.5, maxWidth:'80px' }}>{value}</div>
+      <div style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', color: accent || 'rgba(var(--text-rgb),calc(0.8*var(--kt)))', letterSpacing:'0.02em', lineHeight:1.5, maxWidth:'80px' }}>{value}</div>
     </div>
   );
 }
 
 function _HPRow({ monster, onRoll, color }) {
-  const lc  = color ? _alpha(color, 0.5)  : 'rgba(160,140,255,0.5)';
-  const dc  = color ? _alpha(color, 0.4)  : 'rgba(160,140,255,0.4)';
+  const lc  = color ? _alpha(color, 0.5)  : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))';
+  const dc  = color ? _alpha(color, 0.4)  : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))';
   const bc  = color ? _alpha(color, 0.75) : 'rgba(180,160,255,0.75)';
-  const bb  = color ? _alpha(color, 0.08) : 'rgba(160,140,255,0.08)';
-  const bbd = color ? _alpha(color, 0.3)  : 'rgba(160,140,255,0.3)';
-  const bbh = color ? _alpha(color, 0.2)  : 'rgba(160,140,255,0.2)';
-  const bdh = color ? _alpha(color, 0.6)  : 'rgba(160,140,255,0.6)';
+  const bb  = color ? _alpha(color, 0.08) : 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))';
+  const bbd = color ? _alpha(color, 0.3)  : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))';
+  const bbh = color ? _alpha(color, 0.2)  : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))';
+  const bdh = color ? _alpha(color, 0.6)  : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))';
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:'2px' }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.26em', color: lc, textTransform:'uppercase' }}>Trefferpunkte</div>
       <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
-        <div style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', letterSpacing:'0.02em', lineHeight:1.5, color:'rgba(var(--text-rgb),0.8)' }}>
+        <div style={{ fontFamily:'var(--font-body)', fontSize:'11.5px', fontWeight:'300', letterSpacing:'0.02em', lineHeight:1.5, color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))' }}>
           {monster.tp}<span style={{ color: dc, marginLeft:'5px' }}>({monster.tp_wuerfel})</span>
         </div>
         <button onClick={onRoll} title="Trefferpunkte würfeln"
@@ -127,12 +127,12 @@ function _HPRow({ monster, onRoll, color }) {
 }
 
 function _AbilityScore({ label, score, color }) {
-  const lc = color ? _alpha(color, 0.55) : 'rgba(160,140,255,0.55)';
+  const lc = color ? _alpha(color, 0.55) : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))';
   return (
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'2px', flex:1 }}>
       <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em', color: lc, textTransform:'uppercase' }}>{label}</div>
       <div style={{ fontFamily:'var(--font-body)', fontSize:'14px', fontWeight:'400', color:'var(--white)' }}>{score}</div>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text-rgb),0.7)' }}>{_mod(score)}</div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))' }}>{_mod(score)}</div>
     </div>
   );
 }
@@ -157,12 +157,12 @@ function _SizeGrid({ groesse, color }) {
 
 function _TagList({ items, color }) {
   if (!items || items.length === 0) return null;
-  const bg  = color ? _alpha(color, 0.08) : 'rgba(160,140,255,0.08)';
-  const bdr = color ? _alpha(color, 0.2)  : 'rgba(160,140,255,0.2)';
+  const bg  = color ? _alpha(color, 0.08) : 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))';
+  const bdr = color ? _alpha(color, 0.2)  : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))';
   return (
     <div style={{ display:'flex', flexWrap:'wrap', gap:'4px' }}>
       {items.map((item, i) => (
-        <span key={i} style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', padding:'2px 8px', background: bg, border:`1px solid ${bdr}`, borderRadius:'2px', color:'rgba(210,200,255,0.8)', letterSpacing:'0.03em' }}>{item}</span>
+        <span key={i} style={{ fontFamily:'var(--font-body)', fontSize:'10.5px', fontWeight:'300', padding:'2px 8px', background: bg, border:`1px solid ${bdr}`, borderRadius:'2px', color:'color-mix(in srgb, rgba(210,200,255,0.8), rgb(var(--ink-rgb)) var(--cm))', letterSpacing:'0.03em' }}>{item}</span>
       ))}
     </div>
   );
@@ -172,7 +172,7 @@ function _MonsterRollTable({ tabelle, accentColor }) {
   const [rolling, setRolling] = useState(false);
   const [highlight, setHighlight] = useState(null);
   const rows = tabelle.rows;
-  const ac = accentColor || 'rgba(160,140,255,0.9)';
+  const ac = accentColor || 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))';
   const a = (opacity) => {
     const m = ac.match(/oklch\(([^)]+)\)/);
     if (m) return `oklch(${m[1].replace(/\s+\d*\.?\d+\s*$/, '')} / ${opacity})`;
@@ -199,7 +199,7 @@ function _MonsterRollTable({ tabelle, accentColor }) {
           <thead><tr>{tabelle.header.map((h, j) => <th key={j} style={{ textAlign:'left', padding:'6px 10px', background:a(0.12), color:ac, fontFamily:'var(--font-display)', fontWeight:'400', fontSize:'10px', letterSpacing:'0.14em', textTransform:'uppercase', borderBottom:`1px solid ${a(0.3)}` }}>{h}</th>)}</tr></thead>
           <tbody>{rows.map((row, k) => (
             <tr key={k} onClick={() => setHighlight(k)} style={{ cursor:'pointer', background: highlight === k ? a(0.1) : 'transparent', transition:'background 0.15s' }}>
-              {row.map((cell, j) => <td key={j} style={{ padding:'5px 10px', color: highlight === k ? 'rgba(var(--text-rgb),0.95)' : (j === 0 ? a(0.75) : 'rgba(var(--text-rgb),0.75)'), fontFamily: j === 0 ? 'var(--font-mono)' : 'var(--font-body)', fontSize: j === 0 ? '10px' : '11px', borderBottom:'1px solid rgba(255,255,255,0.04)', verticalAlign:'top' }}>{cell}</td>)}
+              {row.map((cell, j) => <td key={j} style={{ padding:'5px 10px', color: highlight === k ? 'rgba(var(--text-rgb),calc(0.95*var(--kt)))' : (j === 0 ? a(0.75) : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))'), fontFamily: j === 0 ? 'var(--font-mono)' : 'var(--font-body)', fontSize: j === 0 ? '10px' : '11px', borderBottom:'1px solid rgba(255,255,255,0.04)', verticalAlign:'top' }}>{cell}</td>)}
             </tr>
           ))}</tbody>
         </table>
@@ -220,12 +220,12 @@ function _EffectBlock({ title, intro, items, color }) {
   return (
     <div style={{ marginBottom:'18px' }}>
       <_SectionLabel title={title} color={c} />
-      {intro && <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:'0 0 10px' }}>{intro}</p>}
+      {intro && <p style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.75, color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', letterSpacing:'0.015em', margin:'0 0 10px' }}>{intro}</p>}
       <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
         {items.map((item, i) => (
           <div key={i} style={{ display:'flex', gap:'9px', alignItems:'flex-start' }}>
             <span style={{ color:_alpha(c, 0.45), flexShrink:0, fontFamily:'var(--font-mono)', fontSize:'8px', marginTop:'4px', lineHeight:1 }}>◆</span>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.015em', lineHeight:1.75 }}>{item}</span>
+            <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))', letterSpacing:'0.015em', lineHeight:1.75 }}>{item}</span>
           </div>
         ))}
       </div>
@@ -241,8 +241,8 @@ function _ActionBlock({ title, items, accentColor, color }) {
       <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
         {items.map((a, i) => (
           <div key={i}>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'500', color: accentColor || 'rgba(180,160,255,0.9)', letterSpacing:'0.04em' }}>{a.name}. </span>
-            <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(var(--text-rgb),0.78)', letterSpacing:'0.015em', lineHeight:1.75 }}>{a.beschreibung}</span>
+            <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'500', color: accentColor || 'color-mix(in srgb, rgba(180,160,255,0.9), rgb(var(--ink-rgb)) var(--cm))', letterSpacing:'0.04em' }}>{a.name}. </span>
+            <span style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))', letterSpacing:'0.015em', lineHeight:1.75 }}>{a.beschreibung}</span>
             {a.tabelle && <_MonsterRollTable tabelle={a.tabelle} accentColor={accentColor} />}
           </div>
         ))}
@@ -305,7 +305,7 @@ function MonsterDetail({ monster }) {
               </div>
               <div style={{ flex:1 }}>
                 <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(16px,2vw,24px)', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', lineHeight:1.2, textTransform:'uppercase', marginBottom:'4px' }}>{monster.name}</h1>
-                <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'rgba(200,185,255,0.55)', letterSpacing:'0.04em', fontStyle:'italic' }}>
+                <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', color:'color-mix(in srgb, rgba(200,185,255,0.55), rgb(var(--ink-rgb)) var(--cm))', letterSpacing:'0.04em', fontStyle:'italic' }}>
                   {_declineSize(monster.groesse, monster.art)} {monster.art}{typeLineUnterart}, {monster.gesinnung}
                 </div>
                 <div style={{ display:'flex', alignItems:'center', gap:'7px', marginTop:'6px' }}>
@@ -324,7 +324,7 @@ function MonsterDetail({ monster }) {
               <svg width={HEX} height={HEX} viewBox={`0 0 ${HEX} ${HEX}`} style={{ position:'absolute', top:0, left:0 }}>
                 <polygon points={hexPts} fill={rolledHP !== null ? 'rgba(255,210,100,0.07)' : 'rgba(255,210,100,0.03)'} stroke={rolledHP !== null ? 'rgba(255,210,100,0.5)' : 'rgba(255,210,100,0.2)'} strokeWidth="1.2"/>
               </svg>
-              <span key={hpKey} style={{ fontFamily:'var(--font-mono)', fontSize:'13px', fontWeight:'400', color: rolledHP !== null ? 'rgba(255,210,100,0.95)' : 'rgba(255,210,100,0.35)', position:'relative', zIndex:1, lineHeight:1 }}>
+              <span key={hpKey} style={{ fontFamily:'var(--font-mono)', fontSize:'13px', fontWeight:'400', color: rolledHP !== null ? 'color-mix(in srgb, rgba(255,210,100,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(255,210,100,0.35), rgb(var(--ink-rgb)) var(--cm))', position:'relative', zIndex:1, lineHeight:1 }}>
                 {rolledHP !== null ? rolledHP : monster.tp}
               </span>
             </div>
@@ -343,7 +343,7 @@ function MonsterDetail({ monster }) {
                 <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase', marginRight:'4px' }}>Rettungswürfe</span>
                 {saves.map(([attr, bonus], i) => [
                   i > 0 && <span key={`s${i}`} style={{ color:a(0.3) }}>,</span>,
-                  <span key={attr} style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.8)' }}>{attr} {bonus >= 0 ? `+${bonus}` : bonus}</span>
+                  <span key={attr} style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))' }}>{attr} {bonus >= 0 ? `+${bonus}` : bonus}</span>
                 ])}
               </div>
             )}
@@ -352,42 +352,42 @@ function MonsterDetail({ monster }) {
                 <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase', marginRight:'4px' }}>Fertigkeiten</span>
                 {skills.map(([sk, bonus], i) => [
                   i > 0 && <span key={`f${i}`} style={{ color:a(0.3) }}>,</span>,
-                  <span key={sk} style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.8)' }}>{sk} {bonus >= 0 ? `+${bonus}` : bonus}</span>
+                  <span key={sk} style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))' }}>{sk} {bonus >= 0 ? `+${bonus}` : bonus}</span>
                 ])}
               </div>
             )}
             {(monster.verwundbarkeiten||[]).length > 0 && (
               <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
                 <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Verwundbarkeiten</span>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(200,180,255,0.8)' }}>{monster.verwundbarkeiten.join(', ')}</span>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(200,180,255,calc(0.8*var(--ka) + var(--tb)))' }}>{monster.verwundbarkeiten.join(', ')}</span>
               </div>
             )}
             {(monster.schadensresistenzen||[]).length > 0 && (
               <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
                 <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Resistenzen</span>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.75)' }}>{monster.schadensresistenzen.join('; ')}</span>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))' }}>{monster.schadensresistenzen.join('; ')}</span>
               </div>
             )}
             {(monster.schadensimmunitaeten||[]).length > 0 && (
               <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
                 <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Immunitäten</span>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.75)' }}>{monster.schadensimmunitaeten.join('; ')}</span>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))' }}>{monster.schadensimmunitaeten.join('; ')}</span>
               </div>
             )}
             {(monster.zustandsimmunitaeten||[]).length > 0 && (
               <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
                 <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Zustandsimmunitäten</span>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.75)' }}>{monster.zustandsimmunitaeten.join(', ')}</span>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))' }}>{monster.zustandsimmunitaeten.join(', ')}</span>
               </div>
             )}
             <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
               <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Sinne</span>
-              <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.75)' }}>{[...(monster.sinne||[]), `passive Wahrnehmung ${monster.passiveWahrnehmung}`].join(', ')}</span>
+              <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))' }}>{[...(monster.sinne||[]), `passive Wahrnehmung ${monster.passiveWahrnehmung}`].join(', ')}</span>
             </div>
             {(monster.sprachen||[]).length > 0 && (
               <div style={{ display:'flex', gap:'6px', flexWrap:'wrap', alignItems:'center' }}>
                 <span style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:a(0.5), textTransform:'uppercase' }}>Sprachen</span>
-                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),0.75)' }}>{monster.sprachen.join(', ')}</span>
+                <span style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))' }}>{monster.sprachen.join(', ')}</span>
               </div>
             )}
             {(monster.umgebung||[]).length > 0 && (
@@ -430,7 +430,7 @@ function MonsterDetail({ monster }) {
             <_SectionLabel title="Lore" color={tc} />
             <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
               {monster.beschreibung.map((p, i) => (
-                <p key={i} style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(var(--text-rgb),0.65)', letterSpacing:'0.015em', margin:0 }}>{p}</p>
+                <p key={i} style={{ fontFamily:'var(--font-body)', fontSize:'12px', fontWeight:'300', lineHeight:1.85, color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', letterSpacing:'0.015em', margin:0 }}>{p}</p>
               ))}
             </div>
           </div>
@@ -440,7 +440,7 @@ function MonsterDetail({ monster }) {
       {imgOpen && ReactDOM.createPortal(
         <div onClick={() => setImgOpen(false)} style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.85)', display:'flex', alignItems:'center', justifyContent:'center', cursor:'zoom-out', backdropFilter:'blur(6px)' }}>
           <img src={monster.bild} alt={monster.name} onClick={e => e.stopPropagation()}
-            style={{ maxWidth:'90vw', maxHeight:'90vh', objectFit:'contain', borderRadius:'3px', boxShadow:'0 0 60px rgba(0,0,0,0.8)' }} />
+            style={{ maxWidth:'90vw', maxHeight:'calc(var(--vh, 1vh) * 90)', objectFit:'contain', borderRadius:'3px', boxShadow:'0 0 60px rgba(var(--shadow-rgb),calc(0.8 * var(--shadow-k)))' }} />
         </div>,
         document.body
       )}

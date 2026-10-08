@@ -270,7 +270,7 @@ function FilterSidebar({
       fontFamily: 'var(--font-display)',
       fontSize: '10px',
       letterSpacing: '0.25em',
-      color: 'rgba(38,198,218,0.65)',
+      color: 'color-mix(in srgb, rgba(38,198,218,0.65), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase'
     }
   }, "Filter"), hasAny && /*#__PURE__*/React.createElement(XBtn, {
@@ -320,7 +320,7 @@ function FilterSidebar({
       transform: 'translateY(-50%)',
       background: 'none',
       border: 'none',
-      color: 'rgba(var(--text-rgb),0.5)',
+      color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
       cursor: 'pointer',
       padding: '0',
       fontSize: '10px',
@@ -509,7 +509,7 @@ function App() {
     style: {
       display: 'flex',
       flexDirection: 'column',
-      height: '100vh',
+      height: 'calc(var(--vh, 1vh) * 100)',
       overflow: 'hidden',
       position: 'relative'
     }
@@ -536,7 +536,7 @@ function App() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.28em',
-      color: 'rgba(38,198,218,0.35)',
+      color: 'color-mix(in srgb, rgba(38,198,218,0.35), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase',
       marginBottom: '5px'
     }
@@ -569,7 +569,7 @@ function App() {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.18em',
-      color: 'rgba(38,198,218,0.3)'
+      color: 'color-mix(in srgb, rgba(38,198,218,0.3), rgb(var(--ink-rgb)) var(--cm))'
     }
   }, filtered.length, " Eintr\xE4ge"))), filtered.length > 0 ? /*#__PURE__*/React.createElement("div", {
     className: "fish-grid"

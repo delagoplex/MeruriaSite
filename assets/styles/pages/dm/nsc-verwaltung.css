@@ -4,15 +4,15 @@
 
 html, body { overflow: hidden; }
 
-select option { background: #0b081c; color: #f0eeff; }
-input::placeholder, textarea::placeholder { color: rgba(160,140,255,0.35); }
+select option { background: rgb(var(--panel-rgb)); color: var(--white); }
+input::placeholder, textarea::placeholder { color: rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb))); }
 input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
 
 .nscv-shell {
   display: flex;
-  height: calc(100vh - var(--nav-h));
+  height: calc(calc(var(--vh, 1vh) * 100) - var(--nav-h));
   overflow: hidden;
-  background: radial-gradient(ellipse 900px 500px at 70% -10%, rgba(124,77,255,0.10), transparent), var(--bg);
+  background: radial-gradient(ellipse 900px 500px at 70% -10%, rgba(var(--purple-rgb),calc(0.10*var(--kp))), transparent), var(--bg);
 }
 .nscv-shell ::-webkit-scrollbar { width: 5px; height: 5px; }
 
@@ -27,8 +27,60 @@ input.ash-num { -moz-appearance: textfield; appearance: textfield; }
   line-height: 1;
   font-size: 8px;
   font-family: var(--font-mono);
-  color: rgba(160,140,255,0.45);
+  color: rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)));
   cursor: pointer;
   transition: color 0.12s;
 }
-.ash-step:hover { color: #f0eeff; text-shadow: 0 0 6px rgba(124,77,255,0.8); }
+.ash-step:hover { color: var(--white); text-shadow: 0 0 6px rgba(var(--purple-rgb),calc(0.8*var(--kp))); }
+
+/* Phones: list and editor are separate panes (md-* pattern in base.css); the editor hero stacks */
+@media (max-width: 768px) {
+  .nscv-edit[style] { padding: 18px 14px 90px !important; }
+  .nscv-hero[style] { flex-direction: column !important; }
+  .nscv-hero-info[style] { padding: 14px !important; gap: 12px !important; }
+  .nscv-portrait[style] { align-self: stretch; }
+  .nscv-portrait > div, .nscv-portrait > input { width: 100% !important; max-width: 280px; align-self: center; }
+  .nscv-portrait > div { height: 190px !important; }
+}
+@media (max-width: 768px) {
+  /* editor rows are inline grids with fixed pixel columns (drag handle / name / role / text / delete): let them wrap */
+  .nscv-edit.nscv-edit [style*="display: grid"]:not([style*="auto-fit"]):not([style*="auto-fill"]) { grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)) !important; }
+  .nscv-edit input, .nscv-edit select, .nscv-edit textarea { font-size: 16px !important; }
+}
+
+/* Live-Bearbeitung in der Spieler-Vorschau: +-Buttons, Anfasser, Löschen erscheinen beim Überfahren */
+.nscv-live-row .nscv-live-grip, .nscv-live-row .nscv-live-x, .nscv-live-row > .nscv-ins { opacity: 0; transition: opacity 0.12s; }
+.nscv-live-row:hover .nscv-live-grip, .nscv-live-row:hover .nscv-live-x, .nscv-live-row:hover > .nscv-ins,
+.nscv-live-row:focus-within .nscv-live-grip, .nscv-live-row:focus-within .nscv-live-x { opacity: 1; }
+.nscv-live-grip { cursor: grab; color: rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb))); font-size: 13px; padding: 0 2px; user-select: none; flex-shrink: 0; }
+.nscv-live-x { background: transparent; border: none; cursor: pointer; color: rgba(227,103,96,0.75); font-size: 14px; line-height: 1; padding: 0 3px; flex-shrink: 0; }
+.nscv-ins { width: 18px; height: 18px; padding: 0; border-radius: 50%; cursor: pointer; line-height: 1; font-size: 13px; font-family: var(--font-mono);
+  background: rgb(var(--panel-rgb)); border: 1px solid rgba(var(--purple-rgb),calc(0.7*var(--kp))); color: rgba(var(--purple-rgb),calc(0.95*var(--kp) + var(--tb))); z-index: 4; }
+.nscv-ins:hover { background: rgba(var(--purple-rgb),calc(0.35*var(--kp))); color: var(--white); }
+.nscv-ins-top { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); }
+.nscv-ins-left { position: absolute; left: -13px; top: 50%; transform: translateY(-50%); }
+.nscv-ins-inline { width: 15px; height: 15px; font-size: 11px; opacity: 0.3; transition: opacity 0.12s; flex-shrink: 0; }
+.nscv-ins-inline:hover { opacity: 1; }
+.nscv-live-add { padding: 6px 14px; background: rgba(var(--purple-rgb),calc(0.06*var(--kp))); border: 1px dashed rgba(var(--purple-rgb),calc(0.4*var(--kp))); border-radius: 3px;
+  color: rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb))); font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; align-self: flex-start; }
+/* Spalten- und Rasterlisten: der Button sieht aus wie ein leeres Feld und fluchtet mit den Einträgen (Anfasser links, × rechts) */
+.nscv-live-add-col, .nscv-live-add-grid { align-self: stretch; text-align: left; border: 1px solid rgba(var(--accent-rgb),calc(0.25*var(--ka))); border-left: 2px solid rgba(var(--accent-rgb),calc(0.55*var(--ka))); background: rgba(var(--accent-rgb),calc(0.05*var(--ka))); border-radius: 0; padding: 10px 14px; }
+.nscv-live-add-col, .nscv-live-add-grid { margin-left: 17px; margin-right: 19px; }
+.nscv-live-add-grid { align-self: stretch; text-align: left; border-style: solid; border-color: rgba(var(--purple-rgb),calc(0.3*var(--kp))); border-left: 2px dashed rgba(var(--purple-rgb),calc(0.55*var(--kp))); border-radius: 0; padding: 10px 14px; }
+.nscv-live-add-grid { min-height: 60px; text-align: center; }
+.nscv-live-add:hover { background: rgba(var(--purple-rgb),calc(0.18*var(--kp))); color: var(--white); }
+.nscv-live-rmsec { background: transparent; border: none; cursor: pointer; font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb))); }
+.nscv-live-rmsec:hover { color: rgba(227,103,96,0.9); }
+
+.nscv-live-ph { opacity: 0.4; font-style: italic; }
+.nscv-edit [title="Klicken zum Bearbeiten"]:hover { background: rgba(var(--purple-rgb),calc(0.1*var(--kp))); border-radius: 2px; }
+
+.nscv-pick-list { position: absolute; left: 0; top: 100%; margin-top: 3px; min-width: 260px; max-height: 260px; overflow-y: auto; z-index: 30; border-radius: 4px;
+  background: rgb(var(--panel-rgb)); border: 1px solid rgba(var(--purple-rgb),calc(0.55*var(--kp))); box-shadow: 0 10px 30px rgba(var(--shadow-rgb),calc(0.5*var(--shadow-k))); }
+.nscv-pick-item { display: flex; align-items: center; gap: 9px; padding: 6px 10px; cursor: pointer; }
+.nscv-pick-item.on { background: rgba(var(--purple-rgb),calc(0.2*var(--kp))); }
+.nscv-pick-av { width: 24px; height: 24px; flex-shrink: 0; border-radius: 3px; border: 1px solid; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 11px; color: var(--white); }
+.nscv-pick-av img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.nscv-pick-name { flex: 1; min-width: 0; font-family: var(--font-body); font-size: 13px; color: var(--white); letter-spacing: 0; text-transform: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nscv-pick-kind { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0; }
+.nscv-pick-empty { padding: 9px 12px; font-family: var(--font-body); font-size: 12px; color: rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb))); letter-spacing: 0; text-transform: none; }

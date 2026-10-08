@@ -13,6 +13,7 @@ window.MONSTER_DATA = [
   ...(window.MONSTER_DATA_TOME_OF_BEASTS || []),
   ...(window.MONSTER_DATA_TOME_OF_BEASTS_2 || []),
   ...(window.MONSTER_DATA_SONSTIGE || []),
+  ...(window.MONSTER_DATA_REKRUTIERUNG || []),
 ].sort((a, b) => a.name.localeCompare(b.name, 'de'));
 
 window.UNTERART_LORE = {

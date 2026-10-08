@@ -1327,7 +1327,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
   {
     name: "Die Herzogin",
     art: "Aberration",
-    unterart: "NPC",
+    unterart: null,
     groesse: "Gigantisch",
     gesinnung: "Neutral böse",
     cr: 18,
@@ -3832,7 +3832,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
   {
     name: "Herr des Festmahls",
     art: "Monstrosität",
-    unterart: "NPC",
+    unterart: null,
     groesse: "Groß",
     gesinnung: "Gesinnungslos",
     cr: 13,
@@ -6160,7 +6160,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
   {
     name: "Ratten-Kronprinz",
     art: "Monstrosität",
-    unterart: "NPC",
+    unterart: null,
     groesse: "Mittelgroß",
     gesinnung: "Chaotisch böse",
     cr: 10,
@@ -6248,7 +6248,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
   {
     name: "Rattenprinz",
     art: "Monstrosität",
-    unterart: "NPC",
+    unterart: null,
     groesse: "Mittelgroß",
     gesinnung: "Chaotisch böse",
     cr: 3,
@@ -6812,7 +6812,7 @@ window.MONSTER_DATA_DRAKKENHEIM = [
   {
     name: "Karmesin-Gräfin",
     art: "Monstrosität",
-    unterart: "NPC",
+    unterart: null,
     groesse: "Mittelgroß",
     gesinnung: "Chaotisch böse",
     cr: 8,

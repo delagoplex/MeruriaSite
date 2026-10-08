@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) and other contributo
 
 ## What this project is
 
-A static website for the tabletop RPG world **Meruria**, deployed to `meruria.de` via GitHub Pages. The site is written in German and documents the world's factions, races, classes, and deities.
+A static website for the tabletop RPG world **Meruria**, deployed to `meruria.de` via GitHub Pages (a dev copy of the `devel` branch runs on `dev.meruria.de` via Cloudflare, see "Environments and deployment"). The site is written in German and documents the world's factions, races, classes, and deities.
 
 The site is built with **Vite** (multi-page, every `.html` file is an entry) and deployed by a GitHub Actions workflow (`.github/workflows/deploy.yml`) that runs `npm run build` and publishes `dist/` to GitHub Pages. React, ReactDOM and Supabase stay global vendor scripts in `assets/scripts/vendor/` (no Babel in the browser); JSX is compiled at build time to `React.createElement`.
 
@@ -21,7 +21,7 @@ Pages live in topic folders; the folder and file names are the public URLs (lowe
 | `divisionen/` | `index` (overview of the eight divisions), `kuratoren`, `sturmritter`, `sentinels`, `friedenshueter`, `outfitters`, `pathfinders`, `quellensucher`, `bergungsgarde` |
 | `charaktere/` | `index` (hub), `mein-charakter`, `spielercharaktere`, `nsc`, `steckbrief` |
 | `spiel/` | `kollektikon`, `karte`, `kalender`, `kalender-interaktiv`, `missionsterminal`, `rekrutierung` |
-| `dm/` | DM-only pages (access is checked by role, not by path): `monster`, `ressourcen`, `tarot`, `kampfsimulation`, `missionen`, `nsc-verwaltung`, `charakterverwaltung`, `kartenmanagement`, `kolonisierung-und-bau`, `kollektikon`, `rekrutierungspreise`, `rezeptverwaltung`, `segen-und-flueche` |
+| `dm/` | DM-only pages (access is checked by role, not by path): `monster`, `ressourcen`, `tarot`, `kampfsimulation`, `missionen`, `nsc-verwaltung`, `charakterverwaltung`, `kartenmanagement`, `kolonisierung-und-bau`, `kollektikon`, `rekrutierung` (Tabs Anfragen und Preise), `rezeptverwaltung`, `segen-und-flueche` |
 
 Each page consists of:
 - `<folder>/<name>.html` with `<base href="/">` (so `assets/...` works from every folder), `<link>` tags for CSS from `assets/styles/global/` and `assets/styles/pages/<folder>/<name>.css` (kept unbundled and in written order), classic `<script>` tags for vendor libs and data files, and **one** `<script type="module" src="/src/pages/<folder>/<name>.jsx">`
@@ -58,6 +58,7 @@ Access is enforced by Row Level Security, not by the client-side role checks (`w
 - `SECURITY DEFINER` functions must check `public.is_dm()` (or `auth.uid()`) themselves and set `SET search_path = public, pg_temp`
 - never rely on `WITH CHECK`-less UPDATE policies for tables with privileged columns: restrict columns with `GRANT UPDATE (col)` or a guard trigger (see `profiles`, `characters` in `041_security_hardening.sql`)
 - roll tokens are only redeemed through `check_roll_token` / `redeem_roll_token` (players cannot read the token table)
+- NSC reveal: players get NSC data only through `get_nsc_player_data` (migration 046). The DM releases only name and image (`field_visibility` keys `name` / `bild`); every other fact is unlocked by the player guessing it (`guess_nsc_fact`), except secrets (`geheimnisse`), which also need their own `vis` flag
 - known gap: `nscs` rows that are `visible` are fully readable by players; the per-field unlock system (`nsc_unlocks`, `field_visibility`) hides secrets only in the UI
 
 ## Shared components (`src/components/`)
@@ -69,6 +70,7 @@ Access is enforced by Row Level Security, not by the client-side role checks (`w
 | `particle-field.jsx` | `window.ParticleField` | Animated background particles |
 | `shared-helpers.jsx` | `window.hexPoints`, `window.useScrollReveal` | Helpers shared by the hub/overview pages that used identical copies |
 | `filter-utils.jsx` | `window.FilterGroup`, `window.XBtn`, … | Filter UI primitives used by /dm/monster.html |
+| `rasse-picker.jsx` | `window.RassePicker` | Auswahlleiste Rasse / angeborenes Talent / Waffe für NSC-Statblöcke (Monsterseite, Kampfsimulation, Rekrutierung) |
 
 ### Authentication
 
@@ -80,7 +82,15 @@ Access is enforced by Row Level Security, not by the client-side role checks (`w
 ```js
 document.documentElement.dataset.theme = (localStorage.getItem('theme') === 'light') ? 'light' : 'dark';
 ```
-The `ThemeToggle` component (☀/☽) in `SiteNav` toggles `data-theme` on `<html>` and persists to `localStorage`. CSS variables in `base.css` handle all color switching under `[data-theme="light"]`.
+The `ThemeToggle` component (☀/☽) in `SiteNav` toggles `data-theme` on `<html>` and persists to `localStorage`. CSS variables in `base.css` handle all color switching under `[data-theme="light"]` (light palette: lavender-white page `#f6f4fc`, white cards, ink `#1e1540`, accent `#6a3de8`).
+
+**Write colours as tokens, not literals**, in page CSS and inline JSX styles alike, so both themes work without per-page overrides:
+- `rgba(var(--text-rgb), calc(0.5*var(--kt)))` text/ink, `--accent-rgb` (+`--ka`) borders/glows, `--purple-rgb` (+`--kp`) brand fills, `--bg-rgb` / `--bg2-rgb` / `--panel-rgb` surfaces, `--text-hi-rgb` near-white text. In the dark theme the multipliers `--kt/--ka/--kp` are 1; in light they strengthen low alphas. For text colours add `+ var(--tb)` inside the `calc()` (a minimum boost in light).
+- Solid colours: `var(--white)` (primary text), `var(--silver)`, `var(--lav)` / `var(--lav2)` (lavender text), `var(--bg)`.
+- Bright literal text colours (gold, teal, …): `color-mix(in srgb, <colour>, rgb(var(--ink-rgb)) var(--cm))` (`--cm` is 0% in dark, 55% in light). Shadows: `rgba(var(--shadow-rgb), calc(0.5*var(--shadow-k)))`. Very dark data colours (division card gradients): `color-mix(in srgb, <colour> var(--dk), rgb(var(--bg-rgb)))`.
+- A region that must stay dark in the light theme (artwork banner): add `className="dark-scope"`, which restores the dark token values inside.
+- Canvas 2D cannot resolve `var()`: use `themeRgb('--accent-rgb')` (global, `theme-init.js`) when drawing. `text-shadow` glows and the scanline overlay are switched off in light mode (`base.css`).
+- Do not put a token into a value that JS concatenates (`${accent}44`) or parses as hex (`type="color"`, particle accents): keep hex there.
 
 ## Asset structure
 
@@ -163,7 +173,31 @@ npm run build
 npm run preview
 ```
 
-Deployment: push to `master` → `.github/workflows/deploy.yml` generates the gallery data (`tools/generate-galerie-data.mjs`), builds and publishes to Pages (Settings → Pages → Source must be "GitHub Actions"). `public/CNAME` carries the custom domain `meruria.de`. `generate-galerie.yml` additionally commits the regenerated `galerie-data.js` when monster images change. **The database is not deployed by CI** — migrations are applied by hand (see below).
+## Environments and deployment
+
+| | Live | Dev |
+|---|---|---|
+| URL | `meruria.de` | `dev.meruria.de` |
+| Branch | `master` | `devel` |
+| Host | GitHub Pages | Cloudflare (Workers with static assets) |
+| Built by | `.github/workflows/deploy.yml` | Cloudflare Workers Builds |
+| Database | real Supabase | **the same real Supabase** (there is no separate dev database) |
+
+Flow: feature branch → `devel` → check on dev.meruria.de → pull request `devel` → `master`. Treat dev as real data: it writes to the production database, so anything risky is tried against the local database first.
+
+**Live:** push to `master` → `.github/workflows/deploy.yml` generates the gallery data (`tools/generate-galerie-data.mjs`), builds and publishes to Pages (Settings → Pages → Source must be "GitHub Actions"). `public/CNAME` carries the custom domain `meruria.de`. `generate-galerie.yml` additionally commits the regenerated `galerie-data.js` to `master` when monster images change.
+
+**Dev:** GitHub Pages can only serve one branch, so `devel` is built by Cloudflare. Settings live in the Cloudflare dashboard, not in the repo, except `wrangler.jsonc`:
+- project/worker `meruria`, production branch `devel`; build `node tools/generate-galerie-data.mjs && npm run build`, deploy `npx wrangler deploy`, preview `npx wrangler versions upload`, variable `NODE_VERSION=22` (keep in sync with `deploy.yml`)
+- `wrangler.jsonc` (root) serves `./dist`; its `name` must equal the Cloudflare project name or the build fails. It must exist on the branch being built.
+- custom domain `dev.meruria.de` is attached in the worker's Settings → Domains & Routes
+- Supabase Auth → URL Configuration → Redirect URLs must contain `https://dev.meruria.de`
+
+**DNS:** `meruria.de` is registered at Namecheap, but the nameservers are Cloudflare's (Custom DNS), so all records are edited in Cloudflare. The four `A` records for `@` (`185.199.108–111.153`) point at GitHub Pages and must stay **DNS only** (grey cloud); proxying them stops GitHub from issuing/renewing the HTTPS certificate. There is no mail on the domain; if it gets any, add `MX`/`TXT` in Cloudflare.
+
+**Branch rules** (GitHub rulesets): `master` – no deletion, no force push, pull request required; the GitHub Actions app is on the bypass list so `generate-galerie.yml` can still push. `devel` – no deletion, no force push (Cloudflare builds it; don't delete it when merging into `master`).
+
+**Database deployment:** the Supabase GitHub integration (Project Settings → Integrations → GitHub; repo `delagoplex/MeruriaSite`, working directory `.`, *Deploy to production* on, branch `master`) applies new `supabase/migrations/` files when something is merged into `master`. Supabase Branching (preview DBs) needs Pro and is not used. See "Changing the real database" below, including the history baseline.
 
 `vite.config.js` auto-discovers all `.html` files as entries. Files that are referenced only at runtime (classic scripts, images, `assets/styles`) are copied unchanged to `dist/assets/` by a small plugin, so URLs are identical in dev and production.
 
@@ -190,7 +224,15 @@ Test accounts (local only) are created by `supabase/seed.sql`; the passwords are
 
 Migrations are applied in file-name order, so new files need the next free number (`042_…`); never reuse or rename an existing number (the CLI requires unique versions).
 
-**Changing the real database:** write the migration, test it with `npm run db:reset` (and by logging in as the seed player and DM), then run **only the new file** in the Supabase SQL editor of the real project, after the app version that needs it is online. Never run `db:reset` or `seed.sql` against the real project. The CLI's runtime folder `supabase/.temp/` is git-ignored and contains local secrets.
+**Changing the real database:** write the migration, test it with `npm run db:reset` (and by logging in as the seed player and DM), then merge it into `master`; the Supabase integration applies it. Check the run under Dashboard → Integrations → GitHub → workflow logs (and Database → Migrations). Never run `db:reset` or `seed.sql` against the real project. The CLI's runtime folder `supabase/.temp/` is git-ignored and contains local secrets.
+- App (GitHub Pages) and migration (Supabase) deploy independently within minutes of each other, not atomically. A migration that would break the running app is shipped in two steps: backwards-compatible migration first, app change afterwards.
+- The integration compares only the **version** (number before the file name) with `supabase_migrations.schema_migrations`, not the file contents. Never edit an applied migration; add a new one.
+- **History baseline:** the real database was created by hand before the integration, so its history table was filled with `001`–`040` without running them (before that every run failed on `001` with `relation "profiles" already exists`). If a migration is ever applied by hand in the SQL editor, record it, otherwise the integration replays it and fails on "already exists":
+  ```sql
+  insert into supabase_migrations.schema_migrations (version) values ('042')
+  on conflict (version) do nothing;
+  ```
+- Open: the first automatic run after the baseline still needs to be confirmed with the next regular migration; check its workflow log and then remove this note.
 
 ## Monster data (`assets/scripts/data/monster/`)
 
@@ -219,6 +261,23 @@ Adding a new book: create `<book>-data.js`, declare the window variable, add it 
 | `schatzkammer-der-drachen-data.js` | `MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN` | `"Schatzkammer der Drachen"` | `monster/schatzkammer/` |
 | `flee-mortals-data.js` | `MONSTER_DATA_FLEE_MORTALS` | `"Flee Mortals"` | `monster/flee-mortals/` |
 | `sonstige-data.js` | `MONSTER_DATA_SONSTIGE` | `"Sonstige"` | `monster/sonstige/` |
+| `rekrutierung-data.js` | `MONSTER_DATA_REKRUTIERUNG` | `"Rekrutierung"` | Divisionslogo aus `images/divisions/` |
+
+`rekrutierung-data.js` ist **generiert**: `node tools/generate-rekrutierung-nsc.mjs` baut aus `computeNscStats()` (`assets/scripts/shared/nsc-statblock.js`) und `divisions-data.js` pro Division und Rang (8 × 10) den NSC-Statblock "<Titel> (<Division>, Rang N)" (Humanoid, Unterart "NPC"; HG als Näherung nach der DMG-Tabelle). Werte in `nsc-statblock.js`/`divisions-data.js` ändern und neu generieren, nicht die Ausgabedatei von Hand bearbeiten.
+
+Fähigkeiten pro Division stehen in `nscConfig` (`divisions-data.js`): `besonderheit` (Basis, Art über `besonderheitTyp`: Standard Besonderheit, sonst `bonusaktion`/`reaktion`), `aktionen` und `faehigkeiten: [{ typ: 'besonderheit'|'aktion'|'bonusaktion'|'reaktion', minTier, name, beschreibung }]`. `minTier = 10 − Rang`; Platzhalter `{titel}`, `{prof}`, `{DC}`, `{attackBonus}`, `{damageDice}`. Jede Division bekommt bei Rang 7, 4 und 1 je eine zusätzliche Fähigkeit, der Mehrfachangriff kommt ab Rang 5. Optional `hg: { tp, rk, dmg }` an einer Fähigkeit schätzt ihre Wirkung für den HG (zusätzliche effektive TP, RK, Schaden pro Runde).
+
+### Rasse anwenden (NSC-Statblöcke)
+
+Jeder Statblock mit `art: "Humanoid"` und `unterart: "NPC"` kann eine Rasse, ein angeborenes Talent und eine Waffe bekommen. Der fertige Statblock wird **immer berechnet** (nie gespeichert): `window.RasseAnwenden.anwenden(statblock, { rasse, linie, talent, waffe })` in `assets/scripts/shared/rasse-anwenden.js`. Eine Seite braucht dafür die Scripts `data/rassen-struktur-data.js`, `data/ausrüstung-data.js` und `shared/rasse-anwenden.js` (klassisch) sowie `components/rasse-picker.jsx`.
+
+- **Daten:** `assets/scripts/data/rassen-struktur-data.js` (`window.RASSEN_STRUKTUR`) ist von Hand gepflegt, nicht generiert: pro Rasse Größe, Bewegung, Sinne, Resistenzen, Attributsboni (immer +2/+1 oder dreimal +1, außer Menschen), Merkmale und angeborene Talente in dritter Person (`merkmale`, `talentTexte`). Blutlinien/Ahnenlinien stehen unter `varianten` und gelten zusätzlich zur Rasse (eigene Attribute, Resistenzen, `merkmale`, teils abweichende `groesse`/`bewegung`); Rassen, deren Boni an den Linien hängen, gibt es nur mit Linie.
+- **Talente:** `talentTexte[<Talent>].text` ist der Text in dritter Person, `.wirkung` die maschinenlesbare Wirkung (nur eindeutige, unbedingte Effekte: `resistenzen`, `immunitaeten`, `zustandsimmunitaeten`, `bewegungPlus`, `bewegung`, `sinne`, `tpProTW`, `rkBasis`, `fertigkeiten`). Alles andere wirkt nur als Text. Das Talent einer Blutlinie steht in `linienTalente`.
+- **Was angepasst wird:** Attribute und alles Abgeleitete (TP-Würfel, Rettungswürfe, Fertigkeiten, passive Wahrnehmung, RK, Angriffs- und Schadenswerte), Größe, Bewegung, Sinne, Resistenzen, Besonderheiten (Merkmale, Talent) und auf Wunsch die Hauptwaffe (Werte aus `ausrüstung-data.js`, Übungsbonus aus der Vorlage).
+- **Zufall:** `RasseAnwenden.zufall(statblock)` würfelt Rasse (mit Linie), Größe, Talent und Waffe. Die Kampfsimulation hat die Einstellung "NSC-Rasse" (Original / Fest / Zufällig, `NscRasseBox`): im Fenster "Monster hinzufügen" (Standard Original) und bei "Passende Gegner" / "+ 1 Gegner" in Gruppe 2 (Standard Zufällig, pro NSC neu gewürfelt); Doppeln kopiert den fertigen Statblock des Kämpfers.
+- **NSC-Erstellung:** Die Schnellanlage in `/dm/nsc-verwaltung` bietet NSC-Statblöcke (Unterart NPC, auch die Rekrutierungs-NSCs) als Grundlage an, mit Vorschlag passend zu Division und Rang. Die Vorschau folgt der Rasse des NSC; Waffe und Rasse lassen sich einzeln würfeln. Gespeichert wird der fertig berechnete Statblock im Feld `steckbrief`.
+- **Rekrutierungsanfragen:** Auf `/spiel/rekrutierung` kann ein Spieler (Charakter mit Divisionsrang) den gewählten NSC samt Rasse/Talent/Waffe anfragen (Tabelle `rekrutierung_anfragen`, Migration 044; Spieler sehen und löschen nur ihre eigenen offenen Anfragen). `/dm/rekrutierung` (Tab Anfragen) zeigt der SL alle Anfragen; "Annehmen" legt mit Name/Geschlecht/Alter einen NSC mit berechnetem Statblock an (`window.statToSteckbrief` aus `shared/statblock-steckbrief.js`) und markiert die Anfrage. Die Rekrutierungspreise gelten für alle Divisionen gleich und stehen unter der Division `kuratoren` in `rekrutierung_preise`.
+- **Rekrutierungs-NSCs:** `nscToMonster()` in `nsc-statblock.js` rechnet Division/Rang ins Monster-Format um; die Rekrutierungsseite zeigt damit den berechneten Statblock, und `tools/generate-rekrutierung-nsc.mjs` baut daraus die Monsterliste.
 
 ### `bild` URL — Namenskonvention
 

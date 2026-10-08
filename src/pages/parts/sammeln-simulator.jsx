@@ -134,11 +134,11 @@ function SammelSimulator() {
       <div style={{display:'grid',gridTemplateColumns:'minmax(260px, 0.85fr) minmax(320px, 1.4fr)',gap:'22px',alignItems:'start'}}>
         {/* ── Setup / Region ── */}
         <div style={{
-          background:'rgba(10,8,28,0.45)',
-          border:'1px solid rgba(124,77,255,0.18)',
+          background:'rgba(var(--panel-rgb),0.45)',
+          border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
           borderRadius:'4px', padding:'18px 20px',
         }}>
-          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.24em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase',marginBottom:'14px'}}>Setup</div>
+          <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.24em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'14px'}}>Setup</div>
 
           <FieldRow label="Region">
             <div style={{display:'flex',flexWrap:'wrap',gap:'6px'}}>
@@ -147,11 +147,11 @@ function SammelSimulator() {
                 return (
                   <button key={r.id} onClick={()=>{ setRegionId(r.id); reset(); }} style={{
                     padding:'7px 12px',
-                    background: on ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)',
-                    border: `1px solid ${on ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.2)'}`,
+                    background: on ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+                    border: `1px solid ${on ? 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
                     borderRadius:'2px', cursor:'pointer',
                     fontFamily:'var(--font-display)', fontSize:'11px', letterSpacing:'0.14em',
-                    color: on ? '#f0eeff' : 'rgba(200,190,240,0.7)',
+                    color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))',
                     textTransform:'uppercase',
                     display:'flex',alignItems:'center',gap:'7px',
                   }}>
@@ -165,10 +165,10 @@ function SammelSimulator() {
 
           <FieldRow label="Bonus" hint="WEI/INT-Modifikator + Kräuterkunde-Übungsbonus (falls geübt)">
             <input type="number" value={bonus} onChange={e=>setBonus(parseInt(e.target.value||'0',10))}
-              style={{padding:'4px 8px',background:'rgba(0,0,0,0.3)',border:'1px solid rgba(124,77,255,0.3)',borderRadius:'2px',fontFamily:'var(--font-mono)',fontSize:'12px',color:'#f0eeff',width:'80px'}}/>
+              style={{padding:'4px 8px',background:'rgba(var(--bg-rgb),0.3)',border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',borderRadius:'2px',fontFamily:'var(--font-mono)',fontSize:'12px',color:'var(--white)',width:'80px'}}/>
           </FieldRow>
 
-          <div style={{height:'1px',background:'rgba(124,77,255,0.12)',margin:'18px 0 16px'}}/>
+          <div style={{height:'1px',background:'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',margin:'18px 0 16px'}}/>
 
           <div style={{display:'flex',alignItems:'center',gap:'14px',flexWrap:'wrap'}}>
             <DiceButton spec="1W20" modifier={bonus} label="Gebiet absuchen" size="lg"
@@ -177,7 +177,7 @@ function SammelSimulator() {
 
           <div style={{
             fontFamily:'var(--font-body)',fontWeight:300,fontSize:'11px',
-            color:'rgba(160,140,255,0.5)',marginTop:'12px',fontStyle:'italic',
+            color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',marginTop:'12px',fontStyle:'italic',
             letterSpacing:'0.02em',lineHeight:1.5,
           }}>
             15 Minuten pro Ressourcenart. Der Wurf bestimmt automatisch, welche Seltenheiten du erkennst, und würfelt die Mengen.
@@ -186,19 +186,19 @@ function SammelSimulator() {
           {findRoll && (
             <div style={{
               marginTop:'16px',padding:'12px 14px',
-              background:'rgba(124,77,255,0.08)',
-              border:'1px solid rgba(124,77,255,0.3)',
+              background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
+              border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
               borderRadius:'3px',
               animation:'resultPop 0.4s ease',
             }}>
-              <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.18em',color:'rgba(160,140,255,0.6)',textTransform:'uppercase',marginBottom:'6px'}}>Absuchen-Wurf</div>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'6px'}}>Absuchen-Wurf</div>
               <div style={{display:'flex',alignItems:'baseline',gap:'10px',flexWrap:'wrap'}}>
-                <span style={{fontFamily:'var(--font-display)',fontSize:'22px',color:'#f0eeff',fontWeight:600}}>{findRoll.total}</span>
-                <span style={{fontFamily:'var(--font-mono)',fontSize:'10.5px',color:'rgba(160,140,255,0.7)',letterSpacing:'0.06em'}}>
+                <span style={{fontFamily:'var(--font-display)',fontSize:'22px',color:'var(--white)',fontWeight:600}}>{findRoll.total}</span>
+                <span style={{fontFamily:'var(--font-mono)',fontSize:'10.5px',color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',letterSpacing:'0.06em'}}>
                   [W20: {findRoll.raw}{findRoll.bonus >= 0 ? ' + ' : ' '}{findRoll.bonus}]
                 </span>
               </div>
-              <div style={{fontFamily:'var(--font-body)',fontSize:'11.5px',color:'rgba(200,190,240,0.75)',marginTop:'5px',letterSpacing:'0.04em'}}>
+              <div style={{fontFamily:'var(--font-body)',fontSize:'11.5px',color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',marginTop:'5px',letterSpacing:'0.04em'}}>
                 {findRoll.total < 10 && 'Nichts erkannt — Misserfolg.'}
                 {findRoll.total >= 10 && findRoll.total < 15 && 'Gewöhnliche Ressourcen erkannt.'}
                 {findRoll.total >= 15 && findRoll.total < 20 && 'Gewöhnlich + Ungewöhnlich erkannt.'}
@@ -212,20 +212,20 @@ function SammelSimulator() {
 
         {/* ── Pool / Harvest ── */}
         <div style={{
-          background:'rgba(10,8,28,0.6)',
-          border:'1px solid rgba(124,77,255,0.22)',
+          background:'rgba(var(--panel-rgb),0.6)',
+          border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
           borderRadius:'4px', padding:'18px 20px',
           minHeight:'200px',
         }}>
           <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'14px'}}>
-            <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.24em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase'}}>Ressourcen-Pool · {region.icon} {region.name}</div>
-            {pool && <button onClick={reset} style={{background:'transparent',border:'1px solid rgba(124,77,255,0.25)',borderRadius:'2px',padding:'3px 8px',cursor:'pointer',fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.18em',color:'rgba(180,155,255,0.7)'}}>↺ Neue Suche</button>}
+            <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.24em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase'}}>Ressourcen-Pool · {region.icon} {region.name}</div>
+            {pool && <button onClick={reset} style={{background:'transparent',border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',borderRadius:'2px',padding:'3px 8px',cursor:'pointer',fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.18em',color:'color-mix(in srgb, rgba(180,155,255,0.7), rgb(var(--ink-rgb)) var(--cm))'}}>↺ Neue Suche</button>}
           </div>
 
           {!pool ? (
             <div style={{
               fontFamily:'var(--font-body)',fontStyle:'italic',fontWeight:300,
-              fontSize:'13px',color:'rgba(180,165,235,0.55)',lineHeight:1.7,
+              fontSize:'13px',color:'color-mix(in srgb, rgba(180,165,235,0.55), rgb(var(--ink-rgb)) var(--cm))',lineHeight:1.7,
               padding:'40px 0',textAlign:'center',
             }}>
               Suche das Gebiet ab, um zu sehen, welche Ressourcen hier vorkommen.
@@ -233,11 +233,11 @@ function SammelSimulator() {
           ) : pool.tier === 0 ? (
             <div style={{
               fontFamily:'var(--font-body)',fontStyle:'italic',fontWeight:300,
-              fontSize:'13px',color:'rgba(255,120,120,0.78)',lineHeight:1.7,
+              fontSize:'13px',color:'color-mix(in srgb, rgba(255,120,120,0.78), rgb(var(--ink-rgb)) var(--cm))',lineHeight:1.7,
               padding:'40px 0',textAlign:'center',
             }}>
               Du findest nichts Verwertbares.<br/>
-              <span style={{fontSize:'11px',color:'rgba(160,140,255,0.5)'}}>Mindestens 10 erforderlich.</span>
+              <span style={{fontSize:'11px',color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))'}}>Mindestens 10 erforderlich.</span>
             </div>
           ) : (
             <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
@@ -249,17 +249,17 @@ function SammelSimulator() {
                 return (
                   <div key={rid} style={{
                     padding:'10px 14px',
-                    background:'rgba(124,77,255,0.05)',
+                    background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
                     border:`1px solid ${rarity.hue.replace(/[\d.]+\)$/, '0.3)')}`,
                     borderLeft:`3px solid ${rarity.hue}`,
                     borderRadius:'0 3px 3px 0',
                   }}>
                     <div style={{display:'flex',alignItems:'baseline',gap:'10px',marginBottom:'5px',flexWrap:'wrap'}}>
                       <RarityPill seltenheit={rid} size="sm" />
-                      <span style={{fontFamily:'var(--font-display)',fontSize:'13px',color:'rgba(232,225,255,0.95)',letterSpacing:'0.04em'}}>
+                      <span style={{fontFamily:'var(--font-display)',fontSize:'13px',color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))',letterSpacing:'0.04em'}}>
                         {plant ? plant.label : (rid === 'legendaer' ? 'Legendäre Ressource' : 'Ressource')}
                       </span>
-                      <span style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(160,140,255,0.65)',marginLeft:'auto',letterSpacing:'0.04em'}}>
+                      <span style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))',marginLeft:'auto',letterSpacing:'0.04em'}}>
                         {found.total} {found.total === 1 ? 'Einheit' : 'Einheiten'} im Vorkommen
                       </span>
                     </div>
@@ -271,11 +271,11 @@ function SammelSimulator() {
                         background:'rgba(0,0,0,0.25)',borderRadius:'2px',
                         animation:'resultPop 0.4s ease',
                       }}>
-                        <span style={{fontFamily:'var(--font-mono)',fontSize:'9.5px',color:'rgba(160,140,255,0.7)',letterSpacing:'0.12em',textTransform:'uppercase'}}>Ernte-Wurf</span>
-                        <span style={{fontFamily:'var(--font-display)',fontSize:'15px',color: harvest.harvested > 0 ? 'rgba(120,230,180,0.95)' : 'rgba(255,120,120,0.95)',fontWeight:600}}>
+                        <span style={{fontFamily:'var(--font-mono)',fontSize:'9.5px',color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',letterSpacing:'0.12em',textTransform:'uppercase'}}>Ernte-Wurf</span>
+                        <span style={{fontFamily:'var(--font-display)',fontSize:'15px',color: harvest.harvested > 0 ? 'color-mix(in srgb, rgba(120,230,180,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(255,120,120,0.95), rgb(var(--ink-rgb)) var(--cm))',fontWeight:600}}>
                           {harvest.harvested} / {harvest.total}
                         </span>
-                        <span style={{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(200,190,240,0.72)',fontStyle:'italic'}}>
+                        <span style={{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb)))',fontStyle:'italic'}}>
                           [W20: {harvest.roll}] {harvest.label}
                         </span>
                       </div>
@@ -291,11 +291,11 @@ function SammelSimulator() {
 
               <div style={{
                 marginTop:'8px',padding:'10px 12px',
-                background:'rgba(124,77,255,0.04)',
-                borderLeft:'2px solid rgba(124,77,255,0.3)',
+                background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
+                borderLeft:'2px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
                 borderRadius:'0 2px 2px 0',
                 fontFamily:'var(--font-body)',fontSize:'10.5px',fontWeight:300,
-                color:'rgba(180,165,235,0.65)',lineHeight:1.6,fontStyle:'italic',
+                color:'color-mix(in srgb, rgba(180,165,235,0.65), rgb(var(--ink-rgb)) var(--cm))',lineHeight:1.6,fontStyle:'italic',
                 letterSpacing:'0.02em',
               }}>
                 Die welche Pflanzenart in einer Region vorkommt, hängt vom W20-Wurf auf die Regionstabelle ab — gleiche Seltenheit, aber verschiedene Spezies. Wirf neu, um andere Pflanzen aus derselben Region zu erhalten.

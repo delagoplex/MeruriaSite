@@ -48,7 +48,7 @@ const DIVISION_THEMES = {
     dim: '255,228,220', dimBoost: 0.15,
   },
   sentinels: {
-    asideBg: 'rgba(6,18,32,0.90)',
+    asideBg: 'rgba(var(--panel-rgb),0.90)',
     label: "Division III",
     name: "Die Sentinels",
     tocIndent: 'rgba(150,220,252,0.45)', toc: 'rgba(170,228,254,0.65)',
@@ -62,7 +62,7 @@ const DIVISION_THEMES = {
     name: "Die Friedensh\xFCter",
     tocIndent: 'rgba(255,185,215,0.45)', toc: 'rgba(255,200,225,0.65)',
     divider: 'rgba(255,195,220,0.85)',
-    text: 'rgba(255,220,235,0.72)',
+    text: 'rgba(var(--text-hi-rgb),0.72)',
     dim: '255,215,230', dimBoost: 0,
   },
   outfitters: {
@@ -102,7 +102,17 @@ const DIVISION_THEMES = {
     dim: '240,215,190', dimBoost: 0,
   },
 };
-const THEME = DIVISION_THEMES[DIVISION.id];
+const _THEME = DIVISION_THEMES[DIVISION.id];
+// the per-division colours are the dark-theme values; the light theme overrides them via --dv-* (base.css)
+const THEME = {
+  ..._THEME,
+  asideBg: `var(--dv-aside, ${_THEME.asideBg})`,
+  tocIndent: `var(--dv-toc-indent, ${_THEME.tocIndent})`,
+  toc: `var(--dv-toc, ${_THEME.toc})`,
+  divider: `var(--dv-divider, ${_THEME.divider})`,
+  text: `var(--dv-text, ${_THEME.text})`,
+  dim: `var(--dv-dim, ${_THEME.dim})`
+};
 
 // ── HEX HELPER ──────────────────────────────────────────
 function OctSvg({
@@ -184,11 +194,13 @@ function TOCSidebar({
   const [activeId, setActiveId] = useState('uebersicht');
   useEffect(() => {
     const update = () => {
-      const ideal = (headerBottom || 0) - window.scrollY;
+      // headerBottom / scrollY are measured in visual px; style values are CSS px (scaled by html zoom)
+      const zoom = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+      const ideal = ((headerBottom || 0) - window.scrollY) / zoom;
       const val = Math.max(0, ideal);
       if (asideRef.current) {
         asideRef.current.style.top = val + 'px';
-        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+        asideRef.current.style.height = `calc(calc(var(--vh, 1vh) * 100) - ${val}px)`;
       }
     };
     update();
@@ -222,7 +234,8 @@ function TOCSidebar({
   const scrollTo = id => {
     const el = document.getElementById(id);
     if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+      const zoom = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+      const y = el.getBoundingClientRect().top + window.scrollY - (navHeight + 16) * zoom;
       window.scrollTo({
         top: y,
         behavior: 'smooth'
@@ -341,6 +354,7 @@ function DivisionPage({
   const pal = division.palette;
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     id: "uebersicht",
+    className: "dark-scope",
     style: {
       width: 'calc(100% + var(--sidebar-w))',
       marginLeft: 'calc(-1 * var(--sidebar-w))',
@@ -373,7 +387,7 @@ function DivisionPage({
     style: {
       position: 'absolute',
       inset: 0,
-      background: 'radial-gradient(ellipse at 105% 50%, rgba(124,77,255,0.15) 0%, transparent 55%)',
+      background: 'radial-gradient(ellipse at 105% 50%, rgba(var(--purple-rgb),calc(0.15*var(--kp))) 0%, transparent 55%)',
       pointerEvents: 'none',
       zIndex: 2
     }
@@ -441,7 +455,7 @@ function DivisionPage({
   }, /*#__PURE__*/React.createElement("polygon", {
     points: hexPoints(60),
     fill: "none",
-    stroke: "rgba(124,77,255,0.8)",
+    stroke: "rgba(var(--purple-rgb),calc(0.8*var(--kp)))",
     strokeWidth: "1"
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -455,6 +469,7 @@ function DivisionPage({
       animation: 'heroScan 6s ease-in-out infinite'
     }
   }), /*#__PURE__*/React.createElement("div", {
+    className: "div-hero-logo",
     style: {
       position: 'absolute',
       left: '4%',
@@ -494,6 +509,7 @@ function DivisionPage({
     strokeWidth: "1.5",
     opacity: "0.7"
   }))), /*#__PURE__*/React.createElement("div", {
+    className: "div-hero-num",
     style: {
       position: 'absolute',
       right: '6%',
@@ -511,6 +527,7 @@ function DivisionPage({
       zIndex: 3
     }
   }, division.nummer), /*#__PURE__*/React.createElement("div", {
+    className: "div-hero-title",
     style: {
       position: 'absolute',
       bottom: 0,
@@ -579,6 +596,7 @@ function DivisionPage({
       height: 0
     }
   }), /*#__PURE__*/React.createElement("div", {
+    className: "div-body-row",
     style: {
       display: 'flex',
       alignItems: 'flex-start'
@@ -620,7 +638,7 @@ function DivisionPage({
   }, /*#__PURE__*/React.createElement("polygon", {
     points: hexPoints(180),
     fill: "none",
-    stroke: "rgba(124,77,255,0.9)",
+    stroke: "rgba(var(--purple-rgb),calc(0.9*var(--kp)))",
     strokeWidth: "1"
   }))), /*#__PURE__*/React.createElement("section", {
     id: "beschreibung",
@@ -635,13 +653,27 @@ function DivisionPage({
       fontWeight: '300',
       fontSize: '14px',
       lineHeight: 1.9,
-      color: 'rgba(var(--text-rgb),0.78)',
+      color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
       textWrap: 'pretty',
       borderLeft: `1px solid ${accent}22`,
       paddingLeft: '16px'
     }
-  }, division.beschreibung)), /*#__PURE__*/React.createElement("section", {
+  }, division.beschreibung), division.leitspruch && /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-display)',
+      fontStyle: 'italic',
+      fontWeight: '300',
+      fontSize: '14px',
+      lineHeight: 1.7,
+      letterSpacing: '0.04em',
+      color: `${accent}cc`,
+      marginTop: '20px',
+      paddingLeft: '16px',
+      borderLeft: `2px solid ${accent}55`
+    }
+  }, "\u201E", division.leitspruch, "\u201C")), /*#__PURE__*/React.createElement("section", {
     id: "auftraege",
     className: "div-section"
   }, /*#__PURE__*/React.createElement(SectionBanner, {
@@ -712,7 +744,28 @@ function DivisionPage({
   }, /*#__PURE__*/React.createElement(SectionBanner, {
     label: "Rangsystem",
     accent: accent
-  }), /*#__PURE__*/React.createElement("div", {
+  }), window.DIVISIONS_RANGLOGIK && /*#__PURE__*/React.createElement("p", {
+    className: "reveal-up",
+    style: {
+      fontFamily: 'var(--font-body)',
+      fontWeight: '300',
+      fontSize: '12.5px',
+      lineHeight: 1.8,
+      color: THEME.text,
+      letterSpacing: '0.02em',
+      textWrap: 'pretty',
+      marginBottom: '18px'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '8px',
+      letterSpacing: '0.24em',
+      textTransform: 'uppercase',
+      color: `${accent}99`,
+      marginRight: '8px'
+    }
+  }, "Ranglogik"), window.DIVISIONS_RANGLOGIK), /*#__PURE__*/React.createElement("div", {
     className: "rang-list"
   }, division.raenge.map(r => {
     const isTop = r.rang <= 3;
@@ -804,7 +857,35 @@ function DivisionPage({
         color: `rgba(${THEME.dim},${dimAlpha + THEME.dimBoost})`,
         letterSpacing: '0.01em'
       }
-    }, r.beschreibung))), isTop && /*#__PURE__*/React.createElement("div", {
+    }, r.beschreibung)), r.privilegien && r.privilegien.length > 0 && /*#__PURE__*/React.createElement("ul", {
+      style: {
+        position: 'relative',
+        zIndex: 1,
+        listStyle: 'none',
+        margin: '8px 0 0',
+        padding: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '3px'
+      }
+    }, r.privilegien.map((p, i) => /*#__PURE__*/React.createElement("li", {
+      key: i,
+      style: {
+        display: 'flex',
+        gap: '7px',
+        fontFamily: 'var(--font-body)',
+        fontWeight: '300',
+        fontSize: '11.5px',
+        lineHeight: 1.6,
+        color: `rgba(${THEME.dim},${dimAlpha + THEME.dimBoost})`,
+        letterSpacing: '0.01em'
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: `${accent}aa`,
+        flexShrink: 0
+      }
+    }, "\u2192"), p)))), isTop && /*#__PURE__*/React.createElement("div", {
       style: {
         position: 'absolute',
         left: 0,
@@ -815,6 +896,7 @@ function DivisionPage({
       }
     }));
   })))), /*#__PURE__*/React.createElement("div", {
+    className: "div-side-col",
     style: {
       borderLeft: `1px solid ${accent}14`
     }

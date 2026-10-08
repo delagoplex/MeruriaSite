@@ -1,6 +1,7 @@
 // Page entry for /charaktere/spielercharaktere.html
 import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
+import '../../components/char-age.jsx';
 
 ;(function () {
 // top-level functions were global in the old classic-script setup
@@ -106,7 +107,7 @@ function rowToCard(row, profileMap) {
     division: d.division || '—',
     gesinnung: d.alignment || '—',
     status: d.status || 'Aktiv',
-    alter: d.age || '—',
+    alter: window.CharAge.age(d.age, d.age_ref_abs, d.geburtstag_doy, d.geburtstag_jahr) || '—',
     geschlecht: d.gender || '—',
     stats: d.stats || { str:10, dex:10, con:10, int:10, wis:10, cha:10 },
     skills: buildSkills(d),
@@ -173,7 +174,7 @@ function ParticleField({ mouseX, mouseY }) {
         p.x += p.vx/w*60; p.y += p.vy/h*60;
         if(p.x<0)p.x=1; if(p.x>1)p.x=0; if(p.y<0)p.y=1; if(p.y>1)p.y=0;
         ctx.beginPath(); ctx.arc(p.x*w+shiftX, p.y*h+shiftY, p.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`; ctx.fill();
+        ctx.fillStyle = `rgba(${themeRgb('--accent-rgb')},${p.alpha})`; ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
     };
@@ -225,7 +226,7 @@ function Portrait({ char, size=120 }) {
         ) : (
           <React.Fragment>
             <div style={{ position:'absolute', inset:0, backgroundImage:`repeating-linear-gradient(45deg, ${hexA(acc,0.10)} 0 6px, transparent 6px 12px)`, backgroundColor: hexA(acc, 0.06) }} />
-            <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontSize: size*0.30, fontWeight:300, letterSpacing:'0.05em', color:'#f0eeff', textShadow:`0 0 14px ${acc}, 0 0 6px ${hexA(acc,0.8)}` }}>{initials}</div>
+            <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-display)', fontSize: size*0.30, fontWeight:300, letterSpacing:'0.05em', color:'var(--white)', textShadow:`0 0 14px ${acc}, 0 0 6px ${hexA(acc,0.8)}` }}>{initials}</div>
           </React.Fragment>
         )}
       </div>
@@ -239,12 +240,12 @@ function LevelBadge({ stufe, acc, size=40 }) {
   return (
     <div style={{ position:'absolute', bottom: -offset + 'px', right: -offset + 'px', width: size, height: size, zIndex:5, pointerEvents:'none' }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ position:'absolute', inset:0, overflow:'visible', filter:`drop-shadow(0 0 8px ${hexA(acc,0.6)})` }}>
-        <polygon points={hexPointsInset(size, 1.6)} fill="rgba(5,4,15,0.97)" stroke={acc} strokeWidth="1.4"/>
+        <polygon points={hexPointsInset(size, 1.6)} fill="rgba(var(--bg-rgb),0.97)" stroke={acc} strokeWidth="1.4"/>
         <polygon points={hexPointsInset(size, 4)} fill="none" stroke={acc} strokeWidth="0.5" strokeOpacity="0.4"/>
       </svg>
       <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', lineHeight:1 }}>
         <span style={{ fontFamily:'var(--font-mono)', fontSize: size*0.16 + 'px', letterSpacing:'0.18em', color: acc, opacity:0.85, marginBottom:'1px', textTransform:'uppercase' }}>St.</span>
-        <span style={{ fontFamily:'var(--font-display)', fontSize: size*0.42 + 'px', fontWeight:500, color:'#f0eeff', textShadow:`0 0 8px ${hexA(acc,0.7)}` }}>{stufe}</span>
+        <span style={{ fontFamily:'var(--font-display)', fontSize: size*0.42 + 'px', fontWeight:500, color:'var(--white)', textShadow:`0 0 8px ${hexA(acc,0.7)}` }}>{stufe}</span>
       </div>
     </div>
   );
@@ -267,11 +268,11 @@ function AttributesGrid({ stats, acc, dense }) {
           const v = stats[k];
           const isMax = v === max;
           return (
-            <div key={k} style={{ padding: dense ? '4px 2px' : '6px 2px', textAlign:'center', background: isMax ? hexA(acc, 0.16) : 'rgba(5,4,15,0.55)', border: `1px solid ${isMax ? acc : hexA(acc,0.18)}`, borderRadius:'2px', boxShadow: isMax ? `0 0 10px ${hexA(acc,0.35)} inset, 0 0 6px ${hexA(acc,0.25)}` : 'none', position:'relative', overflow:'hidden' }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.18em', color: isMax ? acc : 'rgba(160,140,255,0.55)', textTransform:'uppercase', marginBottom:'1px' }}>{STAT_LABEL[k]}</div>
-              <div style={{ fontFamily:'var(--font-display)', fontSize: dense ? '14px' : '16px', fontWeight:400, color: isMax ? '#f0eeff' : 'rgba(240,238,255,0.88)', textShadow: isMax ? `0 0 10px ${hexA(acc,0.6)}` : 'none', lineHeight:1, fontVariantNumeric:'tabular-nums' }}>{v}</div>
+            <div key={k} style={{ padding: dense ? '4px 2px' : '6px 2px', textAlign:'center', background: isMax ? hexA(acc, 0.16) : 'rgba(var(--bg-rgb),0.55)', border: `1px solid ${isMax ? acc : hexA(acc,0.18)}`, borderRadius:'2px', boxShadow: isMax ? `0 0 10px ${hexA(acc,0.35)} inset, 0 0 6px ${hexA(acc,0.25)}` : 'none', position:'relative', overflow:'hidden' }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.18em', color: isMax ? acc : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))', textTransform:'uppercase', marginBottom:'1px' }}>{STAT_LABEL[k]}</div>
+              <div style={{ fontFamily:'var(--font-display)', fontSize: dense ? '14px' : '16px', fontWeight:400, color: isMax ? 'var(--white)' : 'rgba(var(--text-hi-rgb),calc(0.88*var(--kt)))', textShadow: isMax ? `0 0 10px ${hexA(acc,0.6)}` : 'none', lineHeight:1, fontVariantNumeric:'tabular-nums' }}>{v}</div>
               {!dense && (
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color: isMax ? hexA(acc,0.95) : 'rgba(200,190,240,0.5)', marginTop:'2px', fontVariantNumeric:'tabular-nums' }}>{abilityMod(v)}</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color: isMax ? hexA(acc,0.95) : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))', marginTop:'2px', fontVariantNumeric:'tabular-nums' }}>{abilityMod(v)}</div>
               )}
             </div>
           );
@@ -294,9 +295,9 @@ function CombatStats({ char, acc, dense }) {
     <div style={{ position:'relative', zIndex:1, marginTop: dense ? '6px' : '4px', marginBottom: dense ? '0' : '14px', paddingTop:'10px', borderTop:`1px dashed ${hexA(acc, 0.18)}`, display:'flex', alignItems:'baseline', flexWrap:'wrap', columnGap:'10px', rowGap:'6px', fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.10em' }}>
       {items.map((t, i) => (
         <span key={t.label} style={{ display:'inline-flex', alignItems:'baseline', gap:'5px' }}>
-          <span style={{ color:'rgba(160,140,255,0.45)', textTransform:'uppercase', fontSize:'8px', letterSpacing:'0.22em' }}>{t.label}</span>
-          <span style={{ color:'rgba(230,225,255,0.88)', fontVariantNumeric:'tabular-nums' }}>{t.value}</span>
-          {i < items.length-1 && <span style={{ color:'rgba(160,140,255,0.20)' }}>·</span>}
+          <span style={{ color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', fontSize:'8px', letterSpacing:'0.22em' }}>{t.label}</span>
+          <span style={{ color:'rgba(var(--text-hi-rgb),calc(0.88*var(--kt) + var(--tb)))', fontVariantNumeric:'tabular-nums' }}>{t.value}</span>
+          {i < items.length-1 && <span style={{ color:'rgba(var(--accent-rgb),calc(0.20*var(--ka) + var(--tb)))' }}>·</span>}
         </span>
       ))}
     </div>
@@ -313,7 +314,7 @@ function SkillsList({ skills, acc }) {
       </div>
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'2px 12px' }}>
         {skills.map((s, i) => (
-          <div key={i} style={{ display:'flex', alignItems:'baseline', gap:'7px', padding:'3px 8px 3px 6px', borderLeft:`2px solid ${hexA(acc, 0.45)}`, background: hexA(acc, 0.04), fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:400, color:'rgba(230,225,255,0.85)' }}>
+          <div key={i} style={{ display:'flex', alignItems:'baseline', gap:'7px', padding:'3px 8px 3px 6px', borderLeft:`2px solid ${hexA(acc, 0.45)}`, background: hexA(acc, 0.04), fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:400, color:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt) + var(--tb)))' }}>
             <svg width="4" height="4" viewBox="0 0 4 4" style={{ flexShrink:0, transform:'translateY(-1px)' }}>
               <polygon points={hexPoints(4)} fill={acc} />
             </svg>
@@ -330,13 +331,13 @@ function SkillsList({ skills, acc }) {
 
 // ── FILTER CHIP ──────────────────────────────────────────
 function FilterChip({ active, label, count, onClick, accent }) {
-  const ac = accent || 'rgba(124,77,255,1)';
+  const ac = accent || 'rgba(var(--purple-rgb),calc(1*var(--kp)))';
   return (
-    <button onClick={onClick} style={{ display:'inline-flex', alignItems:'center', gap:'8px', padding:'5px 10px', fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.14em', textTransform:'uppercase', background: active ? `${ac.replace('1)','0.18)')}` : 'rgba(10,6,28,0.6)', border: `1px solid ${active ? ac.replace('1)','0.7)') : 'rgba(160,140,255,0.18)'}`, color: active ? '#f0eeff' : 'rgba(200,190,240,0.65)', borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', whiteSpace:'nowrap' }}
-    onMouseEnter={e => { if (!active) { e.currentTarget.style.borderColor = ac.replace('1)','0.45)'); e.currentTarget.style.color = '#f0eeff'; } }}
-    onMouseLeave={e => { if (!active) { e.currentTarget.style.borderColor = 'rgba(160,140,255,0.18)'; e.currentTarget.style.color = 'rgba(200,190,240,0.65)'; } }}>
+    <button onClick={onClick} style={{ display:'inline-flex', alignItems:'center', gap:'8px', padding:'5px 10px', fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.14em', textTransform:'uppercase', background: active ? `${ac.replace('1)','0.18)')}` : 'rgba(var(--panel-rgb),0.6)', border: `1px solid ${active ? ac.replace('1)','0.7)') : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`, color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.65*var(--kt)))', borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', whiteSpace:'nowrap' }}
+    onMouseEnter={e => { if (!active) { e.currentTarget.style.borderColor = ac.replace('1)','0.45)'); e.currentTarget.style.color = 'var(--white)'; } }}
+    onMouseLeave={e => { if (!active) { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'; e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'; } }}>
       <span>{label}</span>
-      {typeof count === 'number' && <span style={{ fontSize:'8px', color: active ? `${ac.replace('1)','0.95)')}` : 'rgba(160,140,255,0.45)', fontVariantNumeric:'tabular-nums' }}>{count}</span>}
+      {typeof count === 'number' && <span style={{ fontSize:'8px', color: active ? `${ac.replace('1)','0.95)')}` : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', fontVariantNumeric:'tabular-nums' }}>{count}</span>}
     </button>
   );
 }
@@ -348,9 +349,9 @@ function FilterGroup({ title, values, selected, onToggle, getCount, labelFor }) 
   if (!values || values.length === 0) return null;
   return (
     <div style={{ marginBottom:'18px' }}>
-      <button onClick={() => setExpanded(!expanded)} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', width:'100%', padding:'6px 0', marginBottom:'8px', background:'transparent', border:'none', cursor:'pointer', borderBottom:'1px solid rgba(160,140,255,0.1)' }}>
+      <button onClick={() => setExpanded(!expanded)} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', width:'100%', padding:'6px 0', marginBottom:'8px', background:'transparent', border:'none', cursor:'pointer', borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))' }}>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:`${acc}cc`, textTransform:'uppercase' }}>◇ {title}</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(160,140,255,0.4)' }}>{expanded ? '−' : '+'}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))' }}>{expanded ? '−' : '+'}</span>
       </button>
       {expanded && (
         <div style={{ display:'flex', flexWrap:'wrap', gap:'6px' }}>
@@ -367,8 +368,8 @@ function FilterGroup({ title, values, selected, onToggle, getCount, labelFor }) 
 function MetaLine({ label, value, acc, highlight, divisionAccent }) {
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:'1px', minWidth:0 }}>
-      <span style={{ color: 'rgba(160,140,255,0.4)', fontSize:'7.5px' }}>{label}</span>
-      <span style={{ color: divisionAccent ? acc : (highlight ? '#f0eeff' : 'rgba(220,210,255,0.78)'), textShadow: (highlight || divisionAccent) ? `0 0 10px ${hexA(acc, 0.4)}` : 'none', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{value}</span>
+      <span style={{ color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:'7.5px' }}>{label}</span>
+      <span style={{ color: divisionAccent ? acc : (highlight ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.78*var(--kt)))'), textShadow: (highlight || divisionAccent) ? `0 0 10px ${hexA(acc, 0.4)}` : 'none', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{value}</span>
     </div>
   );
 }
@@ -389,7 +390,7 @@ function CharCard({ char, compact, delay }) {
           onMouseEnter={() => setHov(true)}
           onMouseLeave={() => setHov(false)}
           style={{ textDecoration:'none', display:'block', color:'inherit' }}>
-          <article style={{ position:'relative', background: hov ? `linear-gradient(160deg, ${accBg}, rgba(10,6,28,0.92))` : 'linear-gradient(160deg, rgba(14,8,32,0.78), rgba(8,5,22,0.85))', border: `1px solid ${hov ? acc : 'rgba(160,140,255,0.18)'}`, borderRadius:'3px', padding: compact ? '14px 16px' : '20px 22px 18px', transition:'background 0.3s, border-color 0.3s, transform 0.25s, box-shadow 0.3s', transform: hov ? 'translateY(-3px)' : 'translateY(0)', boxShadow: hov ? `0 10px 30px rgba(0,0,0,0.5), 0 0 24px ${hexA(acc,0.22)}` : '0 2px 10px rgba(0,0,0,0.3)', overflow:'hidden', opacity: isGefallen ? 0.7 : 1 }}>
+          <article className="sc-card" style={{ position:'relative', background: hov ? `linear-gradient(160deg, ${accBg}, rgba(var(--panel-rgb),0.92))` : 'linear-gradient(160deg, rgba(var(--panel-rgb),0.78), rgba(var(--panel-rgb),0.85))', border: `1px solid ${hov ? acc : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`, borderRadius:'3px', padding: compact ? '14px 16px' : '20px 22px 18px', transition:'background 0.3s, border-color 0.3s, transform 0.25s, box-shadow 0.3s', transform: hov ? 'translateY(-3px)' : 'translateY(0)', boxShadow: hov ? `0 10px 30px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k))), 0 0 24px ${hexA(acc,0.22)}` : '0 2px 10px rgba(0,0,0,0.3)', overflow:'hidden', opacity: isGefallen ? 0.7 : 1 }}>
 
             {/* Top-left accent bar */}
             <div style={{ position:'absolute', left:0, top:0, bottom:0, width:'3px', background: `linear-gradient(180deg, ${acc} 0%, ${accDim} 100%)`, boxShadow: hov ? `0 0 10px ${hexA(acc,0.85)}` : 'none', transition:'box-shadow 0.3s' }} />
@@ -398,12 +399,12 @@ function CharCard({ char, compact, delay }) {
             <div style={{ position:'absolute', inset:0, pointerEvents:'none', backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 22px, ${hexA(acc,0.05)} 22px, ${hexA(acc,0.05)} 23px)`, opacity: hov ? 1 : 0.55, transition:'opacity 0.3s' }} />
 
             {/* Spieler-Chip oben rechts */}
-            <div style={{ position:'absolute', top:'10px', right:'12px', zIndex:4, display:'flex', alignItems:'center', gap:'6px', padding:'5px 10px 5px 8px', background: hov ? hexA(acc, 0.28) : hexA(acc, 0.18), border:`1px solid ${hov ? acc : hexA(acc, 0.5)}`, borderRadius:'2px', boxShadow: hov ? `0 0 14px ${hexA(acc,0.45)}` : 'none', transition:'all 0.25s' }}>
+            <div className="sc-chip" style={{ position:'absolute', top:'10px', right:'12px', zIndex:4, display:'flex', alignItems:'center', gap:'6px', padding:'5px 10px 5px 8px', background: hov ? hexA(acc, 0.28) : hexA(acc, 0.18), border:`1px solid ${hov ? acc : hexA(acc, 0.5)}`, borderRadius:'2px', boxShadow: hov ? `0 0 14px ${hexA(acc,0.45)}` : 'none', transition:'all 0.25s' }}>
               <svg width="7" height="7" viewBox="0 0 7 7" style={{ flexShrink:0 }}>
                 <polygon points={hexPoints(7)} fill={acc} />
               </svg>
               <span style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.28em', color:hexA(acc,0.85), textTransform:'uppercase' }}>Spieler</span>
-              <span style={{ fontFamily:'var(--font-display)', fontSize:'12px', letterSpacing:'0.12em', color:'#f0eeff', textShadow:`0 0 8px ${hexA(acc,0.45)}` }}>{char.spieler}</span>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:'12px', letterSpacing:'0.12em', color:'var(--white)', textShadow:`0 0 8px ${hexA(acc,0.45)}` }}>{char.spieler}</span>
             </div>
 
             {/* Header row: portrait + name + status */}
@@ -412,13 +413,13 @@ function CharCard({ char, compact, delay }) {
                 <Portrait char={char} size={compact ? 86 : 124} />
                 <LevelBadge stufe={char.stufe} acc={acc} size={compact ? 32 : 40} />
               </div>
-              <div style={{ flex:1, minWidth:0, paddingTop:'4px', paddingRight:'120px' }}>
+              <div className="sc-headtext" style={{ flex:1, minWidth:0, paddingTop:'4px', paddingRight:'120px' }}>
                 <div style={{ marginBottom:'3px' }}>
-                  <h3 style={{ fontFamily:'var(--font-display)', fontSize: compact ? '15px' : '17px', fontWeight:400, letterSpacing:'0.06em', color:'#f0eeff', textShadow: hov ? `0 0 14px ${hexA(acc,0.55)}` : 'none', lineHeight:1.15, textWrap:'balance' }}>{char.name}</h3>
+                  <h3 style={{ fontFamily:'var(--font-display)', fontSize: compact ? '15px' : '17px', fontWeight:400, letterSpacing:'0.06em', color:'var(--white)', textShadow: hov ? `0 0 14px ${hexA(acc,0.55)}` : 'none', lineHeight:1.15, textWrap:'balance' }}>{char.name}</h3>
                 </div>
                 <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap', marginBottom:'8px' }}>
                   <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color: acc, textTransform:'uppercase', textShadow:`0 0 10px ${hexA(acc,0.35)}` }}>{char.rasse}</span>
-                  <span style={{ color:'rgba(160,140,255,0.3)', fontSize:'9px' }}>·</span>
+                  <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:'9px' }}>·</span>
                   <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color: acc, textTransform:'uppercase', textShadow:`0 0 10px ${hexA(acc,0.35)}` }}>{char.klasse}</span>
                 </div>
                 {/* Status pill */}
@@ -464,18 +465,18 @@ function CharCard({ char, compact, delay }) {
 // ── STAT TILE ─────────────────────────────────────────────
 function StatTile({ label, value, color, active, onClick }) {
   const [hov, setHov] = useState(false);
-  const c = color || '#c9b8ff';
+  const c = color || 'var(--lav)';
   const clickable = !!onClick;
-  const borderCol = active ? c : (color ? `${color}44` : 'rgba(160,140,255,0.2)');
-  const bgCol = active ? (color ? `${color}22` : 'rgba(124,77,255,0.18)') : 'rgba(10,6,28,0.6)';
+  const borderCol = active ? c : (color ? `${color}44` : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))');
+  const bgCol = active ? (color ? `${color}22` : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))') : 'rgba(var(--panel-rgb),0.6)';
   return (
     <button type="button" onClick={onClick} disabled={!clickable}
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{ padding:'10px 16px', minWidth:'78px', background: clickable && hov && !active ? (color ? `${color}11` : 'rgba(124,77,255,0.08)') : bgCol, border:`1px solid ${clickable && hov && !active ? (color ? `${color}88` : 'rgba(160,140,255,0.4)') : borderCol}`, borderRadius:'3px', textAlign:'center', position:'relative', cursor: clickable ? 'pointer' : 'default', boxShadow: active && color ? `0 0 14px ${color}33, 0 0 0 1px ${color}55 inset` : 'none', transition:'all 0.18s', fontFamily:'inherit', color:'inherit' }}>
+      style={{ padding:'10px 16px', minWidth:'78px', background: clickable && hov && !active ? (color ? `${color}11` : 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))') : bgCol, border:`1px solid ${clickable && hov && !active ? (color ? `${color}88` : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))') : borderCol}`, borderRadius:'3px', textAlign:'center', position:'relative', cursor: clickable ? 'pointer' : 'default', boxShadow: active && color ? `0 0 14px ${color}33, 0 0 0 1px ${color}55 inset` : 'none', transition:'all 0.18s', fontFamily:'inherit', color:'inherit' }}>
       <div style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, color:c, lineHeight:1, marginBottom:'4px', textShadow: color ? `0 0 14px ${color}55` : 'none' }}>
         {String(value).padStart(2,'0')}
       </div>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.6)', textTransform:'uppercase' }}>{label}</div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>{label}</div>
       {active && (
         <div style={{ position:'absolute', top:'4px', right:'6px', fontFamily:'var(--font-mono)', fontSize:'9px', color: c, lineHeight:1 }}>✓</div>
       )}
@@ -486,9 +487,9 @@ function StatTile({ label, value, color, active, onClick }) {
 // ── ACTIVE FILTER PILL ────────────────────────────────────
 function ActivePill({ label, onRemove }) {
   return (
-    <button onClick={onRemove} style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'4px 8px', background:'rgba(124,77,255,0.22)', border:'1px solid rgba(160,140,255,0.55)', borderRadius:'2px', color:'#f0eeff', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.14em', cursor:'pointer', textTransform:'uppercase', transition:'all 0.15s' }}
+    <button onClick={onRemove} style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'4px 8px', background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.55*var(--ka)))', borderRadius:'2px', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.14em', cursor:'pointer', textTransform:'uppercase', transition:'all 0.15s' }}
     onMouseEnter={e => { e.currentTarget.style.background='rgba(227,103,96,0.25)'; e.currentTarget.style.borderColor='rgba(227,103,96,0.7)'; }}
-    onMouseLeave={e => { e.currentTarget.style.background='rgba(124,77,255,0.22)'; e.currentTarget.style.borderColor='rgba(160,140,255,0.55)'; }}>
+    onMouseLeave={e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.22*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.55*var(--ka)))'; }}>
       <span>{label}</span>
       <span style={{ fontSize:'10px', lineHeight:1 }}>×</span>
     </button>
@@ -512,7 +513,10 @@ function App() {
 
   async function load() {
     setLoading(true);
-    const { data: rows } = await window._sb.from('characters').select('*').eq('type', 'spieler').order('created_at');
+    const [{ data: rows }] = await Promise.all([
+      window._sb.from('characters').select('*').eq('type', 'spieler').order('created_at'),
+      window.CharAge.load(),
+    ]);
 
     const ownerIds = [...new Set((rows || []).map(r => r.owner_id))];
     let profileMap = {};
@@ -626,7 +630,7 @@ function App() {
   useScrollReveal([filtered.length, tweaks.compactCards, loading]);
 
   return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'100vh', paddingTop:'var(--nav-h)' }}>
+    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'calc(var(--vh, 1vh) * 100)', paddingTop:'var(--nav-h)' }}>
       <SiteNav />
       {<ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
       {<FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />}
@@ -635,20 +639,20 @@ function App() {
       <div style={{ position:'relative', zIndex:5, maxWidth:'1380px', margin:'0 auto', padding:'46px 36px 80px' }}>
 
         {/* Breadcrumb */}
-        <div className="reveal-up" style={{ marginBottom:'14px', display:'flex', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(160,140,255,0.55)' }}>
-          <a href="/index.html" style={{ color:'rgba(160,140,255,0.55)', textDecoration:'none' }}>Meruria</a>
+        <div className="reveal-up" style={{ marginBottom:'14px', display:'flex', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
+          <a href="/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Meruria</a>
           <span style={{ opacity:0.4 }}>›</span>
-          <a href="/charaktere/index.html" style={{ color:'rgba(160,140,255,0.55)', textDecoration:'none' }}>Charaktere</a>
+          <a href="/charaktere/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Charaktere</a>
           <span style={{ opacity:0.4 }}>›</span>
-          <span style={{ color:'#c9b8ff' }}>Spielercharaktere</span>
+          <span style={{ color:'var(--lav)' }}>Spielercharaktere</span>
         </div>
 
         <div className="reveal-up" style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', gap:'24px', marginBottom:'32px', flexWrap:'wrap' }}>
           <div style={{ maxWidth:'620px' }}>
-            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(30px,3.6vw,46px)', fontWeight:300, letterSpacing:'0.20em', color:'#f0eeff', textShadow:'0 0 40px rgba(124,77,255,0.4)', lineHeight:1.1, textTransform:'uppercase', margin:'0 0 14px 0' }}>
+            <h1 style={{ fontFamily:'var(--font-display)', fontSize:'clamp(18px,3.6vw,46px)', fontWeight:300, letterSpacing:'0.20em', color:'var(--white)', textShadow:'0 0 40px rgba(var(--purple-rgb),calc(0.4*var(--kp)))', lineHeight:1.1, textTransform:'uppercase', margin:'0 0 14px 0' }}>
               Spielercharaktere
             </h1>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:'13px', lineHeight:1.85, color:'rgba(220,210,255,0.55)', letterSpacing:'0.04em', textWrap:'pretty', margin:0 }}>
+            <p style={{ fontFamily:'var(--font-body)', fontWeight:300, fontSize:'13px', lineHeight:1.85, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', letterSpacing:'0.04em', textWrap:'pretty', margin:0 }}>
               Alle Held*innen, die in der laufenden Kampagne von Spieler*innen geführt werden — aktive Figuren am Lagerfeuer, ruhende Charaktere zwischen Akten und die Namen jener, die zurückblieben.
             </p>
           </div>
@@ -664,7 +668,7 @@ function App() {
 
         {/* Loading indicator */}
         {loading && (
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'.3em', color:'rgba(124,77,255,0.35)', textTransform:'uppercase', padding:'60px 0' }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'.3em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'60px 0' }}>
             Lade Charaktere…
           </div>
         )}
@@ -673,19 +677,19 @@ function App() {
           <div style={{ display:'grid', gridTemplateColumns:'280px 1fr', gap:'28px', alignItems:'flex-start' }}>
 
             {/* SIDEBAR — FILTERS */}
-            <aside style={{ position:'sticky', top:'calc(var(--nav-h) + 20px)', background:'linear-gradient(160deg, rgba(14,8,32,0.78), rgba(8,5,22,0.85))', border:'1px solid rgba(160,140,255,0.18)', borderRadius:'3px', padding:'18px 20px', maxHeight:'calc(100vh - 96px)', overflow:'auto' }}>
+            <aside style={{ position:'sticky', top:'calc(var(--nav-h) + 20px)', background:'linear-gradient(160deg, rgba(var(--panel-rgb),0.78), rgba(var(--panel-rgb),0.85))', border:'1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))', borderRadius:'3px', padding:'18px 20px', maxHeight:'calc(calc(var(--vh, 1vh) * 100) - 96px)', overflow:'auto' }}>
               <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'14px' }}>
                 <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
-                  <svg width="10" height="10" viewBox="0 0 10 10"><polygon points={hexPoints(10)} fill="#7c4dff" stroke="rgba(160,140,255,0.8)" strokeWidth="0.5"/></svg>
-                  <span style={{ fontFamily:'var(--font-display)', fontSize:'13px', letterSpacing:'0.22em', color:'#f0eeff', textTransform:'uppercase' }}>Filter</span>
+                  <svg width="10" height="10" viewBox="0 0 10 10"><polygon points={hexPoints(10)} fill="#7c4dff" stroke="rgba(var(--accent-rgb),calc(0.8*var(--ka)))" strokeWidth="0.5"/></svg>
+                  <span style={{ fontFamily:'var(--font-display)', fontSize:'13px', letterSpacing:'0.22em', color:'var(--white)', textTransform:'uppercase' }}>Filter</span>
                   {activeFilterCount > 0 && (
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.1em', padding:'2px 6px', background:'rgba(124,77,255,0.25)', border:'1px solid rgba(160,140,255,0.5)', color:'#f0eeff', borderRadius:'2px' }}>{activeFilterCount}</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.1em', padding:'2px 6px', background:'rgba(var(--purple-rgb),calc(0.25*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))', color:'var(--white)', borderRadius:'2px' }}>{activeFilterCount}</span>
                   )}
                 </div>
                 {activeFilterCount > 0 && (
-                  <button onClick={clearAll} style={{ background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(160,140,255,0.55)', textTransform:'uppercase', padding:'4px 0', textDecoration:'underline', textUnderlineOffset:'3px' }}
-                  onMouseEnter={e => e.currentTarget.style.color = '#f0eeff'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(160,140,255,0.55)'}>
+                  <button onClick={clearAll} style={{ background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase', padding:'4px 0', textDecoration:'underline', textUnderlineOffset:'3px' }}
+                  onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))'}>
                     Zurücksetzen
                   </button>
                 )}
@@ -695,9 +699,9 @@ function App() {
               <div style={{ position:'relative', marginBottom:'18px' }}>
                 <input value={search} onChange={e => setSearch(e.target.value)}
                   placeholder="Name, Klasse, Rasse..."
-                  style={{ width:'100%', padding:'9px 30px 9px 12px', background:'rgba(5,4,15,0.7)', border:'1px solid rgba(160,140,255,0.22)', borderRadius:'2px', color:'#f0eeff', fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.06em', outline:'none', transition:'border-color 0.2s, box-shadow 0.2s' }}
-                  onFocus={e => { e.target.style.borderColor='rgba(124,77,255,0.7)'; e.target.style.boxShadow='0 0 12px rgba(124,77,255,0.18)'; }}
-                  onBlur={e => { e.target.style.borderColor='rgba(160,140,255,0.22)'; e.target.style.boxShadow='none'; }} />
+                  style={{ width:'100%', padding:'9px 30px 9px 12px', background:'rgba(var(--bg-rgb),0.7)', border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))', borderRadius:'2px', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.06em', outline:'none', transition:'border-color 0.2s, box-shadow 0.2s' }}
+                  onFocus={e => { e.target.style.borderColor='rgba(var(--purple-rgb),calc(0.7*var(--kp)))'; e.target.style.boxShadow='0 0 12px rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; }}
+                  onBlur={e => { e.target.style.borderColor='rgba(var(--accent-rgb),calc(0.22*var(--ka)))'; e.target.style.boxShadow='none'; }} />
                 <svg width="12" height="12" viewBox="0 0 12 12" style={{ position:'absolute', right:'10px', top:'50%', transform:'translateY(-50%)', opacity:0.5 }}>
                   <circle cx="5" cy="5" r="3.5" fill="none" stroke="#7c4dff" strokeWidth="1"/>
                   <line x1="7.5" y1="7.5" x2="10.5" y2="10.5" stroke="#7c4dff" strokeWidth="1"/>
@@ -719,14 +723,14 @@ function App() {
               {/* Toolbar */}
               <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'14px', marginBottom:'18px', flexWrap:'wrap' }}>
                 <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(160,140,255,0.7)', textTransform:'uppercase' }}>Register</span>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:'rgba(160,140,255,0.45)' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Register</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))' }}>
                     {String(filtered.length).padStart(2,'0')} / {String(characters.length).padStart(2,'0')} Charaktere
                   </span>
                 </div>
                 <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(160,140,255,0.5)', textTransform:'uppercase' }}>Sortieren</span>
-                  <select value={sort} onChange={e => setSort(e.target.value)} style={{ padding:'5px 10px', background:'rgba(5,4,15,0.7)', border:'1px solid rgba(160,140,255,0.22)', borderRadius:'2px', color:'#f0eeff', fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.1em', cursor:'pointer', outline:'none' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Sortieren</span>
+                  <select value={sort} onChange={e => setSort(e.target.value)} style={{ padding:'5px 10px', background:'rgba(var(--bg-rgb),0.7)', border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))', borderRadius:'2px', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.1em', cursor:'pointer', outline:'none' }}>
                     <option value="name">Name (A–Z)</option>
                     <option value="stufe-desc">Stufe ↓</option>
                     <option value="stufe-asc">Stufe ↑</option>
@@ -755,8 +759,8 @@ function App() {
 
               {/* Active filter pills */}
               {activeFilterCount > 0 && (
-                <div style={{ display:'flex', flexWrap:'wrap', gap:'6px', marginBottom:'18px', padding:'10px 12px', background:'rgba(124,77,255,0.06)', border:'1px dashed rgba(160,140,255,0.25)', borderRadius:'2px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.24em', color:'rgba(160,140,255,0.65)', textTransform:'uppercase', padding:'4px 4px 4px 0' }}>Aktiv:</span>
+                <div style={{ display:'flex', flexWrap:'wrap', gap:'6px', marginBottom:'18px', padding:'10px 12px', background:'rgba(var(--purple-rgb),calc(0.06*var(--kp)))', border:'1px dashed rgba(var(--accent-rgb),calc(0.25*var(--ka)))', borderRadius:'2px' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.24em', color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))', textTransform:'uppercase', padding:'4px 4px 4px 0' }}>Aktiv:</span>
                   {search && <ActivePill label={`„${search}"`} onRemove={() => setSearch('')} />}
                   {Object.entries(filters).map(([group, vals]) =>
                     vals.map(v => (
@@ -768,14 +772,14 @@ function App() {
 
               {/* Result grid */}
               {filtered.length === 0 ? (
-                <div style={{ padding:'60px 30px', textAlign:'center', border:'1px dashed rgba(160,140,255,0.25)', borderRadius:'3px', background:'rgba(10,6,28,0.4)' }}>
+                <div style={{ padding:'60px 30px', textAlign:'center', border:'1px dashed rgba(var(--accent-rgb),calc(0.25*var(--ka)))', borderRadius:'3px', background:'rgba(var(--panel-rgb),0.4)' }}>
                   <svg width="48" height="48" viewBox="0 0 48 48" style={{ margin:'0 auto 16px', opacity:0.5 }}>
                     <polygon points={hexPoints(48)} fill="none" stroke="#7c4dff" strokeWidth="1" strokeDasharray="3 3"/>
                     <text x="24" y="30" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fill="#7c4dff" opacity="0.7">∅</text>
                   </svg>
-                  <div style={{ fontFamily:'var(--font-display)', fontSize:'14px', letterSpacing:'0.22em', color:'#c9b8ff', textTransform:'uppercase', marginBottom:'8px' }}>Keine Charaktere im Register</div>
-                  <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', color:'rgba(200,190,240,0.55)', marginBottom:'14px' }}>Mit den aktuellen Filtern bleibt das Archiv leer.</div>
-                  <button onClick={clearAll} style={{ padding:'7px 16px', background:'rgba(124,77,255,0.15)', border:'1px solid rgba(160,140,255,0.5)', color:'#f0eeff', fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.22em', cursor:'pointer', borderRadius:'2px', textTransform:'uppercase' }}>Filter zurücksetzen</button>
+                  <div style={{ fontFamily:'var(--font-display)', fontSize:'14px', letterSpacing:'0.22em', color:'var(--lav)', textTransform:'uppercase', marginBottom:'8px' }}>Keine Charaktere im Register</div>
+                  <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginBottom:'14px' }}>Mit den aktuellen Filtern bleibt das Archiv leer.</div>
+                  <button onClick={clearAll} style={{ padding:'7px 16px', background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.22em', cursor:'pointer', borderRadius:'2px', textTransform:'uppercase' }}>Filter zurücksetzen</button>
                 </div>
               ) : (
                 <div style={{ display:'grid', gridTemplateColumns: tweaks.compactCards ? 'repeat(auto-fill, minmax(310px, 1fr))' : 'repeat(auto-fill, minmax(400px, 1fr))', gap:'16px' }}>
@@ -791,17 +795,17 @@ function App() {
         {/* Closing flourish */}
         {!loading && (
           <div className="reveal-up" style={{ display:'flex', alignItems:'center', gap:'14px', marginTop:'48px', justifyContent:'center' }}>
-            <div style={{ width:'80px', height:'1px', background:'linear-gradient(270deg, rgba(124,77,255,0.5), transparent)' }} />
-            <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill="rgba(124,77,255,0.4)" stroke="rgba(160,140,255,0.5)" strokeWidth="0.5" /></svg>
-            <div style={{ width:'80px', height:'1px', background:'linear-gradient(90deg, rgba(124,77,255,0.5), transparent)' }} />
+            <div style={{ width:'80px', height:'1px', background:'linear-gradient(270deg, rgba(var(--purple-rgb),calc(0.5*var(--kp))), transparent)' }} />
+            <svg width="6" height="6" viewBox="0 0 6 6"><polygon points={hexPoints(6)} fill="rgba(var(--purple-rgb),calc(0.4*var(--kp)))" stroke="rgba(var(--accent-rgb),calc(0.5*var(--ka)))" strokeWidth="0.5" /></svg>
+            <div style={{ width:'80px', height:'1px', background:'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.5*var(--kp))), transparent)' }} />
           </div>
         )}
       </div>
 
       {/* ── FOOTER ── */}
-      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(160,140,255,0.07)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(160,140,255,0.22)', letterSpacing:'0.2em' }}>MERURIA // SPIELERCHARAKTERE</div>
+      <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)))', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>MERURIA // SPIELERCHARAKTERE</div>
       </div></div>
   );
 }

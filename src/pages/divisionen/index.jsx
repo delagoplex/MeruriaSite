@@ -338,7 +338,7 @@ function ParticleField({
         if (p.y > 1) p.y = 0;
         ctx.beginPath();
         ctx.arc(p.x * w + shiftX, p.y * h + shiftY, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(160,140,255,${p.alpha})`;
+        ctx.fillStyle = `rgba(${themeRgb('--accent-rgb')},${p.alpha})`;
         ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
@@ -388,7 +388,7 @@ function DivisionCard({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
-      background: `linear-gradient(140deg, ${div.bgStart} 0%, rgba(5,4,15,0.98) 100%)`,
+      background: `linear-gradient(140deg, color-mix(in srgb, ${div.bgStart} var(--dk), rgb(var(--bg-rgb))) 0%, rgba(var(--bg-rgb),0.98) 100%)`,
       border: `1px solid ${hov ? acc + '55' : acc + '18'}`,
       borderLeft: `3px solid ${hov ? acc : acc + '88'}`,
       borderRadius: '4px',
@@ -475,7 +475,7 @@ function DivisionCard({
       fontSize: '16px',
       fontWeight: '400',
       letterSpacing: '0.13em',
-      color: hov ? '#f0eeff' : 'rgba(240,238,255,0.88)',
+      color: hov ? 'var(--white)' : 'rgba(var(--text-hi-rgb),calc(0.88*var(--kt)))',
       textShadow: hov ? `0 0 20px ${acc}55` : 'none',
       transition: 'color 0.3s, text-shadow 0.3s',
       marginBottom: '5px',
@@ -495,7 +495,7 @@ function DivisionCard({
       fontWeight: '300',
       fontSize: '12.5px',
       lineHeight: 1.85,
-      color: 'rgba(240,238,255,0.6)',
+      color: 'rgba(var(--text-hi-rgb),calc(0.6*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
       textWrap: 'pretty',
       marginBottom: '18px',
@@ -526,7 +526,7 @@ function DivisionCard({
     style: {
       flex: 1,
       height: '1px',
-      background: `linear-gradient(90deg, ${acc}44, rgba(124,77,255,0.15), transparent)`
+      background: `linear-gradient(90deg, ${acc}44, rgba(var(--purple-rgb),calc(0.15*var(--kp))), transparent)`
     }
   })), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -593,7 +593,7 @@ function DivisionCard({
       fontWeight: '300',
       fontSize: '11.5px',
       lineHeight: 1.65,
-      color: 'rgba(200,190,240,0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.01em',
       fontStyle: 'italic',
       textWrap: 'pretty'
@@ -635,7 +635,7 @@ function App() {
     onMouseMove: handleMouseMove,
     style: {
       position: 'relative',
-      minHeight: '100vh'
+      minHeight: 'calc(var(--vh, 1vh) * 100)'
     }
   }, /*#__PURE__*/React.createElement(ParticleField, {
     mouseX: mouse.x,
@@ -643,44 +643,7 @@ function App() {
   }), /*#__PURE__*/React.createElement(FloatingHexField, {
     mouseX: mouse.x,
     mouseY: mouse.y
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'relative',
-      zIndex: 10,
-      width: '100%',
-      height: '180px',
-      background: 'linear-gradient(180deg, rgba(20,10,50,0.95) 0%, rgba(10,8,30,0.98) 100%)',
-      borderBottom: '1px solid rgba(160,140,255,0.15)',
-      overflow: 'hidden',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0,
-      background: `radial-gradient(ellipse at 20% 50%, rgba(124,77,255,0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 50%, rgba(45,125,255,0.14) 0%, transparent 50%), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(160,140,255,0.04) 60px, rgba(160,140,255,0.04) 61px)`,
-      pointerEvents: 'none'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0,
-      backgroundImage: `repeating-linear-gradient(135deg, transparent, transparent 18px, rgba(124,77,255,0.03) 18px, rgba(124,77,255,0.03) 19px)`,
-      pointerEvents: 'none'
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
-      color: 'rgba(160,140,255,0.3)',
-      letterSpacing: '0.3em',
-      textTransform: 'uppercase',
-      position: 'relative',
-      zIndex: 1
-    }
-  }, "Kopfbild \u2014 Artwork hier ablegen")), /*#__PURE__*/React.createElement(SiteNav, {
+  }), /*#__PURE__*/React.createElement(SiteNav, {
     rightLabel: "DIVISIONEN-ARCHIV"
   }), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -709,7 +672,7 @@ function App() {
     style: {
       width: '60px',
       height: '1px',
-      background: 'linear-gradient(270deg, rgba(124,77,255,0.6), transparent)'
+      background: 'linear-gradient(270deg, rgba(var(--purple-rgb),calc(0.6*var(--kp))), transparent)'
     }
   }), /*#__PURE__*/React.createElement("svg", {
     width: "8",
@@ -717,14 +680,14 @@ function App() {
     viewBox: "0 0 8 8"
   }, /*#__PURE__*/React.createElement("polygon", {
     points: hexPoints(8),
-    fill: "rgba(124,77,255,0.35)",
-    stroke: "rgba(160,140,255,0.6)",
+    fill: "rgba(var(--purple-rgb),calc(0.35*var(--kp)))",
+    stroke: "rgba(var(--accent-rgb),calc(0.6*var(--ka)))",
     strokeWidth: "0.8"
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '60px',
       height: '1px',
-      background: 'linear-gradient(90deg, rgba(124,77,255,0.6), transparent)'
+      background: 'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.6*var(--kp))), transparent)'
     }
   })), /*#__PURE__*/React.createElement("h1", {
     style: {
@@ -732,8 +695,8 @@ function App() {
       fontSize: 'clamp(30px,4vw,52px)',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: '#f0eeff',
-      textShadow: '0 0 50px rgba(124,77,255,0.4)',
+      color: 'var(--white)',
+      textShadow: '0 0 50px rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
       marginBottom: '18px',
       lineHeight: 1.15
     }
@@ -743,15 +706,16 @@ function App() {
       fontWeight: '300',
       fontSize: '13px',
       lineHeight: 1.9,
-      color: 'rgba(200,190,240,0.45)',
+      color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.06em',
       maxWidth: '520px',
       margin: '0 auto'
     }
   }, "Alle acht Divisionen sind operabel und arbeiten gemeinsam, um das \xDCberleben der Kolonisten auf Meruria zu sichern.")), /*#__PURE__*/React.createElement("div", {
+    className: "division-grid",
     style: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
       gap: '18px'
     }
   }, DIVISIONS.map((div, i) => /*#__PURE__*/React.createElement(DivisionCard, {
@@ -763,7 +727,7 @@ function App() {
       position: 'relative',
       zIndex: 10,
       padding: '10px 32px',
-      borderTop: '1px solid rgba(160,140,255,0.07)',
+      borderTop: '1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)))',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center'
@@ -772,14 +736,14 @@ function App() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '7px',
-      color: 'rgba(160,140,255,0.22)',
+      color: 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em'
     }
   }, "\u25C8 ARCHIV-STATUS: NOMINAL \u25C8 EPOCHE: UNBEKANNT"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '7px',
-      color: 'rgba(160,140,255,0.22)',
+      color: 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em'
     }
   }, "MERURIA // DIE VERWOBENEN REICHE")));

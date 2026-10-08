@@ -19,7 +19,7 @@ function hexPts(size) {
   return pts.join(' ');
 }
 
-function Oct({ size = 8, color = 'rgba(124,77,255,0.6)', fill = 'rgba(124,77,255,0.2)', sw = 1, style = {} }) {
+function Oct({ size = 8, color = 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', fill = 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))', sw = 1, style = {} }) {
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display: 'block', flexShrink: 0, ...style }}>
       <polygon points={hexPts(size)} fill={fill} stroke={color} strokeWidth={sw} />
@@ -30,13 +30,13 @@ function Oct({ size = 8, color = 'rgba(124,77,255,0.6)', fill = 'rgba(124,77,255
 // ── SECTION HEADER ─────────────────────────────────────────────────
 function SH({ mono, title, anchorId }) {
   return (
-    <div id={anchorId} style={{ marginBottom: '24px', paddingBottom: '14px', borderBottom: '1px solid rgba(124,77,255,0.15)', scrollMarginTop: '70px' }}>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: 'rgba(124,77,255,0.5)', textTransform: 'uppercase', marginBottom: '6px' }}>{mono}</div>
+    <div id={anchorId} style={{ marginBottom: '24px', paddingBottom: '14px', borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', scrollMarginTop: '70px' }}>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform: 'uppercase', marginBottom: '6px' }}>{mono}</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <Oct size={9} />
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: 300, letterSpacing: '0.22em', color: 'rgba(232,225,255,0.94)', textTransform: 'uppercase' }}>{title}</h2>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: 300, letterSpacing: '0.22em', color: 'rgba(var(--text-hi-rgb),calc(0.94*var(--kt) + var(--tb)))', textTransform: 'uppercase' }}>{title}</h2>
       </div>
-      <div style={{ width: '48px', height: '1px', background: 'linear-gradient(90deg,rgba(124,77,255,0.77),transparent)', marginTop: '12px', animation: 'pulse-glow 3s infinite' }} />
+      <div style={{ width: '48px', height: '1px', background: 'linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.77*var(--kp))),transparent)', marginTop: '12px', animation: 'pulse-glow 3s infinite' }} />
     </div>
   );
 }
@@ -45,8 +45,8 @@ function SubH({ children, id }) {
   return (
     <h3 id={id} style={{
       fontFamily: 'var(--font-display)', fontSize: '14px', fontWeight: 400, letterSpacing: '0.18em',
-      color: 'rgba(170,150,255,0.88)', textTransform: 'uppercase',
-      margin: '32px 0 14px', paddingBottom: '8px', borderBottom: '1px solid rgba(124,77,255,0.12)',
+      color: 'color-mix(in srgb, rgba(170,150,255,0.88), rgb(var(--ink-rgb)) var(--cm))', textTransform: 'uppercase',
+      margin: '32px 0 14px', paddingBottom: '8px', borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
       scrollMarginTop: '70px',
     }}>{children}</h3>
   );
@@ -56,19 +56,19 @@ function Txt({ c, children, s = {} }) {
   return (
     <p style={{
       fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: '13px', lineHeight: 1.85,
-      color: 'rgba(204,194,240,0.7)', letterSpacing: '0.02em', marginBottom: '12px', textWrap: 'pretty',
+      color: 'color-mix(in srgb, rgba(204,194,240,0.7), rgb(var(--ink-rgb)) var(--cm))', letterSpacing: '0.02em', marginBottom: '12px', textWrap: 'pretty',
       ...s,
     }}>{c || children}</p>
   );
 }
 
-function Acc({ c, children }) { return <strong style={{ color: 'rgba(180,155,255,0.95)', fontWeight: 500 }}>{c || children}</strong>; }
-function Hl({ c, children })  { return <strong style={{ color: 'rgba(220,210,255,0.92)', fontWeight: 500 }}>{c || children}</strong>; }
+function Acc({ c, children }) { return <strong style={{ color: 'color-mix(in srgb, rgba(180,155,255,0.95), rgb(var(--ink-rgb)) var(--cm))', fontWeight: 500 }}>{c || children}</strong>; }
+function Hl({ c, children })  { return <strong style={{ color: 'rgba(var(--text-rgb),calc(0.92*var(--kt) + var(--tb)))', fontWeight: 500 }}>{c || children}</strong>; }
 
 // ── CALLOUT BOX ────────────────────────────────────────────────────
 function Callout({ tone = 'info', title, children }) {
   const toneMap = {
-    info:    { border: 'rgba(124,77,255,0.45)',  bg: 'rgba(124,77,255,0.06)',  tag: 'rgba(160,140,255,0.85)' },
+    info:    { border: 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))',  bg: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',  tag: 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))' },
     warn:    { border: 'rgba(220,170,60,0.55)',  bg: 'rgba(220,170,60,0.07)',  tag: 'rgba(240,200,90,0.92)' },
     bad:     { border: 'rgba(220,80,80,0.55)',   bg: 'rgba(220,80,80,0.07)',   tag: 'rgba(255,120,120,0.92)' },
     good:    { border: 'rgba(80,200,150,0.5)',   bg: 'rgba(80,200,150,0.06)',  tag: 'rgba(120,230,180,0.9)' },
@@ -83,7 +83,7 @@ function Callout({ tone = 'info', title, children }) {
       {title && (
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase', color: t.tag, marginBottom: '6px' }}>{title}</div>
       )}
-      <div style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: '12.5px', lineHeight: 1.75, color: 'rgba(210,200,240,0.78)', textWrap: 'pretty' }}>
+      <div style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: '12.5px', lineHeight: 1.75, color: 'color-mix(in srgb, rgba(210,200,240,0.78), rgb(var(--ink-rgb)) var(--cm))', textWrap: 'pretty' }}>
         {children}
       </div>
     </div>
@@ -91,19 +91,22 @@ function Callout({ tone = 'info', title, children }) {
 }
 
 // ── TABLE ──────────────────────────────────────────────────────────
-function Table({ cols, rows, dense = false, accent = 'rgba(124,77,255,0.18)' }) {
+function Table({ cols, rows, dense = false, accent = 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))', stack }) {
+  // On phones tables with 4+ columns (or `stack`) turn into label/value cards, see base.css .rt-stack
+  const stacked = stack !== undefined ? stack : cols.length >= 4;
   return (
-    <div style={{ border: '1px solid rgba(124,77,255,0.18)', borderRadius: '3px', overflow: 'auto', margin: '14px 0 22px', background: 'rgba(10,8,28,0.55)' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-body)' }}>
+    <div style={{ border: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', borderRadius: '3px', overflow: 'auto', margin: '14px 0 22px', background: 'rgba(var(--panel-rgb),0.55)' }}>
+      {/* inline display:table keeps the table full width (base.css makes bare tables display:block on phones; this wrapper scrolls instead) */}
+      <table className={stacked ? 'rt-stack' : undefined} style={{ display: 'table', width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-body)' }}>
         <thead>
           <tr>
             {cols.map((c, i) => (
               <th key={i} style={{
-                background: accent, color: 'rgba(240,238,255,0.92)',
+                background: accent, color: 'rgba(var(--text-hi-rgb),calc(0.92*var(--kt) + var(--tb)))',
                 fontFamily: 'var(--font-display)', fontSize: '10.5px', fontWeight: 400,
                 letterSpacing: '0.14em', textTransform: 'uppercase',
                 padding: dense ? '7px 10px' : '10px 14px', textAlign: c.align || 'left',
-                borderBottom: '1px solid rgba(124,77,255,0.35)',
+                borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
                 whiteSpace: 'nowrap',
               }}>{c.label}</th>
             ))}
@@ -111,14 +114,14 @@ function Table({ cols, rows, dense = false, accent = 'rgba(124,77,255,0.18)' }) 
         </thead>
         <tbody>
           {rows.map((r, i) => (
-            <tr key={i} style={{ borderBottom: '1px solid rgba(124,77,255,0.07)' }}>
+            <tr key={i} style={{ borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.07*var(--kp)))' }}>
               {cols.map((c, j) => {
                 const v = typeof c.render === 'function' ? c.render(r, i) : r[c.key];
                 return (
-                  <td key={j} style={{
+                  <td key={j} data-label={c.label} style={{
                     padding: dense ? '7px 10px' : '10px 14px',
                     fontSize: '12.5px', fontWeight: 300,
-                    color: j === 0 ? 'rgba(190,175,255,0.88)' : 'rgba(204,194,240,0.72)',
+                    color: j === 0 ? 'color-mix(in srgb, rgba(190,175,255,0.88), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(204,194,240,0.72), rgb(var(--ink-rgb)) var(--cm))',
                     lineHeight: 1.6, verticalAlign: 'top',
                     textAlign: c.align || 'left',
                     whiteSpace: c.nowrap ? 'nowrap' : 'normal',
@@ -210,10 +213,10 @@ function DiceButton({ spec = '1W20', label, onResult, modifier = 0, children, si
                    : 'rgba(180,155,255,0.95)';
   const toneBg    = tone === 'bad'  ? 'rgba(220,70,70,0.10)'
                    : tone === 'good' ? 'rgba(80,200,150,0.10)'
-                   : 'rgba(124,77,255,0.10)';
+                   : 'rgba(var(--purple-rgb),calc(0.10*var(--kp)))';
   const toneBorder= tone === 'bad'  ? 'rgba(220,70,70,0.4)'
                    : tone === 'good' ? 'rgba(80,200,150,0.4)'
-                   : 'rgba(124,77,255,0.4)';
+                   : 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))';
 
   const showResult = !!state && !rolling;
 
@@ -248,10 +251,10 @@ function DiceButton({ spec = '1W20', label, onResult, modifier = 0, children, si
         <span style={{
           display: 'inline-flex', alignItems: 'center', gap: '6px',
           fontFamily: 'var(--font-mono)', fontSize: fs,
-          letterSpacing: '0.12em', color: 'rgba(232,225,255,0.95)',
+          letterSpacing: '0.12em', color: 'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))',
           padding: '3px 9px', borderRadius: '2px',
-          background: 'rgba(124,77,255,0.14)',
-          border: '1px solid rgba(124,77,255,0.35)',
+          background: 'rgba(var(--purple-rgb),calc(0.14*var(--kp)))',
+          border: '1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
           animation: 'resultPop 0.4s cubic-bezier(.2,.7,.3,1.1)',
           whiteSpace: 'nowrap',
         }}>
@@ -278,16 +281,16 @@ function CraftSidebar({ chapters, activeId, onSelect }) {
     <aside style={{
       width: 'var(--sidebar-w)', flexShrink: 0,
       position: 'sticky', top: 'var(--nav-h)',
-      height: 'calc(100vh - var(--nav-h))',
-      borderRight: '1px solid rgba(160,140,255,0.1)',
+      height: 'calc(calc(var(--vh, 1vh) * 100) - var(--nav-h))',
+      borderRight: '1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
       padding: '24px 0 40px',
-      background: 'rgba(5,4,15,0.85)',
+      background: 'rgba(var(--bg-rgb),0.85)',
       backdropFilter: 'blur(12px)',
       zIndex: 50, overflowY: 'auto', alignSelf: 'flex-start',
     }}>
       <div style={{
         fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em',
-        color: 'rgba(160,140,255,0.4)', textTransform: 'uppercase',
+        color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform: 'uppercase',
         padding: '0 22px', marginBottom: '16px',
       }}>Handwerkerhandbuch</div>
       {chapters.map((ch) => {
@@ -298,22 +301,22 @@ function CraftSidebar({ chapters, activeId, onSelect }) {
               display: 'flex', alignItems: 'center', gap: '10px',
               width: '100%', textAlign: 'left',
               padding: '9px 22px',
-              background: on ? 'rgba(124,77,255,0.13)' : 'transparent',
+              background: on ? 'rgba(var(--purple-rgb),calc(0.13*var(--kp)))' : 'transparent',
               border: 'none',
               borderLeft: on ? '2px solid #7c4dff' : '2px solid transparent',
               cursor: 'pointer',
               fontFamily: 'var(--font-body)',
               fontWeight: on ? 500 : 300, fontSize: '12.5px',
               letterSpacing: '0.06em',
-              color: on ? '#f0eeff' : 'rgba(200,190,240,0.6)',
+              color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
               transition: 'all 0.15s',
             }}
-            onMouseEnter={e => { if (!on) { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.55)'; e.currentTarget.style.background = 'rgba(124,77,255,0.08)'; } }}
-            onMouseLeave={e => { if (!on) { e.currentTarget.style.color = 'rgba(200,190,240,0.6)'; e.currentTarget.style.borderLeftColor = 'transparent'; e.currentTarget.style.background = 'transparent'; } }}
+            onMouseEnter={e => { if (!on) { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderLeftColor = 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))'; e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))'; } }}
+            onMouseLeave={e => { if (!on) { e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'; e.currentTarget.style.borderLeftColor = 'transparent'; e.currentTarget.style.background = 'transparent'; } }}
           >
             <Oct size={7}
-                 color={on ? '#7c4dff' : 'rgba(124,77,255,0.4)'}
-                 fill={on ? 'rgba(124,77,255,0.44)' : 'rgba(124,77,255,0.12)'} />
+                 color={on ? '#7c4dff' : 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))'}
+                 fill={on ? 'rgba(var(--purple-rgb),calc(0.44*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))'} />
             <span style={{ flex: 1 }}>{ch.label}</span>
             <span style={{
               fontFamily: 'var(--font-mono)', fontSize: '8px', opacity: 0.45, letterSpacing: '0.15em',
@@ -322,10 +325,10 @@ function CraftSidebar({ chapters, activeId, onSelect }) {
         );
       })}
 
-      <div style={{ height: '1px', background: 'rgba(124,77,255,0.12)', margin: '22px 22px 18px' }} />
+      <div style={{ height: '1px', background: 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))', margin: '22px 22px 18px' }} />
       <div style={{
         fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em',
-        color: 'rgba(160,140,255,0.4)', textTransform: 'uppercase',
+        color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform: 'uppercase',
         padding: '0 22px', marginBottom: '12px',
       }}>Werkbank</div>
       {[
@@ -338,22 +341,22 @@ function CraftSidebar({ chapters, activeId, onSelect }) {
             display: 'flex', alignItems: 'center', gap: '10px',
             width: '100%', textAlign: 'left',
             padding: '9px 22px',
-            background: activeId === t.id ? 'rgba(124,77,255,0.13)' : 'transparent',
+            background: activeId === t.id ? 'rgba(var(--purple-rgb),calc(0.13*var(--kp)))' : 'transparent',
             border: 'none',
             borderLeft: activeId === t.id ? '2px solid #7c4dff' : '2px solid transparent',
             cursor: 'pointer',
             fontFamily: 'var(--font-body)',
             fontWeight: activeId === t.id ? 500 : 300, fontSize: '12.5px',
             letterSpacing: '0.06em',
-            color: activeId === t.id ? '#f0eeff' : 'rgba(200,190,240,0.6)',
+            color: activeId === t.id ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
             transition: 'all 0.15s',
           }}
-          onMouseEnter={e => { if (activeId !== t.id) { e.currentTarget.style.color = '#f0eeff'; e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.55)'; e.currentTarget.style.background = 'rgba(124,77,255,0.08)'; } }}
-          onMouseLeave={e => { if (activeId !== t.id) { e.currentTarget.style.color = 'rgba(200,190,240,0.6)'; e.currentTarget.style.borderLeftColor = 'transparent'; e.currentTarget.style.background = 'transparent'; } }}
+          onMouseEnter={e => { if (activeId !== t.id) { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderLeftColor = 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))'; e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))'; } }}
+          onMouseLeave={e => { if (activeId !== t.id) { e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'; e.currentTarget.style.borderLeftColor = 'transparent'; e.currentTarget.style.background = 'transparent'; } }}
         >
           <Oct size={7}
-               color={activeId === t.id ? '#7c4dff' : 'rgba(124,77,255,0.4)'}
-               fill={activeId === t.id ? 'rgba(124,77,255,0.44)' : 'rgba(124,77,255,0.12)'} />
+               color={activeId === t.id ? '#7c4dff' : 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))'}
+               fill={activeId === t.id ? 'rgba(var(--purple-rgb),calc(0.44*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))'} />
           <span>{t.label}</span>
         </button>
       ))}

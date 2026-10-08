@@ -57,15 +57,15 @@ const STATUS_OPTS = [{
 const APP_STATUS = {
   pending: {
     label: 'Ausstehend',
-    color: 'rgba(127,184,255,0.8)'
+    color: 'color-mix(in srgb, rgba(127,184,255,0.8), rgb(var(--ink-rgb)) var(--cm))'
   },
   accepted: {
     label: 'Angenommen',
-    color: 'rgba(100,220,140,0.8)'
+    color: 'color-mix(in srgb, rgba(100,220,140,0.8), rgb(var(--ink-rgb)) var(--cm))'
   },
   rejected: {
     label: 'Abgelehnt',
-    color: 'rgba(255,120,120,0.8)'
+    color: 'color-mix(in srgb, rgba(255,120,120,0.8), rgb(var(--ink-rgb)) var(--cm))'
   }
 };
 const DIVISIONS = [
@@ -93,9 +93,9 @@ function Btn({
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.45 : 1,
     transition: 'all .15s',
-    background: danger ? 'rgba(200,60,60,0.15)' : secondary ? 'transparent' : 'rgba(124,77,255,0.18)',
-    borderColor: danger ? 'rgba(200,60,60,0.5)' : secondary ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.55)',
-    color: danger ? 'rgba(255,120,120,0.9)' : secondary ? 'rgba(124,77,255,0.55)' : 'rgba(200,190,240,0.9)'
+    background: danger ? 'rgba(200,60,60,0.15)' : secondary ? 'transparent' : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
+    borderColor: danger ? 'rgba(200,60,60,0.5)' : secondary ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))',
+    color: danger ? 'color-mix(in srgb, rgba(255,120,120,0.9), rgb(var(--ink-rgb)) var(--cm))' : secondary ? 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))' : 'rgba(var(--text-rgb),calc(0.9*var(--kt)))'
   };
   return /*#__PURE__*/React.createElement("button", {
     onClick: disabled ? undefined : onClick,
@@ -110,7 +110,7 @@ function Btn({
     }
   }, children);
 }
-function mono(txt, size = '8px', color = 'rgba(124,77,255,0.5)') {
+function mono(txt, size = '8px', color = 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))') {
   return /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
@@ -129,15 +129,15 @@ function Panel({
 }) {
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      background: 'linear-gradient(180deg, rgba(15,10,40,0.7) 0%, rgba(8,6,22,0.85) 100%)',
-      border: '1px solid rgba(160,140,255,0.18)',
+      background: 'linear-gradient(180deg, rgba(var(--panel-rgb),0.7) 0%, rgba(var(--panel-rgb),0.85) 100%)',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
       borderRadius: '3px',
       backdropFilter: 'blur(8px)',
       display: 'flex',
       flexDirection: 'column',
       minHeight: 0,
       overflow: 'hidden',
-      boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
+      boxShadow: '0 8px 40px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k)))',
       ...style
     }
   }, children);
@@ -149,8 +149,8 @@ function PanelHead({
   return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '10px 18px',
-      borderBottom: '1px solid rgba(160,140,255,0.18)',
-      background: 'linear-gradient(180deg,rgba(124,77,255,0.10)0%,rgba(124,77,255,0.02)100%)',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
+      background: 'linear-gradient(180deg,rgba(var(--purple-rgb),calc(0.10*var(--kp)))0%,rgba(var(--purple-rgb),calc(0.02*var(--kp)))100%)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -163,9 +163,9 @@ function PanelHead({
       fontSize: '13px',
       fontWeight: 400,
       letterSpacing: '.32em',
-      color: '#f0eeff',
+      color: 'var(--white)',
       textTransform: 'uppercase',
-      textShadow: '0 0 14px rgba(124,77,255,0.4)'
+      textShadow: '0 0 14px rgba(var(--purple-rgb),calc(0.4*var(--kp)))'
     }
   }, children), right);
 }
@@ -186,13 +186,13 @@ function MissionRow({
       display: 'flex',
       alignItems: 'center',
       gap: '10px',
-      background: active ? 'linear-gradient(90deg,rgba(124,77,255,0.18)0%,rgba(124,77,255,0.06)100%)' : 'transparent',
-      borderLeft: `2px solid ${active ? 'rgba(167,139,255,0.8)' : 'transparent'}`,
-      borderBottom: '1px solid rgba(160,140,255,0.06)',
+      background: active ? 'linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.18*var(--kp)))0%,rgba(var(--purple-rgb),calc(0.06*var(--kp)))100%)' : 'transparent',
+      borderLeft: `2px solid ${active ? 'rgba(var(--accent-rgb),calc(0.8*var(--ka)))' : 'transparent'}`,
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
       transition: 'all .15s'
     },
     onMouseEnter: e => {
-      if (!active) e.currentTarget.style.background = 'rgba(124,77,255,0.05)';
+      if (!active) e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))';
     },
     onMouseLeave: e => {
       if (!active) e.currentTarget.style.background = 'transparent';
@@ -213,7 +213,7 @@ function MissionRow({
       fontFamily: 'var(--font-body)',
       fontSize: '13px',
       fontWeight: active ? 400 : 300,
-      color: active ? '#f0eeff' : 'rgba(220,210,250,0.85)',
+      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis'
@@ -225,7 +225,7 @@ function MissionRow({
       gap: '8px',
       marginTop: '2px'
     }
-  }, mono(m.auftraggeber || '—', '8px', 'rgba(160,140,255,0.45)'), m.status === 'neu' && /*#__PURE__*/React.createElement("span", {
+  }, mono(m.auftraggeber || '—', '8px', 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))'), m.status === 'neu' && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '7px',
       padding: '1px 5px',
@@ -241,10 +241,10 @@ function MissionRow({
     style: {
       fontSize: '7px',
       padding: '1px 5px',
-      background: 'rgba(160,140,255,0.08)',
-      border: '1px solid rgba(160,140,255,0.2)',
+      background: 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))',
       borderRadius: '2px',
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       fontFamily: 'var(--font-mono)',
       letterSpacing: '.12em',
       textTransform: 'uppercase'
@@ -253,11 +253,11 @@ function MissionRow({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      background: 'rgba(124,77,255,0.25)',
-      border: '1px solid rgba(167,139,255,0.5)',
+      background: 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))',
       borderRadius: '10px',
       padding: '1px 7px',
-      color: '#c9b8ff',
+      color: 'var(--lav)',
       flexShrink: 0
     }
   }, appCount));
@@ -349,7 +349,7 @@ function CreateForm({
       fontFamily: 'var(--font-display)',
       fontSize: '15px',
       letterSpacing: '.2em',
-      color: '#f0eeff',
+      color: 'var(--white)',
       textTransform: 'uppercase',
       marginBottom: '20px'
     }
@@ -434,10 +434,10 @@ function CreateForm({
             style: {
               padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '9px',
               letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer',
-              border: `1px solid ${active ? 'rgba(124,77,255,0.7)' : 'rgba(124,77,255,0.2)'}`,
+              border: `1px solid ${active ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
               borderRadius: '2px',
-              background: active ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)',
-              color: active ? 'rgba(200,180,255,0.95)' : 'rgba(160,140,255,0.45)',
+              background: active ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+              color: active ? 'rgba(200,180,255,calc(0.95*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))',
               transition: 'all .15s'
             }
           }, active ? `\u2713 ${div}` : div),
@@ -473,10 +473,10 @@ function CreateForm({
       fontSize: '8px',
       letterSpacing: '.15em',
       padding: '3px 9px',
-      background: 'rgba(124,77,255,0.12)',
-      border: '1px solid rgba(124,77,255,0.3)',
+      background: 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
       borderRadius: '2px',
-      color: 'rgba(167,139,255,0.8)',
+      color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))',
       cursor: 'pointer'
     }
   }, "+ Schritt")), steps.map((step, i) => /*#__PURE__*/React.createElement("div", {
@@ -507,7 +507,7 @@ function CreateForm({
       background: 'transparent',
       border: '1px solid rgba(200,60,60,0.3)',
       borderRadius: '2px',
-      color: 'rgba(255,120,120,0.6)',
+      color: 'color-mix(in srgb, rgba(255,120,120,0.6), rgb(var(--ink-rgb)) var(--cm))',
       cursor: 'pointer',
       fontSize: '13px',
       lineHeight: 1,
@@ -516,8 +516,8 @@ function CreateForm({
   }, "\xD7")))), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '14px',
-      background: 'rgba(124,77,255,0.05)',
-      border: '1px solid rgba(124,77,255,0.15)',
+      background: 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
       borderRadius: '3px',
       marginBottom: '20px'
     }
@@ -586,7 +586,7 @@ function AppRow({
   return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '12px 18px',
-      borderBottom: '1px solid rgba(160,140,255,0.08)',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       display: 'flex',
       alignItems: 'center',
       gap: '14px'
@@ -601,7 +601,7 @@ function AppRow({
       fontFamily: 'var(--font-body)',
       fontSize: '13px',
       fontWeight: 400,
-      color: '#f0eeff',
+      color: 'var(--white)',
       marginBottom: '3px'
     }
   }, profile?.display_name || profile?.email?.split('@')[0] || '—'), char && /*#__PURE__*/React.createElement("div", {
@@ -609,11 +609,11 @@ function AppRow({
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: 300,
-      color: 'rgba(160,140,255,0.7)'
+      color: 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))'
     }
   }, char.name, (char.race || char.class || char.division) && /*#__PURE__*/React.createElement("span", {
     style: {
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       marginLeft: '6px'
     }
   }, [char.race, char.class, char.division, `Stufe ${char.char_data?.level ?? 1}`].filter(Boolean).join(' · '))), /*#__PURE__*/React.createElement("div", {
@@ -696,7 +696,7 @@ function EditForm({ mission, onSaved, onCancel, nscOptions }) {
   return /*#__PURE__*/React.createElement("div", {
     style: { flex: 1, overflowY: 'auto', padding: '22px' }
   },
-    /*#__PURE__*/React.createElement("div", { style: { fontFamily: 'var(--font-display)', fontSize: '15px', letterSpacing: '.2em', color: '#f0eeff', textTransform: 'uppercase', marginBottom: '20px' } }, "Mission bearbeiten"),
+    /*#__PURE__*/React.createElement("div", { style: { fontFamily: 'var(--font-display)', fontSize: '15px', letterSpacing: '.2em', color: 'var(--white)', textTransform: 'uppercase', marginBottom: '20px' } }, "Mission bearbeiten"),
     /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "Name"), /*#__PURE__*/React.createElement("input", { value: form.name, onChange: e => set('name', e.target.value) })),
     /*#__PURE__*/React.createElement("div", { className: "field", style: row2 },
       /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, "Kategorie"), /*#__PURE__*/React.createElement("select", { value: form.kategorie, onChange: e => set('kategorie', e.target.value) }, /*#__PURE__*/React.createElement("option", { value: "Suche" }, "Suche"), /*#__PURE__*/React.createElement("option", { value: "Gespraech" }, "Gespräch"), /*#__PURE__*/React.createElement("option", { value: "Jagd" }, "Jagd"), /*#__PURE__*/React.createElement("option", { value: "Sammeln" }, "Sammeln"), /*#__PURE__*/React.createElement("option", { value: "Eskorte" }, "Eskorte"))),
@@ -725,7 +725,7 @@ function EditForm({ mission, onSaved, onCancel, nscOptions }) {
             /*#__PURE__*/React.createElement("button", {
               type: "button",
               onClick: () => setRequirements(rs => active ? rs.filter(r => r.label !== div) : [...rs, { label: div, count: 1 }]),
-              style: { padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer', border: `1px solid ${active ? 'rgba(124,77,255,0.7)' : 'rgba(124,77,255,0.2)'}`, borderRadius: '2px', background: active ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)', color: active ? 'rgba(200,180,255,0.95)' : 'rgba(160,140,255,0.45)', transition: 'all .15s' }
+              style: { padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer', border: `1px solid ${active ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`, borderRadius: '2px', background: active ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))', color: active ? 'rgba(200,180,255,calc(0.95*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', transition: 'all .15s' }
             }, active ? `✓ ${div}` : div),
             active && /*#__PURE__*/React.createElement("input", { type: "number", min: "1", max: "9", value: req.count, onChange: e => setRequirements(rs => rs.map(r => r.label === div ? { ...r, count: Number(e.target.value) || 1 } : r)), title: "Anzahl", style: { width: '42px', padding: '4px 6px', textAlign: 'center', fontSize: '11px' } })
           );
@@ -735,15 +735,15 @@ function EditForm({ mission, onSaved, onCancel, nscOptions }) {
     /*#__PURE__*/React.createElement("div", { style: { marginBottom: '14px' } },
       /*#__PURE__*/React.createElement("div", { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' } },
         /*#__PURE__*/React.createElement("label", { style: { margin: 0 } }, "Anweisungen"),
-        /*#__PURE__*/React.createElement("button", { onClick: addStep, style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '.15em', padding: '3px 9px', background: 'rgba(124,77,255,0.12)', border: '1px solid rgba(124,77,255,0.3)', borderRadius: '2px', color: 'rgba(167,139,255,0.8)', cursor: 'pointer' } }, "+ Schritt")
+        /*#__PURE__*/React.createElement("button", { onClick: addStep, style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '.15em', padding: '3px 9px', background: 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))', border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius: '2px', color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', cursor: 'pointer' } }, "+ Schritt")
       ),
       steps.map((step, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { display: 'grid', gridTemplateColumns: '1fr 70px 28px', gap: '8px', marginBottom: '8px', alignItems: 'center' } },
         /*#__PURE__*/React.createElement("input", { value: step.txt, onChange: e => setStep(i, 'txt', e.target.value), placeholder: `Schritt ${i + 1}…` }),
         /*#__PURE__*/React.createElement("input", { type: "number", min: "1", value: step.max, onChange: e => setStep(i, 'max', e.target.value), title: "Anzahl", style: { textAlign: 'center' } }),
-        /*#__PURE__*/React.createElement("button", { onClick: () => removeStep(i), style: { background: 'transparent', border: '1px solid rgba(200,60,60,0.3)', borderRadius: '2px', color: 'rgba(255,120,120,0.6)', cursor: 'pointer', fontSize: '13px', lineHeight: 1, padding: '3px' } }, "×")
+        /*#__PURE__*/React.createElement("button", { onClick: () => removeStep(i), style: { background: 'transparent', border: '1px solid rgba(200,60,60,0.3)', borderRadius: '2px', color: 'color-mix(in srgb, rgba(255,120,120,0.6), rgb(var(--ink-rgb)) var(--cm))', cursor: 'pointer', fontSize: '13px', lineHeight: 1, padding: '3px' } }, "×")
       ))
     ),
-    /*#__PURE__*/React.createElement("div", { style: { padding: '14px', background: 'rgba(124,77,255,0.05)', border: '1px solid rgba(124,77,255,0.15)', borderRadius: '3px', marginBottom: '20px' } },
+    /*#__PURE__*/React.createElement("div", { style: { padding: '14px', background: 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))', border: '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', borderRadius: '3px', marginBottom: '20px' } },
       /*#__PURE__*/React.createElement("label", { style: { marginBottom: '10px' } }, "Belohnungen"),
       /*#__PURE__*/React.createElement("div", { style: row2 },
         /*#__PURE__*/React.createElement("div", { className: "field" }, /*#__PURE__*/React.createElement("label", null, "XP"), /*#__PURE__*/React.createElement("input", { type: "number", min: "0", value: form.rewards_xp, onChange: e => set('rewards_xp', e.target.value) })),
@@ -826,8 +826,8 @@ function MissionDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '18px 22px',
-      borderBottom: '1px solid rgba(160,140,255,0.12)',
-      background: `linear-gradient(180deg,${kat.color}18 0%,rgba(10,8,32,0)100%)`,
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
+      background: `linear-gradient(180deg,${kat.color}18 0%,rgba(var(--panel-rgb),0)100%)`,
       flexShrink: 0
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -845,7 +845,7 @@ function MissionDetail({
       fontFamily: 'var(--font-display)',
       fontSize: '20px',
       letterSpacing: '.08em',
-      color: '#f0eeff',
+      color: 'var(--white)',
       marginBottom: '6px'
     }
   }, mission.name), /*#__PURE__*/React.createElement("div", {
@@ -853,7 +853,7 @@ function MissionDetail({
       fontFamily: 'var(--font-body)',
       fontWeight: 300,
       fontSize: '11px',
-      color: 'rgba(160,140,255,0.55)'
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))'
     }
   }, mission.auftraggeber, mission.region ? ` · ${mission.region}` : ''), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -887,7 +887,7 @@ function MissionDetail({
   }, "L\xF6schen"))), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '10px 22px',
-      borderBottom: '1px solid rgba(160,140,255,0.08)',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       display: 'flex',
       gap: '20px',
       flexShrink: 0
@@ -896,7 +896,7 @@ function MissionDetail({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '16px',
-      color: '#f0eeff',
+      color: 'var(--white)',
       marginTop: '2px'
     }
   }, apps.length)), /*#__PURE__*/React.createElement("div", null, mono('Ausstehend', '7.5px', 'rgba(127,184,255,0.6)'), /*#__PURE__*/React.createElement("div", {
@@ -910,7 +910,7 @@ function MissionDetail({
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '16px',
-      color: 'rgba(100,220,140,0.9)',
+      color: 'color-mix(in srgb, rgba(100,220,140,0.9), rgb(var(--ink-rgb)) var(--cm))',
       marginTop: '2px'
     }
   }, accepted))), /*#__PURE__*/React.createElement("div", {
@@ -924,7 +924,7 @@ function MissionDetail({
       textAlign: 'center',
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '.2em'
     }
   }, "LADE\u2026"), !loading && apps.length === 0 && /*#__PURE__*/React.createElement("div", {
@@ -937,7 +937,7 @@ function MissionDetail({
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '.22em',
-      color: 'rgba(160,140,255,0.3)',
+      color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '8px'
     }
@@ -946,7 +946,7 @@ function MissionDetail({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: 300,
-      color: 'rgba(160,140,255,0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       fontStyle: 'italic'
     }
   }, "Noch hat sich niemand f\xFCr diese Mission beworben.")), !loading && apps.map(app => /*#__PURE__*/React.createElement(AppRow, {
@@ -1029,11 +1029,11 @@ function TokensTab() {
   const used = tokens.filter(t => t.used_by);
   const tokenRowStyle = used => ({
     padding: '10px 18px',
-    borderBottom: '1px solid rgba(160,140,255,0.07)',
+    borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)))',
     display: 'flex',
     alignItems: 'center',
     gap: '14px',
-    background: used ? 'transparent' : 'rgba(124,77,255,0.03)'
+    background: used ? 'transparent' : 'rgba(var(--purple-rgb),calc(0.03*var(--kp)))'
   });
   function TokenRow({
     t
@@ -1064,7 +1064,7 @@ function TokensTab() {
         fontFamily: 'var(--font-mono)',
         fontSize: '15px',
         letterSpacing: '.18em',
-        color: t.used_by ? 'rgba(160,140,255,0.35)' : '#f0eeff',
+        color: t.used_by ? 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))' : 'var(--white)',
         textDecoration: t.used_by ? 'line-through' : 'none'
       }
     }, fmt(t.code)), !t.used_by && /*#__PURE__*/React.createElement("button", {
@@ -1074,10 +1074,10 @@ function TokensTab() {
         fontSize: '7.5px',
         letterSpacing: '.12em',
         padding: '2px 8px',
-        background: copied ? 'rgba(100,220,140,0.12)' : 'rgba(124,77,255,0.1)',
-        border: `1px solid ${copied ? 'rgba(100,220,140,0.4)' : 'rgba(124,77,255,0.25)'}`,
+        background: copied ? 'rgba(100,220,140,0.12)' : 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+        border: `1px solid ${copied ? 'rgba(100,220,140,0.4)' : 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))'}`,
         borderRadius: '2px',
-        color: copied ? 'rgba(100,220,140,0.8)' : 'rgba(160,140,255,0.6)',
+        color: copied ? 'color-mix(in srgb, rgba(100,220,140,0.8), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))',
         cursor: 'pointer',
         textTransform: 'uppercase',
         transition: 'all .15s'
@@ -1094,7 +1094,7 @@ function TokensTab() {
         fontFamily: 'var(--font-body)',
         fontSize: '11px',
         fontWeight: 300,
-        color: 'rgba(160,140,255,0.5)',
+        color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
         fontStyle: 'italic'
       }
     }, t.note), t.used_by ? /*#__PURE__*/React.createElement("span", {
@@ -1102,7 +1102,7 @@ function TokensTab() {
         fontFamily: 'var(--font-mono)',
         fontSize: '7.5px',
         letterSpacing: '.12em',
-        color: 'rgba(160,140,255,0.35)',
+        color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
         textTransform: 'uppercase'
       }
     }, "eingel\xF6st von ", usedName) : /*#__PURE__*/React.createElement("span", {
@@ -1110,7 +1110,7 @@ function TokensTab() {
         fontFamily: 'var(--font-mono)',
         fontSize: '7.5px',
         letterSpacing: '.12em',
-        color: 'rgba(100,220,140,0.6)',
+        color: 'color-mix(in srgb, rgba(100,220,140,0.6), rgb(var(--ink-rgb)) var(--cm))',
         textTransform: 'uppercase'
       }
     }, "\u25CF verf\xFCgbar"))), !t.used_by && /*#__PURE__*/React.createElement("button", {
@@ -1119,7 +1119,7 @@ function TokensTab() {
         background: 'transparent',
         border: '1px solid rgba(200,60,60,0.25)',
         borderRadius: '2px',
-        color: 'rgba(255,120,120,0.5)',
+        color: 'color-mix(in srgb, rgba(255,120,120,0.5), rgb(var(--ink-rgb)) var(--cm))',
         cursor: 'pointer',
         fontFamily: 'var(--font-mono)',
         fontSize: '9px',
@@ -1131,11 +1131,11 @@ function TokensTab() {
       },
       onMouseEnter: e => {
         e.currentTarget.style.borderColor = 'rgba(200,60,60,0.5)';
-        e.currentTarget.style.color = 'rgba(255,120,120,0.85)';
+        e.currentTarget.style.color = 'color-mix(in srgb, rgba(255,120,120,0.85), rgb(var(--ink-rgb)) var(--cm))';
       },
       onMouseLeave: e => {
         e.currentTarget.style.borderColor = 'rgba(200,60,60,0.25)';
-        e.currentTarget.style.color = 'rgba(255,120,120,0.5)';
+        e.currentTarget.style.color = 'color-mix(in srgb, rgba(255,120,120,0.5), rgb(var(--ink-rgb)) var(--cm))';
       }
     }, "L\xF6schen"));
   }
@@ -1157,7 +1157,7 @@ function TokensTab() {
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: 300,
-      color: 'rgba(160,140,255,0.5)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       lineHeight: 1.7,
       marginBottom: '18px'
     }
@@ -1177,8 +1177,8 @@ function TokensTab() {
     style: {
       marginTop: '24px',
       padding: '14px',
-      background: 'rgba(124,77,255,0.05)',
-      border: '1px solid rgba(124,77,255,0.12)',
+      background: 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
       borderRadius: '3px'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1186,7 +1186,7 @@ function TokensTab() {
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
       letterSpacing: '.2em',
-      color: 'rgba(124,77,255,0.45)',
+      color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '6px'
     }
@@ -1199,28 +1199,28 @@ function TokensTab() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '18px',
-      color: 'rgba(100,220,140,0.8)'
+      color: 'color-mix(in srgb, rgba(100,220,140,0.8), rgb(var(--ink-rgb)) var(--cm))'
     }
   }, unused.length), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
       letterSpacing: '.15em',
-      color: 'rgba(100,220,140,0.5)',
+      color: 'color-mix(in srgb, rgba(100,220,140,0.5), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase'
     }
   }, "Verf\xFCgbar")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '18px',
-      color: 'rgba(160,140,255,0.4)'
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'
     }
   }, used.length), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
       letterSpacing: '.15em',
-      color: 'rgba(160,140,255,0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Eingel\xF6st")))))), /*#__PURE__*/React.createElement(Panel, null, /*#__PURE__*/React.createElement(PanelHead, null, tokens.length, " W\xFCrfelerlaubnis"), /*#__PURE__*/React.createElement("div", {
@@ -1234,7 +1234,7 @@ function TokensTab() {
       textAlign: 'center',
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '.2em'
     }
   }, "LADE\u2026"), !loading && tokens.length === 0 && /*#__PURE__*/React.createElement("div", {
@@ -1244,7 +1244,7 @@ function TokensTab() {
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: 300,
-      color: 'rgba(160,140,255,0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       fontStyle: 'italic'
     }
   }, "Noch keine Token generiert."), unused.map(t => /*#__PURE__*/React.createElement(TokenRow, {
@@ -1253,13 +1253,13 @@ function TokensTab() {
   })), unused.length > 0 && used.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '6px 18px',
-      borderBottom: '1px solid rgba(160,140,255,0.08)',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       fontFamily: 'var(--font-mono)',
       fontSize: '7.5px',
       letterSpacing: '.2em',
-      color: 'rgba(160,140,255,0.25)',
+      color: 'rgba(var(--accent-rgb),calc(0.25*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
-      background: 'rgba(5,4,15,0.3)'
+      background: 'rgba(var(--bg-rgb),0.3)'
     }
   }, "Bereits eingel\xF6st"), used.map(t => /*#__PURE__*/React.createElement(TokenRow, {
     key: t.code,
@@ -1297,7 +1297,7 @@ function App() {
         fontFamily: 'var(--font-display)',
         fontSize: '18px',
         letterSpacing: '.2em',
-        color: 'rgba(160,140,255,0.6)',
+        color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
         textTransform: 'uppercase'
       }
     }, "Kein Zugriff"), /*#__PURE__*/React.createElement("a", {
@@ -1305,7 +1305,7 @@ function App() {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: '9px',
-        color: 'rgba(124,77,255,0.5)',
+        color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
         letterSpacing: '.2em',
         textDecoration: 'none'
       }
@@ -1315,7 +1315,7 @@ function App() {
     setLoading(true);
     const [{ data }, { data: nscData }] = await Promise.all([
       window._sb.from('missions').select('*').order('created_at', { ascending: false }),
-      window._sb.from('nscs').select('name,division').order('name')
+      window._sb.rpc('get_nsc_admin_data')
     ]);
     setMissions(data || []);
     setNscOptions(nscData || []);
@@ -1369,14 +1369,14 @@ function App() {
     style: {
       display: 'flex',
       flexDirection: 'column',
-      minHeight: '100vh'
+      minHeight: 'calc(var(--vh, 1vh) * 100)'
     }
   }, /*#__PURE__*/React.createElement(SiteNav, {
     rightLabel: "DM \xB7 MISSIONEN"
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '18px 32px 0',
-      borderBottom: '1px solid rgba(160,140,255,0.08)',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       flexShrink: 0
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1390,7 +1390,7 @@ function App() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(167,139,255,0.5)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       letterSpacing: '.3em',
       textTransform: 'uppercase',
       marginBottom: '6px'
@@ -1401,14 +1401,14 @@ function App() {
       fontSize: '24px',
       fontWeight: 400,
       letterSpacing: '.28em',
-      color: '#f0eeff',
+      color: 'var(--white)',
       textTransform: 'uppercase'
     }
   }, activeTab === 'missions' ? 'Missionsverwaltung' : 'Würfelerlaubnis')), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '.18em'
     }
   }, activeTab === 'missions' ? `${missions.length} Missionen gesamt` : 'Einmalcodes für Attributwürfeln')), /*#__PURE__*/React.createElement("div", {
@@ -1425,10 +1425,10 @@ function App() {
       letterSpacing: '.18em',
       textTransform: 'uppercase',
       padding: '8px 18px',
-      background: activeTab === id ? 'rgba(124,77,255,0.15)' : 'transparent',
+      background: activeTab === id ? 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' : 'transparent',
       border: 'none',
-      borderBottom: activeTab === id ? '2px solid rgba(167,139,255,0.7)' : '2px solid transparent',
-      color: activeTab === id ? '#f0eeff' : 'rgba(160,140,255,0.4)',
+      borderBottom: activeTab === id ? '2px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))' : '2px solid transparent',
+      color: activeTab === id ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',
       cursor: 'pointer',
       transition: 'all .15s'
     }
@@ -1452,10 +1452,10 @@ function App() {
         fontSize: '8px',
         letterSpacing: '.15em',
         padding: '4px 10px',
-        background: 'rgba(124,77,255,0.2)',
-        border: '1px solid rgba(124,77,255,0.5)',
+        background: 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
+        border: '1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
         borderRadius: '2px',
-        color: 'rgba(200,190,240,0.9)',
+        color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
         cursor: 'pointer',
         textTransform: 'uppercase'
       }
@@ -1471,7 +1471,7 @@ function App() {
       textAlign: 'center',
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '.2em'
     }
   }, "LADE\u2026"), !loading && missions.length === 0 && /*#__PURE__*/React.createElement("div", {
@@ -1481,7 +1481,7 @@ function App() {
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: 300,
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       fontStyle: 'italic'
     }
   }, "Noch keine Missionen. Erstelle die erste."), missions.map(m => /*#__PURE__*/React.createElement(MissionRow, {
@@ -1507,7 +1507,7 @@ function App() {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '.22em',
-      color: 'rgba(160,140,255,0.3)',
+      color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Mission ausw\xE4hlen oder neue erstellen")), creating && /*#__PURE__*/React.createElement(CreateForm, {

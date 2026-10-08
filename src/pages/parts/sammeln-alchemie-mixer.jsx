@@ -97,16 +97,16 @@ function ReagentSlot({ slot, idx, typId, onPick, onClear, onHgChange }) {
       <button onClick={() => onPick(idx)}
         style={{
           width:'100%', minHeight:'82px',
-          background:'rgba(124,77,255,0.04)',
-          border:'1px dashed rgba(124,77,255,0.32)',
+          background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
+          border:'1px dashed rgba(var(--purple-rgb),calc(0.32*var(--kp)))',
           borderRadius:'4px', cursor:'pointer',
           fontFamily:'var(--font-mono)', fontSize:'10px',
           letterSpacing:'0.18em', textTransform:'uppercase',
-          color:'rgba(160,140,255,0.6)',
+          color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
           transition:'all 0.2s',
         }}
-        onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,0.1)';e.currentTarget.style.borderColor='rgba(124,77,255,0.7)';e.currentTarget.style.color='rgba(220,200,255,0.95)';}}
-        onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,0.04)';e.currentTarget.style.borderColor='rgba(124,77,255,0.32)';e.currentTarget.style.color='rgba(160,140,255,0.6)';}}>
+        onMouseEnter={e=>{e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.1*var(--kp)))';e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.7*var(--kp)))';e.currentTarget.style.color='color-mix(in srgb, rgba(220,200,255,0.95), rgb(var(--ink-rgb)) var(--cm))';}}
+        onMouseLeave={e=>{e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.04*var(--kp)))';e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.32*var(--kp)))';e.currentTarget.style.color='rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))';}}>
         <div style={{fontSize:'24px',opacity:0.5,marginBottom:'4px'}}>+</div>
         Slot {idx+1}
       </button>
@@ -124,56 +124,56 @@ function ReagentSlot({ slot, idx, typId, onPick, onClear, onHgChange }) {
   return (
     <div style={{
       width:'100%', position:'relative',
-      background: ok ? 'rgba(124,77,255,0.09)' : 'rgba(220,80,80,0.06)',
-      border: `1px solid ${ok ? 'rgba(124,77,255,0.4)' : 'rgba(220,80,80,0.32)'}`,
+      background: ok ? 'rgba(var(--purple-rgb),calc(0.09*var(--kp)))' : 'rgba(220,80,80,0.06)',
+      border: `1px solid ${ok ? 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' : 'rgba(220,80,80,0.32)'}`,
       borderRadius:'4px', padding:'12px 14px',
       transition:'all 0.2s',
     }}>
       <button onClick={() => onClear(idx)} style={{
         position:'absolute', top:'6px', right:'6px',
         background:'transparent', border:'none', cursor:'pointer',
-        fontSize:'12px', color:'rgba(200,180,255,0.5)',
+        fontSize:'12px', color:'rgba(200,180,255,calc(0.5*var(--ka) + var(--tb)))',
         padding:'2px 6px', borderRadius:'2px',
       }}
-        onMouseEnter={e=>{e.currentTarget.style.color='rgba(255,120,120,0.9)';}}
-        onMouseLeave={e=>{e.currentTarget.style.color='rgba(200,180,255,0.5)';}}
+        onMouseEnter={e=>{e.currentTarget.style.color='color-mix(in srgb, rgba(255,120,120,0.9), rgb(var(--ink-rgb)) var(--cm))';}}
+        onMouseLeave={e=>{e.currentTarget.style.color='rgba(200,180,255,calc(0.5*var(--ka) + var(--tb)))';}}
         title="Entfernen">✕</button>
 
       <div style={{display:'flex', alignItems:'center', gap:'8px', marginBottom:'8px'}}>
         <span style={{
           fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.18em',
-          color:'rgba(160,140,255,0.55)', textTransform:'uppercase',
+          color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase',
         }}>Slot {idx+1}</span>
         {slot.kind === 'pflanze' && (
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.16em',
-            color:'rgba(110,200,160,0.7)', textTransform:'uppercase',
+            color:'color-mix(in srgb, rgba(110,200,160,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase',
           }}>🌿 Pflanze</span>
         )}
         {slot.kind === 'kreatur' && (
           <span style={{
             fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.16em',
-            color:'rgba(220,140,90,0.78)', textTransform:'uppercase',
+            color:'color-mix(in srgb, rgba(220,140,90,0.78), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase',
           }}>◈ Kreaturenteil</span>
         )}
       </div>
 
       <div style={{
         fontFamily:'var(--font-display)', fontSize:'13.5px', fontWeight:400,
-        letterSpacing:'0.08em', color:'rgba(232,225,255,0.95)', marginBottom:'6px',
+        letterSpacing:'0.08em', color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))', marginBottom:'6px',
       }}>{name}</div>
 
       {slot.kind === 'kreatur' && (
         <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'8px'}}>
-          <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.14em',color:'rgba(160,140,255,0.7)',textTransform:'uppercase'}}>HG</span>
+          <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.14em',color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>HG</span>
           <input type="number" min="0" max="30" value={slot.hg}
             onChange={e=>onHgChange(idx, parseInt(e.target.value||'0',10))}
             style={{
-              width:'56px',padding:'2px 6px',background:'rgba(0,0,0,0.3)',
-              border:'1px solid rgba(124,77,255,0.3)',borderRadius:'2px',
-              fontFamily:'var(--font-mono)',fontSize:'11px',color:'#f0eeff',
+              width:'56px',padding:'2px 6px',background:'rgba(var(--bg-rgb),0.3)',
+              border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',borderRadius:'2px',
+              fontFamily:'var(--font-mono)',fontSize:'11px',color:'var(--white)',
             }}/>
-          <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.14em',color:'rgba(160,140,255,0.55)'}}>
+          <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.14em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))'}}>
             → Level {window.hgToLevel(slot.hg)}
           </span>
         </div>
@@ -181,7 +181,7 @@ function ReagentSlot({ slot, idx, typId, onPick, onClear, onHgChange }) {
 
       <div style={{
         fontFamily:'var(--font-mono)', fontSize:'10.5px', letterSpacing:'0.06em',
-        color: ok ? 'rgba(180,155,255,0.9)' : 'rgba(255,120,120,0.85)',
+        color: ok ? 'color-mix(in srgb, rgba(180,155,255,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(255,120,120,0.85), rgb(var(--ink-rgb)) var(--cm))',
         lineHeight:1.5,
       }}>
         {ok ? c.raw : (c && c.reason)}
@@ -216,22 +216,22 @@ function ReagentPicker({ open, onPick, onClose, typId }) {
     }}
       onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
       <div style={{
-        width:'100%', maxWidth:'720px', maxHeight:'82vh',
-        background:'rgba(10,8,28,0.97)',
-        border:'1px solid rgba(124,77,255,0.4)',
+        width:'100%', maxWidth:'720px', maxHeight:'calc(var(--vh, 1vh) * 82)',
+        background:'rgba(var(--panel-rgb),0.97)',
+        border:'1px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
         borderRadius:'6px', padding:'24px',
         display:'flex', flexDirection:'column',
-        boxShadow:'0 20px 60px rgba(0,0,0,0.7)',
+        boxShadow:'0 20px 60px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k)))',
       }}>
         <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'18px'}}>
           <div>
-            <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.28em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase',marginBottom:'4px'}}>Reagenz wählen</div>
-            <div style={{fontFamily:'var(--font-display)',fontSize:'16px',letterSpacing:'0.18em',color:'rgba(232,225,255,0.95)',textTransform:'uppercase'}}>{typ.label}-Wirkung</div>
+            <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'4px'}}>Reagenz wählen</div>
+            <div style={{fontFamily:'var(--font-display)',fontSize:'16px',letterSpacing:'0.18em',color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))',textTransform:'uppercase'}}>{typ.label}-Wirkung</div>
           </div>
           <button onClick={onClose} style={{
-            background:'transparent',border:'1px solid rgba(124,77,255,0.3)',
+            background:'transparent',border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
             borderRadius:'3px',padding:'5px 10px',cursor:'pointer',
-            fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(200,180,255,0.7)',
+            fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(200,180,255,calc(0.7*var(--ka) + var(--tb)))',
             letterSpacing:'0.14em',
           }}>✕ schließen</button>
         </div>
@@ -239,12 +239,12 @@ function ReagentPicker({ open, onPick, onClose, typId }) {
         <div style={{display:'flex',gap:'4px',marginBottom:'14px'}}>
           {[{id:'pflanze',label:'Pflanzen'},{id:'kreatur',label:'Kreaturenteile'}].map(t=>(
             <button key={t.id} onClick={()=>setTab(t.id)} style={{
-              padding:'8px 14px', background: tab===t.id ? 'rgba(124,77,255,0.18)' : 'transparent',
-              border: `1px solid ${tab===t.id ? 'rgba(124,77,255,0.55)' : 'rgba(124,77,255,0.18)'}`,
+              padding:'8px 14px', background: tab===t.id ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent',
+              border: `1px solid ${tab===t.id ? 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))'}`,
               borderRadius:'3px', cursor:'pointer',
               fontFamily:'var(--font-display)', fontSize:'11px', letterSpacing:'0.16em',
               textTransform:'uppercase',
-              color: tab===t.id ? '#f0eeff' : 'rgba(200,190,240,0.65)',
+              color: tab===t.id ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.65*var(--kt)))',
             }}>{t.label}</button>
           ))}
         </div>
@@ -255,13 +255,13 @@ function ReagentPicker({ open, onPick, onClose, typId }) {
               placeholder="Pflanze suchen…"
               style={{
                 width:'100%', padding:'9px 12px', marginBottom:'14px',
-                background:'rgba(0,0,0,0.35)', border:'1px solid rgba(124,77,255,0.25)',
+                background:'rgba(var(--bg-rgb),0.35)', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
                 borderRadius:'3px', fontFamily:'var(--font-body)', fontSize:'12.5px',
-                color:'#f0eeff', letterSpacing:'0.04em',
+                color:'var(--white)', letterSpacing:'0.04em',
               }} />
             <div style={{flex:1, overflowY:'auto', paddingRight:'4px'}}>
               {plantsFiltered.length === 0 && (
-                <div style={{padding:'30px',textAlign:'center',fontFamily:'var(--font-mono)',fontSize:'11px',color:'rgba(160,140,255,0.5)'}}>
+                <div style={{padding:'30px',textAlign:'center',fontFamily:'var(--font-mono)',fontSize:'11px',color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))'}}>
                   Keine Pflanze mit {typ.label}-Wirkung gefunden.
                 </div>
               )}
@@ -274,18 +274,18 @@ function ReagentPicker({ open, onPick, onClose, typId }) {
                       style={{
                         textAlign:'left',
                         padding:'10px 12px',
-                        background:'rgba(124,77,255,0.05)',
-                        border:'1px solid rgba(124,77,255,0.18)',
+                        background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+                        border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
                         borderRadius:'3px', cursor:'pointer',
                         transition:'all 0.15s',
                       }}
-                      onMouseEnter={e=>{e.currentTarget.style.background='rgba(124,77,255,0.13)';e.currentTarget.style.borderColor='rgba(124,77,255,0.5)';}}
-                      onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,0.05)';e.currentTarget.style.borderColor='rgba(124,77,255,0.18)';}}>
+                      onMouseEnter={e=>{e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.13*var(--kp)))';e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.5*var(--kp)))';}}
+                      onMouseLeave={e=>{e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.05*var(--kp)))';e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.18*var(--kp)))';}}>
                       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'8px',marginBottom:'4px'}}>
-                        <span style={{fontFamily:'var(--font-display)',fontSize:'12px',letterSpacing:'0.04em',color:'#f0eeff'}}>{p.name}</span>
-                        <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.14em',color: rarity ? rarity.hue : 'rgba(160,140,255,0.6)',textTransform:'uppercase'}}>{rarity ? rarity.short : ''}</span>
+                        <span style={{fontFamily:'var(--font-display)',fontSize:'12px',letterSpacing:'0.04em',color:'var(--white)'}}>{p.name}</span>
+                        <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.14em',color: rarity ? rarity.hue : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))',textTransform:'uppercase'}}>{rarity ? rarity.short : ''}</span>
                       </div>
-                      <div style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'rgba(180,155,255,0.78)',letterSpacing:'0.04em'}}>{p[typ.field]}</div>
+                      <div style={{fontFamily:'var(--font-mono)',fontSize:'10px',color:'color-mix(in srgb, rgba(180,155,255,0.78), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'0.04em'}}>{p[typ.field]}</div>
                     </button>
                   );
                 })}
@@ -298,7 +298,7 @@ function ReagentPicker({ open, onPick, onClose, typId }) {
           <div style={{flex:1, overflowY:'auto', paddingRight:'4px'}}>
             <div style={{
               fontFamily:'var(--font-body)', fontWeight:300, fontSize:'12px',
-              lineHeight:1.7, color:'rgba(200,190,240,0.6)',
+              lineHeight:1.7, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
               marginBottom:'14px', textWrap:'pretty',
             }}>
               Wähle einen Kreaturenteil-Typ. Die HG-Stufe der Kreatur kannst du im Slot anpassen — sie bestimmt das Reagenz-Level (1–4).
@@ -328,8 +328,8 @@ function ReagentPicker({ open, onPick, onClose, typId }) {
                     }}
                     onMouseEnter={e=>{if(ok){e.currentTarget.style.background='rgba(220,140,90,0.14)';e.currentTarget.style.borderColor='rgba(220,140,90,0.55)';}}}
                     onMouseLeave={e=>{if(ok){e.currentTarget.style.background='rgba(220,140,90,0.06)';e.currentTarget.style.borderColor='rgba(220,140,90,0.25)';}}}>
-                    <div style={{fontFamily:'var(--font-display)',fontSize:'12px',color:'#f0eeff',marginBottom:'4px',letterSpacing:'0.04em'}}>{part.teil}</div>
-                    <div style={{fontFamily:'var(--font-mono)',fontSize:'10px',color: ok ? 'rgba(230,180,140,0.85)' : 'rgba(160,150,180,0.5)',letterSpacing:'0.04em'}}>
+                    <div style={{fontFamily:'var(--font-display)',fontSize:'12px',color:'var(--white)',marginBottom:'4px',letterSpacing:'0.04em'}}>{part.teil}</div>
+                    <div style={{fontFamily:'var(--font-mono)',fontSize:'10px',color: ok ? 'color-mix(in srgb, rgba(230,180,140,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(160,150,180,0.5), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'0.04em'}}>
                       {wirk || `Keine ${KONKOKTION_TYPEN.find(t=>t.id===typId).label}-Wirkung`}
                     </div>
                   </button>
@@ -378,12 +378,12 @@ function AlchemyMixer() {
             <button key={t.id}
               onClick={()=>{ setTypId(t.id); }}
               style={{
-                padding:'10px 18px', background: on ? 'rgba(124,77,255,0.18)' : 'rgba(10,8,28,0.4)',
-                border: `1px solid ${on ? 'rgba(124,77,255,0.6)' : 'rgba(124,77,255,0.2)'}`,
+                padding:'10px 18px', background: on ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'rgba(var(--panel-rgb),0.4)',
+                border: `1px solid ${on ? 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
                 borderRadius:'4px', cursor:'pointer',
                 fontFamily:'var(--font-display)', fontSize:'12px', letterSpacing:'0.2em',
                 textTransform:'uppercase',
-                color: on ? '#f0eeff' : 'rgba(200,190,240,0.68)',
+                color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.68*var(--kt)))',
                 display:'flex',alignItems:'center',gap:'10px',
                 transition:'all 0.2s',
               }}>
@@ -396,7 +396,7 @@ function AlchemyMixer() {
 
       <div style={{
         fontFamily:'var(--font-body)',fontWeight:300,fontSize:'12.5px',
-        lineHeight:1.7,color:'rgba(200,190,240,0.62)',marginBottom:'18px',
+        lineHeight:1.7,color:'rgba(var(--text-rgb),calc(0.62*var(--kt) + var(--tb)))',marginBottom:'18px',
         textWrap:'pretty',fontStyle:'italic',
       }}>
         {KONKOKTION_TYPEN.find(t=>t.id===typId).intro}
@@ -410,16 +410,16 @@ function AlchemyMixer() {
         <div>
           <div style={{
             fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.24em',
-            color:'rgba(124,77,255,0.6)', textTransform:'uppercase', marginBottom:'10px',
+            color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:'10px',
             display:'flex', alignItems:'center', justifyContent:'space-between',
           }}>
             <span>Reagenzien · {usedCount} / 4</span>
             {usedCount > 0 && (
               <button onClick={resetMix} style={{
-                background:'transparent', border:'1px solid rgba(124,77,255,0.25)',
+                background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
                 borderRadius:'2px', padding:'3px 8px', cursor:'pointer',
                 fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.18em',
-                color:'rgba(180,155,255,0.7)',
+                color:'color-mix(in srgb, rgba(180,155,255,0.7), rgb(var(--ink-rgb)) var(--cm))',
               }}>↺ leeren</button>
             )}
           </div>
@@ -436,19 +436,19 @@ function AlchemyMixer() {
 
         {/* Result */}
         <div style={{
-          background:'rgba(10,8,28,0.6)',
-          border:`1px solid ${rarityData ? rarityData.hue.replace(/[\d.]+\)$/, '0.4)') : 'rgba(124,77,255,0.22)'}`,
+          background:'rgba(var(--panel-rgb),0.6)',
+          border:`1px solid ${rarityData ? rarityData.hue.replace(/[\d.]+\)$/, '0.4)') : 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))'}`,
           borderRadius:'4px', padding:'18px 20px',
         }}>
           <div style={{
             fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em',
-            color:'rgba(124,77,255,0.6)', textTransform:'uppercase', marginBottom:'8px',
+            color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:'8px',
           }}>Konkoktion</div>
 
           {result.effekte.length === 0 ? (
             <div style={{
               fontFamily:'var(--font-body)', fontStyle:'italic', fontWeight:300,
-              fontSize:'13px', color:'rgba(180,165,235,0.55)', lineHeight:1.7,
+              fontSize:'13px', color:'color-mix(in srgb, rgba(180,165,235,0.55), rgb(var(--ink-rgb)) var(--cm))', lineHeight:1.7,
               padding:'30px 0', textAlign:'center',
             }}>
               Wähle Reagenzien, um eine Konkoktion zusammenzustellen.
@@ -458,14 +458,14 @@ function AlchemyMixer() {
               <div style={{display:'flex',alignItems:'baseline',gap:'10px',marginBottom:'12px',flexWrap:'wrap'}}>
                 <div style={{
                   fontFamily:'var(--font-display)', fontSize:'18px', letterSpacing:'0.18em',
-                  textTransform:'uppercase', color:'rgba(240,238,255,0.96)',
+                  textTransform:'uppercase', color:'rgba(var(--text-hi-rgb),calc(0.96*var(--kt) + var(--tb)))',
                 }}>{KONKOKTION_TYPEN.find(t=>t.id===typId).label}</div>
                 {rarityData && <RarityPill seltenheit={seltenheit} size="md" />}
               </div>
 
               <div style={{
                 fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
-                color:'rgba(160,140,255,0.55)', textTransform:'uppercase', marginBottom:'8px',
+                color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:'8px',
               }}>Effekte</div>
               <div style={{display:'flex', flexDirection:'column', gap:'6px', marginBottom:'18px'}}>
                 {result.effekte.map((e, i) => {
@@ -476,14 +476,14 @@ function AlchemyMixer() {
                               || window.REAGENZ_EFFEKTE[e.familie];
                   return (
                     <div key={i} style={{
-                      borderLeft: `2px solid ${tag ? tag.hue : 'rgba(124,77,255,0.5)'}`,
+                      borderLeft: `2px solid ${tag ? tag.hue : 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))'}`,
                       paddingLeft:'10px',
                     }}>
                       <div style={{display:'flex',alignItems:'baseline',gap:'8px',justifyContent:'space-between'}}>
-                        <span style={{fontFamily:'var(--font-display)',fontSize:'12.5px',color:'rgba(232,225,255,0.95)',letterSpacing:'0.06em'}}>{eName}</span>
-                        <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.16em',color:tag ? tag.hue : 'rgba(160,140,255,0.6)',textTransform:'uppercase'}}>{tag ? tag.short : ''}</span>
+                        <span style={{fontFamily:'var(--font-display)',fontSize:'12.5px',color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))',letterSpacing:'0.06em'}}>{eName}</span>
+                        <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.16em',color:tag ? tag.hue : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))',textTransform:'uppercase'}}>{tag ? tag.short : ''}</span>
                       </div>
-                      <div style={{fontFamily:'var(--font-body)',fontSize:'11.5px',fontWeight:300,color:'rgba(200,190,240,0.65)',lineHeight:1.5,marginTop:'2px',textWrap:'pretty'}}>
+                      <div style={{fontFamily:'var(--font-body)',fontSize:'11.5px',fontWeight:300,color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',lineHeight:1.5,marginTop:'2px',textWrap:'pretty'}}>
                         {lookup ? lookup.beschreibung : '—'}
                       </div>
                     </div>
@@ -493,7 +493,7 @@ function AlchemyMixer() {
 
               <div style={{
                 display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px 14px',
-                paddingTop:'14px', borderTop:'1px solid rgba(124,77,255,0.15)',
+                paddingTop:'14px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
               }}>
                 <Spec label="Handwerks-SG" value={sgHandwerk ? `${sgHandwerk}` : '—'} />
                 <Spec label="Wirkungsdauer" value={dauer || '—'} />
@@ -513,8 +513,8 @@ function AlchemyMixer() {
                 )}
               </div>
 
-              <div style={{marginTop:'16px',paddingTop:'14px',borderTop:'1px solid rgba(124,77,255,0.1)',display:'flex',alignItems:'center',gap:'12px',flexWrap:'wrap'}}>
-                <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.18em',color:'rgba(160,140,255,0.6)',textTransform:'uppercase'}}>Handwerkswurf</span>
+              <div style={{marginTop:'16px',paddingTop:'14px',borderTop:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))',display:'flex',alignItems:'center',gap:'12px',flexWrap:'wrap'}}>
+                <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>Handwerkswurf</span>
                 <DiceButton spec="1W20" label={`gegen SG ${sgHandwerk}`} size="sm" />
               </div>
             </>
@@ -534,8 +534,8 @@ function AlchemyMixer() {
 function Spec({ label, value, long }) {
   return (
     <div style={{gridColumn: long ? 'span 2' : 'auto'}}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.18em',color:'rgba(160,140,255,0.55)',textTransform:'uppercase',marginBottom:'3px'}}>{label}</div>
-      <div style={{fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.06em',color:'rgba(232,225,255,0.9)'}}>{value}</div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'3px'}}>{label}</div>
+      <div style={{fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.06em',color:'rgba(var(--text-hi-rgb),calc(0.9*var(--kt) + var(--tb)))'}}>{value}</div>
     </div>
   );
 }

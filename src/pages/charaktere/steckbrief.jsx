@@ -42,13 +42,13 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
     <div style={base} {...ev}>
       <img src={src} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} alt={label} />
       <div style={{position:"absolute",bottom:5,right:7,fontFamily:"var(--font-mono)",fontSize:6.5,
-        color:"rgba(255,255,255,0.3)",background:"rgba(0,0,0,0.6)",padding:"1px 5px",borderRadius:2,letterSpacing:".12em"}}>ersetzen</div>
+        color:"color-mix(in srgb, rgba(255,255,255,0.3), rgb(var(--ink-rgb)) var(--cm))",background:"rgba(0,0,0,0.6)",padding:"1px 5px",borderRadius:2,letterSpacing:".12em"}}>ersetzen</div>
       <input ref={inp} type="file" accept="image/*" style={{display:"none"}} onChange={e=>load(e.target.files[0])} />
     </div>
   );
   return (
     <div style={{...base,
-      background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${str} 8px,${str} 9px),linear-gradient(160deg,rgba(28,16,62,0.97),rgba(14,9,36,0.98))`,
+      background:`repeating-linear-gradient(-45deg,transparent,transparent 8px,${str} 8px,${str} 9px),linear-gradient(160deg,rgba(var(--panel-rgb),0.97),rgba(var(--panel-rgb),0.98))`,
       display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:8}} {...ev}>
       <div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse at 50% 45%,oklch(0.65 0.18 ${h} / 0.17) 0%,transparent 62%)`}} />
       {portrait
@@ -77,16 +77,16 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
 function SecTitle({ label }) {
   return (
     <div style={{marginBottom:10}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(124,77,255,0.5)",textTransform:"uppercase"}}>{label}</span>
-      <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(124,77,255,0.65),transparent)",marginTop:4}} />
+      <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>{label}</span>
+      <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.65*var(--kp))),transparent)",marginTop:4}} />
     </div>
   );
 }
 function Card({children,style}) {
-  return <div style={{background:"var(--card-bg)",border:"1px solid rgba(124,77,255,0.2)",borderRadius:4,padding:"13px 14px",position:"relative",...style}}>{children}</div>;
+  return <div style={{background:"var(--card-bg)",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:4,padding:"13px 14px",position:"relative",...style}}>{children}</div>;
 }
 function Corners({op=0.4,sz=14}) {
-  const b=`1.5px solid rgba(124,77,255,${op})`;
+  const b=`1.5px solid rgba(var(--purple-rgb),${op})`;
   return (<>
     <div style={{position:"absolute",top:0,left:0,  width:sz,height:sz,borderTop:b,borderLeft:b,  pointerEvents:"none"}}/>
     <div style={{position:"absolute",top:0,right:0, width:sz,height:sz,borderTop:b,borderRight:b, pointerEvents:"none"}}/>
@@ -96,8 +96,8 @@ function Corners({op=0.4,sz=14}) {
 }
 function IRow({label,value,bright}) {
   return (
-    <div style={{display:"flex",alignItems:"baseline",gap:6,padding:"3.5px 0",borderBottom:"1px solid rgba(124,77,255,0.06)"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+    <div style={{display:"flex",alignItems:"baseline",gap:6,padding:"3.5px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
       <span style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:bright?"var(--white)":"var(--silver)",flex:1}}>{value}</span>
     </div>
   );
@@ -127,17 +127,17 @@ function SteckbriefPage() {
   }, []);
 
   if (loading) return (
-    <div style={{minHeight:"100vh",paddingTop:"var(--nav-h)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+    <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",paddingTop:"var(--nav-h)",display:"flex",alignItems:"center",justifyContent:"center"}}>
       {SiteNav && <SiteNav />}
-      <span style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(124,77,255,0.4)",textTransform:"uppercase"}}>Lade Charakter…</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>Lade Charakter…</span>
     </div>
   );
 
   if (err || !char) return (
-    <div style={{minHeight:"100vh",paddingTop:"var(--nav-h)",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16}}>
+    <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",paddingTop:"var(--nav-h)",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16}}>
       {SiteNav && <SiteNav />}
       <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(227,103,96,0.8)"}}>{err || 'Unbekannter Fehler'}</span>
-      <a href="/charaktere/spielercharaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".2em",color:"rgba(124,77,255,0.6)",textDecoration:"underline"}}>← Zurück zur Übersicht</a>
+      <a href="/charaktere/spielercharaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))",textDecoration:"underline"}}>← Zurück zur Übersicht</a>
     </div>
   );
 

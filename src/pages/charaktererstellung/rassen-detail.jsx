@@ -61,7 +61,7 @@ function FovDiagram({ sicht, accent, wandelform = false }) {
   const full = radius >= 360;
   return (
     <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ display:'block', overflow:'hidden', borderRadius:'3px' }}>
-      <rect width={W} height={H} fill="rgba(0,0,10,0.55)" />
+      <rect width={W} height={H} fill="rgba(var(--bg-rgb),0.55)" />
       <circle cx={cx} cy={cy} r={rN}       fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth={1} />
       <circle cx={cx} cy={cy} r={rN * 0.5} fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth={1} />
       {dunkel > 0 && (full
@@ -122,7 +122,7 @@ function SichtSection({ sicht, accent }) {
           ].map(row => (
             <div key={row.label}>
               <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'3px' }}>{row.label}</div>
-              <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', fontWeight:'300', color:'rgba(var(--text2-rgb),0.85)' }}>{row.value}</div>
+              <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', fontWeight:'300', color:'rgba(var(--text2-rgb),calc(0.85*var(--kt) + var(--tb)))' }}>{row.value}</div>
             </div>
           ))}
           {notiz && (
@@ -151,8 +151,8 @@ function useScrollReveal() {
 // ── NOT FOUND ────────────────────────────────────────────
 function NotFound() {
   return (
-    <div style={{ minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'20px', padding:'40px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),0.5)', textTransform:'uppercase' }}>Rassenarchiv</div>
+    <div style={{ minHeight:'calc(var(--vh, 1vh) * 100)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'20px', padding:'40px' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Rassenarchiv</div>
       <h1 style={{ fontFamily:'var(--font-display)', fontSize:'32px', fontWeight:'300', letterSpacing:'0.15em', color:'var(--white)', textTransform:'uppercase' }}>
         {RASSE || 'Rasse'} nicht gefunden
       </h1>
@@ -185,13 +185,13 @@ function Hero({ data }) {
           {data.headerImage ? (
             <>
               <img src={data.headerImage} alt="" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center top' }} />
-              <div style={{ position:'absolute', inset:0, background:`linear-gradient(180deg,rgba(3,2,15,0.25) 0%,rgba(3,2,15,0.55) 60%,#03020f 100%)` }} />
+              <div style={{ position:'absolute', inset:0, background:`linear-gradient(180deg,rgba(var(--bg-rgb),0.25) 0%,rgba(var(--bg-rgb),0.55) 60%,rgb(var(--bg-rgb)) 100%)` }} />
               <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse at 30% 80%,${acc(0.18)} 0%,transparent 50%)` }} />
             </>
           ) : (
             <>
               <div style={{ position:'absolute', inset:0,
-                background:`radial-gradient(ellipse at 30% 60%,${acc(0.18)} 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(${r},${g},${b},0.10) 0%,transparent 55%),linear-gradient(180deg,#03020f 0%,#05040f 100%)`
+                background:`radial-gradient(ellipse at 30% 60%,${acc(0.18)} 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(${r},${g},${b},0.10) 0%,transparent 55%),linear-gradient(180deg,rgb(var(--bg-rgb)) 0%,var(--bg) 100%)`
               }} />
               <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:0.05 }} viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice">
                 <path d="M200 480 Q300 180 500 90 Q400 290 350 480" fill={acc(1)} />
@@ -243,7 +243,7 @@ function ImgPH({ url, label, caption, width=300, height=360, position='right' })
         /* Real image: no fixed height, adapts to natural aspect ratio */
         <img src={url} alt={label || ''} loading="lazy"
           style={{ width:'100%', height:'auto', display:'block', borderRadius:4,
-            boxShadow:`0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(var(--accent-rgb),0.12)` }}/>
+            boxShadow:`0 4px 24px rgba(var(--shadow-rgb),calc(0.4 * var(--shadow-k))), 0 0 0 1px rgba(var(--accent-rgb),calc(0.12*var(--ka)))` }}/>
       ) : (
         /* Placeholder: fixed height with decorative frame */
         <div className="rd-img-ph reveal-right" style={{ width, height }}>
@@ -262,23 +262,239 @@ function ImgPH({ url, label, caption, width=300, height=360, position='right' })
   );
 }
 
+function normalizeGallery(images) {
+  if (!Array.isArray(images)) return [];
+  return images
+    .map(item => typeof item === 'string' ? { url: item } : item)
+    .filter(item => item && item.url)
+    .slice(0, 6);
+}
+
+function RaceGallery({ images, label = 'Illustration', width = 360 }) {
+  const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const gallery = normalizeGallery(images);
+
+  useEffect(() => {
+    if (!open) return;
+    const prevOverflow = document.body.style.overflow;
+    const prevHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    const onKey = e => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.documentElement.style.overflow = prevHtmlOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  if (!gallery.length) return null;
+
+  const openAt = (idx = 0) => {
+    setActiveIndex(idx);
+    setOpen(true);
+  };
+
+  const active = gallery[activeIndex] || gallery[0];
+
+  return (
+    <>
+      <div className="rd-float-right" style={{ width, cursor: 'pointer' }} onClick={() => openAt(0)}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: gallery.length > 1 ? 'repeat(2, minmax(0, 1fr))' : '1fr',
+            gap: '8px',
+            padding: '2px',
+            borderRadius: '4px',
+            border: '1px solid rgba(var(--accent-rgb),0.14)',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.38)',
+            background: 'rgba(12, 10, 28, 0.7)',
+            overflow: 'hidden'
+          }}
+        >
+          {gallery.map((img, idx) => (
+            <div key={`${img.url}-${idx}`} style={{ position: 'relative', height: gallery.length > 1 ? '120px' : '320px', overflow: 'hidden' }}>
+              <img
+                src={img.url}
+                alt={img.label || label}
+                loading="lazy"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                  filter: 'saturate(1.06) contrast(1.06)'
+                }}
+              />
+            </div>
+          ))}
+        </div>
+        <div style={{
+          marginTop: '10px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '8px',
+          letterSpacing: '0.18em',
+          color: 'rgba(var(--accent-rgb),0.6)',
+          textTransform: 'uppercase'
+        }}>
+          <span>{gallery.length > 1 ? `${gallery.length} Bilder` : 'Illustration'}</span>
+          <span style={{ opacity: 0.85 }}>Zoom</span>
+        </div>
+      </div>
+
+      {open && ReactDOM.createPortal(
+        <div
+          onClick={() => setOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 2147483647,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 30,
+            background: 'rgba(3,2,15,0.84)',
+            backdropFilter: 'blur(12px)',
+            isolation: 'isolate',
+            pointerEvents: 'auto',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              position: 'relative',
+              zIndex: 2,
+              width: 'min(92vw, 860px)',
+              maxHeight: '88vh',
+              borderRadius: '6px',
+              overflow: 'hidden',
+              border: '1px solid rgba(var(--accent-rgb),0.38)',
+              boxShadow: '0 32px 100px rgba(0,0,0,0.8)',
+              background: 'rgba(6,4,18,0.98)',
+            }}
+          >
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Schließen"
+              style={{
+                position: 'absolute',
+                right: 14,
+                top: 14,
+                zIndex: 100,
+                border: 'none',
+                background: 'transparent',
+                color: 'rgba(var(--accent-rgb),0.95)',
+                borderRadius: 0,
+                width: '36px',
+                height: '36px',
+                cursor: 'pointer',
+                fontSize: '30px',
+                fontWeight: 300,
+                lineHeight: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: 'none',
+                transform: 'translateZ(0)',
+                pointerEvents: 'auto',
+              }}
+            >×</button>
+
+            <div style={{ position: 'relative', zIndex: 1, background: '#000', padding: '10px', border: '1px solid rgba(var(--accent-rgb),0.18)' }}>
+              <img
+                src={active.url}
+                alt={active.label || label}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  maxHeight: '78vh',
+                  objectFit: 'contain',
+                  background: '#05040f',
+                  borderRadius: '4px',
+                  border: '1px solid rgba(var(--accent-rgb),0.12)'
+                }}
+              />
+            </div>
+
+            {gallery.length > 1 && (
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 12,
+                padding: '14px 20px 18px',
+                background: 'rgba(7,5,20,0.96)'
+              }}>
+                <button
+                  onClick={e => { e.stopPropagation(); setActiveIndex(current => (current - 1 + gallery.length) % gallery.length); }}
+                  style={{
+                    border: '1px solid rgba(var(--accent-rgb),0.24)',
+                    background: 'rgba(var(--accent-rgb),0.06)',
+                    color: 'var(--white)',
+                    borderRadius: '3px',
+                    padding: '8px 12px',
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '10px',
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase'
+                  }}
+                >Zurück</button>
+
+                <div style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '9px',
+                  letterSpacing: '0.18em',
+                  color: 'rgba(var(--accent-rgb),0.72)',
+                  textTransform: 'uppercase'
+                }}>
+                  {activeIndex + 1} / {gallery.length}
+                </div>
+
+                <button
+                  onClick={e => { e.stopPropagation(); setActiveIndex(current => (current + 1) % gallery.length); }}
+                  style={{
+                    border: '1px solid rgba(var(--accent-rgb),0.24)',
+                    background: 'rgba(var(--accent-rgb),0.06)',
+                    color: 'var(--white)',
+                    borderRadius: '3px',
+                    padding: '8px 12px',
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '10px',
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase'
+                  }}
+                >Weiter</button>
+              </div>
+            )}
+          </div>
+        </div>,
+        document.body
+      )}
+    </>
+  );
+}
+
 // ── LORE SECTIONS ────────────────────────────────────────
 function LoreSections({ data }) {
   const l = data.lore;
+  const introGallery = normalizeGallery(Array.isArray(data.gallery) && data.gallery.length ? data.gallery : [l?.introBild]);
+
   return (
     <>
       {l.intro && (
         <Section label="Charaktererstellung" title="Über diese Rasse">
-          <div className={l.introBild ? 'rd-clearfix' : ''}>
-            {l.introBild && (
-              <ImgPH
-                url={l.introBild.url}
-                label={l.introBild.label || 'Illustration'}
-                caption={l.introBild.caption}
-                width={l.introBild.width || 270}
-                height={l.introBild.height || 330}
-                position={l.introBild.position || 'right'}
-              />
+          <div className={introGallery.length ? 'rd-clearfix' : ''}>
+            {introGallery.length > 0 && (
+              <RaceGallery images={introGallery} label="Illustration" width={l.introBild?.width || 360} />
             )}
             {l.intro.map((p,i) => <p key={i} className="rd-body-text">{p}</p>)}
           </div>
@@ -315,7 +531,7 @@ function Placeholder({ name }) {
   return (
     <Section label="Charaktererstellung" title={name}>
       <div className="rd-placeholder-box">
-        <p>Der Eintrag für <strong style={{ color:'rgba(var(--accent-rgb),0.7)' }}>{name}</strong> wird noch ausgearbeitet.</p>
+        <p>Der Eintrag für <strong style={{ color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))' }}>{name}</strong> wird noch ausgearbeitet.</p>
         <p style={{ marginTop:'10px' }}>Lore, Gesellschaft, bekannte Personen und Spielmechanik folgen in einem späteren Update.</p>
       </div>
     </Section>
@@ -518,11 +734,13 @@ function VariantCards({ section }) {
           : <div className="rd-vc-img-placeholder">Kein Bild hinterlegt</div>
         }
         <div className="rd-vc-body">
-          <div className="rd-vc-appear">
-            <div className="rd-vc-row"><span className="rd-vc-lbl">Augen</span><span className="rd-vc-val">{v.augenfarbe}</span></div>
-            <div className="rd-vc-row"><span className="rd-vc-lbl">Haut</span><span className="rd-vc-val">{v.hautfarbe}</span></div>
-            <div className="rd-vc-row"><span className="rd-vc-lbl">Haar</span><span className="rd-vc-val">{v.haarfarbe}</span></div>
-          </div>
+          {(v.augenfarbe || v.hautfarbe || v.haarfarbe) && (
+            <div className="rd-vc-appear">
+              {v.augenfarbe && <div className="rd-vc-row"><span className="rd-vc-lbl">Augen</span><span className="rd-vc-val">{v.augenfarbe}</span></div>}
+              {v.hautfarbe && <div className="rd-vc-row"><span className="rd-vc-lbl">Haut</span><span className="rd-vc-val">{v.hautfarbe}</span></div>}
+              {v.haarfarbe && <div className="rd-vc-row"><span className="rd-vc-lbl">Haar</span><span className="rd-vc-val">{v.haarfarbe}</span></div>}
+            </div>
+          )}
           <div className="rd-vc-feats">
             <div className="rd-vc-feat">
               <div className="rd-vc-feat-name">{section.feat1Label || 'Odemwaffe'}</div>
@@ -762,12 +980,12 @@ function Radar({ data: rd }) {
         <div className="rd-radar-desc">
           {rd.labels.map((label,i) => (
             <div key={label} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'10px' }}>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(var(--accent-rgb),0.6)', textTransform:'uppercase' }}>{label}</span>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>{label}</span>
               <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
-                <div style={{ width:'80px', height:'3px', background:'rgba(var(--accent-rgb),0.1)', borderRadius:'2px', overflow:'hidden' }}>
-                  <div style={{ height:'100%', width:`${rd.values[i]}%`, background:`rgba(var(--accent-rgb),0.75)`, borderRadius:'2px' }} />
+                <div style={{ width:'80px', height:'3px', background:'rgba(var(--accent-rgb),calc(0.1*var(--ka)))', borderRadius:'2px', overflow:'hidden' }}>
+                  <div style={{ height:'100%', width:`${rd.values[i]}%`, background:`rgba(var(--accent-rgb),calc(0.75*var(--ka)))`, borderRadius:'2px' }} />
                 </div>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text2-rgb),0.5)', width:'28px' }}>{rd.values[i]}</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text2-rgb),calc(0.5*var(--kt) + var(--tb)))', width:'28px' }}>{rd.values[i]}</span>
               </div>
             </div>
           ))}
@@ -817,8 +1035,8 @@ function Quiz({ data: qd }) {
         </>
       ) : (
         <div className="rd-quiz-result">
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),0.5)', textTransform:'uppercase', marginBottom:'12px' }}>Empfehlung</div>
-          <div className="rd-quiz-result-class" style={{ color:`rgba(var(--accent-rgb),1)` }}>{winner}</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:'12px' }}>Empfehlung</div>
+          <div className="rd-quiz-result-class" style={{ color:`rgba(var(--accent-rgb),calc(1*var(--ka) + var(--tb)))` }}>{winner}</div>
           <div className="rd-quiz-result-desc">{qd.klassen[winner] || '—'}</div>
           <button className="rd-quiz-reset" onClick={reset}>Nochmal</button>
         </div>
@@ -1057,7 +1275,7 @@ function GebaeudekatalogTab({ race }) {
       <section style={{ marginBottom:'48px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'20px' }}>
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:acc(0.5), textTransform:'uppercase' }}>01 · Steckbrief</span>
-          <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),0.12)` }}/>
+          <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),calc(0.12*var(--ka)))` }}/>
         </div>
         <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, letterSpacing:'0.18em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px' }}>Habitatprofil</h2>
         <div className="habitat-grid">
@@ -1100,7 +1318,7 @@ function GebaeudekatalogTab({ race }) {
       <section>
         <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'20px' }}>
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:acc(0.5), textTransform:'uppercase' }}>02 · Bausystem</span>
-          <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),0.12)` }}/>
+          <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),calc(0.12*var(--ka)))` }}/>
         </div>
         <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, letterSpacing:'0.18em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px' }}>Gebäudekatalog</h2>
         <div className="filterbar">
@@ -1143,11 +1361,11 @@ function RassenTOC({ items, headerBottom }) {
   // Slide up with hero, lock below nav once hero is past
   useEffect(() => {
     const update = () => {
-      const ideal = (headerBottom || 0) - window.scrollY;
+      const ideal = ((headerBottom || 0) - window.scrollY) / window.uiZoom();
       const val   = Math.max(0, ideal);
       if (navRef.current) {
         navRef.current.style.top    = val + 'px';
-        navRef.current.style.height = `calc(100vh - ${val}px)`;
+        navRef.current.style.height = `calc(calc(var(--vh, 1vh) * 100) - ${val}px)`;
       }
     };
     update();
@@ -1320,7 +1538,7 @@ function App() {
       <div style={{ display: tab === 'gebaeude' ? undefined : 'none' }}>
         {gebRace
           ? <GebaeudekatalogTab race={gebRace} />
-          : <div style={{ padding:'80px 48px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),0.3)', textTransform:'uppercase' }}>Noch keine Gebäudedaten für diese Rasse.</div>
+          : <div style={{ padding:'80px 48px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Noch keine Gebäudedaten für diese Rasse.</div>
         }
       </div>
       {selectedTalent && <TalentModal talent={selectedTalent} onClose={() => setSelectedTalent(null)} />}

@@ -125,6 +125,7 @@
       { name:'Aufmerksam und athletisch', text:'Du bist in den Fertigkeiten Athletik und Wahrnehmung geübt.' },
       { name:'Leviathan-Wille',           text:'Du hast Vorteil auf Rettungswürfe gegen Bezauberung, Furcht, Lähmung, Vergiftung, Betäubung und Einschläferung.' },
       { name:'Begrenzte Amphibienfähigkeit', text:'Du kannst sowohl Luft als auch Wasser atmen. Du musst jedoch mindestens alle 4 Stunden untergetaucht sein — andernfalls beginnst du zu ersticken.' },
+      { name:'Angeborenes Talent', text:null, talente:["Schuppenschild","Seitenlinie","Strömungsreiter"] },
     ],
   },
 };

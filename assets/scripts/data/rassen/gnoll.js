@@ -152,6 +152,8 @@
       { name:'— Wüste: Hitzetoleranz', text:'Resistenz gegen Feuerschaden. Du kannst dreimal so lange ohne Wasser auskommen wie die meisten Humanoiden.' },
       { name:'— Nekropole: Unter den Toten', text:'Resistenz gegen nekrotischen Schaden.' },
       { name:'— Nekropole: Fluchtrotzigkeit', text:'Vorteil auf Rettungswürfe gegen Flüche.' },
+      { name:'Angeborenes Talent', text:'Wähle eines der allgemeinen oder das Talent deiner Linie.', talente:["Lachen der Hyäne","Aasmagen"] },
+      { name:'Linien-Talente', text:'Je nach gewählter Linie steht dir eines dieser Talente zur Verfügung:', talente:["Weltgewandt","Blutrausch","Sandwitterung","Gräberräubersinn"] },
     ],
   },
 };

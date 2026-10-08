@@ -5,28 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="/assets/images/favicon/favicon-m.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/images/favicon/favicon-m-180.png">
-<title>Meruria — DM · Rekrutierungspreise</title>
+<title>Meruria — DM · Rekrutierung</title>
 <script src="/assets/scripts/theme-init.js"></script>
 <link rel="stylesheet" href="/assets/styles/global/fonts.css">
 <link rel="stylesheet" href="/assets/styles/global/base.css">
 <script src="/assets/scripts/vendor/react.production.min.js"></script>
 <script src="/assets/scripts/vendor/react-dom.production.min.js"></script>
-<script type="module" src="/src/pages/dm/rekrutierungspreise.jsx"></script>
+<script type="module" src="/src/pages/dm/rekrutierung.jsx"></script>
 <script src="/assets/scripts/vendor/supabase.min.js"></script>
 <script src="/assets/scripts/supabase-client.js"></script>
 <script src="/assets/scripts/data/divisions-data.js"></script>
+<script src="/assets/scripts/data/monster/rekrutierung-data.js"></script>
+<script src="/assets/scripts/data/rassen-struktur-data.js"></script>
+<script src="/assets/scripts/data/ausrüstung-data.js"></script>
+<script src="/assets/scripts/shared/rasse-anwenden.js"></script>
+<script src="/assets/scripts/shared/statblock-steckbrief.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { min-height: 100vh; background: var(--bg); color: var(--white); }
-input[type="number"] {
+body { min-height: calc(var(--vh, 1vh) * 100); background: var(--bg); color: var(--white); }
+input[type="number"], input[type="text"] {
   font-family: var(--font-mono); font-size: 13px; font-weight: 400;
-  color: var(--white); background: rgba(5,4,15,0.7);
-  border: 1px solid rgba(124,77,255,0.25); border-radius: 3px;
-  padding: 6px 10px; outline: none; width: 100%;
-  transition: border-color .15s;
+  color: var(--white); background: rgba(var(--bg-rgb),0.7);
+  border: 1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp))); border-radius: 3px;
+  padding: 6px 10px; outline: none; transition: border-color .15s;
 }
-input[type="number"]:focus { border-color: rgba(124,77,255,0.6); }
 input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
+input, textarea { outline: none; }
+input:focus, textarea:focus { border-color: rgba(var(--purple-rgb),calc(0.6*var(--kp))) !important; }
 </style>
 </head>
 <body>

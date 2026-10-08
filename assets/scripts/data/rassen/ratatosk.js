@@ -133,6 +133,8 @@
       { name:'— Ekorre: Segen von Yggdrasil', text:'Du kennst die Zaubertricks Nachricht und Boshafter Spott. Ab Stufe 5: Spiegelbild einmal pro langer Rast. Charisma ist deine Zaubermerkmalcharakteristik.' },
       { name:'— Ekorre: Winzige Waffen', text:'Du kannst Waffen mit der Leicht- oder Finesse-Eigenschaft normal führen. Andere Waffen werden als zweihändig behandelt und du hast Nachteil auf Angriffe damit. Schwere Waffen kannst du nicht verwenden.' },
       { name:'— Tradvakt: Kriegsgeplapper', text:'Als Bonusaktion muss eine Nicht-Ratatosk-Kreatur innerhalb von 9 Metern, die dich hören kann, einen Charisma-Rettungswurf (SG 8 + Übungsbonus + KON-Mod) bestehen oder bis zum Beginn deines nächsten Zuges Nachteil auf Angriffswürfe haben. Einmal pro kurzer oder langer Rast.' },
+      { name:'Angeborenes Talent', text:'Wähle eines der allgemeinen oder das Talent deiner Linie.', talente:["Buschiger Schweif","Lauscher der Zweige"] },
+      { name:'Linien-Talente', text:'Je nach gewählter Linie steht dir eines dieser Talente zur Verfügung:', talente:["Schlupfwinkel","Banner des Schweifs"] },
     ],
   },
 };

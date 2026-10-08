@@ -120,7 +120,7 @@ function FovDiagram({
   }, /*#__PURE__*/React.createElement("rect", {
     width: W,
     height: H,
-    fill: "rgba(0,0,10,0.55)"
+    fill: "rgba(var(--bg-rgb),0.55)"
   }), /*#__PURE__*/React.createElement("circle", {
     cx: cx,
     cy: cy,
@@ -275,7 +275,7 @@ function RaceImagePlaceholder({
     style: {
       width: '100%',
       height: `${height}px`,
-      background: `repeating-linear-gradient(-45deg, transparent, transparent 8px, ${accent}09 8px, ${accent}09 9px), linear-gradient(160deg, rgba(20,12,50,0.9) 0%, rgba(8,5,22,0.95) 100%)`,
+      background: `repeating-linear-gradient(-45deg, transparent, transparent 8px, ${accent}09 8px, ${accent}09 9px), linear-gradient(160deg, rgba(var(--panel-rgb),0.9) 0%, rgba(var(--panel-rgb),0.95) 100%)`,
       border: `1px dashed ${accent}33`,
       borderRadius: '3px',
       display: 'flex',
@@ -362,8 +362,7 @@ function CardInner({
       borderRadius: '4px',
       height: '260px',
       border: `1px solid ${hov ? accent + '88' : accent + '22'}`,
-      boxShadow: hov ? `0 12px 48px rgba(0,0,0,0.7), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : `0 2px 16px rgba(0,0,0,0.55)`,
-      transition: 'border-color 0.2s, box-shadow 0.25s',
+      boxShadow: hov ? `0 12px 48px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k))), 0 0 28px ${accent}33, inset 0 1px 0 ${accent}18` : `0 2px 16px rgba(0,0,0,0.55)`,
       overflow: 'visible',
       transformStyle: 'preserve-3d',
       transform: hov ? `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)` : `rotateX(0deg) rotateY(0deg)`,
@@ -382,7 +381,7 @@ function CardInner({
     style: {
       position: 'absolute',
       inset: 0,
-      backgroundImage: 'url(assets/images/races/placeholder-race.png)',
+      backgroundImage: `url(${(window.RASSEN_DETAIL_INDEX?.[name]?.banner) || 'assets/images/races/placeholder-race.png'})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       transition: 'filter 0.5s ease'
@@ -400,7 +399,7 @@ function CardInner({
     style: {
       position: 'absolute',
       inset: 0,
-      background: 'linear-gradient(to top, rgba(4,2,14,0.98) 0%, rgba(4,2,14,0.88) 50%, rgba(4,2,14,0.65) 100%)',
+      background: 'linear-gradient(to top, rgba(var(--bg-rgb),0.98) 0%, rgba(var(--bg-rgb),0.88) 50%, rgba(var(--bg-rgb),0.65) 100%)',
       opacity: hov ? 1 : 0,
       transition: 'opacity 0.45s ease'
     }
@@ -475,7 +474,7 @@ function CardInner({
       fontWeight: '300',
       fontStyle: 'normal',
       fontSize: '10px',
-      color: 'rgba(var(--text-rgb),0.48)',
+      color: 'rgba(var(--text-rgb),calc(0.48*var(--kt) + var(--tb)))',
       letterSpacing: '0.05em',
       lineHeight: 1.55,
       marginBottom: tags && tags.length ? '6px' : 0
@@ -493,9 +492,9 @@ function CardInner({
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '0.12em',
-      color: 'rgba(var(--accent-rgb),0.55)',
-      background: 'rgba(124,77,255,0.07)',
-      border: '1px solid rgba(124,77,255,0.16)',
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
+      background: 'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.16*var(--kp)))',
       padding: '3px 8px',
       borderRadius: '2px',
       textTransform: 'uppercase'
@@ -508,7 +507,7 @@ function CardInner({
       right: 0,
       height: '108px',
       zIndex: 9,
-      background: 'linear-gradient(to top, rgba(2,1,10,0.92) 0%, rgba(2,1,10,0.88) 97%, transparent 99%)',
+      background: 'linear-gradient(to top, rgba(var(--bg-rgb),0.92) 0%, rgba(var(--bg-rgb),0.88) 97%, transparent 99%)',
       opacity: hov ? 0 : 1,
       transition: 'opacity 0.35s ease',
       pointerEvents: 'none'
@@ -522,7 +521,7 @@ function CardInner({
       height: '80px',
       zIndex: 10,
       transform: 'translateZ(2px)',
-      background: 'linear-gradient(to top, rgba(2,1,10,0.88) 0%, transparent 100%)',
+      background: 'linear-gradient(to top, rgba(var(--bg-rgb),0.88) 0%, transparent 100%)',
       clipPath: 'polygon(0% 40%, 100% 0%, 100% 100%, 0% 100%)',
       opacity: hov ? 1 : 0,
       transition: 'opacity 0.35s ease',
@@ -741,7 +740,7 @@ function GroupSection({
       fontSize: '20px',
       fontWeight: '300',
       letterSpacing: '0.2em',
-      color: 'rgba(var(--text-rgb),0.85)',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       textShadow: `0 0 20px ${accent}33`,
       textTransform: 'uppercase'
     }
@@ -754,6 +753,7 @@ function GroupSection({
       animation: 'pulse-glow 3s infinite'
     }
   })), /*#__PURE__*/React.createElement("div", {
+    className: "race-grid",
     style: {
       display: 'grid',
       gridTemplateColumns: `repeat(${cols}, 1fr)`,
@@ -791,9 +791,9 @@ function EntityDetailPlaceholder({
     fontWeight: '300',
     fontSize: '11px',
     letterSpacing: '0.12em',
-    color: 'rgba(var(--text2-rgb),0.55)',
-    background: 'rgba(124,77,255,0.06)',
-    border: '1px solid rgba(124,77,255,0.18)',
+    color: 'rgba(var(--text2-rgb),calc(0.55*var(--kt) + var(--tb)))',
+    background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+    border: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
     padding: '7px 14px',
     borderRadius: '3px',
     cursor: 'pointer',
@@ -801,7 +801,7 @@ function EntityDetailPlaceholder({
   };
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      minHeight: '100vh',
+      minHeight: 'calc(var(--vh, 1vh) * 100)',
       background: 'var(--bg)'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -816,13 +816,13 @@ function EntityDetailPlaceholder({
     onClick: onClose,
     onMouseEnter: e => {
       e.currentTarget.style.color = 'var(--white)';
-      e.currentTarget.style.background = 'rgba(124,77,255,0.14)';
-      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.45)';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.14*var(--kp)))';
+      e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))';
     },
     onMouseLeave: e => {
-      e.currentTarget.style.color = 'rgba(var(--text2-rgb),0.55)';
-      e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
-      e.currentTarget.style.borderColor = 'rgba(124,77,255,0.18)';
+      e.currentTarget.style.color = 'rgba(var(--text2-rgb),calc(0.55*var(--kt) + var(--tb)))';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))';
+      e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))';
     }
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 16 16",
@@ -969,21 +969,21 @@ function EntityDetailPlaceholder({
       fontWeight: '300',
       fontSize: '10px',
       lineHeight: '1.65',
-      color: 'rgba(200,190,240,0.5)',
+      color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
       margin: 0
     }
   }, activeSicht?.notiz || sicht.notiz))))), /*#__PURE__*/React.createElement("div", {
     style: {
-      border: '1px dashed rgba(124,77,255,0.2)',
+      border: '1px dashed rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
       borderRadius: '4px',
       padding: '48px 40px',
       textAlign: 'center',
-      background: 'rgba(124,77,255,0.03)'
+      background: 'rgba(var(--purple-rgb),calc(0.03*var(--kp)))'
     }
   }, /*#__PURE__*/React.createElement(OctSvg, {
     size: 32,
-    color: "rgba(124,77,255,0.25)",
-    fill: "rgba(124,77,255,0.08)",
+    color: "rgba(var(--purple-rgb),calc(0.25*var(--kp) + var(--tb)))",
+    fill: "rgba(var(--purple-rgb),calc(0.08*var(--kp)))",
     strokeWidth: 1,
     style: {
       margin: '0 auto 20px'
@@ -994,7 +994,7 @@ function EntityDetailPlaceholder({
       fontSize: '13px',
       fontWeight: '300',
       letterSpacing: '0.18em',
-      color: 'rgba(var(--text2-rgb),0.4)',
+      color: 'rgba(var(--text2-rgb),calc(0.4*var(--kt) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '12px'
     }
@@ -1004,13 +1004,13 @@ function EntityDetailPlaceholder({
       fontWeight: '300',
       fontSize: '12px',
       lineHeight: '1.9',
-      color: 'rgba(var(--text2-rgb),0.3)',
+      color: 'rgba(var(--text2-rgb),calc(0.3*var(--kt) + var(--tb)))',
       maxWidth: '400px',
       margin: '0 auto'
     }
   }, "Der Eintrag f\xFCr ", /*#__PURE__*/React.createElement("span", {
     style: {
-      color: 'rgba(var(--text2-rgb),0.5)'
+      color: 'rgba(var(--text2-rgb),calc(0.5*var(--kt) + var(--tb)))'
     }
   }, race.name), " wird noch ausgearbeitet. Komm sp\xE4ter wieder."))));
 }
@@ -1042,9 +1042,9 @@ function DetailOverlay({
     fontWeight: '300',
     fontSize: '11px',
     letterSpacing: '0.12em',
-    color: 'rgba(var(--text2-rgb),0.55)',
+    color: 'rgba(var(--text2-rgb),calc(0.55*var(--kt) + var(--tb)))',
     background: 'rgba(var(--bg-rgb),0.85)',
-    border: '1px solid rgba(124,77,255,0.25)',
+    border: '1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
     padding: '7px 14px',
     borderRadius: '3px',
     cursor: 'pointer',
@@ -1122,11 +1122,11 @@ function TOCSidebar({
   const asideRef = React.useRef(null);
   useEffect(() => {
     const update = () => {
-      const ideal = (headerBottom || 0) - window.scrollY;
+      const ideal = ((headerBottom || 0) - window.scrollY) / window.uiZoom();
       const val = Math.max(navHeight, ideal);
       if (asideRef.current) {
         asideRef.current.style.top = val + 'px';
-        asideRef.current.style.height = `calc(100vh - ${val}px)`;
+        asideRef.current.style.height = `calc(calc(var(--vh, 1vh) * 100) - ${val}px)`;
       }
     };
     update();
@@ -1160,8 +1160,8 @@ function TOCSidebar({
       position: 'fixed',
       top: `${navHeight}px`,
       left: 0,
-      height: `calc(100vh - ${navHeight}px)`,
-      borderRight: '1px solid rgba(var(--accent-rgb),0.1)',
+      height: `calc(calc(var(--vh, 1vh) * 100) - ${navHeight}px)`,
+      borderRight: '1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
       padding: '28px 0',
       background: 'rgba(var(--bg-rgb),0.85)',
       backdropFilter: 'blur(12px)',
@@ -1173,7 +1173,7 @@ function TOCSidebar({
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '0.25em',
-      color: 'rgba(var(--accent-rgb),0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
       padding: '0 20px',
       marginBottom: '4px'
@@ -1196,25 +1196,25 @@ function TOCSidebar({
       fontSize: '11px',
       letterSpacing: '0.1em',
       fontVariant: 'small-caps',
-      color: 'rgba(var(--text-rgb),0.6)',
+      color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       borderLeft: '2px solid transparent',
       transition: 'all 0.15s',
       lineHeight: 1.55
     },
     onMouseEnter: e => {
       e.currentTarget.style.color = 'var(--white)';
-      e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.6)';
-      e.currentTarget.style.background = 'rgba(124,77,255,0.06)';
+      e.currentTarget.style.borderLeftColor = 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))';
+      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))';
     },
     onMouseLeave: e => {
-      e.currentTarget.style.color = 'rgba(var(--text-rgb),0.6)';
+      e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))';
       e.currentTarget.style.borderLeftColor = 'transparent';
       e.currentTarget.style.background = 'transparent';
     }
   }, /*#__PURE__*/React.createElement(OctSvg, {
     size: 6,
-    color: "rgba(124,77,255,0.5)",
-    fill: "rgba(124,77,255,0.25)",
+    color: "rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",
+    fill: "rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
     strokeWidth: 1,
     style: {
       flexShrink: 0,
@@ -1240,9 +1240,28 @@ function App() {
   });
   const tweaks = TWEAK_DEFAULTS;
   const [headerBottom, setHeaderBottom] = useState(0);
-  const [selectedRace, setSelectedRace] = useState(null);
+  // Die geöffnete Rasse steht in der URL (?rasse=<id>), damit ein Neuladen oder ein Link beim Detail bleibt
+  const raceFromUrl = () => {
+    try {
+      const id = new URLSearchParams(location.search).get('rasse');
+      return ENTRIES.find(e => e.type === 'race' && e.id === id) || null;
+    } catch (e) { return null; }
+  };
+  const [selectedRace, setSelectedRace] = useState(raceFromUrl);
   const NAV_H = 52;
-  const handleSelect = useCallback(race => setSelectedRace(race), []);
+  const handleSelect = useCallback(race => {
+    setSelectedRace(race);
+    try { history.pushState(null, '', location.pathname + '?rasse=' + encodeURIComponent(race.id)); } catch (e) {}
+  }, []);
+  const handleClose = useCallback(() => {
+    setSelectedRace(null);
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  }, []);
+  useEffect(() => {
+    const onPop = () => setSelectedRace(raceFromUrl());
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
   const pageTitleRef = useRef(null);
   const handleMouseMove = useCallback(e => {
     setMouse({
@@ -1313,6 +1332,7 @@ function App() {
         output.push(/*#__PURE__*/React.createElement("div", {
           key: rowId,
           id: rowId,
+          className: "race-grid",
           style: {
             display: 'grid',
             gridTemplateColumns: `repeat(${cols}, 1fr)`,
@@ -1360,7 +1380,7 @@ function App() {
     return output;
   })())), /*#__PURE__*/React.createElement(SiteFooter, null), selectedRace && /*#__PURE__*/React.createElement(DetailOverlay, {
     race: selectedRace,
-    onClose: () => setSelectedRace(null)
+    onClose: handleClose
   }), !selectedRace && /*#__PURE__*/React.createElement(FloatNav, null));
 }
 ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));

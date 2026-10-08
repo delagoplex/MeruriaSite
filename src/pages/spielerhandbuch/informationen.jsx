@@ -1,5 +1,6 @@
 // Page entry for /spielerhandbuch/informationen.html
 import '../../components/nav.jsx';
+import '../../components/damage-icon.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/footer.jsx';
 import '../../components/page-hero.jsx';
@@ -70,302 +71,8 @@ var SCHADEN_CATS = [
   { id:'mag',  label:'Elementar & Magisch', sub:'Naturkräfte, Magie und Geist' },
 ];
 
-// SVG glyphs — simple line art, ~24x24 viewBox-friendly, all stroke="currentColor"
-var SCHADEN_GLYPHS = {
-  // Crossed swords (slashing)
-  hieb: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2">
-      <g transform="rotate(45 20 20)">
-        <path d="M18 4 L22 4 L22 25 L18 25 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
-        <path d="M18 4 L20 1 L22 4 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
-        <path d="M13 25 L27 25 L27 28 L13 28 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
-        <path d="M19 28 L21 28 L21 35 L19 35 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
-        <circle cx="20" cy="37" r="1.8" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
-        <line x1="20" y1="6" x2="20" y2="23" stroke="currentColor" strokeWidth="0.6" opacity="0.5"/>
-      </g>
-      <g transform="rotate(-45 20 20)">
-        <path d="M18 4 L22 4 L22 25 L18 25 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
-        <path d="M18 4 L20 1 L22 4 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
-        <path d="M13 25 L27 25 L27 28 L13 28 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
-        <path d="M19 28 L21 28 L21 35 L19 35 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
-        <circle cx="20" cy="37" r="1.8" fill="rgba(15,10,30,0.95)" stroke="currentColor"/>
-        <line x1="20" y1="6" x2="20" y2="23" stroke="currentColor" strokeWidth="0.6" opacity="0.5"/>
-      </g>
-      <circle cx="20" cy="20" r="1.4" fill="currentColor"/>
-    </g>
-  ),
-  // War hammer (bludgeoning) — Mjölnir-style block head
-  wucht: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      {/* impact sparks at corners */}
-      <path d="M3 10 L8 11 M4 5 L9 8" stroke="currentColor" strokeWidth="1.1" opacity="0.6"/>
-      <path d="M37 10 L32 11 M36 5 L31 8" stroke="currentColor" strokeWidth="1.1" opacity="0.6"/>
-      {/* hammer head — bold block */}
-      <rect x="8" y="9" width="24" height="13" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
-      {/* vertical bands on head */}
-      <line x1="13" y1="9"  x2="13" y2="22" stroke="currentColor" strokeWidth="0.8" opacity="0.55"/>
-      <line x1="27" y1="9"  x2="27" y2="22" stroke="currentColor" strokeWidth="0.8" opacity="0.55"/>
-      {/* center stud */}
-      <circle cx="20" cy="15.5" r="2" fill="currentColor"/>
-      <circle cx="20" cy="15.5" r="0.8" fill="rgba(15,10,30,0.95)"/>
-      {/* handle */}
-      <rect x="18.2" y="22" width="3.6" height="12" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      {/* grip wrap */}
-      <line x1="18.2" y1="25" x2="21.8" y2="25" stroke="currentColor" strokeWidth="0.6" opacity="0.6"/>
-      <line x1="18.2" y1="28" x2="21.8" y2="28" stroke="currentColor" strokeWidth="0.6" opacity="0.6"/>
-      <line x1="18.2" y1="31" x2="21.8" y2="31" stroke="currentColor" strokeWidth="0.6" opacity="0.6"/>
-      {/* pommel base */}
-      <rect x="15.5" y="34" width="9" height="3" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-    </g>
-  ),
-  // Dagger pointing down (piercing)
-  stich: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      {/* drips/sparks at tip */}
-      <circle cx="20" cy="38" r="0.9" fill="currentColor" opacity="0.7"/>
-      <circle cx="15" cy="36" r="0.6" fill="currentColor" opacity="0.5"/>
-      <circle cx="25" cy="36" r="0.6" fill="currentColor" opacity="0.5"/>
-      {/* pommel */}
-      <circle cx="20" cy="6" r="2.6" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      <circle cx="20" cy="6" r="0.9" fill="currentColor"/>
-      {/* grip with binding */}
-      <path d="M18 8 L22 8 L22 14 L18 14 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      <line x1="18" y1="10" x2="22" y2="10" stroke="currentColor" strokeWidth="0.6" opacity="0.6"/>
-      <line x1="18" y1="12" x2="22" y2="12" stroke="currentColor" strokeWidth="0.6" opacity="0.6"/>
-      {/* crossguard */}
-      <path d="M11 14 L29 14 L29 17 L11 17 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      <circle cx="11.5" cy="15.5" r="0.6" fill="currentColor"/>
-      <circle cx="28.5" cy="15.5" r="0.6" fill="currentColor"/>
-      {/* blade — tapered */}
-      <path d="M16 17 L24 17 L20 34 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      {/* blood groove */}
-      <path d="M20 19 L20 32" stroke="currentColor" strokeWidth="0.6" opacity="0.55"/>
-    </g>
-  ),
-  // Sun disc with rays
-  strahlend: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      {/* rays — 8 cardinal + diagonal */}
-      <g stroke="currentColor" strokeWidth="1.5">
-        <path d="M20 1 L20 7"/>
-        <path d="M20 33 L20 39"/>
-        <path d="M1 20 L7 20"/>
-        <path d="M33 20 L39 20"/>
-      </g>
-      <g stroke="currentColor" strokeWidth="1.1" opacity="0.7">
-        <path d="M6 6 L11 11"/>
-        <path d="M29 11 L34 6"/>
-        <path d="M6 34 L11 29"/>
-        <path d="M29 29 L34 34"/>
-      </g>
-      {/* outer disc */}
-      <circle cx="20" cy="20" r="9" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
-      {/* inner ring */}
-      <circle cx="20" cy="20" r="5.5" fill="none" stroke="currentColor" strokeWidth="0.9" opacity="0.55"/>
-      {/* center diamond */}
-      <path d="M20 16 L23 20 L20 24 L17 20 Z" fill="currentColor"/>
-    </g>
-  ),
-  // Skull with decay tendrils (necrotic)
-  nekrotisch: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      <path d="M10 31 L8 37 M14 32 L13 38 M20 33 L20 38 M26 32 L27 38 M30 31 L32 37" stroke="currentColor" strokeWidth="1.1" opacity="0.55"/>
-      <path d="M11 14 Q11 5 20 5 Q29 5 29 14 L29 21 Q29 25 26 26 L26 31 L23 31 L23 29 L17 29 L17 31 L14 31 L14 26 Q11 25 11 21 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      <circle cx="16" cy="16" r="2.2" fill="currentColor"/>
-      <circle cx="24" cy="16" r="2.2" fill="currentColor"/>
-      <path d="M20 19 L18 23 L22 23 Z" fill="currentColor" opacity="0.85"/>
-      <path d="M17 26 L17 28 M19 26 L19 28 M21 26 L21 28 M23 26 L23 28" stroke="currentColor" strokeWidth="0.8" opacity="0.75"/>
-      <path d="M18 9 L16 12 L18 14" stroke="currentColor" strokeWidth="0.7" opacity="0.55"/>
-    </g>
-  ),
-  // Crystal core snowflake (cold)
-  kaelte: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      {/* 6 bold radial arms with branches */}
-      <g stroke="currentColor" strokeWidth="1.5">
-        <g transform="translate(20 20)">
-          {[0,60,120,180,240,300].map(a => (
-            <g key={a} transform={`rotate(${a})`}>
-              <line x1="0" y1="-5" x2="0" y2="-17"/>
-              <line x1="0" y1="-9" x2="-3" y2="-12" strokeWidth="1.2"/>
-              <line x1="0" y1="-9" x2="3" y2="-12" strokeWidth="1.2"/>
-              <line x1="0" y1="-13" x2="-2" y2="-15" strokeWidth="1.1"/>
-              <line x1="0" y1="-13" x2="2" y2="-15" strokeWidth="1.1"/>
-            </g>
-          ))}
-        </g>
-      </g>
-      {/* tiny crystal tips */}
-      <g fill="currentColor">
-        {[0,60,120,180,240,300].map(a => {
-          const rad = (a - 90) * Math.PI / 180;
-          return <circle key={a} cx={20 + Math.cos(rad)*17} cy={20 + Math.sin(rad)*17} r="1.1"/>;
-        })}
-      </g>
-      {/* central hexagonal crystal */}
-      <polygon points="20,13 26,16.5 26,23.5 20,27 14,23.5 14,16.5" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
-      <polygon points="20,16 23.5,18 23.5,22 20,24 16.5,22 16.5,18" fill="currentColor" opacity="0.85"/>
-      <polygon points="20,18 22,19 22,21 20,22 18,21 18,19" fill="rgba(15,10,30,0.95)"/>
-    </g>
-  ),
-  // Elegant layered flame with curling tongues
-  feuer: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.4">
-      {/* floating embers */}
-      <circle cx="8"  cy="13" r="0.7" fill="currentColor" opacity="0.6"/>
-      <circle cx="33" cy="9"  r="0.6" fill="currentColor" opacity="0.6"/>
-      <circle cx="6"  cy="22" r="0.4" fill="currentColor" opacity="0.4"/>
-      <circle cx="34" cy="20" r="0.5" fill="currentColor" opacity="0.45"/>
-      <circle cx="14" cy="5"  r="0.5" fill="currentColor" opacity="0.45"/>
-      {/* tiny spark crowning the flame */}
-      <path d="M22 2 L23 4 L22 5 L21 4 Z" fill="currentColor"/>
-
-      {/* OUTER flame — dark silhouette with flowing curves */}
-      <path d="M20 37
-               C 7 35, 4 24, 12 16
-               C 13 19, 16 18, 14 11
-               C 16 5, 22 4, 22 12
-               C 24 10, 28 11, 26 16
-               C 35 19, 34 32, 24 37
-               Z"
-        fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.5"/>
-
-      {/* MIDDLE flame — accent color tongue */}
-      <path d="M20 33
-               C 11 31, 12 22, 17 18
-               C 17 21, 20 21, 18 14
-               C 20 11, 23 13, 22 18
-               C 28 21, 27 29, 22 33
-               Z"
-        fill="currentColor" opacity="0.88"/>
-
-      {/* INNER core — dark heart of the flame */}
-      <path d="M20 28
-               C 16 27, 17 23, 19 20
-               C 20 22, 22 22, 22 26
-               Z"
-        fill="rgba(15,10,30,0.95)"/>
-
-      {/* tiny upper-tip glint */}
-      <circle cx="22" cy="9" r="0.9" fill="currentColor" opacity="0.95"/>
-    </g>
-  ),
-  // Lightning bolt silhouette
-  blitz: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      <circle cx="6" cy="14" r="1.1" fill="currentColor" opacity="0.7"/>
-      <circle cx="34" cy="26" r="1.1" fill="currentColor" opacity="0.7"/>
-      <circle cx="9" cy="32" r="0.7" fill="currentColor" opacity="0.5"/>
-      <circle cx="32" cy="10" r="0.7" fill="currentColor" opacity="0.5"/>
-      <path d="M24 3 L11 21 L19 21 L15 37 L29 17 L21 17 L26 3 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
-      <path d="M23 7 L15 19 L20 19 L17 30" stroke="currentColor" strokeWidth="0.6" opacity="0.5"/>
-    </g>
-  ),
-  // Skull with crossed bones
-  gift: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      <path d="M8 30 L32 8" strokeWidth="1.5" opacity="0.6"/>
-      <path d="M32 30 L8 8" strokeWidth="1.5" opacity="0.6"/>
-      <circle cx="8" cy="8"  r="2" fill="rgba(255,255,255,0.16)"/>
-      <circle cx="32" cy="8"  r="2" fill="rgba(255,255,255,0.16)"/>
-      <circle cx="8" cy="30" r="2" fill="rgba(255,255,255,0.16)"/>
-      <circle cx="32" cy="30" r="2" fill="rgba(255,255,255,0.16)"/>
-      <path d="M11 19 Q11 11 20 11 Q29 11 29 19 L29 23 Q29 27 26 28 L26 31 L23 31 L23 29 L17 29 L17 31 L14 31 L14 28 Q11 27 11 23 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      <circle cx="16" cy="20" r="1.7" fill="currentColor"/>
-      <circle cx="24" cy="20" r="1.7" fill="currentColor"/>
-      <path d="M18 25 L18 27 M20 25 L20 27 M22 25 L22 27" opacity="0.7" strokeWidth="0.9"/>
-    </g>
-  ),
-  // Ringing bell (thunder/sound)
-  schall: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      {/* vibration lines on sides */}
-      <path d="M3 14 L7 15 M3 21 L7 20" stroke="currentColor" strokeWidth="1.2" opacity="0.7"/>
-      <path d="M37 14 L33 15 M37 21 L33 20" stroke="currentColor" strokeWidth="1.2" opacity="0.7"/>
-      <path d="M2 9 L6 11" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
-      <path d="M38 9 L34 11" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
-      {/* bell crown/loop */}
-      <path d="M18 4 L22 4 L22 8 L18 8 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      {/* bell body */}
-      <path d="M11 25 Q 11 10, 20 8 Q 29 10, 29 25 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
-      {/* bell rim */}
-      <path d="M9 25 L31 25 L31 28 L9 28 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      {/* bell mouth shading line */}
-      <line x1="13" y1="25" x2="13" y2="28" stroke="currentColor" strokeWidth="0.6" opacity="0.5"/>
-      <line x1="27" y1="25" x2="27" y2="28" stroke="currentColor" strokeWidth="0.6" opacity="0.5"/>
-      {/* clapper */}
-      <line x1="20" y1="28" x2="20" y2="31" stroke="currentColor" strokeWidth="1.4"/>
-      <circle cx="20" cy="33" r="2.2" fill="currentColor"/>
-    </g>
-  ),
-  // Bubbling vial / corrosive flask (acid)
-  saeure: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      {/* splatter drops around */}
-      <circle cx="6" cy="32" r="1.4" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1"/>
-      <circle cx="34" cy="30" r="1.6" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1"/>
-      <circle cx="33" cy="36" r="0.8" fill="currentColor" opacity="0.7"/>
-      <circle cx="7" cy="38" r="0.7" fill="currentColor" opacity="0.7"/>
-      {/* steam/fumes */}
-      <path d="M14 6 Q15 4 17 5" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
-      <path d="M23 6 Q25 4 27 5" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
-      <path d="M19 3 Q21 1 23 2" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
-      {/* flask cork */}
-      <path d="M16 8 L24 8 L24 11 L16 11 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      {/* flask neck */}
-      <path d="M17 11 L23 11 L23 16 L17 16 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      {/* flask body — round bulb */}
-      <path d="M17 16 Q9 22 11 30 Q14 37 20 37 Q26 37 29 30 Q31 22 23 16 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
-      {/* acid fluid line */}
-      <path d="M13 26 Q17 28 20 26 Q23 24 27 26" stroke="currentColor" strokeWidth="1.1" opacity="0.85"/>
-      {/* bubbles inside */}
-      <circle cx="16" cy="30" r="1.2" fill="currentColor" opacity="0.8"/>
-      <circle cx="22" cy="32" r="0.9" fill="currentColor" opacity="0.7"/>
-      <circle cx="25" cy="28" r="0.6" fill="currentColor" opacity="0.6"/>
-    </g>
-  ),
-
-  // Bursting magic star (force)
-  energie: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      <path d="M5 5 L7 7 M5 7 L7 5" stroke="currentColor" strokeWidth="1.1" opacity="0.7"/>
-      <path d="M33 33 L35 35 M33 35 L35 33" stroke="currentColor" strokeWidth="1.1" opacity="0.7"/>
-      <path d="M5 35 L7 33 M5 33 L7 35" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
-      <path d="M33 5 L35 7 M33 7 L35 5" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
-      <path d="M20 2 L23.5 16.5 L38 20 L23.5 23.5 L20 38 L16.5 23.5 L2 20 L16.5 16.5 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.4"/>
-      <path d="M20 8 L22 18 L32 20 L22 22 L20 32 L18 22 L8 20 L18 18 Z" fill="currentColor" opacity="0.85"/>
-      <circle cx="20" cy="20" r="2.2" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="0.9"/>
-      <circle cx="20" cy="20" r="0.9" fill="currentColor"/>
-    </g>
-  ),
-
-  // Brain silhouette with psi waves
-  psychisch: (
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.3">
-      {/* psi waves */}
-      <path d="M3 9 Q6 11 5 15" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
-      <path d="M37 9 Q34 11 35 15" stroke="currentColor" strokeWidth="1" opacity="0.55"/>
-      <path d="M4 32 Q7 30 6 27" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
-      <path d="M36 32 Q33 30 34 27" stroke="currentColor" strokeWidth="1" opacity="0.45"/>
-      {/* left hemisphere */}
-      <path d="M19 7 Q14 5 10 9 Q6 13 9 18 Q5 22 9 27 Q11 32 16 33 L19 33 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      {/* right hemisphere */}
-      <path d="M21 7 Q26 5 30 9 Q34 13 31 18 Q35 22 31 27 Q29 32 24 33 L21 33 Z" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.3"/>
-      {/* central fissure highlight */}
-      <line x1="20" y1="7" x2="20" y2="33" stroke="currentColor" strokeWidth="0.6" opacity="0.4"/>
-      {/* folds — left */}
-      <path d="M12 13 Q14 14 13 16" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
-      <path d="M11 20 Q13 21 12 23" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
-      <path d="M13 27 Q15 28 14 30" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
-      {/* folds — right */}
-      <path d="M28 13 Q26 14 27 16" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
-      <path d="M29 20 Q27 21 28 23" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
-      <path d="M27 27 Q25 28 26 30" stroke="currentColor" strokeWidth="1" opacity="0.7"/>
-      {/* brain stem */}
-      <path d="M17 33 L17 36 L23 36 L23 33" fill="rgba(15,10,30,0.95)" stroke="currentColor" strokeWidth="1.2"/>
-    </g>
-  ),
-};
+// glyphs live in src/components/damage-icon.jsx (shared with the character sheet)
+var { SCHADEN_GLYPHS } = window;
 
 // ── HEILTRÄNKE ──────────────────────────────────────────────────────────────
 var HEILTRAENKE = [
@@ -392,12 +99,12 @@ function Sidebar({ active, onSelect }) {
   return (
     <aside style={{
       width:'var(--sidebar-w)', flexShrink:0, position:'sticky', top:'var(--nav-h)',
-      height:'calc(100vh - var(--nav-h))', overflowY:'auto',
+      height:'calc(calc(var(--vh, 1vh) * 100) - var(--nav-h))', overflowY:'auto',
       padding:'28px 18px 28px 22px',
-      borderRight:'1px solid rgba(160,140,255,0.08)',
-      background:'linear-gradient(180deg, rgba(8,6,22,0.45) 0%, rgba(5,4,15,0.7) 100%)',
+      borderRight:'1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
+      background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.45) 0%, rgba(var(--bg-rgb),0.7) 100%)',
     }}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.32em',color:'rgba(124,77,255,0.55)',textTransform:'uppercase',marginBottom:'18px',paddingLeft:'4px'}}>◈ Kapitel</div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'18px',paddingLeft:'4px'}}>◈ Kapitel</div>
       <nav style={{display:'flex',flexDirection:'column',gap:'2px'}}>
         {CATEGORIES.map((cat,i) => {
           const on = cat.id === active;
@@ -405,23 +112,23 @@ function Sidebar({ active, onSelect }) {
             <button key={cat.id} onClick={()=>onSelect(cat.id)} style={{
               display:'flex', alignItems:'center', gap:'10px',
               padding:'10px 12px', textAlign:'left',
-              background: on ? 'linear-gradient(90deg, rgba(124,77,255,0.18), rgba(124,77,255,0.04))' : 'transparent',
-              border:'1px solid', borderColor: on ? 'rgba(124,77,255,0.45)' : 'transparent',
+              background: on ? 'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.18*var(--kp))), rgba(var(--purple-rgb),calc(0.04*var(--kp))))' : 'transparent',
+              border:'1px solid', borderColor: on ? 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))' : 'transparent',
               borderRadius:'2px', cursor:'pointer', transition:'all 0.18s',
             }}
-              onMouseEnter={e=>{if(!on){e.currentTarget.style.background='rgba(124,77,255,0.06)';e.currentTarget.style.borderColor='rgba(124,77,255,0.15)';}}}
+              onMouseEnter={e=>{if(!on){e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.06*var(--kp)))';e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.15*var(--kp)))';}}}
               onMouseLeave={e=>{if(!on){e.currentTarget.style.background='transparent';e.currentTarget.style.borderColor='transparent';}}}
             >
-              <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color: on ? '#c9b8ff' : 'rgba(124,77,255,0.45)',minWidth:'18px'}}>{String(i+1).padStart(2,'0')}</span>
-              <span style={{fontFamily:'var(--font-display)',fontSize:'11px',fontWeight: on ? 500 : 400,letterSpacing:'0.12em',color: on ? '#f0eeff' : 'rgba(200,190,240,0.6)',textTransform:'uppercase'}}>{cat.label}</span>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color: on ? 'var(--lav)' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))',minWidth:'18px'}}>{String(i+1).padStart(2,'0')}</span>
+              <span style={{fontFamily:'var(--font-display)',fontSize:'11px',fontWeight: on ? 500 : 400,letterSpacing:'0.12em',color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',textTransform:'uppercase'}}>{cat.label}</span>
             </button>
           );
         })}
       </nav>
 
-      <div style={{marginTop:'40px',padding:'14px 12px',background:'rgba(124,77,255,0.05)',border:'1px solid rgba(124,77,255,0.14)',borderRadius:'3px'}}>
-        <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.28em',color:'rgba(124,77,255,0.55)',textTransform:'uppercase',marginBottom:'8px'}}>◈ Hinweis</div>
-        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'10.5px',lineHeight:1.6,color:'rgba(200,190,240,0.55)'}}>
+      <div style={{marginTop:'40px',padding:'14px 12px',background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',borderRadius:'3px'}}>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'8px'}}>◈ Hinweis</div>
+        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'10.5px',lineHeight:1.6,color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'}}>
           Diese Seite sammelt Meta-Informationen, die du außerhalb der Spielwelt brauchst.
         </p>
       </div>
@@ -432,23 +139,23 @@ function Sidebar({ active, onSelect }) {
 function SectionHeader({ mono, title, sub }) {
   return (
     <div style={{marginBottom:'22px'}}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.32em',color:'rgba(124,77,255,0.6)',textTransform:'uppercase',marginBottom:'10px'}}>◈ {mono}</div>
-      <h2 style={{fontFamily:'var(--font-display)',fontSize:'clamp(28px,3.5vw,42px)',fontWeight:'300',letterSpacing:'0.14em',color:'#f0eeff',textShadow:'0 0 28px rgba(124,77,255,0.32)',lineHeight:1.05,textTransform:'uppercase'}}>{title}</h2>
-      {sub && <p style={{marginTop:'12px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'13px',color:'rgba(200,190,240,0.5)',letterSpacing:'0.04em',maxWidth:'620px',lineHeight:1.7}}>{sub}</p>}
-      <div style={{marginTop:'18px',width:'72px',height:'1px',background:'linear-gradient(to right, rgba(124,77,255,0.7), rgba(124,77,255,0))'}}/>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'10px'}}>◈ {mono}</div>
+      <h2 style={{fontFamily:'var(--font-display)',fontSize:'clamp(18px,3.5vw,42px)',fontWeight:'300',letterSpacing:'0.14em',color:'var(--white)',textShadow:'0 0 28px rgba(var(--purple-rgb),calc(0.32*var(--kp)))',lineHeight:1.05,textTransform:'uppercase'}}>{title}</h2>
+      {sub && <p style={{marginTop:'12px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'13px',color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',letterSpacing:'0.04em',maxWidth:'620px',lineHeight:1.7}}>{sub}</p>}
+      <div style={{marginTop:'18px',width:'72px',height:'1px',background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.7*var(--kp))), rgba(var(--purple-rgb),calc(0*var(--kp))))'}}/>
     </div>
   );
 }
 
 function SubH({ children }) {
-  return <h3 style={{fontFamily:'var(--font-display)',fontSize:'15px',fontWeight:'400',letterSpacing:'0.18em',color:'#e8e0ff',textTransform:'uppercase',margin:'28px 0 12px',display:'flex',alignItems:'center',gap:'10px'}}>
-    <span style={{width:'8px',height:'8px',background:'rgba(124,77,255,0.7)',transform:'rotate(45deg)',display:'inline-block'}}/>
+  return <h3 style={{fontFamily:'var(--font-display)',fontSize:'15px',fontWeight:'400',letterSpacing:'0.18em',color:'var(--white)',textTransform:'uppercase',margin:'28px 0 12px',display:'flex',alignItems:'center',gap:'10px'}}>
+    <span style={{width:'8px',height:'8px',background:'rgba(var(--purple-rgb),calc(0.7*var(--kp)))',transform:'rotate(45deg)',display:'inline-block'}}/>
     {children}
   </h3>;
 }
 
 function TW({ children }) {
-  return <div style={{borderRadius:'3px',overflow:'hidden',border:'1px solid rgba(124,77,255,0.18)',background:'rgba(10,7,28,0.6)',marginBottom:'18px'}}>{children}</div>;
+  return <div style={{borderRadius:'3px',overflow:'hidden',border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',background:'rgba(var(--panel-rgb),0.6)',marginBottom:'18px'}}>{children}</div>;
 }
 
 function useReveal(active) {
@@ -476,7 +183,7 @@ function AufstiegContent() {
       <div className="feat reveal-up" style={{marginBottom:'18px'}}>
         <div className="feat-name">Lesehilfe</div>
         <div className="feat-text">
-          Du startest mit einem neuen Charakter auf <strong style={{color:'rgba(220,210,255,0.9)'}}>Stufe&nbsp;1</strong> mit <strong style={{color:'rgba(220,210,255,0.9)'}}>0&nbsp;EP</strong>.
+          Du startest mit einem neuen Charakter auf <strong style={{color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'}}>Stufe&nbsp;1</strong> mit <strong style={{color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'}}>0&nbsp;EP</strong>.
           Die Spalte <em>Benötigt für Aufstieg</em> zeigt, wie viele <em>zusätzliche</em> Erfahrungspunkte du sammeln musst, um die nächste Stufe zu erreichen.
           Die Spalte <em>Gesamt</em> ist die kumulierte Summe aller bisher gesammelten Erfahrungspunkte ab Stufenstart.
         </div>
@@ -496,8 +203,8 @@ function AufstiegContent() {
             {AUFSTIEG.map((row, i) => {
               cum += row.needed;
               const tier = row.lvl <= 4 ? 1 : row.lvl <= 10 ? 2 : row.lvl <= 16 ? 3 : 4;
-              const tierBg = ['rgba(94,232,208,0.04)','rgba(124,77,255,0.04)','rgba(255,180,100,0.04)','rgba(255,120,200,0.05)'][tier-1];
-              const tierEdge = ['rgba(94,232,208,0.6)','rgba(160,140,255,0.7)','rgba(255,200,140,0.65)','rgba(255,160,220,0.7)'][tier-1];
+              const tierBg = ['rgba(94,232,208,0.04)','rgba(var(--purple-rgb),calc(0.04*var(--kp)))','rgba(255,180,100,0.04)','rgba(255,120,200,0.05)'][tier-1];
+              const tierEdge = ['rgba(94,232,208,0.6)','rgba(var(--accent-rgb),calc(0.7*var(--ka)))','rgba(255,200,140,0.65)','rgba(255,160,220,0.7)'][tier-1];
               const isFirst = i === 0 || AUFSTIEG[i-1].lvl > row.lvl || (i > 0 && (
                 (row.lvl === 5) || (row.lvl === 11) || (row.lvl === 17)
               ));
@@ -510,9 +217,9 @@ function AufstiegContent() {
                     }}>
                       <svg viewBox="0 0 26 29" width="26" height="29" style={{position:'absolute',inset:0}}>
                         <polygon points="13,1 25,7.5 25,21.5 13,28 1,21.5 1,7.5"
-                          fill="rgba(124,77,255,0.08)" stroke={tierEdge} strokeWidth="0.9"/>
+                          fill="rgba(var(--purple-rgb),calc(0.08*var(--kp)))" stroke={tierEdge} strokeWidth="0.9"/>
                       </svg>
-                      <span style={{position:'relative',fontFamily:'var(--font-display)',fontSize:'12px',fontWeight:500,color:'#f0eeff'}}>{row.lvl}</span>
+                      <span style={{position:'relative',fontFamily:'var(--font-display)',fontSize:'12px',fontWeight:500,color:'var(--white)'}}>{row.lvl}</span>
                     </span>
                     {isFirst && (
                       <span style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.2em',color:tierEdge,textTransform:'uppercase'}}>
@@ -520,18 +227,18 @@ function AufstiegContent() {
                       </span>
                     )}
                   </td>
-                  <td className="mono" style={{color: row.lvl === 1 ? 'rgba(160,140,255,0.4)' : 'rgba(220,210,255,0.85)'}}>
+                  <td className="mono" style={{color: row.lvl === 1 ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))'}}>
                     {row.lvl === 1 ? '— (Start)' : `+ ${fmtEP(row.needed)} EP`}
                   </td>
-                  <td className="mono" style={{color:'rgba(160,140,255,0.95)'}}>
+                  <td className="mono" style={{color:'rgba(var(--accent-rgb),calc(0.95*var(--ka) + var(--tb)))'}}>
                     {fmtEP(cum)} EP
                   </td>
                   <td>
                     <span style={{
                       fontFamily:'var(--font-mono)',fontSize:'12px',
-                      padding:'3px 10px',background:'rgba(124,77,255,0.12)',
+                      padding:'3px 10px',background:'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
                       border:`1px solid ${tierEdge}`,borderRadius:'2px',
-                      color:'#e8e0ff',letterSpacing:'0.04em',
+                      color:'var(--white)',letterSpacing:'0.04em',
                     }}>+{row.prof}</span>
                   </td>
                 </tr>
@@ -548,12 +255,12 @@ function AufstiegContent() {
           {t:'Stufenklasse III',r:'Stufe 11–16',e:'Übungsbonus +4 bis +5'},
           {t:'Stufenklasse IV',r:'Stufe 17–20',e:'Übungsbonus +6'},
         ].map((c,i) => {
-          const tEdge = ['rgba(94,232,208,0.6)','rgba(160,140,255,0.7)','rgba(255,200,140,0.65)','rgba(255,160,220,0.7)'][i];
+          const tEdge = ['rgba(94,232,208,0.6)','rgba(var(--accent-rgb),calc(0.7*var(--ka)))','rgba(255,200,140,0.65)','rgba(255,160,220,0.7)'][i];
           return (
-            <div key={c.t} className="reveal-up" style={{padding:'14px 14px',background:'rgba(124,77,255,0.05)',border:'1px solid rgba(124,77,255,0.14)',borderTop:`2px solid ${tEdge}`,borderRadius:'0 0 3px 3px'}}>
+            <div key={c.t} className="reveal-up" style={{padding:'14px 14px',background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',borderTop:`2px solid ${tEdge}`,borderRadius:'0 0 3px 3px'}}>
               <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.24em',color:tEdge,textTransform:'uppercase',marginBottom:'5px'}}>{c.t}</div>
-              <div style={{fontFamily:'var(--font-display)',fontSize:'14px',fontWeight:400,letterSpacing:'0.1em',color:'#f0eeff',textTransform:'uppercase',marginBottom:'5px'}}>{c.r}</div>
-              <div style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'11px',color:'rgba(200,190,240,0.55)',lineHeight:1.55}}>{c.e}</div>
+              <div style={{fontFamily:'var(--font-display)',fontSize:'14px',fontWeight:400,letterSpacing:'0.1em',color:'var(--white)',textTransform:'uppercase',marginBottom:'5px'}}>{c.r}</div>
+              <div style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'11px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',lineHeight:1.55}}>{c.e}</div>
             </div>
           );
         })}
@@ -596,17 +303,17 @@ function SchadenContent() {
             <div style={{display:'flex',alignItems:'baseline',gap:'14px',marginBottom:'14px'}}>
               <span style={{
                 fontFamily:'var(--font-mono)', fontSize:'9px',
-                letterSpacing:'0.3em', color:'rgba(124,77,255,0.65)',
+                letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
                 textTransform:'uppercase',
               }}>◇ {String(ci+1).padStart(2,'0')} · {cat.label}</span>
               <span style={{
                 fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-                fontSize:'11.5px', color:'rgba(200,190,240,0.42)',
+                fontSize:'11.5px', color:'rgba(var(--text-rgb),calc(0.42*var(--kt) + var(--tb)))',
               }}>{cat.sub}</span>
-              <div style={{flex:1,height:1,background:'linear-gradient(to right, rgba(124,77,255,0.32), rgba(124,77,255,0.03))'}}/>
+              <div style={{flex:1,height:1,background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.32*var(--kp))), rgba(var(--purple-rgb),calc(0.03*var(--kp))))'}}/>
               <span style={{
                 fontFamily:'var(--font-mono)', fontSize:'8px',
-                letterSpacing:'0.24em', color:'rgba(160,140,255,0.4)',
+                letterSpacing:'0.24em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
               }}>{items.length} TYPEN</span>
             </div>
 
@@ -616,13 +323,13 @@ function SchadenContent() {
                   position:'relative', overflow:'hidden',
                   display:'flex', gap:'14px', alignItems:'flex-start',
                   padding:'14px 16px 14px 20px',
-                  background:`linear-gradient(135deg, oklch(0.78 0.15 ${s.hue} / 0.06) 0%, rgba(10,7,28,0.85) 60%)`,
-                  border:'1px solid rgba(124,77,255,0.16)',
+                  background:`linear-gradient(135deg, oklch(0.78 0.15 ${s.hue} / 0.06) 0%, rgba(var(--panel-rgb),0.85) 60%)`,
+                  border:'1px solid rgba(var(--purple-rgb),calc(0.16*var(--kp)))',
                   borderRadius:'3px',
                   transition:'border-color 0.22s, box-shadow 0.22s, transform 0.22s',
                 }}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor=`oklch(0.78 0.15 ${s.hue} / 0.6)`;e.currentTarget.style.boxShadow=`0 0 28px oklch(0.78 0.15 ${s.hue} / 0.2)`;e.currentTarget.style.transform='translateY(-2px)';}}
-                  onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(124,77,255,0.16)';e.currentTarget.style.boxShadow='none';e.currentTarget.style.transform='translateY(0)';}}
+                  onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.16*var(--kp)))';e.currentTarget.style.boxShadow='none';e.currentTarget.style.transform='translateY(0)';}}
                 >
                   {/* left accent bar */}
                   <span style={{position:'absolute',left:0,top:0,bottom:0,width:3,background:`oklch(0.78 0.15 ${s.hue} / 0.65)`,boxShadow:`0 0 8px oklch(0.78 0.15 ${s.hue} / 0.5)`}}/>
@@ -633,10 +340,10 @@ function SchadenContent() {
                   <SchadenIcon id={s.id} hue={s.hue} size={62}/>
                   <div style={{flex:1,minWidth:0}}>
                     <div style={{display:'flex',alignItems:'baseline',gap:'8px',marginBottom:'6px'}}>
-                      <span style={{fontFamily:'var(--font-display)',fontSize:'15px',fontWeight:500,letterSpacing:'0.18em',color:'#f0eeff',textTransform:'uppercase'}}>{s.name}</span>
+                      <span style={{fontFamily:'var(--font-display)',fontSize:'15px',fontWeight:500,letterSpacing:'0.18em',color:'var(--white)',textTransform:'uppercase'}}>{s.name}</span>
                       <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.22em',color:`oklch(0.78 0.15 ${s.hue} / 0.7)`,textTransform:'uppercase'}}>schaden</span>
                     </div>
-                    <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'11.5px',lineHeight:1.65,color:'rgba(200,190,240,0.7)',letterSpacing:'0.01em'}}>{s.desc}</p>
+                    <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'11.5px',lineHeight:1.65,color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',letterSpacing:'0.01em'}}>{s.desc}</p>
                   </div>
                 </div>
               ))}
@@ -667,10 +374,10 @@ function HeiltrankContent() {
           <tbody>
             {HEILTRAENKE.map(p => (
               <tr key={p.name}>
-                <td style={{color:'#e8e0ff',fontWeight:400,fontStyle:'italic',fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.05em'}}>{p.name}</td>
+                <td style={{color:'var(--white)',fontWeight:400,fontStyle:'italic',fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.05em'}}>{p.name}</td>
                 <td><span className={`tag-rar tag-${p.rarKey}`}>{p.rar}</span></td>
-                <td className="mono" style={{color:'rgba(220,210,255,0.95)',fontSize:'13px'}}>{p.tp}</td>
-                <td style={{color:'rgba(200,190,240,0.55)',fontStyle:'italic',fontSize:'11.5px'}}>{p.notes}</td>
+                <td className="mono" style={{color:'rgba(var(--text-rgb),calc(0.95*var(--kt) + var(--tb)))',fontSize:'13px'}}>{p.tp}</td>
+                <td style={{color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',fontStyle:'italic',fontSize:'11.5px'}}>{p.notes}</td>
               </tr>
             ))}
           </tbody>
@@ -703,9 +410,9 @@ function HeiltrankContent() {
                 <circle cx="23" cy="39" r="0.8" fill="rgba(255,255,255,0.5)"/>
               </svg>
               <div style={{fontFamily:'var(--font-display)',fontSize:'12px',fontWeight:400,letterSpacing:'0.14em',color:colors[i],textTransform:'uppercase',marginBottom:'8px',minHeight:'30px',display:'flex',alignItems:'center',justifyContent:'center'}}>{p.name}</div>
-              <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.24em',color:'rgba(160,140,255,0.55)',textTransform:'uppercase',marginBottom:'4px'}}>Durchschnitt</div>
-              <div style={{fontFamily:'var(--font-display)',fontSize:'22px',fontWeight:300,color:'#f0eeff',lineHeight:1}}>{avg} TP</div>
-              <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color:'rgba(160,140,255,0.45)',marginTop:'6px'}}>Max. {max}</div>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.24em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'4px'}}>Durchschnitt</div>
+              <div style={{fontFamily:'var(--font-display)',fontSize:'22px',fontWeight:300,color:'var(--white)',lineHeight:1}}>{avg} TP</div>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',marginTop:'6px'}}>Max. {max}</div>
             </div>
           );
         })}
@@ -714,7 +421,7 @@ function HeiltrankContent() {
       <div className="feat reveal-up" style={{marginTop:'24px'}}>
         <div className="feat-name">Konsum als Aktion</div>
         <div className="feat-text">
-          Ein Trank zu trinken kostet eine <strong style={{color:'rgba(220,210,255,0.9)'}}>Aktion</strong>.
+          Ein Trank zu trinken kostet eine <strong style={{color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))'}}>Aktion</strong>.
           Einer anderen, bewusstlosen Kreatur einen Trank einzuflößen kostet ebenfalls eine ganze Aktion. Der Trank kann nicht durch andere Heilmethoden ersetzt werden — er wirkt sofort.
         </div>
       </div>
@@ -741,8 +448,8 @@ function InspirationContent() {
             display:'grid',gridTemplateColumns:'auto 1fr',gap:'18px',
             alignItems:'flex-start',
             padding:'18px 22px',
-            background:'linear-gradient(135deg, rgba(18,12,42,0.65) 0%, rgba(10,7,28,0.85) 100%)',
-            border:'1px solid rgba(124,77,255,0.18)',
+            background:'linear-gradient(135deg, rgba(var(--panel-rgb),0.65) 0%, rgba(var(--panel-rgb),0.85) 100%)',
+            border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
             borderRadius:'3px',
           }}>
             {/* sparkle accent */}
@@ -750,17 +457,17 @@ function InspirationContent() {
               display:'flex',flexDirection:'column',alignItems:'center',gap:'6px',
               paddingTop:'2px',minWidth:'52px',
             }}>
-              <svg viewBox="0 0 40 40" width="40" height="40" style={{filter:'drop-shadow(0 0 8px rgba(160,140,255,0.5))'}}>
+              <svg viewBox="0 0 40 40" width="40" height="40" style={{filter:'drop-shadow(0 0 8px rgba(var(--accent-rgb),calc(0.5*var(--ka))))'}}>
                 <polygon points="20,4 23,15 34,18 23,21 20,32 17,21 6,18 17,15"
-                  fill="rgba(160,140,255,0.25)" stroke="rgba(200,180,255,0.85)" strokeWidth="1"/>
-                <circle cx="32" cy="32" r="2" fill="rgba(200,180,255,0.7)"/>
-                <circle cx="8" cy="32" r="1.5" fill="rgba(200,180,255,0.5)"/>
+                  fill="rgba(var(--accent-rgb),calc(0.25*var(--ka)))" stroke="rgba(200,180,255,calc(0.85*var(--ka)))" strokeWidth="1"/>
+                <circle cx="32" cy="32" r="2" fill="rgba(200,180,255,calc(0.7*var(--ka)))"/>
+                <circle cx="8" cy="32" r="1.5" fill="rgba(200,180,255,calc(0.5*var(--ka)))"/>
               </svg>
-              <span style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.28em',color:'rgba(124,77,255,0.7)'}}>{r.n}</span>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))'}}>{r.n}</span>
             </div>
             <div>
-              <div style={{fontFamily:'var(--font-display)',fontSize:'13px',fontWeight:500,letterSpacing:'0.16em',color:'#f0eeff',textTransform:'uppercase',marginBottom:'8px'}}>{r.t}</div>
-              <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'13px',lineHeight:1.75,color:'rgba(200,190,240,0.72)',letterSpacing:'0.01em'}}>{r.x}</p>
+              <div style={{fontFamily:'var(--font-display)',fontSize:'13px',fontWeight:500,letterSpacing:'0.16em',color:'var(--white)',textTransform:'uppercase',marginBottom:'8px'}}>{r.t}</div>
+              <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'13px',lineHeight:1.75,color:'rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb)))',letterSpacing:'0.01em'}}>{r.x}</p>
             </div>
           </div>
         ))}
@@ -768,21 +475,21 @@ function InspirationContent() {
 
       <div style={{
         marginTop:'24px',padding:'16px 22px',
-        background:'linear-gradient(90deg, rgba(124,77,255,0.12), rgba(124,77,255,0.02))',
-        borderLeft:'2px solid rgba(160,140,255,0.7)',
+        background:'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.12*var(--kp))), rgba(var(--purple-rgb),calc(0.02*var(--kp))))',
+        borderLeft:'2px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))',
         borderRadius:'0 3px 3px 0',
       }}>
         <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
-          <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.28em',color:'rgba(160,140,255,0.85)',textTransform:'uppercase'}}>Maximalwert</span>
+          <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.28em',color:'rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>Maximalwert</span>
           <div style={{display:'flex',gap:'6px'}}>
             {[1,2,3,4].map(i => (
               <svg key={i} viewBox="0 0 40 40" width="22" height="22">
                 <polygon points="20,4 23,15 34,18 23,21 20,32 17,21 6,18 17,15"
-                  fill="rgba(160,140,255,0.3)" stroke="rgba(200,180,255,0.85)" strokeWidth="1.2"/>
+                  fill="rgba(var(--accent-rgb),calc(0.3*var(--ka)))" stroke="rgba(200,180,255,calc(0.85*var(--ka)))" strokeWidth="1.2"/>
               </svg>
             ))}
           </div>
-          <span style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12px',color:'rgba(200,190,240,0.65)'}}>= vier Inspirationen, die ein Charakter gleichzeitig halten kann.</span>
+          <span style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12px',color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'}}>= vier Inspirationen, die ein Charakter gleichzeitig halten kann.</span>
         </div>
       </div>
     </div>
@@ -859,22 +566,22 @@ function RichtungenContent() {
         <div style={{
           position:'relative',
           padding:'24px',
-          background:'linear-gradient(135deg, rgba(18,12,42,0.7) 0%, rgba(10,7,28,0.92) 100%)',
-          border:'1px solid rgba(124,77,255,0.25)',
+          background:'linear-gradient(135deg, rgba(var(--panel-rgb),0.7) 0%, rgba(var(--panel-rgb),0.92) 100%)',
+          border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
           borderRadius:'4px',
           textAlign:'center',
         }}>
           {/* corner brackets */}
-          <span style={{position:'absolute',top:-1,left:-1,width:12,height:12,borderTop:'1px solid rgba(160,140,255,0.7)',borderLeft:'1px solid rgba(160,140,255,0.7)'}}/>
-          <span style={{position:'absolute',top:-1,right:-1,width:12,height:12,borderTop:'1px solid rgba(160,140,255,0.7)',borderRight:'1px solid rgba(160,140,255,0.7)'}}/>
-          <span style={{position:'absolute',bottom:-1,left:-1,width:12,height:12,borderBottom:'1px solid rgba(160,140,255,0.7)',borderLeft:'1px solid rgba(160,140,255,0.7)'}}/>
-          <span style={{position:'absolute',bottom:-1,right:-1,width:12,height:12,borderBottom:'1px solid rgba(160,140,255,0.7)',borderRight:'1px solid rgba(160,140,255,0.7)'}}/>
+          <span style={{position:'absolute',top:-1,left:-1,width:12,height:12,borderTop:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))',borderLeft:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))'}}/>
+          <span style={{position:'absolute',top:-1,right:-1,width:12,height:12,borderTop:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))',borderRight:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))'}}/>
+          <span style={{position:'absolute',bottom:-1,left:-1,width:12,height:12,borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))',borderLeft:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))'}}/>
+          <span style={{position:'absolute',bottom:-1,right:-1,width:12,height:12,borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))',borderRight:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))'}}/>
 
           <svg viewBox="0 0 240 240" width="240" height="240" style={{margin:'0 auto',display:'block'}}>
             {/* outer ring */}
-            <circle cx="120" cy="120" r="110" fill="none" stroke="rgba(124,77,255,0.25)" strokeWidth="1"/>
-            <circle cx="120" cy="120" r="100" fill="none" stroke="rgba(124,77,255,0.15)" strokeWidth="0.6" strokeDasharray="2 3"/>
-            <circle cx="120" cy="120" r="78"  fill="none" stroke="rgba(124,77,255,0.2)" strokeWidth="0.6"/>
+            <circle cx="120" cy="120" r="110" fill="none" stroke="rgba(var(--purple-rgb),calc(0.25*var(--kp)))" strokeWidth="1"/>
+            <circle cx="120" cy="120" r="100" fill="none" stroke="rgba(var(--purple-rgb),calc(0.15*var(--kp)))" strokeWidth="0.6" strokeDasharray="2 3"/>
+            <circle cx="120" cy="120" r="78"  fill="none" stroke="rgba(var(--purple-rgb),calc(0.2*var(--kp)))" strokeWidth="0.6"/>
             {/* tick marks for 8 directions */}
             {RICHTUNGEN.map(r => {
               const rad = (r.angle * Math.PI) / 180;
@@ -887,10 +594,10 @@ function RichtungenContent() {
               const isActive = active && active.n === r.n;
               return (
                 <g key={r.n}>
-                  <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={isActive ? '#f0eeff' : 'rgba(160,140,255,0.6)'} strokeWidth={isActive ? 2 : 1}/>
+                  <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={isActive ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))'} strokeWidth={isActive ? 2 : 1}/>
                   <text x={lx} y={ly+3} textAnchor="middle"
                     fontFamily="Share Tech Mono" fontSize="11"
-                    fill={isActive ? '#f0eeff' : 'rgba(200,190,240,0.7)'}
+                    fill={isActive ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))'}
                     style={{transition:'fill 0.2s'}}>
                     {r.n}
                   </text>
@@ -903,10 +610,10 @@ function RichtungenContent() {
               transform: `rotate(${needleAngle}deg)`,
               willChange:'transform',
             }}>
-              <path d="M 120 40 L 124 120 L 116 120 Z" fill="rgba(220,210,255,0.95)" stroke="rgba(160,140,255,0.9)" strokeWidth="0.8"/>
-              <path d="M 116 120 L 124 120 L 120 200 Z" fill="rgba(124,77,255,0.5)" stroke="rgba(160,140,255,0.6)" strokeWidth="0.8"/>
-              <circle cx="120" cy="120" r="6" fill="rgba(18,12,42,1)" stroke="rgba(220,210,255,0.9)" strokeWidth="1.4"/>
-              <circle cx="120" cy="120" r="2" fill="rgba(220,210,255,0.95)"/>
+              <path d="M 120 40 L 124 120 L 116 120 Z" fill="rgba(var(--text-rgb),calc(0.95*var(--kt)))" stroke="rgba(var(--accent-rgb),calc(0.9*var(--ka)))" strokeWidth="0.8"/>
+              <path d="M 116 120 L 124 120 L 120 200 Z" fill="rgba(var(--purple-rgb),calc(0.5*var(--kp)))" stroke="rgba(var(--accent-rgb),calc(0.6*var(--ka)))" strokeWidth="0.8"/>
+              <circle cx="120" cy="120" r="6" fill="rgba(var(--panel-rgb),1)" stroke="rgba(var(--text-rgb),calc(0.9*var(--kt)))" strokeWidth="1.4"/>
+              <circle cx="120" cy="120" r="2" fill="rgba(var(--text-rgb),calc(0.95*var(--kt)))"/>
             </g>
             {/* N marker outside */}
             <text x="120" y="20" textAnchor="middle" fontFamily="Cinzel" fontSize="14"
@@ -916,17 +623,17 @@ function RichtungenContent() {
           <button onClick={roll} disabled={rolling} style={{
             display:'inline-flex',alignItems:'center',gap:'12px',
             marginTop:'18px',padding:'10px 22px',
-            background:'rgba(124,77,255,0.14)',
-            border:'1px solid rgba(124,77,255,0.45)',
+            background:'rgba(var(--purple-rgb),calc(0.14*var(--kp)))',
+            border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))',
             borderRadius:'3px',
-            color:'rgba(220,210,255,0.95)',
+            color:'rgba(var(--text-rgb),calc(0.95*var(--kt) + var(--tb)))',
             fontFamily:'var(--font-display)',fontSize:'11px',letterSpacing:'0.2em',
             textTransform:'uppercase',
             cursor: rolling ? 'wait' : 'pointer',
             transition:'all 0.18s',
           }}
-            onMouseEnter={e=>{if(!rolling){e.currentTarget.style.background='rgba(124,77,255,0.26)';e.currentTarget.style.color='#fff';}}}
-            onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,77,255,0.14)';e.currentTarget.style.color='rgba(220,210,255,0.95)';}}
+            onMouseEnter={e=>{if(!rolling){e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.26*var(--kp)))';e.currentTarget.style.color='#fff';}}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.14*var(--kp)))';e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.95*var(--kt) + var(--tb)))';}}
           >
             {/* d8 icon */}
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" style={{animation:rolling?'diceTumble 0.5s linear infinite':'none',transformOrigin:'center'}}>
@@ -940,15 +647,15 @@ function RichtungenContent() {
           <div style={{marginTop:'14px',minHeight:'56px'}}>
             {display !== null && (
               <div style={{animation: result && !rolling ? 'resultPop 0.32s ease forwards' : 'none'}}>
-                <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.28em',color:'rgba(124,77,255,0.55)',marginBottom:'4px',textTransform:'uppercase'}}>{rolling ? 'würfelt...' : 'Ergebnis'}</div>
-                <div style={{fontFamily:'var(--font-display)',fontSize:'28px',fontWeight:300,color:'#f0eeff',textShadow:'0 0 20px rgba(160,140,255,0.55)',lineHeight:1}}>
-                  {display} {active && <span style={{fontSize:'14px',color:'rgba(200,190,240,0.8)',letterSpacing:'0.12em'}}>· {active.dir}</span>}
+                <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'4px',textTransform:'uppercase'}}>{rolling ? 'würfelt...' : 'Ergebnis'}</div>
+                <div style={{fontFamily:'var(--font-display)',fontSize:'28px',fontWeight:300,color:'var(--white)',textShadow:'0 0 20px rgba(var(--accent-rgb),calc(0.55*var(--ka)))',lineHeight:1}}>
+                  {display} {active && <span style={{fontSize:'14px',color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',letterSpacing:'0.12em'}}>· {active.dir}</span>}
                 </div>
-                {active && <div style={{marginTop:'4px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'11.5px',color:'rgba(200,190,240,0.55)'}}>({active.sub})</div>}
+                {active && <div style={{marginTop:'4px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'11.5px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'}}>({active.sub})</div>}
               </div>
             )}
             {display === null && (
-              <div style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12px',color:'rgba(160,140,255,0.4)'}}>Noch kein Wurf</div>
+              <div style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12px',color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'}}>Noch kein Wurf</div>
             )}
           </div>
         </div>
@@ -969,16 +676,16 @@ function RichtungenContent() {
                   const isActive = active && active.n === r.n;
                   return (
                     <tr key={r.n} style={{
-                      background: isActive ? 'rgba(124,77,255,0.18)' : 'transparent',
+                      background: isActive ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent',
                       transition:'background 0.3s',
                     }}>
-                      <td className="mono" style={{color: isActive ? '#f0eeff' : 'rgba(180,165,255,0.85)',fontWeight:isActive?500:400}}>
+                      <td className="mono" style={{color: isActive ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))',fontWeight:isActive?500:400}}>
                         {r.n}
                       </td>
-                      <td style={{color: isActive ? '#f0eeff' : undefined,fontWeight:isActive?400:300,fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.06em',textTransform:'uppercase'}}>
+                      <td style={{color: isActive ? 'var(--white)' : undefined,fontWeight:isActive?400:300,fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.06em',textTransform:'uppercase'}}>
                         {r.dir}
                       </td>
-                      <td style={{color:'rgba(200,190,240,0.55)',fontStyle:'italic',fontSize:'11.5px'}}>
+                      <td style={{color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',fontStyle:'italic',fontSize:'11.5px'}}>
                         {r.sub}
                       </td>
                     </tr>
@@ -1022,7 +729,7 @@ function App() {
   };
 
   return (
-    <div style={{position:'relative',minHeight:'100vh'}}>
+    <div style={{position:'relative',minHeight:'calc(var(--vh, 1vh) * 100)'}}>
 
       {/* NAV */}
       <SiteNav rightLabel="EINLEITUNG · META"/>
@@ -1035,7 +742,7 @@ function App() {
       />
 
       {/* BODY */}
-      <div style={{display:'flex',alignItems:'flex-start',minHeight:'calc(100vh - 52px)'}}>
+      <div style={{display:'flex',alignItems:'flex-start',minHeight:'calc(calc(var(--vh, 1vh) * 100) - 52px)'}}>
         <Sidebar active={active} onSelect={handleSelect}/>
         <div style={{flex:1,padding:'40px 44px 88px',minWidth:0,maxWidth:'1080px'}}>
           {CONTENT[active]}

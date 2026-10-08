@@ -125,7 +125,7 @@ function ParticleField() {
         if (p.y > 1) p.y = 0;
         ctx.beginPath();
         ctx.arc(p.x * w, p.y * h, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(160,140,255,${p.a})`;
+        ctx.fillStyle = `rgba(${themeRgb('--accent-rgb')},${p.a})`;
         ctx.fill();
       });
       animRef.current = requestAnimationFrame(tick);
@@ -175,7 +175,7 @@ function SchwierigkeitsAnzeige({
     }, /*#__PURE__*/React.createElement("polygon", {
       points: "4.5,0.6 8.3,2.8 8.3,7.2 4.5,9.4 0.7,7.2 0.7,2.8",
       fill: filled ? 'var(--purple)' : 'transparent',
-      stroke: filled ? 'var(--purple-bright)' : 'rgba(160,140,255,0.22)',
+      stroke: filled ? 'var(--purple-bright)' : 'rgba(var(--accent-rgb),calc(0.22*var(--ka)))',
       strokeWidth: "1"
     }));
   }));
@@ -222,15 +222,15 @@ function QuestRow({
       gap: '12px',
       padding: dense ? '8px 16px' : '11px 16px',
       cursor: 'pointer',
-      background: active ? 'linear-gradient(90deg, rgba(124,77,255,0.18) 0%, rgba(124,77,255,0.06) 100%)' : 'transparent',
+      background: active ? 'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.18*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.06*var(--kp))) 100%)' : 'transparent',
       borderLeft: `2px solid ${active ? 'var(--purple-bright)' : 'transparent'}`,
-      borderBottom: '1px solid rgba(160,140,255,0.05)',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.05*var(--ka)))',
       transition: 'all 0.15s'
     },
     onMouseEnter: e => {
       if (!active) {
-        e.currentTarget.style.background = 'rgba(124,77,255,0.05)';
-        e.currentTarget.style.borderLeftColor = 'rgba(124,77,255,0.35)';
+        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))';
+        e.currentTarget.style.borderLeftColor = 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))';
       }
     },
     onMouseLeave: e => {
@@ -277,7 +277,7 @@ function QuestRow({
       fontFamily: 'var(--font-body)',
       fontWeight: active ? 400 : 300,
       fontSize: '13.5px',
-      color: active ? '#f0eeff' : 'rgba(220,210,250,0.85)',
+      color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       letterSpacing: '0.03em',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
@@ -306,9 +306,9 @@ function FilterChip({
       letterSpacing: '0.18em',
       padding: '5px 11px',
       height: '22px',
-      background: active ? 'rgba(124,77,255,0.22)' : 'transparent',
-      border: `1px solid ${active ? 'rgba(160,140,255,0.55)' : 'rgba(160,140,255,0.15)'}`,
-      color: active ? '#f0eeff' : color || 'var(--muted)',
+      background: active ? 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))' : 'transparent',
+      border: `1px solid ${active ? 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
+      color: active ? 'var(--white)' : color || 'var(--muted)',
       cursor: 'pointer',
       borderRadius: '2px',
       textTransform: 'uppercase',
@@ -321,13 +321,13 @@ function FilterChip({
     },
     onMouseEnter: e => {
       if (!active) {
-        e.currentTarget.style.borderColor = 'rgba(160,140,255,0.4)';
-        e.currentTarget.style.color = '#f0eeff';
+        e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))';
+        e.currentTarget.style.color = 'var(--white)';
       }
     },
     onMouseLeave: e => {
       if (!active) {
-        e.currentTarget.style.borderColor = 'rgba(160,140,255,0.15)';
+        e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))';
         e.currentTarget.style.color = color || 'var(--muted)';
       }
     }
@@ -346,9 +346,9 @@ function AuftraggeberSigil({
   image
 }) {
   const initials = (name || '?').replace(/^Die\s+/, '').split(/\s+/).map(w => w[0]).slice(0, 2).join('');
-  const stroke = color || 'rgba(167,139,255,0.6)';
-  const fill   = image ? 'none' : (color ? color + '20' : 'rgba(124,77,255,0.12)');
-  const inner  = color ? color + '30' : 'rgba(167,139,255,0.18)';
+  const stroke = color || 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))';
+  const fill   = image ? 'none' : (color ? color + '20' : 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))');
+  const inner  = color ? color + '30' : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))';
   // CSS clip-path percentage coords derived from SVG polygon points in 46×52 space
   const hexClip = 'polygon(50% 3.8%, 93.5% 25%, 93.5% 75%, 50% 96.2%, 6.5% 75%, 6.5% 25%)';
   return /*#__PURE__*/React.createElement("div", {
@@ -401,7 +401,7 @@ function AuftraggeberSigil({
       fontSize: '14px',
       fontWeight: 500,
       letterSpacing: '0.05em',
-      color: color || '#e8e0ff'
+      color: color || 'var(--white)'
     }
   }, initials));
 }
@@ -431,7 +431,7 @@ function CategoryIcon({
     }
   }, /*#__PURE__*/React.createElement("polygon", {
     points: "21,2 39,12 39,34 21,44 3,34 3,12",
-    fill: "rgba(124,77,255,0.08)",
+    fill: "rgba(var(--purple-rgb),calc(0.08*var(--kp)))",
     stroke: c,
     strokeOpacity: "0.55",
     strokeWidth: "1.2"
@@ -454,8 +454,8 @@ function PanelHeader({
     style: {
       position: 'relative',
       padding: '10px 18px 10px 18px',
-      borderBottom: '1px solid rgba(160,140,255,0.18)',
-      background: 'linear-gradient(180deg, rgba(124,77,255,0.10) 0%, rgba(124,77,255,0.02) 100%)',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
+      background: 'linear-gradient(180deg, rgba(var(--purple-rgb),calc(0.10*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.02*var(--kp))) 100%)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -467,9 +467,9 @@ function PanelHeader({
       fontSize: '14px',
       fontWeight: 400,
       letterSpacing: '0.32em',
-      color: '#f0eeff',
+      color: 'var(--white)',
       textTransform: 'uppercase',
-      textShadow: '0 0 14px rgba(124,77,255,0.4)'
+      textShadow: '0 0 14px rgba(var(--purple-rgb),calc(0.4*var(--kp)))'
     }
   }, children), right);
 }
@@ -487,7 +487,7 @@ function RewardRow({
       alignItems: 'center',
       justifyContent: 'space-between',
       padding: '8px 0',
-      borderBottom: '1px dashed rgba(160,140,255,0.1)'
+      borderBottom: '1px dashed rgba(var(--accent-rgb),calc(0.1*var(--ka)))'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -510,14 +510,14 @@ function RewardRow({
       fontFamily: 'var(--font-body)',
       fontWeight: 300,
       fontSize: '12.5px',
-      color: 'rgba(220,210,250,0.78)',
+      color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em'
     }
   }, label)), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '13px',
-      color: '#f0eeff',
+      color: 'var(--white)',
       letterSpacing: '0.08em'
     }
   }, value));
@@ -561,8 +561,8 @@ function DetailCard({
       alignItems: 'center',
       gap: '14px',
       padding: '18px 22px',
-      background: `linear-gradient(180deg, ${KAT[q.kategorie].color}22 0%, rgba(10,8,32,0) 100%)`,
-      borderBottom: '1px solid rgba(160,140,255,0.12)'
+      background: `linear-gradient(180deg, ${KAT[q.kategorie].color}22 0%, rgba(var(--panel-rgb),0) 100%)`,
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))'
     }
   }, /*#__PURE__*/React.createElement(CategoryIcon, {
     k: q.kategorie
@@ -587,8 +587,8 @@ function DetailCard({
       fontSize: '22px',
       fontWeight: 400,
       letterSpacing: '0.06em',
-      color: '#f0eeff',
-      textShadow: '0 0 22px rgba(124,77,255,0.35)',
+      color: 'var(--white)',
+      textShadow: '0 0 22px rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis'
@@ -628,8 +628,8 @@ function DetailCard({
       gap: '14px',
       marginBottom: '18px',
       padding: '12px 14px',
-      background: divColor ? divColor + '12' : 'rgba(124,77,255,0.06)',
-      border: '1px solid ' + (divColor ? divColor + '40' : 'rgba(160,140,255,0.14)'),
+      background: divColor ? divColor + '12' : 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+      border: '1px solid ' + (divColor ? divColor + '40' : 'rgba(var(--accent-rgb),calc(0.14*var(--ka)))'),
       borderRadius: '3px'
     }
   }, /*#__PURE__*/React.createElement(AuftraggeberSigil, {
@@ -650,7 +650,7 @@ function DetailCard({
       fontFamily: 'var(--font-display)',
       fontSize: '14px',
       fontWeight: 400,
-      color: '#f0eeff',
+      color: 'var(--white)',
       letterSpacing: '0.08em'
     }
   }, q.auftraggeber), /*#__PURE__*/React.createElement("div", {
@@ -668,7 +668,7 @@ function DetailCard({
       fontWeight: 300,
       fontSize: '13px',
       lineHeight: 1.75,
-      color: 'rgba(220,210,250,0.82)',
+      color: 'rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
       marginBottom: '24px',
       textWrap: 'pretty'
@@ -679,7 +679,7 @@ function DetailCard({
       style: {
         fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: 500,
         letterSpacing: '0.28em', color: 'var(--purple-bright)', textTransform: 'uppercase',
-        marginBottom: '8px', paddingBottom: '4px', borderBottom: '1px solid rgba(160,140,255,0.2)'
+        marginBottom: '8px', paddingBottom: '4px', borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))'
       }
     }, "Anforderungen"),
     /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexWrap: 'wrap', gap: '8px' } },
@@ -689,16 +689,16 @@ function DetailCard({
           style: {
             display: 'flex', alignItems: 'center', gap: '8px',
             padding: '7px 12px',
-            background: 'rgba(124,77,255,0.07)',
-            border: '1px solid rgba(124,77,255,0.25)',
+            background: 'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',
+            border: '1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
             borderRadius: '3px'
           }
         },
-          /*#__PURE__*/React.createElement("svg", { width: "12", height: "12", viewBox: "0 0 12 12", fill: "none", stroke: "rgba(160,140,255,0.7)", strokeWidth: "1.3" },
+          /*#__PURE__*/React.createElement("svg", { width: "12", height: "12", viewBox: "0 0 12 12", fill: "none", stroke: "rgba(var(--accent-rgb),calc(0.7*var(--ka)))", strokeWidth: "1.3" },
             /*#__PURE__*/React.createElement("polygon", { points: "6,1 11,4 11,8 6,11 1,8 1,4" })
           ),
           /*#__PURE__*/React.createElement("span", {
-            style: { fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '.18em', textTransform: 'uppercase', color: 'rgba(200,185,255,0.85)' }
+            style: { fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '.18em', textTransform: 'uppercase', color: 'color-mix(in srgb, rgba(200,185,255,0.85), rgb(var(--ink-rgb)) var(--cm))' }
           }, r.count > 1 ? `${r.count}× ${r.label}` : r.label)
         )
       )
@@ -714,7 +714,7 @@ function DetailCard({
       textTransform: 'uppercase',
       marginBottom: '8px',
       paddingBottom: '4px',
-      borderBottom: '1px solid rgba(160,140,255,0.2)'
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))'
     }
   }, "Belohnungen"), /*#__PURE__*/React.createElement(RewardRow, {
     icon: /*#__PURE__*/React.createElement("svg", {
@@ -788,7 +788,7 @@ function DetailCard({
       textTransform: 'uppercase',
       marginBottom: '14px',
       paddingBottom: '4px',
-      borderBottom: '1px solid rgba(160,140,255,0.2)'
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))'
     }
   }, "Anweisungen"), q.anweisungen.map((step, i) => {
     const n = progress[i] ?? step.n;
@@ -801,7 +801,7 @@ function DetailCard({
         alignItems: 'flex-start',
         gap: '14px',
         padding: '12px 0',
-        borderBottom: '1px dashed rgba(160,140,255,0.1)'
+        borderBottom: '1px dashed rgba(var(--accent-rgb),calc(0.1*var(--ka)))'
       }
     }, /*#__PURE__*/React.createElement("button", {
       onClick: handleClick,
@@ -841,16 +841,16 @@ function DetailCard({
       }
     }, /*#__PURE__*/React.createElement("polygon", {
       points: "11,1.5 19.5,6.5 19.5,17.5 11,22.5 2.5,17.5 2.5,6.5",
-      fill: done ? 'rgba(124,77,255,0.5)' : n > 0 ? 'rgba(124,77,255,0.18)' : 'rgba(124,77,255,0.06)',
+      fill: done ? 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))' : n > 0 ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
       stroke: "var(--purple-bright)",
       strokeWidth: "1.1",
       style: {
-        filter: done ? 'drop-shadow(0 0 6px rgba(167,139,255,0.7))' : 'none',
+        filter: done ? 'drop-shadow(0 0 6px rgba(var(--accent-rgb),calc(0.7*var(--ka))))' : 'none',
         transition: 'all 0.2s'
       }
     }), done && /*#__PURE__*/React.createElement("path", {
       d: "M6.5 12 L9.5 15 L15 9",
-      stroke: "#f0eeff",
+      stroke: "var(--white)",
       strokeWidth: "1.8",
       fill: "none",
       strokeLinecap: "round",
@@ -861,7 +861,7 @@ function DetailCard({
       textAnchor: "middle",
       fontFamily: "Share Tech Mono, monospace",
       fontSize: "9",
-      fill: "#f0eeff",
+      fill: "var(--white)",
       style: {
         letterSpacing: '0.05em'
       }
@@ -874,11 +874,11 @@ function DetailCard({
         fontFamily: 'var(--font-body)',
         fontWeight: 300,
         fontSize: '13px',
-        color: done ? 'rgba(200,190,240,0.6)' : 'rgba(220,210,250,0.88)',
+        color: done ? 'rgba(var(--text-rgb),calc(0.6*var(--kt)))' : 'rgba(var(--text-rgb),calc(0.88*var(--kt)))',
         lineHeight: 1.6,
         letterSpacing: '0.02em',
         textDecoration: done ? 'line-through' : 'none',
-        textDecorationColor: 'rgba(167,139,255,0.45)',
+        textDecorationColor: 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))',
         transition: 'all 0.2s'
       }
     }, step.txt), step.max > 1 && /*#__PURE__*/React.createElement("div", {
@@ -892,7 +892,7 @@ function DetailCard({
       style: {
         flex: 1,
         height: '3px',
-        background: 'rgba(160,140,255,0.1)',
+        background: 'rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
         borderRadius: '1px',
         overflow: 'hidden',
         maxWidth: '180px'
@@ -902,14 +902,14 @@ function DetailCard({
         height: '100%',
         width: `${n / step.max * 100}%`,
         background: 'linear-gradient(90deg, var(--purple) 0%, var(--purple-bright) 100%)',
-        boxShadow: '0 0 8px rgba(167,139,255,0.6)',
+        boxShadow: '0 0 8px rgba(var(--accent-rgb),calc(0.6*var(--ka)))',
         transition: 'width 0.25s ease'
       }
     })), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
         fontSize: '11px',
-        color: done ? 'var(--purple-bright)' : '#f0eeff',
+        color: done ? 'var(--purple-bright)' : 'var(--white)',
         letterSpacing: '0.1em'
       }
     }, n, " / ", step.max))));
@@ -926,7 +926,7 @@ function DetailCard({
       fontFamily: 'var(--font-mono)',
       fontSize: '8.5px',
       letterSpacing: '0.22em',
-      color: 'rgba(127,184,255,0.7)',
+      color: 'color-mix(in srgb, rgba(127,184,255,0.7), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase',
       marginBottom: '5px'
     }
@@ -936,14 +936,14 @@ function DetailCard({
       fontWeight: 300,
       fontStyle: 'italic',
       fontSize: '11.5px',
-      color: 'rgba(200,210,240,0.7)',
+      color: 'color-mix(in srgb, rgba(200,210,240,0.7), rgb(var(--ink-rgb)) var(--cm))',
       lineHeight: 1.6
     }
   }, "Tippe auf die Sechsecke, um Schritte abzuhaken \u2014 bei Sammelauftr\xE4gen erh\xF6ht jeder Klick den Z\xE4hler. Sprich mit deinem Auftraggeber, sobald alle Anweisungen erf\xFCllt sind.")))), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '12px 22px',
-      borderTop: '1px solid rgba(160,140,255,0.18)',
-      background: 'rgba(5,4,15,0.6)',
+      borderTop: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
+      background: 'rgba(var(--bg-rgb),0.6)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -978,18 +978,18 @@ function DetailCard({
       background: 'transparent',
       border: '1px solid rgba(200,60,60,0.35)',
       borderRadius: '2px',
-      color: 'rgba(255,120,120,0.6)',
+      color: 'color-mix(in srgb, rgba(255,120,120,0.6), rgb(var(--ink-rgb)) var(--cm))',
       cursor: 'pointer',
       textTransform: 'uppercase',
       transition: 'all .15s'
     },
     onMouseEnter: e => {
       e.currentTarget.style.borderColor = 'rgba(200,60,60,0.6)';
-      e.currentTarget.style.color = 'rgba(255,120,120,0.9)';
+      e.currentTarget.style.color = 'color-mix(in srgb, rgba(255,120,120,0.9), rgb(var(--ink-rgb)) var(--cm))';
     },
     onMouseLeave: e => {
       e.currentTarget.style.borderColor = 'rgba(200,60,60,0.35)';
-      e.currentTarget.style.color = 'rgba(255,120,120,0.6)';
+      e.currentTarget.style.color = 'color-mix(in srgb, rgba(255,120,120,0.6), rgb(var(--ink-rgb)) var(--cm))';
     }
   }, "Zur\xFCckziehen"), /*#__PURE__*/React.createElement("button", {
     onClick: !accepted ? onAccept : undefined,
@@ -999,9 +999,9 @@ function DetailCard({
       fontSize: '11px',
       letterSpacing: '0.28em',
       padding: '9px 28px',
-      background: accepted ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.22)',
-      border: `1px solid ${accepted ? 'rgba(160,140,255,0.3)' : 'rgba(167,139,255,0.7)'}`,
-      color: accepted ? 'var(--purple-bright)' : '#f0eeff',
+      background: accepted ? 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
+      border: `1px solid ${accepted ? 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.7*var(--ka)))'}`,
+      color: accepted ? 'var(--purple-bright)' : 'var(--white)',
       cursor: accepted ? 'default' : 'pointer',
       borderRadius: '2px',
       textTransform: 'uppercase',
@@ -1009,18 +1009,18 @@ function DetailCard({
       display: 'inline-flex',
       alignItems: 'center',
       gap: '10px',
-      boxShadow: accepted ? 'none' : '0 0 20px rgba(124,77,255,0.25)'
+      boxShadow: accepted ? 'none' : '0 0 20px rgba(var(--purple-rgb),calc(0.25*var(--kp)))'
     },
     onMouseEnter: e => {
       if (!accepted) {
-        e.currentTarget.style.background = 'rgba(124,77,255,0.35)';
-        e.currentTarget.style.borderColor = '#a78bff';
+        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))';
+        e.currentTarget.style.borderColor = 'var(--lav2)';
       }
     },
     onMouseLeave: e => {
       if (!accepted) {
-        e.currentTarget.style.background = 'rgba(124,77,255,0.22)';
-        e.currentTarget.style.borderColor = 'rgba(167,139,255,0.7)';
+        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))';
+        e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.7*var(--ka)))';
       }
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -1045,15 +1045,15 @@ function Panel({
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
-      background: 'linear-gradient(180deg, rgba(15,10,40,0.7) 0%, rgba(8,6,22,0.85) 100%)',
-      border: '1px solid rgba(160,140,255,0.18)',
+      background: 'linear-gradient(180deg, rgba(var(--panel-rgb),0.7) 0%, rgba(var(--panel-rgb),0.85) 100%)',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
       borderRadius: '3px',
       backdropFilter: 'blur(8px)',
       display: 'flex',
       flexDirection: 'column',
       minHeight: 0,
       overflow: 'hidden',
-      boxShadow: '0 8px 40px rgba(0,0,0,0.5), inset 0 0 60px rgba(124,77,255,0.04)',
+      boxShadow: '0 8px 40px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k))), inset 0 0 60px rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
       ...style
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1091,7 +1091,7 @@ function CharPickerModal({
       position: 'fixed',
       inset: 0,
       zIndex: 9999,
-      background: 'rgba(5,4,15,0.85)',
+      background: 'rgba(var(--bg-rgb),0.85)',
       backdropFilter: 'blur(8px)',
       display: 'flex',
       alignItems: 'center',
@@ -1102,23 +1102,23 @@ function CharPickerModal({
       width: '100%',
       maxWidth: 420,
       margin: '0 16px',
-      background: 'rgba(10,7,28,0.98)',
-      border: '1px solid rgba(124,77,255,0.4)',
+      background: 'rgba(var(--panel-rgb),0.98)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))',
       borderRadius: 6,
       overflow: 'hidden'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '20px 22px 16px',
-      borderBottom: '1px solid rgba(124,77,255,0.15)',
-      background: 'linear-gradient(180deg,rgba(124,77,255,0.1)0%,transparent 100%)'
+      borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
+      background: 'linear-gradient(180deg,rgba(var(--purple-rgb),calc(0.1*var(--kp)))0%,transparent 100%)'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
       letterSpacing: '.28em',
-      color: 'rgba(124,77,255,0.5)',
+      color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
       marginBottom: '4px'
     }
@@ -1127,7 +1127,7 @@ function CharPickerModal({
       fontFamily: 'var(--font-display)',
       fontSize: '16px',
       letterSpacing: '.15em',
-      color: '#f0eeff',
+      color: 'var(--white)',
       textTransform: 'uppercase'
     }
   }, "Charakter w\xE4hlen")), /*#__PURE__*/React.createElement("div", {
@@ -1143,13 +1143,13 @@ function CharPickerModal({
       fontFamily: 'var(--font-body)',
       fontSize: '12px',
       fontWeight: 300,
-      color: 'rgba(160,140,255,0.5)',
+      color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       fontStyle: 'italic'
     }
   }, "Keine Spielercharaktere vorhanden.", ' ', /*#__PURE__*/React.createElement("a", {
     href: "/charaktererstellung/neuer-charakter.html",
     style: {
-      color: 'rgba(124,77,255,0.7)'
+      color: 'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))'
     }
   }, "Charakter erstellen \u2192")), myChars.map(ch => /*#__PURE__*/React.createElement("div", {
     key: ch.id,
@@ -1161,8 +1161,8 @@ function CharPickerModal({
       padding: '10px 12px',
       marginBottom: '6px',
       cursor: 'pointer',
-      background: pickedId === ch.id ? 'rgba(124,77,255,0.2)' : 'rgba(124,77,255,0.05)',
-      border: `1px solid ${pickedId === ch.id ? 'rgba(167,139,255,0.6)' : 'rgba(124,77,255,0.15)'}`,
+      background: pickedId === ch.id ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+      border: `1px solid ${pickedId === ch.id ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'}`,
       borderRadius: '3px',
       transition: 'all .15s'
     }
@@ -1172,14 +1172,14 @@ function CharPickerModal({
       height: 34,
       borderRadius: '50%',
       flexShrink: 0,
-      background: 'rgba(124,77,255,0.15)',
-      border: '1px solid rgba(124,77,255,0.3)',
+      background: 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       fontFamily: 'var(--font-display)',
       fontSize: '14px',
-      color: 'rgba(167,139,255,0.8)'
+      color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))'
     }
   }, (ch.name || '?')[0]), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1191,7 +1191,7 @@ function CharPickerModal({
       fontFamily: 'var(--font-body)',
       fontSize: '13px',
       fontWeight: 400,
-      color: '#f0eeff',
+      color: 'var(--white)',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis'
@@ -1201,19 +1201,19 @@ function CharPickerModal({
       fontFamily: 'var(--font-body)',
       fontSize: '11px',
       fontWeight: 300,
-      color: 'rgba(160,140,255,0.55)',
+      color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       marginTop: '1px'
     }
   }, [ch.race, ch.class, ch.division, `Stufe ${ch.char_data?.level ?? 1}`].filter(Boolean).join(' · ') || '—')), pickedId === ch.id && /*#__PURE__*/React.createElement("span", {
     style: {
-      color: 'rgba(167,139,255,0.8)',
+      color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))',
       fontSize: '16px',
       flexShrink: 0
     }
   }, "\u2713")))), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '14px 22px',
-      borderTop: '1px solid rgba(124,77,255,0.12)',
+      borderTop: '1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
       display: 'flex',
       gap: '10px'
     }
@@ -1229,9 +1229,9 @@ function CharPickerModal({
       letterSpacing: '.18em',
       textTransform: 'uppercase',
       padding: '10px',
-      background: !pickedId || busy ? 'rgba(124,77,255,0.08)' : 'rgba(124,77,255,0.22)',
-      border: `1px solid ${!pickedId || busy ? 'rgba(124,77,255,0.2)' : 'rgba(167,139,255,0.6)'}`,
-      color: !pickedId || busy ? 'rgba(160,140,255,0.4)' : '#f0eeff',
+      background: !pickedId || busy ? 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
+      border: `1px solid ${!pickedId || busy ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))'}`,
+      color: !pickedId || busy ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' : 'var(--white)',
       cursor: !pickedId || busy ? 'not-allowed' : 'pointer',
       borderRadius: '3px',
       transition: 'all .15s'
@@ -1245,9 +1245,9 @@ function CharPickerModal({
       textTransform: 'uppercase',
       padding: '10px 16px',
       background: 'transparent',
-      border: '1px solid rgba(124,77,255,0.2)',
+      border: '1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
       borderRadius: '3px',
-      color: 'rgba(124,77,255,0.5)',
+      color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       cursor: 'pointer'
     }
   }, "Abbrechen")))), document.body);
@@ -1285,7 +1285,7 @@ function App() {
         data: []
       }, uid ? window._sb.from('characters').select('id,name,race,class,division,char_data').eq('type', 'spieler') : {
         data: []
-      }, window._sb.from('nscs').select('name,division,bild')]);
+      }, window._sb.from('nsc_public_directory').select('name,division,bild')]);
       const nscMap = {};
       (ndata || []).forEach(n => { nscMap[n.name] = { division: n.division || 'Keine', bild: n.bild || null }; });
       setNscDivisionMap(nscMap);
@@ -1377,19 +1377,7 @@ function App() {
     });
   }
   const appliedCount = Object.keys(myApplications).length;
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(ParticleField, null), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'fixed',
-      left: 0,
-      right: 0,
-      top: 0,
-      height: '2px',
-      background: 'linear-gradient(180deg, rgba(167,139,255,0.45) 0%, transparent 100%)',
-      animation: 'scanline-x 14s linear infinite',
-      pointerEvents: 'none',
-      zIndex: 9998
-    }
-  }), /*#__PURE__*/React.createElement(SiteNav, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(ParticleField, null), /*#__PURE__*/React.createElement(SiteNav, {
     rightLabel: "MISSIONSTERMINAL"
   }), /*#__PURE__*/React.createElement(PageHero, {
     kicker: "\u25C8 Divisionsterminal \xB7 Auftrags-Knoten 03",
@@ -1415,7 +1403,7 @@ function App() {
       width: '7px',
       height: '7px',
       borderRadius: '50%',
-      background: loading ? 'rgba(160,140,255,0.4)' : '#7fb8ff',
+      background: loading ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' : '#7fb8ff',
       boxShadow: loading ? 'none' : '0 0 8px #7fb8ff',
       animation: loading ? 'none' : 'pulse-glow 2s ease infinite'
     }
@@ -1443,8 +1431,8 @@ function App() {
       display: 'flex',
       alignItems: 'center',
       gap: '8px',
-      borderBottom: '1px solid rgba(160,140,255,0.1)',
-      background: 'rgba(8,6,22,0.4)'
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
+      background: 'rgba(var(--panel-rgb),0.4)'
     }
   }, /*#__PURE__*/React.createElement(FilterChip, {
     label: "Alle",
@@ -1492,9 +1480,9 @@ function App() {
       gap: '6px',
       padding: '4px 9px',
       height: '22px',
-      border: '1px solid rgba(160,140,255,0.18)',
+      border: '1px solid rgba(var(--accent-rgb),calc(0.18*var(--ka)))',
       borderRadius: '2px',
-      background: 'rgba(5,4,15,0.5)'
+      background: 'rgba(var(--bg-rgb),0.5)'
     }
   }, /*#__PURE__*/React.createElement("svg", {
     width: "11",
@@ -1508,14 +1496,14 @@ function App() {
     cy: "5",
     r: "3.5",
     fill: "none",
-    stroke: "#a78bff",
+    stroke: "var(--lav2)",
     strokeWidth: "1.2"
   }), /*#__PURE__*/React.createElement("line", {
     x1: "7.5",
     y1: "7.5",
     x2: "10",
     y2: "10",
-    stroke: "#a78bff",
+    stroke: "var(--lav2)",
     strokeWidth: "1.2",
     strokeLinecap: "round"
   })), /*#__PURE__*/React.createElement("input", {
@@ -1528,7 +1516,7 @@ function App() {
       outline: 'none',
       fontFamily: 'var(--font-mono)',
       fontSize: '10px',
-      color: '#f0eeff',
+      color: 'var(--white)',
       letterSpacing: '0.08em',
       width: '90px'
     }
@@ -1538,8 +1526,8 @@ function App() {
       gridTemplateColumns: '1fr 110px 90px',
       gap: '12px',
       padding: '9px 16px',
-      borderBottom: '1px solid rgba(160,140,255,0.12)',
-      background: 'rgba(124,77,255,0.04)',
+      borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
+      background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
       fontFamily: 'var(--font-mono)',
       fontSize: '8.5px',
       color: 'var(--muted-dim)',
@@ -1558,7 +1546,7 @@ function App() {
       textAlign: 'center',
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
-      color: 'rgba(160,140,255,0.4)',
+      color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '.2em'
     }
   }, "LADE\u2026"), !loading && filtered.length === 0 && /*#__PURE__*/React.createElement("div", {
@@ -1579,7 +1567,7 @@ function App() {
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '8px 18px',
-      borderTop: '1px solid rgba(160,140,255,0.12)',
+      borderTop: '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -1588,7 +1576,7 @@ function App() {
       color: 'var(--muted-dim)',
       letterSpacing: '0.2em',
       textTransform: 'uppercase',
-      background: 'rgba(5,4,15,0.5)'
+      background: 'rgba(var(--bg-rgb),0.5)'
     }
   }, /*#__PURE__*/React.createElement("span", null, "\u25C8 Live \xB7 Supabase"), /*#__PURE__*/React.createElement("span", null, "Beworben \xB7 ", appliedCount))), /*#__PURE__*/React.createElement(Panel, null, !selected && !loading ? /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1599,7 +1587,7 @@ function App() {
       fontFamily: 'var(--font-mono)',
       fontSize: '9px',
       letterSpacing: '.2em',
-      color: 'rgba(160,140,255,0.3)',
+      color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
     }
   }, "Keine Mission ausgew\xE4hlt") : selected && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelHeader, {
@@ -1617,9 +1605,9 @@ function App() {
         letterSpacing: '0.18em',
         padding: '4px 10px',
         height: '22px',
-        background: view === 'details' ? 'rgba(124,77,255,0.25)' : 'transparent',
-        border: `1px solid ${view === 'details' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
-        color: view === 'details' ? '#f0eeff' : 'var(--muted)',
+        background: view === 'details' ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
+        border: `1px solid ${view === 'details' ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
+        color: view === 'details' ? 'var(--white)' : 'var(--muted)',
         cursor: 'pointer',
         borderRadius: '2px',
         textTransform: 'uppercase',
@@ -1633,9 +1621,9 @@ function App() {
         letterSpacing: '0.18em',
         padding: '4px 10px',
         height: '22px',
-        background: view === 'anweisungen' ? 'rgba(124,77,255,0.25)' : 'transparent',
-        border: `1px solid ${view === 'anweisungen' ? 'rgba(167,139,255,0.6)' : 'rgba(160,140,255,0.15)'}`,
-        color: view === 'anweisungen' ? '#f0eeff' : 'var(--muted)',
+        background: view === 'anweisungen' ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
+        border: `1px solid ${view === 'anweisungen' ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
+        color: view === 'anweisungen' ? 'var(--white)' : 'var(--muted)',
         cursor: 'pointer',
         borderRadius: '2px',
         textTransform: 'uppercase',
@@ -1653,7 +1641,7 @@ function App() {
         width: '6px',
         height: '6px',
         borderRadius: '50%',
-        background: view === 'details' ? 'var(--purple-bright)' : 'rgba(160,140,255,0.25)',
+        background: view === 'details' ? 'var(--purple-bright)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
         boxShadow: view === 'details' ? '0 0 6px var(--purple-bright)' : 'none'
       }
     }), /*#__PURE__*/React.createElement("span", {
@@ -1661,7 +1649,7 @@ function App() {
         width: '6px',
         height: '6px',
         borderRadius: '50%',
-        background: view === 'anweisungen' ? 'var(--purple-bright)' : 'rgba(160,140,255,0.25)',
+        background: view === 'anweisungen' ? 'var(--purple-bright)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
         boxShadow: view === 'anweisungen' ? '0 0 6px var(--purple-bright)' : 'none'
       }
     })))
@@ -1680,7 +1668,7 @@ function App() {
       position: 'relative',
       zIndex: 5,
       padding: '8px 32px',
-      borderTop: '1px solid rgba(160,140,255,0.08)',
+      borderTop: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -1690,14 +1678,14 @@ function App() {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
-      color: 'rgba(160,140,255,0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.22em'
     }
   }, "\u25C8 KONTEXT-TIPPS \xB7 [TAB] WECHSELT ANSICHT \xB7 [\u21B5] AKZEPTIEREN"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '8px',
-      color: 'rgba(160,140,255,0.35)',
+      color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.22em'
     }
   }, "MERURIA // MISSIONSTERMINAL v4.0")), pickerMission && /*#__PURE__*/React.createElement(CharPickerModal, {

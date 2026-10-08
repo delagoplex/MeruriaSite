@@ -168,7 +168,7 @@ function moonSVG(phaseDay, cycleLength, vollmondDay, color, size) {
   const r = 9, cx = 11, cy = 11;
   let fill;
   if (ill < 0.02) {
-    fill = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#0b0820" stroke="${color}" stroke-width="1.1"/>`;
+    fill = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgb(var(--panel-rgb))" stroke="${color}" stroke-width="1.1"/>`;
   } else if (ill > 0.98) {
     fill = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}" stroke="${color}" stroke-width="1.1"/>`;
   } else {
@@ -178,7 +178,7 @@ function moonSVG(phaseDay, cycleLength, vollmondDay, color, size) {
     if (ill < 0.5) innerSweep = waxing ? 0 : 1;
     else innerSweep = waxing ? 1 : 0;
     const path = `M${cx},${cy-r} A${r},${r} 0 0,${outerSweep} ${cx},${cy+r} A${rx},${r} 0 0,${innerSweep} ${cx},${cy-r} Z`;
-    fill = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#0b0820" stroke="${color}" stroke-width="1.1"/><path d="${path}" fill="${color}"/>`;
+    fill = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="rgb(var(--panel-rgb))" stroke="${color}" stroke-width="1.1"/><path d="${path}" fill="${color}"/>`;
   }
   return `<svg viewBox="0 0 22 22" width="${size}" height="${size}" class="mini-moon">${fill}</svg>`;
 }
@@ -711,7 +711,7 @@ renderAll();
   if (!window._sb) return;
   const [{ data: chars }, { data: nscs }] = await Promise.all([
     window._sb.from('characters').select('char_data').eq('visible', true),
-    window._sb.from('nscs').select('name, bild, geburtstag_doy').eq('visible', true).not('geburtstag_doy', 'is', null),
+    window._sb.from('nsc_public_directory').select('name, bild, geburtstag_doy').not('geburtstag_doy', 'is', null),
   ]);
   const map = {};
   for (const row of chars || []) {
