@@ -1377,7 +1377,7 @@ function LiveList({ items, onChange, make, render, eye, layout, cols, addLabel }
           </React.Fragment>
         );
       })}
-      <button className="nscv-live-add" onClick={() => ins(rows.length)} style={layout === 'grid' ? { minHeight:60 } : undefined}>+ {addLabel}</button>
+      <button className={'nscv-live-add nscv-live-add-' + (layout || 'col')} onClick={() => ins(rows.length)}>+ {addLabel}</button>
     </div>
   );
 }
