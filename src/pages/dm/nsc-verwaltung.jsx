@@ -1962,7 +1962,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           ○ Dieser NSC ist für Spieler komplett verborgen — die Vorschau zeigt, was sie nach Freischaltung sähen.
         </div>
       )}
-      <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:14, flexWrap:'wrap' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:8, margin:'18px 0 18px', flexWrap:'wrap' }}>
         <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Ansicht als</span>
         <span style={dmView
           ? { padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', borderRadius:3, background:'rgba(255,184,80,0.16)', border:'1px solid rgba(255,184,80,0.7)', color:'#ffb850' }
