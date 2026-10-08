@@ -1363,7 +1363,6 @@ function LiveList({ items, onChange, make, render, eye, layout, cols, addLabel }
         const f = fresh.current && fresh.current.i === i ? fresh.current : null;
         return (
           <React.Fragment key={f ? 'f' + f.nonce : i}>
-            {wrap && <button className="nscv-ins nscv-ins-inline" title="Davor einfügen" onClick={() => ins(i)}>+</button>}
             <div className="nscv-live-row" {...dnd.rowProps(i)}
               style={{ position:'relative', display:'flex', alignItems:'center', gap:4, minWidth:0, opacity:dnd.dragging === i ? 0.35 : 1 }}>
               {dnd.indicator(i)}
