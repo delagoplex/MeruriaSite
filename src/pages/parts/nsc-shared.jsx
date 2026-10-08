@@ -56,7 +56,7 @@ function meruriaZodiacOf(doy) {
 // sind pro Eintrag freischaltbar (eig-0, tal-0, geh-0, …). Sektions-Fakten
 // zählen nur, wenn die Sektion am NSC aktiv ist (nsc.sections).
 // Die Spielleitung gibt nur Name und Bild frei (Augen 'name' / 'bild'); alle anderen
-// Fakten sind durch Raten freischaltbar und brauchen kein Auge.
+// Fakten tragen die Spieler pro Charakter selbst ein und brauchen kein Auge.
 function nscFieldVisible(nsc, key) {
   if (key === 'name' || key === 'bild') return ((nsc.fieldVis || {})[key]) === true;
   return true;
@@ -168,12 +168,7 @@ const NSC_SEC_OF_PREFIX = { vna:'vname', eig:'pers', tal:'pers', mak:'pers', rou
 // Sektions-Auge und Einzel-Auge müssen explizit geöffnet sein (Opt-in).
 function unlockableFactsOf(nsc) {
   if (Array.isArray(nsc.challengeableKeys)) return nsc.challengeableKeys;
-  return factsOf(nsc).filter(k => {
-    const m = k.match(/^geh-(\d+)$/);
-    if (!m) return true;
-    const list = (nsc.geheimnisse || []).filter(g => (g.text || '').trim());
-    return !!(list[+m[1]] && list[+m[1]].vis);
-  });
+  return factsOf(nsc);
 }
 
 // Stufe aus Anteil freigeschalteter Fakten berechnen.

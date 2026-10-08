@@ -108,7 +108,7 @@ BEGIN
     compact_i := 0;
     FOR item IN SELECT e.value FROM jsonb_array_elements(COALESCE(p_nsc.geheimnisse, '[]'::jsonb)) AS e(value) LOOP
       IF btrim(COALESCE(item->>'text','')) <> '' THEN
-        IF item->>'vis' = 'true' THEN result := result || ('geh-' || compact_i); END IF;
+        result := result || ('geh-' || compact_i);
         compact_i := compact_i + 1;
       END IF;
     END LOOP;

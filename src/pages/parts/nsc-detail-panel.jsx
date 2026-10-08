@@ -490,28 +490,28 @@ function FactGuessForm({ nsc, keys, unlocked, characterId, onCorrect, acc }) {
     }
     const result = Array.isArray(data) ? data[0] : data;
     if (!result?.matched) {
-      setStatus('Das stimmt noch nicht. Versuch es erneut.');
+      setStatus('Das stimmt nicht mit dem überein, was dein Charakter weiß.');
       return;
     }
     setReveal({ key: factKey, text: result.value || guess.trim() });
     setGuess('');
-    setStatus('Richtige Vermutung. Der Fakt wurde für diesen Charakter enthüllt.');
+    setStatus('Richtig. Das Wissen wurde für diesen Charakter eingetragen.');
     onCorrect(factKey);
   };
 
   if (!candidates.length) return null;
   return (
     <div style={{ margin:'18px 0 22px', padding:'14px 16px', border:`1px solid ${dpHA(acc,0.25)}`, borderLeft:`2px solid ${dpHA(acc,0.75)}`, background:dpHA(acc,0.045), borderRadius:2 }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.24em', color:dpHA(acc,0.8), textTransform:'uppercase', marginBottom:10 }}>Wissen versuchen</div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.24em', color:dpHA(acc,0.8), textTransform:'uppercase', marginBottom:10 }}>Wissen eintragen</div>
       {!characterId ? (
         <div style={{ fontFamily:'var(--font-body)', fontSize:12, color:'rgba(200,190,240,0.6)' }}>Wähle zuerst einen deiner Charaktere als Blickwinkel.</div>
       ) : (
         <form onSubmit={submit} style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto', gap:8 }}>
-          <select aria-label="Zu erratende Information" value={factKey} onChange={event => setFactKey(event.target.value)} style={{ gridColumn:'1 / -1', minWidth:0, padding:'8px 9px', border:`1px solid ${dpHA(acc,0.28)}`, borderRadius:2, background:'rgba(5,4,15,0.85)', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:9 }}>
+          <select aria-label="Information, die du erfahren hast" value={factKey} onChange={event => setFactKey(event.target.value)} style={{ gridColumn:'1 / -1', minWidth:0, padding:'8px 9px', border:`1px solid ${dpHA(acc,0.28)}`, borderRadius:2, background:'rgba(5,4,15,0.85)', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:9 }}>
             {candidates.map(key => <option key={key} value={key}>{dpFactLabel(key)}</option>)}
           </select>
-          <input aria-label="Vermutung" value={guess} onChange={event => setGuess(event.target.value)} placeholder="Deine Vermutung …" autoComplete="off" style={{ minWidth:0, padding:'8px 10px', border:`1px solid ${dpHA(acc,0.28)}`, borderRadius:2, background:'rgba(5,4,15,0.85)', color:'var(--white)', fontFamily:'var(--font-body)', fontSize:12 }} />
-          <button type="submit" disabled={busy || !guess.trim()} style={{ padding:'8px 12px', border:`1px solid ${dpHA(acc,0.5)}`, borderRadius:2, background:dpHA(acc,0.12), color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase', cursor:busy ? 'wait' : 'pointer', opacity:busy || !guess.trim() ? 0.55 : 1 }}>{busy ? 'Prüfe …' : 'Prüfen'}</button>
+          <input aria-label="Eintrag" value={guess} onChange={event => setGuess(event.target.value)} placeholder="Was hat dein Charakter erfahren? …" autoComplete="off" style={{ minWidth:0, padding:'8px 10px', border:`1px solid ${dpHA(acc,0.28)}`, borderRadius:2, background:'rgba(5,4,15,0.85)', color:'var(--white)', fontFamily:'var(--font-body)', fontSize:12 }} />
+          <button type="submit" disabled={busy || !guess.trim()} style={{ padding:'8px 12px', border:`1px solid ${dpHA(acc,0.5)}`, borderRadius:2, background:dpHA(acc,0.12), color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase', cursor:busy ? 'wait' : 'pointer', opacity:busy || !guess.trim() ? 0.55 : 1 }}>{busy ? 'Prüfe …' : 'Eintragen'}</button>
         </form>
       )}
       {status && <div role="status" style={{ marginTop:9, fontFamily:'var(--font-body)', fontSize:11, color:status.startsWith('Richtige') ? 'rgba(95,227,154,0.9)' : 'rgba(200,190,240,0.65)' }}>{status}</div>}
@@ -556,7 +556,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
   const gehList = nsc.geheimnisse || [];
   const isOpen = (k) => {
     const mg = k.match(/^geh-(\d+)$/);
-    if (mg) { const g = gehList[+mg[1]]; return !!(g && g.vis) && unlocked.has(k); }
+    if (mg) { const g = gehList[+mg[1]]; return !!g && unlocked.has(k); }
     return unlocked.has(k);
   };
   const visible = (k) => gm || isOpen(k);

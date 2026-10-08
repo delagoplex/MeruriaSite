@@ -1424,7 +1424,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   const tgU = key => !dmView && unlocks.toggleForPids(sel.id, key, [persp]);
   const setU = arr => !dmView && unlocks.setKeysForPid(sel.id, persp, arr);
 
-  // Nur Name und Bild gibt die Spielleitung frei; alle anderen Fakten sind durch Raten freischaltbar
+  // Nur Name und Bild gibt die Spielleitung frei; alle anderen Fakten sind von Spielern eingetragen (durch Spielwissen)
   const gVis = k => (k === 'name' || k === 'bild') ? (sel.fieldVis || {})[k] === true : true;
   const pOpen = (secKey, key) => dmView ? true : (gVis(secKey) && gVis(key) && uSet.has(key));
   const mkTg = (secKey, key) => {
@@ -1463,7 +1463,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
     if (!m) return pOpen(k === 'habe' ? 'ausr' : k === 'unvergesslich' ? 'pers' : k, k);
     if (m[1] === 'geh') {
       const list = (sel.geheimnisse || []).filter(g => (g.text || '').trim());
-      return !!(list[+m[2]] && list[+m[2]].vis) && uSet.has(k);
+      return !!list[+m[2]] && uSet.has(k);
     }
     return pOpen(SEC_OF_PREFIX[m[1]] || m[1], k);
   };
@@ -1602,7 +1602,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   );
 
   // ── Live-Bearbeitung: dieselben Abschnitte, aber mit Eingabefeldern, +-Buttons und Umsortieren ──
-  // Augen gibt es nur für Name und Bild (Spieler raten die übrigen Fakten selbst)
+  // Augen gibt es nur für Name und Bild (Spieler tragen die übrigen Fakten selbst ein)
   const eyeFor = key => (key === 'name' || key === 'bild') ? <Eye on={vis(key)} onClick={() => toggleFieldVis(key)}/> : null;
   const rmSecLive = k => updSel('sections', (sel.sections || []).filter(x => x !== k));
   const fIdx = (list, i) => (list[i].name || '').trim() ? list.slice(0, i + 1).filter(x => (x.name || '').trim()).length - 1 : null;
@@ -1934,7 +1934,6 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           <React.Fragment>
             {edHead('Geheimnisse', [], 'geheim', 'entfernen', '#e36760')}
             <LiveList items={sel.geheimnisse} onChange={a => updSel('geheimnisse', a)} make={() => ({ text:'', vis:false })} layout="col" addLabel="Geheimnis"
-              eye={(i, g, set) => <Eye on={!!g.vis} onClick={() => set({ ...g, vis:!g.vis })}/>}
               render={(g, i, set) => (
                 <div style={{ padding:'12px 14px', border:'1px solid rgba(227,103,96,0.4)', background:'linear-gradient(135deg, rgba(227,103,96,0.10), rgba(227,103,96,0.04))', borderRadius:2, position:'relative', fontFamily:BODY, fontSize:12.5, color:'var(--white)', lineHeight:1.6 }}>
                   <div style={{ position:'absolute', top:-1, left:-1, padding:'2px 6px', background:'rgba(227,103,96,0.20)', border:'1px solid rgba(227,103,96,0.55)', fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'#e36760', textTransform:'uppercase' }}>Geheim · {String(i + 1).padStart(2, '0')}</div>
@@ -2372,8 +2371,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
               {(() => {
                 const items = gehList.map((g, i) => {
                   const key = 'geh-' + i;
-                  const gHidden = dmView ? false : !g.vis;
-                  const open = dmView ? true : (g.vis && uSet.has(key));
+                  const gHidden = false;
+                  const open = dmView ? true : uSet.has(key);
                   return { g, key, gHidden, open, num:(i + 1).toString().padStart(2, '0') };
                 });
                 const nOpen = items.filter(x => x.open).length;
