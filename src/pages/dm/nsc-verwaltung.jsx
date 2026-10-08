@@ -1366,7 +1366,6 @@ function LiveList({ items, onChange, make, render, eye, layout, cols, addLabel }
             <div className="nscv-live-row" {...dnd.rowProps(i)}
               style={{ position:'relative', display:'flex', alignItems:'center', gap:4, minWidth:0, opacity:dnd.dragging === i ? 0.35 : 1 }}>
               {dnd.indicator(i)}
-              {!wrap && <button className={'nscv-ins nscv-ins-' + (layout === 'grid' ? 'left' : 'top')} title="Davor einfügen" onClick={() => ins(i)}>+</button>}
               <span className="nscv-live-grip" title="Ziehen zum Umsortieren" {...dnd.handleProps(i)}>⠿</span>
               <div style={{ flex:wrap ? '0 1 auto' : 1, minWidth:0 }}>
                 <LiveFresh.Provider value={f}>{render(it, i, v => set(i, v))}</LiveFresh.Provider>

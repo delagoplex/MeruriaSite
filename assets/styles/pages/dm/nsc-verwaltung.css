@@ -63,8 +63,10 @@ input.ash-num { -moz-appearance: textfield; appearance: textfield; }
 .nscv-ins-inline:hover { opacity: 1; }
 .nscv-live-add { padding: 6px 14px; background: rgba(var(--purple-rgb),calc(0.06*var(--kp))); border: 1px dashed rgba(var(--purple-rgb),calc(0.4*var(--kp))); border-radius: 3px;
   color: rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb))); font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; align-self: flex-start; }
-/* Spalten- und Rasterlisten: der Button sieht aus wie ein leeres Feld */
-.nscv-live-add-col, .nscv-live-add-grid { align-self: stretch; text-align: left; border-style: solid; border-color: rgba(var(--purple-rgb),calc(0.3*var(--kp))); border-left: 2px dashed rgba(var(--purple-rgb),calc(0.55*var(--kp))); border-radius: 0; padding: 10px 14px; }
+/* Spalten- und Rasterlisten: der Button sieht aus wie ein leeres Feld und fluchtet mit den Einträgen (Anfasser links, × rechts) */
+.nscv-live-add-col, .nscv-live-add-grid { align-self: stretch; text-align: left; border: 1px solid rgba(var(--accent-rgb),calc(0.25*var(--ka))); border-left: 2px solid rgba(var(--accent-rgb),calc(0.55*var(--ka))); background: rgba(var(--accent-rgb),calc(0.05*var(--ka))); border-radius: 0; padding: 10px 14px; }
+.nscv-live-add-col { margin-left: 23px; margin-right: 27px; }
+.nscv-live-add-grid { align-self: stretch; text-align: left; border-style: solid; border-color: rgba(var(--purple-rgb),calc(0.3*var(--kp))); border-left: 2px dashed rgba(var(--purple-rgb),calc(0.55*var(--kp))); border-radius: 0; padding: 10px 14px; }
 .nscv-live-add-grid { min-height: 60px; text-align: center; }
 .nscv-live-add:hover { background: rgba(var(--purple-rgb),calc(0.18*var(--kp))); color: var(--white); }
 .nscv-live-rmsec { background: transparent; border: none; cursor: pointer; font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb))); }
