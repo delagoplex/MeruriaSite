@@ -9,61 +9,61 @@ DECLARE
   i INT;
   compact_i INT;
 BEGIN
-  IF p_nsc.rasse IS NOT NULL AND p_nsc.field_visibility->>'rasse' = 'true' THEN result := array_append(result, 'rasse'::text); END IF;
-  IF p_nsc.geschlecht IS NOT NULL AND p_nsc.field_visibility->>'geschlecht' = 'true' THEN result := array_append(result, 'geschlecht'::text); END IF;
-  IF p_nsc.groesse IS NOT NULL AND p_nsc.field_visibility->>'groesse' = 'true' THEN result := array_append(result, 'groesse'::text); END IF;
-  IF p_nsc.alter_jahre IS NOT NULL AND p_nsc.field_visibility->>'alter' = 'true' THEN result := array_append(result, 'alter'::text); END IF;
-  IF p_nsc.geburtstag_doy IS NOT NULL AND p_nsc.field_visibility->>'geburtstag' = 'true' THEN result := array_append(result, 'geburtstag'::text); END IF;
-  IF p_nsc.gesinnung IS NOT NULL AND p_nsc.field_visibility->>'gesinnung' = 'true' THEN result := array_append(result, 'gesinnung'::text); END IF;
-  IF p_nsc.klasse IS NOT NULL AND p_nsc.field_visibility->>'klasse' = 'true' THEN result := array_append(result, 'klasse'::text); END IF;
-  IF p_nsc.hintergrund IS NOT NULL AND p_nsc.field_visibility->>'hintergrund' = 'true' THEN result := array_append(result, 'hintergrund'::text); END IF;
-  IF p_nsc.beruf IS NOT NULL AND p_nsc.field_visibility->>'beruf' = 'true' THEN result := array_append(result, 'beruf'::text); END IF;
-  IF p_nsc.gottheit IS NOT NULL AND p_nsc.field_visibility->>'gottheit' = 'true' THEN result := array_append(result, 'gottheit'::text); END IF;
-  IF p_nsc.division IS NOT NULL AND p_nsc.division <> 'Keine' AND p_nsc.field_visibility->>'division' = 'true' THEN result := array_append(result, 'division'::text); END IF;
-  IF p_nsc.organisation IS NOT NULL AND p_nsc.field_visibility->>'organisation' = 'true' THEN result := array_append(result, 'organisation'::text); END IF;
-  IF p_nsc.kapsel IS NOT NULL AND p_nsc.field_visibility->>'kapsel' = 'true' THEN result := array_append(result, 'kapsel'::text); END IF;
-  IF p_nsc.wohnort IS NOT NULL AND p_nsc.field_visibility->>'wohnort' = 'true' THEN result := array_append(result, 'wohnort'::text); END IF;
+  IF p_nsc.rasse IS NOT NULL THEN result := array_append(result, 'rasse'::text); END IF;
+  IF p_nsc.geschlecht IS NOT NULL THEN result := array_append(result, 'geschlecht'::text); END IF;
+  IF p_nsc.groesse IS NOT NULL THEN result := array_append(result, 'groesse'::text); END IF;
+  IF p_nsc.alter_jahre IS NOT NULL THEN result := array_append(result, 'alter'::text); END IF;
+  IF p_nsc.geburtstag_doy IS NOT NULL THEN result := array_append(result, 'geburtstag'::text); END IF;
+  IF p_nsc.gesinnung IS NOT NULL THEN result := array_append(result, 'gesinnung'::text); END IF;
+  IF p_nsc.klasse IS NOT NULL THEN result := array_append(result, 'klasse'::text); END IF;
+  IF p_nsc.hintergrund IS NOT NULL THEN result := array_append(result, 'hintergrund'::text); END IF;
+  IF p_nsc.beruf IS NOT NULL THEN result := array_append(result, 'beruf'::text); END IF;
+  IF p_nsc.gottheit IS NOT NULL THEN result := array_append(result, 'gottheit'::text); END IF;
+  IF p_nsc.division IS NOT NULL AND p_nsc.division <> 'Keine' THEN result := array_append(result, 'division'::text); END IF;
+  IF p_nsc.organisation IS NOT NULL THEN result := array_append(result, 'organisation'::text); END IF;
+  IF p_nsc.kapsel IS NOT NULL THEN result := array_append(result, 'kapsel'::text); END IF;
+  IF p_nsc.wohnort IS NOT NULL THEN result := array_append(result, 'wohnort'::text); END IF;
 
   compact_i := 0;
   FOREACH value IN ARRAY COALESCE(p_nsc.voller_name, '{}') LOOP
-    IF btrim(value) <> '' AND p_nsc.field_visibility->>'vname' = 'true' AND p_nsc.field_visibility->>('vna-' || compact_i) = 'true' THEN
+    IF btrim(value) <> '' THEN
       result := result || ('vna-' || compact_i);
     END IF;
     compact_i := compact_i + 1;
   END LOOP;
-  IF 'bio' = ANY(p_nsc.sections) AND btrim(COALESCE(p_nsc.biografie, '')) <> '' AND p_nsc.field_visibility->>'bio' = 'true' THEN result := array_append(result, 'bio'::text); END IF;
+  IF 'bio' = ANY(p_nsc.sections) AND btrim(COALESCE(p_nsc.biografie, '')) <> '' THEN result := array_append(result, 'bio'::text); END IF;
     IF 'aussehen' = ANY(p_nsc.sections)
       AND EXISTS (SELECT 1 FROM jsonb_each_text(COALESCE(p_nsc.aussehen, '{}'::jsonb)) AS x(key,value) WHERE btrim(x.value) <> '')
-      AND p_nsc.field_visibility->>'aussehen' = 'true' THEN result := array_append(result, 'aussehen'::text); END IF;
+      THEN result := array_append(result, 'aussehen'::text); END IF;
 
   IF 'pers' = ANY(p_nsc.sections) THEN
-    IF btrim(COALESCE(p_nsc.unvergesslich, '')) <> '' AND p_nsc.field_visibility->>'pers' = 'true' AND p_nsc.field_visibility->>'unvergesslich' = 'true' THEN result := array_append(result, 'unvergesslich'::text); END IF;
+    IF btrim(COALESCE(p_nsc.unvergesslich, '')) <> '' THEN result := array_append(result, 'unvergesslich'::text); END IF;
     compact_i := 0;
     FOREACH value IN ARRAY COALESCE(p_nsc.eigenschaften, '{}') LOOP
-      IF btrim(value) <> '' AND p_nsc.field_visibility->>'pers' = 'true' AND p_nsc.field_visibility->>('eig-' || compact_i) = 'true' THEN result := result || ('eig-' || compact_i); END IF;
+      IF btrim(value) <> '' THEN result := result || ('eig-' || compact_i); END IF;
       compact_i := compact_i + 1;
     END LOOP;
     compact_i := 0;
     FOREACH value IN ARRAY COALESCE(p_nsc.talente, '{}') LOOP
-      IF btrim(value) <> '' AND p_nsc.field_visibility->>'pers' = 'true' AND p_nsc.field_visibility->>('tal-' || compact_i) = 'true' THEN result := result || ('tal-' || compact_i); END IF;
+      IF btrim(value) <> '' THEN result := result || ('tal-' || compact_i); END IF;
       compact_i := compact_i + 1;
     END LOOP;
     compact_i := 0;
     FOREACH value IN ARRAY COALESCE(p_nsc.makel, '{}') LOOP
-      IF btrim(value) <> '' AND p_nsc.field_visibility->>'pers' = 'true' AND p_nsc.field_visibility->>('mak-' || compact_i) = 'true' THEN result := result || ('mak-' || compact_i); END IF;
+      IF btrim(value) <> '' THEN result := result || ('mak-' || compact_i); END IF;
       compact_i := compact_i + 1;
     END LOOP;
   END IF;
 
   IF 'routine' = ANY(p_nsc.sections) THEN
     FOR i IN 0 .. jsonb_array_length(COALESCE(p_nsc.routine, '[]'::jsonb)) - 1 LOOP
-      IF p_nsc.field_visibility->>'routine' = 'true' AND p_nsc.field_visibility->>('rou-' || i) = 'true' THEN result := result || ('rou-' || i); END IF;
+      result := result || ('rou-' || i); 
     END LOOP;
   END IF;
   compact_i := 0;
   IF 'gewohnheiten' = ANY(p_nsc.sections) THEN
     FOREACH value IN ARRAY COALESCE(p_nsc.gewohnheiten, '{}') LOOP
-      IF btrim(value) <> '' AND p_nsc.field_visibility->>'gewohnheiten' = 'true' AND p_nsc.field_visibility->>('gew-' || compact_i) = 'true' THEN result := result || ('gew-' || compact_i); END IF;
+      IF btrim(value) <> '' THEN result := result || ('gew-' || compact_i); END IF;
       compact_i := compact_i + 1;
     END LOOP;
   END IF;
@@ -71,17 +71,17 @@ BEGIN
     compact_i := 0;
     FOR item IN SELECT e.value FROM jsonb_array_elements(COALESCE(p_nsc.ausruestung, '[]'::jsonb)) AS e(value) LOOP
       IF btrim(COALESCE(item->>'name','')) <> '' THEN
-        IF p_nsc.field_visibility->>'ausr' = 'true' AND p_nsc.field_visibility->>('aus-' || compact_i) = 'true' THEN result := result || ('aus-' || compact_i); END IF;
+        result := result || ('aus-' || compact_i); 
         compact_i := compact_i + 1;
       END IF;
     END LOOP;
-    IF p_nsc.habe > 0 AND p_nsc.field_visibility->>'ausr' = 'true' AND p_nsc.field_visibility->>'habe' = 'true' THEN result := array_append(result, 'habe'::text); END IF;
+    IF p_nsc.habe > 0 THEN result := array_append(result, 'habe'::text); END IF;
   END IF;
   IF 'begleiter' = ANY(p_nsc.sections) THEN
     compact_i := 0;
     FOR item IN SELECT e.value FROM jsonb_array_elements(COALESCE(p_nsc.begleiter, '[]'::jsonb)) AS e(value) LOOP
       IF btrim(COALESCE(item->>'name','')) <> '' THEN
-        IF p_nsc.field_visibility->>'begleiter' = 'true' AND p_nsc.field_visibility->>('beg-' || compact_i) = 'true' THEN result := result || ('beg-' || compact_i); END IF;
+        result := result || ('beg-' || compact_i); 
         compact_i := compact_i + 1;
       END IF;
     END LOOP;
@@ -89,7 +89,7 @@ BEGIN
   compact_i := 0;
   IF 'motive' = ANY(p_nsc.sections) THEN
     FOREACH value IN ARRAY COALESCE(p_nsc.motivationen, '{}') LOOP
-      IF btrim(value) <> '' AND p_nsc.field_visibility->>'motive' = 'true' AND p_nsc.field_visibility->>('mot-' || compact_i) = 'true' THEN result := result || ('mot-' || compact_i); END IF;
+      IF btrim(value) <> '' THEN result := result || ('mot-' || compact_i); END IF;
       compact_i := compact_i + 1;
     END LOOP;
   END IF;
@@ -98,9 +98,7 @@ BEGIN
       compact_i := 0;
       FOR item IN SELECT e.value FROM jsonb_array_elements(COALESCE(p_nsc.kontakte->value, '[]'::jsonb)) AS e(value) LOOP
         IF btrim(COALESCE(item->>'name','')) <> '' THEN
-          IF p_nsc.field_visibility->>'kontakte' = 'true' AND p_nsc.field_visibility->>(CASE value WHEN 'familie' THEN 'fam-' WHEN 'freunde' THEN 'fre-' ELSE 'riv-' END || compact_i) = 'true' THEN
-            result := result || ((CASE value WHEN 'familie' THEN 'fam-' WHEN 'freunde' THEN 'fre-' ELSE 'riv-' END) || compact_i);
-          END IF;
+          result := result || ((CASE value WHEN 'familie' THEN 'fam-' WHEN 'freunde' THEN 'fre-' ELSE 'riv-' END) || compact_i);
           compact_i := compact_i + 1;
         END IF;
       END LOOP;
@@ -266,8 +264,6 @@ DECLARE
   row_data JSONB;
   keys TEXT[];
   unlocked TEXT[];
-  total INT;
-  open_count INT;
   k TEXT;
   v_uid UUID := auth.uid();
 BEGIN
@@ -288,14 +284,15 @@ BEGIN
     FOREACH k IN ARRAY keys LOOP
       IF NOT k = ANY(unlocked) THEN row_data := public.nsc_mask_fact(row_data,k); END IF;
     END LOOP;
-    total := COALESCE(array_length(keys,1),0);
-    SELECT count(*) INTO open_count FROM unnest(unlocked) x WHERE x = ANY(keys);
-    IF total = 0 OR open_count * 4 < total THEN
+    -- Name und Bild gibt allein die Spielleitung frei (field_visibility name / bild).
+    IF COALESCE(n.field_visibility->>'name','') <> 'true' THEN
       row_data := jsonb_set(row_data,'{name}',to_jsonb('Unbekannt'::TEXT));
-      row_data := jsonb_set(row_data,'{bild}','null'::jsonb);
       row_data := jsonb_set(row_data,'{status}','[]'::jsonb);
       row_data := jsonb_set(row_data,'{titel}','null'::jsonb);
       row_data := jsonb_set(row_data,'{art}','null'::jsonb);
+    END IF;
+    IF COALESCE(n.field_visibility->>'bild','') <> 'true' THEN
+      row_data := jsonb_set(row_data,'{bild}','null'::jsonb);
     END IF;
     row_data := row_data - 'slug' - 'steckbrief';
     row_data := jsonb_set(row_data,'{haltung_overrides}',
@@ -396,30 +393,10 @@ BEGIN
   );
 END $$;
 
-CREATE OR REPLACE FUNCTION public.nsc_player_has_stage_one(p_nsc_id UUID)
-RETURNS BOOLEAN LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, pg_temp AS $$
-DECLARE
-  n public.nscs%ROWTYPE;
-  keys TEXT[];
-BEGIN
-  IF public.is_dm() THEN RETURN true; END IF;
-  IF auth.uid() IS NULL THEN RETURN false; END IF;
-  SELECT * INTO n FROM public.nscs WHERE id=p_nsc_id AND visible=true;
-  IF NOT FOUND THEN RETURN false; END IF;
-  keys := public.nsc_unlockable_fact_keys(n);
-  IF COALESCE(cardinality(keys),0) = 0 THEN RETURN false; END IF;
-  RETURN EXISTS (
-    SELECT 1 FROM public.nsc_unlocks u
-    JOIN public.characters c ON c.id=u.character_id
-    WHERE u.nsc_id=p_nsc_id AND c.owner_id=auth.uid()
-      AND (SELECT count(*) FROM unnest(u.unlocked_keys) x WHERE x=ANY(keys)) * 4 >= cardinality(keys)
-  );
-END $$;
-
 CREATE OR REPLACE VIEW public.nsc_public_directory AS
   SELECT n.id,
-         CASE WHEN public.nsc_player_has_stage_one(n.id) THEN n.name ELSE 'Unbekannt' END AS name,
-         CASE WHEN public.nsc_player_has_stage_one(n.id) THEN n.bild END AS bild,
+         CASE WHEN n.field_visibility->>'name' = 'true' THEN n.name ELSE 'Unbekannt' END AS name,
+         CASE WHEN n.field_visibility->>'bild' = 'true' THEN n.bild END AS bild,
          n.created_at,
          n.visible,
          CASE WHEN public.nsc_player_has_fact(n.id,'division') THEN n.division END AS division,
@@ -431,11 +408,9 @@ REVOKE ALL ON FUNCTION public.get_nsc_admin_data() FROM PUBLIC, anon;
 REVOKE ALL ON FUNCTION public.get_nsc_player_data(UUID) FROM PUBLIC, anon;
 REVOKE ALL ON FUNCTION public.guess_nsc_fact(UUID,UUID,TEXT,TEXT) FROM PUBLIC, anon;
 REVOKE ALL ON FUNCTION public.nsc_player_has_fact(UUID,TEXT) FROM PUBLIC, anon;
-REVOKE ALL ON FUNCTION public.nsc_player_has_stage_one(UUID) FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.get_nsc_admin_data() TO authenticated;
 GRANT EXECUTE ON FUNCTION public.get_nsc_player_data(UUID) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.guess_nsc_fact(UUID,UUID,TEXT,TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.nsc_player_has_fact(UUID,TEXT) TO authenticated;
-GRANT EXECUTE ON FUNCTION public.nsc_player_has_stage_one(UUID) TO authenticated;
 
 NOTIFY pgrst, 'reload schema';

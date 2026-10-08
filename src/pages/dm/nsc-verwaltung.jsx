@@ -1218,8 +1218,11 @@ function Editor(props) {
               ? <img src={sel.bild} alt={sel.name} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }}/>
               : <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textAlign:'center', padding:'0 14px' }}>Kein Portrait</span>}
           </div>
-          <input value={sel.bild || ''} onChange={e => updSel('bild', e.target.value)} placeholder="assets/images/npc/…"
-            style={{ ...inpSt, width:200, fontFamily:MONO, fontSize:9.5, padding:'6px 8px' }}/>
+          <div style={{ display:'flex', alignItems:'center', gap:4 }}>
+            <input value={sel.bild || ''} onChange={e => updSel('bild', e.target.value)} placeholder="assets/images/npc/…"
+              style={{ ...inpSt, width:172, fontFamily:MONO, fontSize:9.5, padding:'6px 8px' }}/>
+            <Eye on={vis('bild')} onClick={() => toggleFieldVis('bild')}/>
+          </div>
         </div>
       </div>
       {lightbox && sel.bild && (
@@ -1421,7 +1424,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   const tgU = key => !dmView && unlocks.toggleForPids(sel.id, key, [persp]);
   const setU = arr => !dmView && unlocks.setKeysForPid(sel.id, persp, arr);
 
-  const gVis = k => (sel.fieldVis || {})[k] === true;
+  // Nur Name und Bild gibt die Spielleitung frei; alle anderen Fakten sind durch Raten freischaltbar
+  const gVis = k => (k === 'name' || k === 'bild') ? (sel.fieldVis || {})[k] === true : true;
   const pOpen = (secKey, key) => dmView ? true : (gVis(secKey) && gVis(key) && uSet.has(key));
   const mkTg = (secKey, key) => {
     if (dmView) return null;
@@ -1598,7 +1602,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   );
 
   // ── Live-Bearbeitung: dieselben Abschnitte, aber mit Eingabefeldern, +-Buttons und Umsortieren ──
-  const eyeFor = key => <Eye on={vis(key)} onClick={() => toggleFieldVis(key)}/>;
+  // Augen gibt es nur für Name und Bild (Spieler raten die übrigen Fakten selbst)
+  const eyeFor = key => (key === 'name' || key === 'bild') ? <Eye on={vis(key)} onClick={() => toggleFieldVis(key)}/> : null;
   const rmSecLive = k => updSel('sections', (sel.sections || []).filter(x => x !== k));
   const fIdx = (list, i) => (list[i].name || '').trim() ? list.slice(0, i + 1).filter(x => (x.name || '').trim()).length - 1 : null;
   const edHead = (title, eyeKeys, removeKey, removeLabel, color) => (
@@ -1631,7 +1636,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
     ].sort((a, b) => a.label.localeCompare(b.label, 'de'));
     return (
       <React.Fragment>
-        {hint('✎ Live-Bearbeitung — direkt in die Felder schreiben · + zum Einfügen · ⠿ ziehen zum Umsortieren · Auge = für Spieler sichtbar')}
+        {hint('✎ Live-Bearbeitung — direkt in die Felder schreiben · + zum Einfügen · ⠿ ziehen zum Umsortieren · Augen nur für Name und Bild')}
 
         {has('pers') && (
           <React.Fragment>
@@ -2015,8 +2020,11 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
               <React.Fragment>
                 <LiveInput value={sel.titel} onChange={v => updSel('titel', v)} placeholder="Titel oder Beiname (optional)"
                   style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', color:acc, textTransform:'uppercase', marginBottom:4 }}/>
-                <LiveInput value={sel.name} onChange={v => updSel('name', v)} placeholder="Name"
-                  style={{ fontFamily:DISP, fontWeight:400, fontSize:26, letterSpacing:'0.10em', color:'var(--white)', lineHeight:1.15 }}/>
+                <span style={{ display:'flex', alignItems:'center', gap:8 }}>
+                  <LiveInput value={sel.name} onChange={v => updSel('name', v)} placeholder="Name"
+                    style={{ fontFamily:DISP, fontWeight:400, fontSize:26, letterSpacing:'0.10em', color:'var(--white)', lineHeight:1.15 }}/>
+                  {eyeFor('name')}
+                </span>
               </React.Fragment>
             ) : (
               <React.Fragment>

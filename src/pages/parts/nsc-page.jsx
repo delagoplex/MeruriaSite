@@ -113,9 +113,8 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
   const uFacts = unlockableFactsOf(nsc);
   const totalFacts = uFacts.length;
   const openFacts = uFacts.filter(k => unlocked.has(k)).length;
-  // Sichtbarkeit ist Opt-in: Auge(n) offen UND freigeschaltet
-  const fv = k => ((nsc.fieldVis || {})[k]) === true;
-  const openK = (k, sec) => gm || ((!sec || fv(sec)) && fv(k) && unlocked.has(k));
+  // Fakten sind sichtbar, sobald sie freigeschaltet sind
+  const openK = (k) => gm || unlocked.has(k);
   const hasSec = k => (nsc.sections || []).includes(k);
 
   // Subhead — nur Rasse (Beruf wandert nicht mehr in die Kopfzeile, der ist in der Meta sichtbar)
@@ -413,7 +412,7 @@ function App() {
   // Filter-Werte nur aus Fakten, die der Spieler auch tatsächlich freigeschaltet hat
   const FILTER_VALUES = appUM(() => {
     const known = nscs.filter(n => (stageById[n.id] || 0) >= 1);
-    const vis = (n, k) => ((n.fieldVis || {})[k]) === true && unlocks.unlockedFor(n).has(k);
+    const vis = (n, k) => unlocks.unlockedFor(n).has(k);
     return {
       rasse:      uniq(known.filter(n => vis(n,'rasse')).map(n => n.rasse)),
       geschlecht: uniq(known.filter(n => vis(n,'geschlecht')).map(n => n.geschlecht)),
@@ -449,7 +448,7 @@ function App() {
         const unlockedKeys = unlocks.unlockedFor(n);
         for (const g of ['rasse','geschlecht','division','beruf','gottheit']) {
           if (filters[g].length) {
-            if (((n.fieldVis || {})[g]) !== true || !unlockedKeys.has(g) || !filters[g].includes(n[g])) return false;
+            if (!unlockedKeys.has(g) || !filters[g].includes(n[g])) return false;
           }
         }
         if (filters.status.length) {
@@ -498,7 +497,7 @@ function App() {
             if (!filters[g].some(s => sList.includes(s))) return false;
           }
         } else if (ATTR_KEYS.has(g) && filters[g].length) {
-          if (((n.fieldVis || {})[g]) !== true || !unlockedKeys.has(g) || !filters[g].includes(n[g])) return false;
+          if (!unlockedKeys.has(g) || !filters[g].includes(n[g])) return false;
         }
       }
       if (group === 'kennenstufe') {
@@ -506,7 +505,7 @@ function App() {
       } else if (group === 'status') {
         if (!nscStatus(n).includes(value)) return false;
       } else if (ATTR_KEYS.has(group)) {
-        if (((n.fieldVis || {})[group]) !== true || !unlockedKeys.has(group) || n[group] !== value) return false;
+        if (!unlockedKeys.has(group) || n[group] !== value) return false;
       } else {
         if (n[group] !== value) return false;
       }

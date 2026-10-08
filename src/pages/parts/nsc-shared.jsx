@@ -55,8 +55,12 @@ function meruriaZodiacOf(doy) {
 // Ein "Fakt" existiert nur, wenn der NSC dafür Inhalt hat; Listen-Fakten
 // sind pro Eintrag freischaltbar (eig-0, tal-0, geh-0, …). Sektions-Fakten
 // zählen nur, wenn die Sektion am NSC aktiv ist (nsc.sections).
-// Sichtbarkeit ist OPT-IN: ein Auge ist nur offen, wenn explizit true gesetzt.
-function nscFieldVisible(nsc, key) { return ((nsc.fieldVis || {})[key]) === true; }
+// Die Spielleitung gibt nur Name und Bild frei (Augen 'name' / 'bild'); alle anderen
+// Fakten sind durch Raten freischaltbar und brauchen kein Auge.
+function nscFieldVisible(nsc, key) {
+  if (key === 'name' || key === 'bild') return ((nsc.fieldVis || {})[key]) === true;
+  return true;
+}
 
 function factsOf(nsc) {
   const keys = [];
@@ -164,36 +168,31 @@ const NSC_SEC_OF_PREFIX = { vna:'vname', eig:'pers', tal:'pers', mak:'pers', rou
 // Sektions-Auge und Einzel-Auge müssen explizit geöffnet sein (Opt-in).
 function unlockableFactsOf(nsc) {
   if (Array.isArray(nsc.challengeableKeys)) return nsc.challengeableKeys;
-  const vis = k => (nsc.fieldVis || {})[k] === true;
   return factsOf(nsc).filter(k => {
-    const m = k.match(/^([a-z]+)-(\d+)$/);
-    if (!m) {
-      if (k === 'habe') return vis('ausr') && vis('habe');
-      if (k === 'unvergesslich') return vis('pers') && vis('unvergesslich');
-      return vis(k);
-    }
-    if (m[1] === 'geh') {
-      const list = (nsc.geheimnisse || []).filter(g => (g.text || '').trim());
-      return !!(list[+m[2]] && list[+m[2]].vis);
-    }
-    return vis(NSC_SEC_OF_PREFIX[m[1]] || m[1]) && vis(k);
+    const m = k.match(/^geh-(\d+)$/);
+    if (!m) return true;
+    const list = (nsc.geheimnisse || []).filter(g => (g.text || '').trim());
+    return !!(list[+m[1]] && list[+m[1]].vis);
   });
 }
 
 // Stufe aus Anteil freigeschalteter Fakten berechnen.
 // „Eingeweiht" (MAX_STAGE) erfordert 100 % aller Fakten — sonst fällt der NSC eine Stufe tiefer.
 // Basis sind nur die global sichtbaren (entdeckbaren) Fakten; verwaiste Unlocks zählen nicht.
+// Stufe 0 heißt „Name unbekannt": solange die Spielleitung den Namen nicht freigegeben hat,
+// bleibt der NSC auf 0; danach mindestens Stufe 1.
 function stageFromUnlocked(nsc, unlockedSet) {
+  if (!nscFieldVisible(nsc, 'name')) return 0;
   const facts = unlockableFactsOf(nsc);
   const total = facts.length;
-  if (total === 0) return 0;
+  if (total === 0) return 1;
   const open = facts.reduce((n, k) => n + (unlockedSet.has(k) ? 1 : 0), 0);
   if (open >= total) return MAX_STAGE; // alles offen → Eingeweiht
   const pct = open / total;
-  for (let s = MAX_STAGE - 1; s >= 0; s--) {
+  for (let s = MAX_STAGE - 1; s >= 1; s--) {
     if (pct >= STAGE_THRESHOLDS[s]) return s;
   }
-  return 0;
+  return 1;
 }
 
 // Maps a DB row from the nscs table to the frontend NSC object shape.
@@ -703,7 +702,7 @@ function NSCPortrait({ nsc, stage, acc, size=120 }) {
   const initials = nsc.name && stage >= 1
     ? nsc.name.split(/[\s']/).filter(Boolean).slice(0,2).map(w => w[0]).join('').toUpperCase()
     : '?';
-  const hasImage = !!nsc.bild && stage >= 1;
+  const hasImage = !!nsc.bild && (stage >= 1 || nscFieldVisible(nsc, 'bild'));
   const PAD = 3;
   const RING_GAP = Math.max(4, size * 0.06);
   const clipPath = hexClipInset((PAD / size) * 100);

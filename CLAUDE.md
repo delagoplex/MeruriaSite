@@ -58,6 +58,7 @@ Access is enforced by Row Level Security, not by the client-side role checks (`w
 - `SECURITY DEFINER` functions must check `public.is_dm()` (or `auth.uid()`) themselves and set `SET search_path = public, pg_temp`
 - never rely on `WITH CHECK`-less UPDATE policies for tables with privileged columns: restrict columns with `GRANT UPDATE (col)` or a guard trigger (see `profiles`, `characters` in `041_security_hardening.sql`)
 - roll tokens are only redeemed through `check_roll_token` / `redeem_roll_token` (players cannot read the token table)
+- NSC reveal: players get NSC data only through `get_nsc_player_data` (migration 046). The DM releases only name and image (`field_visibility` keys `name` / `bild`); every other fact is unlocked by the player guessing it (`guess_nsc_fact`), except secrets (`geheimnisse`), which also need their own `vis` flag
 - known gap: `nscs` rows that are `visible` are fully readable by players; the per-field unlock system (`nsc_unlocks`, `field_visibility`) hides secrets only in the UI
 
 ## Shared components (`src/components/`)
