@@ -1240,7 +1240,7 @@ function Editor(props) {
 }
 
 // ── Bausteine der Live-Bearbeitung (Spieler-Vorschau in der DM-Sicht) ───
-// Alles zeigt zuerst die Vorschau; Doppelklick macht das Feld bearbeitbar, beim Verlassen (Klick daneben, Enter, Esc) ist es wieder Vorschau.
+// Alles zeigt zuerst die Vorschau; Ein Klick macht das Feld bearbeitbar, beim Verlassen (Klick daneben, Enter, Esc) ist es wieder Vorschau.
 // Eingabefelder erben Schrift, Farbe und Größe vom umgebenden Vorschau-Element.
 const LIVE_FIELD = { font:'inherit', color:'inherit', letterSpacing:'inherit', textTransform:'inherit', fontStyle:'inherit', lineHeight:'inherit', textAlign:'inherit',
   background:'transparent', border:'none', borderBottom:'1px dashed rgba(var(--purple-rgb),calc(0.55*var(--kp)))', outline:'none', padding:0, margin:0, boxSizing:'border-box' };
@@ -1258,7 +1258,7 @@ function LiveInput({ value, onChange, placeholder, style, fit, type, list, forma
   const v = value ?? '';
   if (!editing) {
     return (
-      <div title="Doppelklick zum Bearbeiten" onDoubleClick={() => setEditing(true)}
+      <div title="Klicken zum Bearbeiten" onClick={() => setEditing(true)}
         style={{ ...LIVE_STATIC, ...(fit ? { display:'inline-block' } : null), ...style }}>
         {String(v) === '' ? <span className="nscv-live-ph">{placeholder || '—'}</span> : (format ? format(v) : v)}
       </div>
@@ -1276,7 +1276,7 @@ function LiveArea({ value, onChange, placeholder, style }) {
   useEffect(() => { const el = ref.current; if (el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; } }, [value, editing]);
   if (!editing) {
     return (
-      <div title="Doppelklick zum Bearbeiten" onDoubleClick={() => setEditing(true)} style={{ ...LIVE_STATIC, ...style }}>
+      <div title="Klicken zum Bearbeiten" onClick={() => setEditing(true)} style={{ ...LIVE_STATIC, ...style }}>
         {String(value ?? '') === '' ? <span className="nscv-live-ph">{placeholder || '—'}</span> : value}
       </div>
     );
@@ -1286,7 +1286,7 @@ function LiveArea({ value, onChange, placeholder, style }) {
     onKeyDown={e => { if (e.key === 'Escape' || (e.key === 'Enter' && (e.ctrlKey || e.metaKey))) e.currentTarget.blur(); }}
     style={{ ...LIVE_FIELD, display:'block', width:'100%', resize:'none', overflow:'hidden', ...style }}/>;
 }
-/* Beliebiger Bereich: Vorschau (display) → Doppelklick → Editor (editor(close)); Klick daneben oder Esc beendet. */
+/* Beliebiger Bereich: Vorschau (display) → Klick → Editor (editor(close)); Klick daneben oder Esc beendet. */
 function LiveDbl({ display, editor, style, disabled, editing: ctlEditing, setEditing: ctlSet }) {
   const [own, setOwn] = useState(false);
   const editing = ctlEditing ?? own;
@@ -1300,7 +1300,7 @@ function LiveDbl({ display, editor, style, disabled, editing: ctlEditing, setEdi
     return () => { document.removeEventListener('mousedown', md); document.removeEventListener('keydown', kd); };
   }, [editing]);
   if (editing) return <div ref={ref} style={style}>{editor(() => setEditing(false))}</div>;
-  return <div title={disabled ? undefined : 'Doppelklick zum Bearbeiten'} onDoubleClick={disabled ? undefined : () => setEditing(true)} style={{ ...style, cursor:disabled ? 'default' : 'text', userSelect:'none' }}>{display}</div>;
+  return <div title={disabled ? undefined : 'Klicken zum Bearbeiten'} onClick={disabled ? undefined : () => setEditing(true)} style={{ ...style, cursor:disabled ? 'default' : 'text', userSelect:'none' }}>{display}</div>;
 }
 /* Name aus NSC- und Spielercharakter-Liste wählen (Suche + Dropdown); freie Namen bleiben möglich. */
 function LiveNamePicker({ value, onChange, options, placeholder, style }) {
@@ -1312,7 +1312,7 @@ function LiveNamePicker({ value, onChange, options, placeholder, style }) {
   const matches = options.filter(o => !ql || o.label.toLowerCase().includes(ql)).slice(0, 14);
   if (!editing) {
     return (
-      <div title="Doppelklick zum Bearbeiten" onDoubleClick={() => { setQ(''); setHi(0); setEditing(true); }} style={{ ...LIVE_STATIC, ...style }}>
+      <div title="Klicken zum Bearbeiten" onClick={() => { setQ(''); setHi(0); setEditing(true); }} style={{ ...LIVE_STATIC, ...style }}>
         {String(v) === '' ? <span className="nscv-live-ph">{placeholder || '—'}</span> : v}
       </div>
     );
@@ -1416,8 +1416,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   const acc = divOf(sel.division).accent;
   const has = k => (sel.sections || []).includes(k);
   const dmView = persp === '__dm' || !charPersp.some(c => c.id === persp);
-  const [live, setLive] = useState(true);
-  const EDIT = dmView && live;  // Live-Bearbeitung: nur in der DM-Sicht
+  const EDIT = dmView;  // Direktbearbeitung: immer in der DM-Sicht
   const perspName = dmView ? 'Spielleitung' : (charPersp.find(c => c.id === persp) || {}).label || 'Spieler';
   const uSet = dmView ? new Set() : ((unlocks.byPersp[persp] || {})[sel.id] || new Set());
   const allKeys = unlockableKeys(sel);
@@ -1636,7 +1635,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
     ].sort((a, b) => a.label.localeCompare(b.label, 'de'));
     return (
       <React.Fragment>
-        {hint('✎ Live-Bearbeitung — direkt in die Felder schreiben · + zum Einfügen · ⠿ ziehen zum Umsortieren · Augen nur für Name und Bild')}
+        {hint('✎ Direkt in die Felder klicken und schreiben · + zum Einfügen · ⠿ ziehen zum Umsortieren · Augen nur für Name und Bild')}
 
         {has('pers') && (
           <React.Fragment>
@@ -1974,13 +1973,6 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
         </span>
         <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.12em', color:'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>· wechseln über „Sicht" in der Seitenleiste</span>
         <div style={{ flex:1 }}/>
-        {dmView && (
-          <button onClick={() => setLive(v => !v)} title="In der Spielleitungs-Sicht direkt in der Vorschau schreiben, mit +-Buttons und Umsortieren"
-            style={{ padding:'6px 12px', borderRadius:3, fontFamily:MONO, fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer',
-              background:live ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'transparent',
-              border:`1px solid ${live ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))'}`,
-              color:live ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))' }}>{live ? '✎ Live-Bearbeitung an' : '◈ Nur ansehen'}</button>
-        )}
         {!dmView && (
           <React.Fragment>
             <button onClick={() => setU([...new Set(allKeys)])}
