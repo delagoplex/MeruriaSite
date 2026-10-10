@@ -177,6 +177,74 @@ function VisToggle({ on, onClick, label, size = 30 }) {
     </button>
   );
 }
+/* Fenster zur Bildauswahl aus den Projektordnern (Liste: assets/scripts/data/bilder-data.js, generiert) */
+const BILD_GRUPPEN = { npc:'NSC-Porträts', races:'Rassen', monster:'Monster', gods:'Gottheiten', classes:'Klassen', divisions:'Divisionen', schutzherren:'Schutzherren', recipes:'Rezepte', resources:'Ressourcen' };
+function BildPicker({ current, onPick, onClose }) {
+  const data = window.BILDER_DATA || {};
+  const keys = Object.keys(data);
+  const [group, setGroup] = useState((data.npc && data.npc.length) ? 'npc' : '*');
+  const [q, setQ] = useState('');
+  const [limit, setLimit] = useState(96);
+  const base = 'assets/images/';
+  const all = group === '*' ? keys.flatMap(k => data[k]) : (data[group] || []);
+  const ql = q.trim().toLowerCase();
+  const hits = ql ? all.filter(p => p.toLowerCase().includes(ql)) : all;
+  const shown = hits.slice(0, limit);
+  const chip = on => ({ padding:'5px 11px', borderRadius:14, cursor:'pointer', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase',
+    background:on ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
+    border:`1px solid ${on ? 'rgba(var(--purple-rgb),calc(0.8*var(--kp)))' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))'}`,
+    color:on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))' });
+  useEffect(() => {
+    const kd = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', kd);
+    return () => document.removeEventListener('keydown', kd);
+  }, []);
+  return (
+    <div onMouseDown={e => { if (e.target === e.currentTarget) onClose(); }}
+      style={{ position:'fixed', inset:0, zIndex:3500, background:'rgba(var(--bg-rgb),0.82)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div role="dialog" aria-label="Bild wählen" style={{ width:'min(980px, 100%)', maxHeight:'88vh', display:'flex', flexDirection:'column', background:'rgba(var(--panel-rgb),0.99)', border:'1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))', borderRadius:8, boxShadow:'0 20px 80px rgba(var(--shadow-rgb),calc(0.6*var(--shadow-k)))' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:12, padding:'14px 18px', borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))' }}>
+          <span style={{ fontFamily:MONO, fontSize:10, letterSpacing:'0.24em', textTransform:'uppercase', color:'var(--white)' }}>Bild wählen</span>
+          <input autoFocus value={q} onChange={e => { setQ(e.target.value); setLimit(96); }} placeholder="Suchen …" style={{ ...inpSt, flex:1, padding:'7px 10px', fontSize:13 }}/>
+          <span style={{ fontFamily:MONO, fontSize:9, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))' }}>{hits.length} Bilder</span>
+          <button onClick={onClose} aria-label="Schließen" style={{ background:'transparent', border:'none', cursor:'pointer', color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', fontSize:18, lineHeight:1 }}>×</button>
+        </div>
+        <div style={{ display:'flex', flexWrap:'wrap', gap:6, padding:'10px 18px' }}>
+          <button style={chip(group === '*')} onClick={() => { setGroup('*'); setLimit(96); }}>Alle</button>
+          {keys.map(k => <button key={k} style={chip(group === k)} onClick={() => { setGroup(k); setLimit(96); }}>{(BILD_GRUPPEN[k] || k)} · {data[k].length}</button>)}
+        </div>
+        <div style={{ overflowY:'auto', padding:'4px 18px 18px' }}>
+          {!hits.length && (
+            <div style={{ padding:'28px 0', textAlign:'center', fontFamily:BODY, fontSize:13, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))' }}>
+              {group === 'npc' && !ql ? 'Noch keine NSC-Porträts. Neue Bilder in assets/images/npc/ ablegen; sie erscheinen nach dem nächsten Build hier.' : 'Keine Treffer.'}
+            </div>
+          )}
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(120px, 1fr))', gap:10 }}>
+            {shown.map(p => {
+              const full = base + p;
+              const on = current === full;
+              return (
+                <button key={p} onClick={() => onPick(full)} title={p}
+                  style={{ padding:6, textAlign:'left', cursor:'pointer', borderRadius:4, background:on ? 'rgba(95,227,154,0.12)' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+                    border:`1px solid ${on ? 'rgba(95,227,154,0.6)' : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))'}` }}>
+                  <div style={{ width:'100%', aspectRatio:'1 / 1', overflow:'hidden', borderRadius:3, background:'#000' }}>
+                    <img src={full} alt="" loading="lazy" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top', display:'block' }}/>
+                  </div>
+                  <div style={{ marginTop:5, fontFamily:MONO, fontSize:8, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{p.split('/').pop()}</div>
+                </button>
+              );
+            })}
+          </div>
+          {hits.length > shown.length && (
+            <div style={{ textAlign:'center', marginTop:14 }}>
+              <button onClick={() => setLimit(l => l + 96)} style={{ padding:'8px 18px', background:'transparent', border:'1px dashed rgba(var(--purple-rgb),calc(0.5*var(--kp)))', borderRadius:3, color:'var(--white)', fontFamily:MONO, fontSize:9, letterSpacing:'0.16em', textTransform:'uppercase', cursor:'pointer' }}>Mehr anzeigen ({hits.length - shown.length})</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 function FieldHead({ label, eye }) {
   return (
     <span style={{ display:'flex', alignItems:'center', gap:4, marginBottom:5 }}>
@@ -1464,6 +1532,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   const dmView = persp === '__dm' || !charPersp.some(c => c.id === persp);
   const EDIT = dmView;  // Direktbearbeitung: immer in der DM-Sicht
   const [tab, setTab] = useState('');  // Reiter der Detailkarte; leer = eingeklappt
+  const [pickBild, setPickBild] = useState(false);
   const perspName = dmView ? 'Spielleitung' : (charPersp.find(c => c.id === persp) || {}).label || 'Spieler';
   const uSet = dmView ? new Set() : ((unlocks.byPersp[persp] || {})[sel.id] || new Set());
   const allKeys = unlockableKeys(sel);
@@ -2068,6 +2137,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           <span style={{ position:'absolute', right:25, top:20, width:340, height:340, background:`center / contain no-repeat url("${dv.logo}")`, opacity:0.06, pointerEvents:'none' }}/>
         )}
         {EDIT && <div style={{ position:'absolute', top:14, right:16, zIndex:6 }}>{visSlot}</div>}
+        {EDIT && pickBild && <BildPicker current={sel.bild || ''} onClose={() => setPickBild(false)} onPick={p => { updSel('bild', p); setPickBild(false); }}/>}
         {!EDIT && (
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 22px', borderBottom:`1px solid ${hexA(acc, 0.2)}` }}>
           <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
@@ -2096,6 +2166,9 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
                 style={{ ...inpSt, width:'auto', flex:1, minWidth:0, height:30, fontFamily:MONO, fontSize:9, padding:'0 7px' }}/>
               {eyeFor('bild')}
             </div>
+          )}
+          {EDIT && (
+            <button onClick={() => setPickBild(true)} style={{ width:125, alignSelf:'center', padding:'6px 0', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))', borderRadius:3, color:'var(--white)', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer' }}>▦ Bild wählen</button>
           )}
           </div>
           <div style={{ flex:1, minWidth:0, paddingTop:6 }}>

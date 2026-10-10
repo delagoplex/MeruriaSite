@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node tools/generate-bilder-data.mjs",
     "dev": "vite",
+    "prebuild": "node tools/generate-bilder-data.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "db:start": "wsl -e bash -lc \"supabase start\"",
