@@ -202,7 +202,7 @@ function BildPicker({ current, onPick, onClose }) {
   return ReactDOM.createPortal(
     <div onMouseDown={e => { if (e.target === e.currentTarget) onClose(); }}
       style={{ position:'fixed', inset:0, zIndex:3500, background:'rgba(var(--bg-rgb),0.82)', display:'flex', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div role="dialog" aria-label="Bild wählen" style={{ width:'min(980px, 100%)', maxHeight:'calc(100vh - 48px)', minHeight:0, display:'flex', flexDirection:'column', background:'rgba(var(--panel-rgb),0.99)', border:'1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))', borderRadius:8, boxShadow:'0 20px 80px rgba(var(--shadow-rgb),calc(0.6*var(--shadow-k)))' }}>
+      <div role="dialog" aria-label="Bild wählen" style={{ width:'min(980px, 100%)', maxHeight:'calc(var(--vh, 1vh) * 100 - 48px)', minHeight:0, display:'flex', flexDirection:'column', background:'rgba(var(--panel-rgb),0.99)', border:'1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))', borderRadius:8, boxShadow:'0 20px 80px rgba(var(--shadow-rgb),calc(0.6*var(--shadow-k)))' }}>
         <div style={{ display:'flex', alignItems:'center', gap:12, padding:'14px 18px', borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))' }}>
           <span style={{ fontFamily:MONO, fontSize:10, letterSpacing:'0.24em', textTransform:'uppercase', color:'var(--white)' }}>Bild wählen</span>
           <input autoFocus value={q} onChange={e => { setQ(e.target.value); setLimit(96); }} placeholder="Suchen …" style={{ ...inpSt, flex:1, padding:'7px 10px', fontSize:13 }}/>
