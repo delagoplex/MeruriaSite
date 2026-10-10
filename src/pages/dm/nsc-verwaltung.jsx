@@ -2033,11 +2033,6 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
 
   return (
     <React.Fragment>
-      {!sel.visible && (
-        <div style={{ marginBottom:14, padding:'10px 16px', background:'rgba(227,103,96,0.08)', border:'1px solid rgba(227,103,96,0.35)', borderRadius:4, fontFamily:MONO, fontSize:9.5, letterSpacing:'0.14em', color:'rgba(227,103,96,0.85)', textTransform:'uppercase' }}>
-          ○ Dieser NSC ist für Spieler komplett verborgen — die Vorschau zeigt, was sie nach Freischaltung sähen.
-        </div>
-      )}
       {!dmView && <div style={{ display:'flex', alignItems:'center', gap:8, margin:'18px 0 18px', flexWrap:'wrap' }}>
         <span style={dmView
           ? { padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', borderRadius:3, background:'rgba(255,184,80,0.16)', border:'1px solid rgba(255,184,80,0.7)', color:'#ffb850' }
