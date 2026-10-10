@@ -1668,7 +1668,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
       ...nscs.filter(n => n.id !== sel.id && n.name).map(n => ({ label:n.name, kind:'nsc', color:divOf(n.division).accent, bild:n.bild })),
     ].sort((a, b) => a.label.localeCompare(b.label, 'de'));
     const TABS = [["ueber","Überblick"],["pers","Persönlichkeit"],["bez","Beziehungen"],["ausr","Ausrüstung"],["geh","Geheimnisse"],["sb","Statblock"],["haltung","Haltung"]];
-    const TAB_OF = { bio:'ueber', aussehen:'pers', pers:'pers', routine:'pers', gewohnheiten:'pers', motive:'pers', begleiter:'bez', kontakte:'bez', ausr:'ausr', geheim:'geh', statblock:'sb' };
+    const TAB_OF = { aussehen:'pers', pers:'pers', routine:'pers', gewohnheiten:'pers', motive:'pers', begleiter:'bez', kontakte:'bez', ausr:'ausr', geheim:'geh', statblock:'sb' };
     const addRow = tk => {
       const miss = SECS.filter(([k]) => !has(k) && TAB_OF[k] === tk);
       if (!miss.length) return null;
@@ -2085,7 +2085,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           {EDIT && (
             <div style={{ display:'flex', alignItems:'center', gap:4, width:125, alignSelf:'center' }}>
               <input value={sel.bild || ''} onChange={e => updSel('bild', e.target.value)} placeholder="Bildpfad"
-                style={{ ...inpSt, width:'auto', flex:1, minWidth:0, fontFamily:MONO, fontSize:9, padding:'5px 7px' }}/>
+                style={{ ...inpSt, width:'auto', flex:1, minWidth:0, height:30, fontFamily:MONO, fontSize:9, padding:'0 7px' }}/>
               {eyeFor('bild')}
             </div>
           )}
@@ -2135,6 +2135,10 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
                 );
               })}
             </div>}
+            {EDIT && !has('bio') && (
+              <button onClick={() => addSection('bio')}
+                style={{ marginTop:14, padding:'7px 14px', background:'transparent', border:'1px dashed rgba(var(--purple-rgb),calc(0.4*var(--kp)))', borderRadius:20, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', fontFamily:BODY, fontSize:12, cursor:'pointer' }}>＋ Biografie</button>
+            )}
             {EDIT && has('bio') && (
               <React.Fragment>
                 {edHead('Biografie', ['bio'], 'bio')}
