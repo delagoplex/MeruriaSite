@@ -141,6 +141,20 @@ const eyeSt = on => ({ background:'transparent', border:'none', cursor:'pointer'
 function Eye({ on, onClick, pad }) {
   return <button title="Sichtbarkeit für Spieler" onClick={onClick} style={{ ...eyeSt(on), padding:pad || '0 2px' }}>{on ? '◉' : '⊘'}</button>;
 }
+/* Symbole für die Haltung gegenüber der Gruppe (Linien-Icons, übernehmen currentColor) */
+const HALTUNG_FARBE = { 'Verbündet':'#5aa9ff', 'Neutral':'#c8c0e8', 'Feind':'#e8605a' };
+function HaltungIcon({ name, size = 18 }) {
+  const p = { width:size, height:size, viewBox:'0 0 24 24', fill:'none', stroke:'currentColor', strokeWidth:1.8, strokeLinecap:'round', strokeLinejoin:'round', 'aria-hidden':true };
+  if (name === 'Verbündet') return (
+    <svg {...p}><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>
+  );
+  if (name === 'Feind') return (
+    <svg {...p}><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>
+  );
+  return (
+    <svg {...p}><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+  );
+}
 function FieldHead({ label, eye }) {
   return (
     <span style={{ display:'flex', alignItems:'center', gap:4, marginBottom:5 }}>
@@ -1114,15 +1128,25 @@ function Editor(props) {
         const ovMap = sel.haltungOverrides || {};
         const ovCount = charPersp.filter(c => ovMap[c.id]).length;
         return (
-          <div style={{ display:'flex', flexWrap:'wrap', alignItems:'flex-start', gap:16, marginTop:9 }}>
+          <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-start', gap:14, marginTop:9 }}>
             {groups.map(([glabel, defs], gi) => {
               const names = defs.map(d => d.name);
               return (
-                <div key={glabel} style={gi ? { borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', paddingLeft:16 } : null}>
+                <div key={glabel}>
                   <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:5 }}>{glabel}</div>
                   <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center' }}>
                     {defs.map(st => {
                       const on = (sel.status || []).includes(st.name);
+                      if (gi === 1) {
+                        const col = HALTUNG_FARBE[st.name] || st.color;
+                        return (
+                          <button key={st.name} onClick={() => pick(names, st.name, on)} title={st.name} aria-label={st.name} aria-pressed={on}
+                            style={{ width:38, height:32, display:'inline-flex', alignItems:'center', justifyContent:'center', cursor:'pointer', borderRadius:3,
+                              background:on ? hexA(col, 0.2) : 'transparent',
+                              border:`1px solid ${on ? hexA(col, 0.8) : hexA(col, 0.3)}`,
+                              color:on ? col : hexA(col, 0.6) }}><HaltungIcon name={st.name}/></button>
+                        );
+                      }
                       return (
                         <button key={st.name} onClick={() => pick(names, st.name, on)}
                           style={{ padding:'4px 11px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
@@ -1392,7 +1416,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   const has = k => (sel.sections || []).includes(k);
   const dmView = persp === '__dm' || !charPersp.some(c => c.id === persp);
   const EDIT = dmView;  // Direktbearbeitung: immer in der DM-Sicht
-  const [tab, setTab] = useState('ueber');  // Reiter der Detailkarte
+  const [tab, setTab] = useState('');  // Reiter der Detailkarte; leer = eingeklappt
   const perspName = dmView ? 'Spielleitung' : (charPersp.find(c => c.id === persp) || {}).label || 'Spieler';
   const uSet = dmView ? new Set() : ((unlocks.byPersp[persp] || {})[sel.id] || new Set());
   const allKeys = unlockableKeys(sel);
@@ -1627,7 +1651,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
     return (
       <React.Fragment>
         <div className="nscv-tabs">
-          {TABS.map(([k, label]) => <button key={k} className={'nscv-tab' + (tab === k ? ' on' : '')} onClick={() => setTab(k)}>{label}</button>)}
+          {TABS.map(([k, label]) => <button key={k} className={'nscv-tab' + (tab === k ? ' on' : '')} onClick={() => setTab(t => t === k ? '' : k)} aria-expanded={tab === k}>{label}</button>)}
         </div>
 
         {tab === 'ueber' && (
