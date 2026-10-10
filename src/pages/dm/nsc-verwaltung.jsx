@@ -1249,11 +1249,11 @@ function Editor(props) {
       }}
       title={sel.visible ? 'Für Spieler sichtbar — klicken zum Verbergen' : 'Für Spieler verborgen — klicken zum Freigeben'}
       aria-label={sel.visible ? 'Für Spieler sichtbar' : 'Für Spieler verborgen'} aria-pressed={!!sel.visible}
-      style={{ width:38, height:34, display:'inline-flex', alignItems:'center', justifyContent:'center', cursor:'pointer', borderRadius:3,
+      style={{ width:52, height:46, display:'inline-flex', alignItems:'center', justifyContent:'center', cursor:'pointer', borderRadius:4,
         background:sel.visible ? 'rgba(95,227,154,0.12)' : 'transparent',
         border:`1px solid ${sel.visible ? 'rgba(95,227,154,0.55)' : hexA(HALTUNG_FARBE.Neutral, 0.35)}`,
         color:sel.visible ? '#5fe39a' : HALTUNG_FARBE.Neutral }}>
-      <VisEye open={!!sel.visible}/>
+      <VisEye open={!!sel.visible} size={32}/>
     </button>
   );
 
