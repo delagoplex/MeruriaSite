@@ -1633,7 +1633,6 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
     ].sort((a, b) => a.label.localeCompare(b.label, 'de'));
     return (
       <React.Fragment>
-        {hint('✎ Direkt in die Felder klicken und schreiben · + zum Einfügen · ⠿ ziehen zum Umsortieren · Augen nur für Name und Bild')}
 
         {has('pers') && (
           <React.Fragment>
@@ -1969,7 +1968,6 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           : { padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', borderRadius:3, background:'rgba(var(--purple-rgb),calc(0.2*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.7*var(--kp)))', color:'var(--white)' }}>
           {dmView ? '◈ DM (Spielleitung)' : perspName + ' · ' + allKeys.filter(k => uSet.has(k)).length + '/' + allKeys.length}
         </span>
-        <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.12em', color:'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>· wechseln über „Sicht" in der Seitenleiste</span>
         <div style={{ flex:1 }}/>
         {!dmView && (
           <React.Fragment>
