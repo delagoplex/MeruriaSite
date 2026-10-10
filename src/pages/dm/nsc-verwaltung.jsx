@@ -1393,6 +1393,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   const has = k => (sel.sections || []).includes(k);
   const dmView = persp === '__dm' || !charPersp.some(c => c.id === persp);
   const EDIT = dmView;  // Direktbearbeitung: immer in der DM-Sicht
+  const [tab, setTab] = useState('ueber');  // Reiter der Detailkarte
   const perspName = dmView ? 'Spielleitung' : (charPersp.find(c => c.id === persp) || {}).label || 'Spieler';
   const uSet = dmView ? new Set() : ((unlocks.byPersp[persp] || {})[sel.id] || new Set());
   const allKeys = unlockableKeys(sel);
@@ -1609,9 +1610,29 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
       ...charPersp.map(c => ({ label:c.label, kind:'sc', color:'#ffb850', bild:null })),
       ...nscs.filter(n => n.id !== sel.id && n.name).map(n => ({ label:n.name, kind:'nsc', color:divOf(n.division).accent, bild:n.bild })),
     ].sort((a, b) => a.label.localeCompare(b.label, 'de'));
+    const TABS = [["ueber","Überblick"],["pers","Persönlichkeit"],["bez","Beziehungen"],["ausr","Ausrüstung"],["geh","Geheimnisse"],["sb","Statblock"]];
+    const TAB_OF = { bio:'ueber', aussehen:'pers', pers:'pers', routine:'pers', gewohnheiten:'pers', motive:'pers', begleiter:'bez', kontakte:'bez', ausr:'ausr', geheim:'geh', statblock:'sb' };
+    const addRow = tk => {
+      const miss = SECS.filter(([k]) => !has(k) && TAB_OF[k] === tk);
+      if (!miss.length) return null;
+      return (
+        <div style={{ marginTop:26, display:'flex', flexWrap:'wrap', gap:8, alignItems:'center' }}>
+          <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginRight:6 }}>Abschnitt hinzufügen</span>
+          {miss.map(([k, label]) => (
+            <button key={k} onClick={() => addSection(k)}
+              style={{ padding:'7px 14px', background:'transparent', border:'1px dashed rgba(var(--purple-rgb),calc(0.4*var(--kp)))', borderRadius:20, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', fontFamily:BODY, fontSize:12, cursor:'pointer' }}>＋ {label}</button>
+          ))}
+        </div>
+      );
+    };
     return (
       <React.Fragment>
+        <div className="nscv-tabs">
+          {TABS.map(([k, label]) => <button key={k} className={'nscv-tab' + (tab === k ? ' on' : '')} onClick={() => setTab(k)}>{label}</button>)}
+        </div>
 
+        {tab === 'ueber' && (
+          <React.Fragment>
         {has('pers') && (
           <React.Fragment>
             {edHead('Erscheinung & Auftreten', ['pers', 'unvergesslich'], 'pers', 'Persönlichkeit entfernen')}
@@ -1622,6 +1643,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
         )}
 
         {edHead('Voller Name', ['vname'])}
+
         <LiveList items={sel.vollerName} onChange={a => updSel('vollerName', a)} make={() => ''} layout="wrap" addLabel="Namensteil"
           eye={i => eyeFor(`vna-${i}`)}
           render={(t, i, set) => (
@@ -1639,25 +1661,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           </React.Fragment>
         )}
 
-        {has('aussehen') && (
-          <React.Fragment>
-            {edHead('Aussehen', ['aussehen'], 'aussehen')}
-            <div style={{ padding:'12px 16px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:'10px 26px' }}>
-              {[['groesse','Größe','cm'],['gewicht','Gewicht','Pfund'],['hautfarbe','Hautfarbe',''],['augenfarbe','Augenfarbe',''],['haarfarbe','Haarfarbe',''],['merkmale','Besondere Merkmale',''],['weiteres','Weiteres','']].map(([k, label, unit]) => (
-                <div key={k} style={(k === 'merkmale' || k === 'weiteres') ? { gridColumn:'1 / -1' } : null}>
-                  <span style={lab}>{label}{unit ? ' · ' + unit : ''}</span>
-                  <div style={{ fontFamily:BODY, fontWeight:300, fontSize:13, color:'var(--white)', lineHeight:1.6 }}>
-                    {(k === 'merkmale' || k === 'weiteres')
-                      ? <LiveArea value={ash[k]} onChange={setAsh(k)} placeholder="…"/>
-                      : <LiveInput value={ash[k]} onChange={setAsh(k)} placeholder="…"/>}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </React.Fragment>
-        )}
-
         {edHead('Eckdaten', [])}
+
         {(() => {
           const close0 = () => {};
           const smallIn = { ...inpSt, padding:'4px 8px', fontSize:12 };
@@ -1763,6 +1768,29 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
             </React.Fragment>
           );
         })()}
+            {addRow('ueber')}
+          </React.Fragment>
+        )}
+
+        {tab === 'pers' && (
+          <React.Fragment>
+        {has('aussehen') && (
+          <React.Fragment>
+            {edHead('Aussehen', ['aussehen'], 'aussehen')}
+            <div style={{ padding:'12px 16px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:'10px 26px' }}>
+              {[['groesse','Größe','cm'],['gewicht','Gewicht','Pfund'],['hautfarbe','Hautfarbe',''],['augenfarbe','Augenfarbe',''],['haarfarbe','Haarfarbe',''],['merkmale','Besondere Merkmale',''],['weiteres','Weiteres','']].map(([k, label, unit]) => (
+                <div key={k} style={(k === 'merkmale' || k === 'weiteres') ? { gridColumn:'1 / -1' } : null}>
+                  <span style={lab}>{label}{unit ? ' · ' + unit : ''}</span>
+                  <div style={{ fontFamily:BODY, fontWeight:300, fontSize:13, color:'var(--white)', lineHeight:1.6 }}>
+                    {(k === 'merkmale' || k === 'weiteres')
+                      ? <LiveArea value={ash[k]} onChange={setAsh(k)} placeholder="…"/>
+                      : <LiveInput value={ash[k]} onChange={setAsh(k)} placeholder="…"/>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </React.Fragment>
+        )}
 
         {has('routine') && (
           <React.Fragment>
@@ -1817,7 +1845,12 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
             ))}
           </React.Fragment>
         )}
+            {addRow('pers')}
+          </React.Fragment>
+        )}
 
+        {tab === 'bez' && (
+          <React.Fragment>
         {has('begleiter') && (
           <React.Fragment>
             {edHead('Begleiter', ['begleiter'], 'begleiter')}
@@ -1832,30 +1865,6 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
                   </span>
                 </div>
               )}/>
-          </React.Fragment>
-        )}
-
-        {has('ausr') && (
-          <React.Fragment>
-            {edHead('Ausrüstung & Gegenstände', ['ausr'], 'ausr')}
-            <LiveList items={sel.ausruestung} onChange={a => updSel('ausruestung', a)} make={() => ({ name:'', beschreibung:'' })} layout="grid" cols={3} addLabel="Gegenstand"
-              eye={i => { const fi = fIdx(sel.ausruestung, i); return fi !== null ? eyeFor(`aus-${fi}`) : <span style={{ width:15 }}/>; }}
-              render={(e, i, set) => (
-                <div style={{ padding:'10px 12px', background:hexA(acc, 0.06), border:`1px solid ${hexA(acc, 0.30)}`, borderLeft:`3px solid ${hexA(acc, 0.75)}`, borderRadius:2, minHeight:60 }}>
-                  <LiveInput value={e.name} onChange={v => set({ ...e, name:v })} placeholder="Gegenstand" style={{ fontFamily:DISP, fontSize:13, letterSpacing:'0.05em', color:'var(--white)' }}/>
-                  <LiveInput value={e.beschreibung} onChange={v => set({ ...e, beschreibung:v })} placeholder="Beschreibung" style={{ fontFamily:BODY, fontSize:11, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:4 }}/>
-                </div>
-              )}/>
-            <div style={{ display:'flex', alignItems:'center', gap:12, marginTop:14, padding:'12px 16px', borderRadius:3, border:'1px solid rgba(214,178,92,0.5)', background:'linear-gradient(135deg, rgba(214,178,92,0.10), rgba(214,178,92,0.03))' }}>
-              <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(214,178,92,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>◈ Vermögen</span>
-              <span style={{ flex:1 }}/>
-              <div style={{ width:130 }}>
-                <LiveInput type="number" value={sel.habe || 0} onChange={v => updSel('habe', Math.max(0, parseInt(v) || 0))} format={v => Number(v).toLocaleString('de-DE')}
-                  style={{ textAlign:'right', fontFamily:MONO, fontSize:14, letterSpacing:'0.1em', color:'#e8c878' }}/>
-              </div>
-              <span style={{ fontFamily:MONO, fontSize:9, color:'color-mix(in srgb, rgba(214,178,92,0.7), rgb(var(--ink-rgb)) var(--cm))', letterSpacing:'0.1em' }}>HADE</span>
-              {eyeFor('habe')}
-            </div>
           </React.Fragment>
         )}
 
@@ -1903,7 +1912,41 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
             </div>
           </React.Fragment>
         )}
+            {addRow('bez')}
+          </React.Fragment>
+        )}
 
+        {tab === 'ausr' && (
+          <React.Fragment>
+        {has('ausr') && (
+          <React.Fragment>
+            {edHead('Ausrüstung & Gegenstände', ['ausr'], 'ausr')}
+            <LiveList items={sel.ausruestung} onChange={a => updSel('ausruestung', a)} make={() => ({ name:'', beschreibung:'' })} layout="grid" cols={3} addLabel="Gegenstand"
+              eye={i => { const fi = fIdx(sel.ausruestung, i); return fi !== null ? eyeFor(`aus-${fi}`) : <span style={{ width:15 }}/>; }}
+              render={(e, i, set) => (
+                <div style={{ padding:'10px 12px', background:hexA(acc, 0.06), border:`1px solid ${hexA(acc, 0.30)}`, borderLeft:`3px solid ${hexA(acc, 0.75)}`, borderRadius:2, minHeight:60 }}>
+                  <LiveInput value={e.name} onChange={v => set({ ...e, name:v })} placeholder="Gegenstand" style={{ fontFamily:DISP, fontSize:13, letterSpacing:'0.05em', color:'var(--white)' }}/>
+                  <LiveInput value={e.beschreibung} onChange={v => set({ ...e, beschreibung:v })} placeholder="Beschreibung" style={{ fontFamily:BODY, fontSize:11, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:4 }}/>
+                </div>
+              )}/>
+            <div style={{ display:'flex', alignItems:'center', gap:12, marginTop:14, padding:'12px 16px', borderRadius:3, border:'1px solid rgba(214,178,92,0.5)', background:'linear-gradient(135deg, rgba(214,178,92,0.10), rgba(214,178,92,0.03))' }}>
+              <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(214,178,92,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>◈ Vermögen</span>
+              <span style={{ flex:1 }}/>
+              <div style={{ width:130 }}>
+                <LiveInput type="number" value={sel.habe || 0} onChange={v => updSel('habe', Math.max(0, parseInt(v) || 0))} format={v => Number(v).toLocaleString('de-DE')}
+                  style={{ textAlign:'right', fontFamily:MONO, fontSize:14, letterSpacing:'0.1em', color:'#e8c878' }}/>
+              </div>
+              <span style={{ fontFamily:MONO, fontSize:9, color:'color-mix(in srgb, rgba(214,178,92,0.7), rgb(var(--ink-rgb)) var(--cm))', letterSpacing:'0.1em' }}>HADE</span>
+              {eyeFor('habe')}
+            </div>
+          </React.Fragment>
+        )}
+            {addRow('ausr')}
+          </React.Fragment>
+        )}
+
+        {tab === 'geh' && (
+          <React.Fragment>
         {has('geheim') && (
           <React.Fragment>
             {edHead('Geheimnisse', [], 'geheim', 'entfernen', '#e36760')}
@@ -1916,17 +1959,15 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
               )}/>
           </React.Fragment>
         )}
+            {addRow('geh')}
+          </React.Fragment>
+        )}
 
+        {tab === 'sb' && (
+          <React.Fragment>
         {has('statblock') && <div style={{ marginTop:22 }}>{sbSlot}</div>}
-
-        {SECS.some(([k]) => !has(k)) && (
-          <div style={{ marginTop:26, display:'flex', flexWrap:'wrap', gap:8, alignItems:'center' }}>
-            <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginRight:6 }}>Abschnitt hinzufügen</span>
-            {SECS.filter(([k]) => !has(k)).map(([k, label]) => (
-              <button key={k} onClick={() => addSection(k)}
-                style={{ padding:'7px 14px', background:'transparent', border:'1px dashed rgba(var(--purple-rgb),calc(0.4*var(--kp)))', borderRadius:20, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', fontFamily:BODY, fontSize:12, cursor:'pointer' }}>＋ {label}</button>
-            ))}
-          </div>
+            {addRow('sb')}
+          </React.Fragment>
         )}
       </React.Fragment>
     );
