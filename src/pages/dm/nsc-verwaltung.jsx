@@ -1100,131 +1100,108 @@ function Editor(props) {
       editor={() => sbFull}/>
   ) : null;
 
+  const heroControls = (
+    <div style={{ flex:1, minWidth:0, position:'relative', zIndex:1, marginTop:16 }}>
+      {(() => {
+        const groups = [
+          ['Zustand', T().statuses.filter(s => !HALTUNGEN.includes(s.name))],
+          ['Haltung ggü. Gruppe', T().statuses.filter(s => HALTUNGEN.includes(s.name))],
+        ];
+        const pick = (names, name, on) => {
+          const rest = (sel.status || []).filter(x => !names.includes(x));
+          updSel('status', on ? rest : [...rest, name]);
+        };
+        const ovMap = sel.haltungOverrides || {};
+        const ovCount = charPersp.filter(c => ovMap[c.id]).length;
+        return (
+          <div style={{ display:'flex', flexWrap:'wrap', alignItems:'flex-start', gap:16, marginTop:9 }}>
+            {groups.map(([glabel, defs], gi) => {
+              const names = defs.map(d => d.name);
+              return (
+                <div key={glabel} style={gi ? { borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', paddingLeft:16 } : null}>
+                  <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:5 }}>{glabel}</div>
+                  <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center' }}>
+                    {defs.map(st => {
+                      const on = (sel.status || []).includes(st.name);
+                      return (
+                        <button key={st.name} onClick={() => pick(names, st.name, on)}
+                          style={{ padding:'4px 11px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
+                            background:on ? hexA(st.color, 0.18) : 'transparent',
+                            border:`1px solid ${on ? hexA(st.color, 0.65) : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
+                            color:on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.4*var(--kt)))' }}>{st.glyph} {st.name}</button>
+                      );
+                    })}
+                    {gi === 1 && (
+                      <button onClick={() => setShowHaltungOv(v => !v)} title="Abweichende Haltung für einzelne Charaktere"
+                        style={{ padding:'4px 9px', fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
+                          background:ovCount ? 'rgba(255,180,80,0.12)' : 'transparent',
+                          border:`1px dashed ${ovCount ? 'rgba(255,180,80,0.6)' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
+                          color:ovCount ? '#ffb850' : 'rgba(var(--text-rgb),calc(0.45*var(--kt)))' }}>± Ausnahmen{ovCount ? ' · ' + ovCount : ''}</button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+      })()}
+      {showHaltungOv && (
+        <div style={{ marginTop:10, padding:'10px 14px', border:'1px dashed rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:4, background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))' }}>
+          <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:8 }}>Haltung · Ausnahmen pro Charakter — Standard: wie Gruppe</div>
+          <input value={haltungOvSearch} onChange={e => setHaltungOvSearch(e.target.value)} placeholder="Charakter suchen …"
+            style={{ ...inpSt, width:220, padding:'5px 9px', fontSize:12, marginBottom:10 }}/>
+          {[...charPersp]
+            .filter(c => c.label.toLowerCase().includes(haltungOvSearch.trim().toLowerCase()))
+            .sort((a, b) => {
+              const ao = (sel.haltungOverrides || {})[a.id] ? 0 : 1, bo = (sel.haltungOverrides || {})[b.id] ? 0 : 1;
+              return ao - bo || a.label.localeCompare(b.label, 'de');
+            })
+            .map(c => {
+            const ov = (sel.haltungOverrides || {})[c.id] || '';
+            const setOv = name => { const next = { ...(sel.haltungOverrides || {}) }; if (name) next[c.id] = name; else delete next[c.id]; updSel('haltungOverrides', next); };
+            return (
+              <div key={c.id} style={{ display:'grid', gridTemplateColumns:'minmax(120px, 180px) repeat(4, max-content)', alignItems:'center', gap:6, marginBottom:5 }}>
+                <span title={c.label} style={{ fontFamily:BODY, fontSize:12, color:'var(--silver)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{c.label}</span>
+                {['', ...HALTUNGEN].map(name => {
+                  const def = name ? ((STATUS_DEF || {})[name] || { color:'var(--silver)', glyph:'◇' }) : null;
+                  const on = ov === name;
+                  const col = def ? def.color : '#a89cd8';
+                  return (
+                    <button key={name || 'default'} onClick={() => setOv(name)}
+                      style={{ padding:'3px 9px', fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
+                        background:on ? hexA(col, 0.16) : 'transparent',
+                        border:`1px solid ${on ? hexA(col, 0.6) : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
+                        color:on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.4*var(--kt)))' }}>{def ? def.glyph + ' ' + name : 'wie Gruppe'}</button>
+                  );
+                })}
+              </div>
+            );
+          })}
+          {!charPersp.length && <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))' }}>Keine Spielercharaktere gefunden.</div>}
+          {charPersp.length > 0 && !charPersp.some(c => c.label.toLowerCase().includes(haltungOvSearch.trim().toLowerCase())) &&
+            <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))' }}>Kein Charakter passt zu „{haltungOvSearch.trim()}".</div>}
+        </div>
+      )}
+      <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginTop:12 }}>
+        <button onClick={async () => {
+            const v = !sel.visible;
+            updSel('visible', v);
+            await window._sb.from('nscs').upsert({ id:sel.id, visible:v }, { onConflict:'id' });
+          }}
+          style={{ padding:'7px 14px', borderRadius:3, fontFamily:MONO, fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', cursor:'pointer',
+            background:sel.visible ? 'rgba(95,227,154,0.12)' : 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
+            border:`1px solid ${sel.visible ? 'rgba(95,227,154,0.55)' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
+            color:sel.visible ? '#5fe39a' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' }}>
+          {sel.visible ? '◆ Für Spieler sichtbar' : '○ Verborgen'}
+        </button>
+        <button onClick={deleteSel} style={{ padding:'6px 12px', background:'transparent', border:'1px solid rgba(227,103,96,0.3)', borderRadius:3, color:'rgba(227,103,96,0.65)', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer' }}>✕ Löschen</button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="nscv-edit" style={{ maxWidth:880, margin:'0 auto', padding:'30px 40px 90px', animation:'fadeIn 0.3s ease' }}>
 
-      {/* Kopfzeile + Portrait */}
-      <div className="nscv-hero" style={{ display:'flex', gap:16, alignItems:'stretch' }}>
-        <div className="nscv-hero-info" style={{ flex:1, minWidth:0, display:'flex', gap:16, alignItems:'flex-start', padding:'18px 20px', borderRadius:6, background:hexA(acc, 0.06), border:`1px solid ${hexA(acc, 0.28)}`, position:'relative', overflow:'hidden' }}>
-          <span style={{ width:58, height:58, flexShrink:0, borderRadius:4, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden',
-            background:sel.bild ? '#000' : hexA(acc, 0.14), border:`1px solid ${hexA(acc, 0.5)}`, fontFamily:DISP, fontSize:24, color:hexA(acc, 0.95) }}>
-            {sel.bild ? <img src={sel.bild} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }}/> : (sel.name[0] || '?').toUpperCase()}
-          </span>
-          <div style={{ flex:1, minWidth:0, position:'relative', zIndex:1 }}>
-            {(() => {
-              const groups = [
-                ['Zustand', T().statuses.filter(s => !HALTUNGEN.includes(s.name))],
-                ['Haltung ggü. Gruppe', T().statuses.filter(s => HALTUNGEN.includes(s.name))],
-              ];
-              const pick = (names, name, on) => {
-                const rest = (sel.status || []).filter(x => !names.includes(x));
-                updSel('status', on ? rest : [...rest, name]);
-              };
-              const ovMap = sel.haltungOverrides || {};
-              const ovCount = charPersp.filter(c => ovMap[c.id]).length;
-              return (
-                <div style={{ display:'flex', flexWrap:'wrap', alignItems:'flex-start', gap:16, marginTop:9 }}>
-                  {groups.map(([glabel, defs], gi) => {
-                    const names = defs.map(d => d.name);
-                    return (
-                      <div key={glabel} style={gi ? { borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', paddingLeft:16 } : null}>
-                        <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:5 }}>{glabel}</div>
-                        <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center' }}>
-                          {defs.map(st => {
-                            const on = (sel.status || []).includes(st.name);
-                            return (
-                              <button key={st.name} onClick={() => pick(names, st.name, on)}
-                                style={{ padding:'4px 11px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.12em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
-                                  background:on ? hexA(st.color, 0.18) : 'transparent',
-                                  border:`1px solid ${on ? hexA(st.color, 0.65) : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
-                                  color:on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.4*var(--kt)))' }}>{st.glyph} {st.name}</button>
-                            );
-                          })}
-                          {gi === 1 && (
-                            <button onClick={() => setShowHaltungOv(v => !v)} title="Abweichende Haltung für einzelne Charaktere"
-                              style={{ padding:'4px 9px', fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
-                                background:ovCount ? 'rgba(255,180,80,0.12)' : 'transparent',
-                                border:`1px dashed ${ovCount ? 'rgba(255,180,80,0.6)' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
-                                color:ovCount ? '#ffb850' : 'rgba(var(--text-rgb),calc(0.45*var(--kt)))' }}>± Ausnahmen{ovCount ? ' · ' + ovCount : ''}</button>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })()}
-            {showHaltungOv && (
-              <div style={{ marginTop:10, padding:'10px 14px', border:'1px dashed rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:4, background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))' }}>
-                <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:8 }}>Haltung · Ausnahmen pro Charakter — Standard: wie Gruppe</div>
-                <input value={haltungOvSearch} onChange={e => setHaltungOvSearch(e.target.value)} placeholder="Charakter suchen …"
-                  style={{ ...inpSt, width:220, padding:'5px 9px', fontSize:12, marginBottom:10 }}/>
-                {[...charPersp]
-                  .filter(c => c.label.toLowerCase().includes(haltungOvSearch.trim().toLowerCase()))
-                  .sort((a, b) => {
-                    const ao = (sel.haltungOverrides || {})[a.id] ? 0 : 1, bo = (sel.haltungOverrides || {})[b.id] ? 0 : 1;
-                    return ao - bo || a.label.localeCompare(b.label, 'de');
-                  })
-                  .map(c => {
-                  const ov = (sel.haltungOverrides || {})[c.id] || '';
-                  const setOv = name => { const next = { ...(sel.haltungOverrides || {}) }; if (name) next[c.id] = name; else delete next[c.id]; updSel('haltungOverrides', next); };
-                  return (
-                    <div key={c.id} style={{ display:'grid', gridTemplateColumns:'minmax(120px, 180px) repeat(4, max-content)', alignItems:'center', gap:6, marginBottom:5 }}>
-                      <span title={c.label} style={{ fontFamily:BODY, fontSize:12, color:'var(--silver)', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{c.label}</span>
-                      {['', ...HALTUNGEN].map(name => {
-                        const def = name ? ((STATUS_DEF || {})[name] || { color:'var(--silver)', glyph:'◇' }) : null;
-                        const on = ov === name;
-                        const col = def ? def.color : '#a89cd8';
-                        return (
-                          <button key={name || 'default'} onClick={() => setOv(name)}
-                            style={{ padding:'3px 9px', fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', borderRadius:2,
-                              background:on ? hexA(col, 0.16) : 'transparent',
-                              border:`1px solid ${on ? hexA(col, 0.6) : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
-                              color:on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.4*var(--kt)))' }}>{def ? def.glyph + ' ' + name : 'wie Gruppe'}</button>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
-                {!charPersp.length && <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))' }}>Keine Spielercharaktere gefunden.</div>}
-                {charPersp.length > 0 && !charPersp.some(c => c.label.toLowerCase().includes(haltungOvSearch.trim().toLowerCase())) &&
-                  <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))' }}>Kein Charakter passt zu „{haltungOvSearch.trim()}".</div>}
-              </div>
-            )}
-            <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginTop:12 }}>
-              <button onClick={async () => {
-                  const v = !sel.visible;
-                  updSel('visible', v);
-                  await window._sb.from('nscs').upsert({ id:sel.id, visible:v }, { onConflict:'id' });
-                }}
-                style={{ padding:'7px 14px', borderRadius:3, fontFamily:MONO, fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', cursor:'pointer',
-                  background:sel.visible ? 'rgba(95,227,154,0.12)' : 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
-                  border:`1px solid ${sel.visible ? 'rgba(95,227,154,0.55)' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
-                  color:sel.visible ? '#5fe39a' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' }}>
-                {sel.visible ? '◆ Für Spieler sichtbar' : '○ Verborgen'}
-              </button>
-              <button onClick={deleteSel} style={{ padding:'6px 12px', background:'transparent', border:'1px solid rgba(227,103,96,0.3)', borderRadius:3, color:'rgba(227,103,96,0.65)', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer' }}>✕ Löschen</button>
-            </div>
-          </div>
-          {dv.logo && (
-            <span title={sel.division} style={{ position:'absolute', right:15, top:'50%', transform:'translateY(-50%)', width:230, height:230, background:`center / contain no-repeat url("${dv.logo}")`, opacity:0.09, pointerEvents:'none' }}/>
-          )}
-        </div>
-        <div className="nscv-portrait" style={{ flexShrink:0, display:'flex', flexDirection:'column', alignItems:'center', gap:7, padding:'10px 10px 8px', borderRadius:6, background:hexA(acc, 0.06), border:`1px solid ${hexA(acc, 0.35)}`, boxShadow:`0 0 18px ${hexA(acc, 0.12)}` }}>
-          <div onClick={() => sel.bild && setLightbox(true)} title={sel.bild ? 'Zum Vergrößern klicken' : 'Bildpfad unten eintragen'}
-            style={{ position:'relative', width:200, height:250, borderRadius:3, overflow:'hidden', cursor:sel.bild ? 'zoom-in' : 'default',
-              background:sel.bild ? '#000' : hexA(acc, 0.08), border:`1px solid ${hexA(acc, 0.3)}`, display:'flex', alignItems:'center', justifyContent:'center' }}>
-            {sel.bild
-              ? <img src={sel.bild} alt={sel.name} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top' }}/>
-              : <span style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textAlign:'center', padding:'0 14px' }}>Kein Portrait</span>}
-          </div>
-          <div style={{ display:'flex', alignItems:'center', gap:4 }}>
-            <input value={sel.bild || ''} onChange={e => updSel('bild', e.target.value)} placeholder="assets/images/npc/…"
-              style={{ ...inpSt, width:172, fontFamily:MONO, fontSize:9.5, padding:'6px 8px' }}/>
-            <Eye on={vis('bild')} onClick={() => toggleFieldVis('bild')}/>
-          </div>
-        </div>
-      </div>
       {lightbox && sel.bild && (
         <div onClick={() => setLightbox(false)} title="Klicken zum Schließen"
           style={{ position:'fixed', inset:0, zIndex:3000, cursor:'zoom-out', backgroundColor:'rgba(var(--bg-rgb),0.95)', backgroundImage:`url("${sel.bild}")`, backgroundSize:'contain', backgroundPosition:'center', backgroundRepeat:'no-repeat', animation:'fadeIn 0.15s ease' }}/>
@@ -1233,6 +1210,7 @@ function Editor(props) {
       <Preview sel={sel} nscs={nscs} charPersp={charPersp} unlocks={unlocks}
         persp={persp} setPersp={setPersp} vis={vis} openNsc={openNsc}
         updSel={updSel} toggleFieldVis={toggleFieldVis}
+        heroSlot={heroControls} onPortraitClick={() => sel.bild && setLightbox(true)}
         updNsc={updNsc} sbSlot={sbCard} createFromContact={createFromContact}
         addSection={k => { addSec(k); if (k === 'statblock' && !sel.steckbrief) setSb(emptySteck()); }}/>
     </div>
@@ -1410,7 +1388,7 @@ function SbSummary({ sb }) {
 }
 
 // ── Spieler-Vorschau — Nachbau des NSC-Detailpanels (charaktere/nsc.html) ───
-function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc, updSel, updNsc, toggleFieldVis, sbSlot, addSection, createFromContact }) {
+function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc, updSel, updNsc, toggleFieldVis, heroSlot, onPortraitClick, sbSlot, addSection, createFromContact }) {
   const acc = divOf(sel.division).accent;
   const has = k => (sel.sections || []).includes(k);
   const dmView = persp === '__dm' || !charPersp.some(c => c.id === persp);
@@ -1989,7 +1967,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>NSC-Register · Spieleransicht</span>
         </div>
         <div style={{ display:'flex', gap:22, padding:'24px 26px 14px', alignItems:'flex-start' }}>
-          <div style={{ position:'relative', width:150, height:150, flexShrink:0 }}>
+          <div style={{ display:'flex', flexDirection:'column', gap:8, width:150, flexShrink:0 }}>
+          <div onClick={onPortraitClick} title={sel.bild ? 'Zum Vergrößern klicken' : undefined} style={{ position:'relative', width:150, height:150, flexShrink:0, cursor:sel.bild && EDIT ? 'zoom-in' : undefined }}>
             <svg width="150" height="150" viewBox="0 0 150 150" style={{ position:'absolute', inset:0, pointerEvents:'none', overflow:'visible', filter:`drop-shadow(0 0 12px ${hexA(acc, stage === 0 ? 0.2 : 0.45)})`, zIndex:3 }}>
               <polygon points={hexPts(3)} fill="none" stroke={acc} strokeWidth="1.6" strokeOpacity={stage === 0 ? 0.4 : 1} strokeDasharray={stage === 0 ? '4 4' : 'none'} strokeLinejoin="miter"/>
               <polygon points={hexPts(12)} fill="none" stroke={acc} strokeWidth="0.6" strokeOpacity={stage === 0 ? 0.15 : 0.45} strokeLinejoin="miter"/>
@@ -2000,6 +1979,14 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
             {stage === 0 && !EDIT && (
               <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:MONO, fontSize:44, fontWeight:700, color:'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))', textShadow:'0 0 14px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 30px rgba(var(--purple-rgb),calc(0.4*var(--kp)))', animation:'pulse-glow 2.5s ease-in-out infinite', pointerEvents:'none', zIndex:4, background:'rgba(var(--bg-rgb),0.6)', clipPath:hexClip }}>?</div>
             )}
+          </div>
+          {EDIT && (
+            <div style={{ display:'flex', alignItems:'center', gap:4 }}>
+              <input value={sel.bild || ''} onChange={e => updSel('bild', e.target.value)} placeholder="Bild: assets/images/npc/…"
+                style={{ ...inpSt, width:128, minWidth:0, fontFamily:MONO, fontSize:9, padding:'5px 7px' }}/>
+              {eyeFor('bild')}
+            </div>
+          )}
           </div>
           <div style={{ flex:1, minWidth:0, paddingTop:6 }}>
             {EDIT ? (
@@ -2030,7 +2017,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
                   <span key={i} style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.18em', color:acc, textTransform:'uppercase' }}>{t}</span>
                 ))}
             </div>
-            <div style={{ marginTop:12, display:'flex', flexWrap:'wrap', gap:5 }}>
+            {EDIT ? heroSlot : <div style={{ marginTop:12, display:'flex', flexWrap:'wrap', gap:5 }}>
               {((dmView || !window.nscEffectiveStatus) ? (sel.status || []) : window.nscEffectiveStatus(sel, persp)).map(name => {
                 const def = (STATUS_DEF || {})[name] || { color:'var(--silver)', glyph:'◇' };
                 return (
@@ -2045,7 +2032,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
                     style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.1em', textTransform:'uppercase', padding:'3px 8px', border:`1px dashed ${hexA(def.color, 0.5)}`, borderRadius:2, color:hexA(def.color, 0.8) }}>± {c.label}: {name}</span>
                 );
               })}
-            </div>
+            </div>}
           </div>
         </div>
         <div style={{ padding:'12px 26px 40px' }}>
