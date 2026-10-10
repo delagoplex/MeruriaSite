@@ -956,7 +956,8 @@ function App() {
                   </span>
                 </span>
                 <span style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:3, flexShrink:0 }}>
-                  <span style={{ fontFamily:MONO, fontSize:10, color:n.visible ? '#5fe39a' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))' }}>{n.visible ? '◆' : '○'}</span>
+                  <span title={n.visible ? 'Für Spieler sichtbar' : 'Für Spieler verborgen'} aria-label={n.visible ? 'Für Spieler sichtbar' : 'Für Spieler verborgen'}
+                    style={{ display:'inline-flex', color:n.visible ? '#5fe39a' : HALTUNG_FARBE.Neutral, opacity:n.visible ? 1 : 0.6 }}><VisEye open={!!n.visible} size={16}/></span>
                   {cCount !== null
                     ? <span title="Freigeschaltete Fakten für diesen Charakter" style={{ fontFamily:MONO, fontSize:8, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))' }}>{cCount}</span>
                     : <span style={{ fontFamily:MONO, fontSize:8, color:hexA(acc, 0.7) }}>{divOf(n.division).roman}</span>}
