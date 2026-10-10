@@ -774,7 +774,7 @@ function App() {
     return [...npc, ...mon];
   }, [statsReady]);
 
-  // ── Persistenz (Debounce-Autosave, immer Upsert) ─────────
+  // ── Persistenz (Debounce-Autosave; UPDATE statt Upsert, weil Spieler und SL kein SELECT auf nscs haben, siehe Migration 046) ─────────
   const nscsRef = useRef(nscs);
   nscsRef.current = nscs;
   const timers = useRef({});
@@ -784,7 +784,8 @@ function App() {
     timers.current[id] = setTimeout(async () => {
       const n = nscsRef.current.find(x => x.id === id);
       if (!n) return;
-      const { error } = await window._sb.from('nscs').upsert(nscToRow(n), { onConflict:'id' });
+      const { id: rowId, ...fields } = nscToRow(n);
+      const { error } = await window._sb.from('nscs').update(fields).eq('id', rowId);
       setSaveInfo(error ? '✕ Speichern fehlgeschlagen: ' + error.message : '✓ gespeichert');
     }, 700);
   }, []);
@@ -1136,9 +1137,7 @@ function Editor(props) {
       editor={() => sbFull}/>
   ) : null;
 
-  const heroControls = (
-    <div style={{ flex:1, minWidth:0, position:'relative', zIndex:1, marginTop:16 }}>
-      {(() => {
+  const statusGroups = (only) => {
         const groups = [
           ['Zustand', T().statuses.filter(s => !HALTUNGEN.includes(s.name))],
           ['Haltung ggü. Gruppe', T().statuses.filter(s => HALTUNGEN.includes(s.name))],
@@ -1153,6 +1152,7 @@ function Editor(props) {
           <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-start', gap:14, marginTop:9 }}>
             {groups.map(([glabel, defs], gi) => {
               const names = defs.map(d => d.name);
+              if (only !== undefined && only !== gi) return null;
               return (
                 <div key={glabel}>
                   <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:5 }}>{glabel}</div>
@@ -1190,7 +1190,15 @@ function Editor(props) {
             })}
           </div>
         );
-      })()}
+  };
+  const heroControls = (
+    <div style={{ flex:1, minWidth:0, position:'relative', zIndex:1, marginTop:16 }}>
+      {statusGroups(0)}
+    </div>
+  );
+  const haltungControls = (
+    <div style={{ maxWidth:620 }}>
+      {statusGroups(1)}
       {showHaltungOv && (
         <div style={{ marginTop:10, padding:'10px 14px', border:'1px dashed rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:4, background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))' }}>
           <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:8 }}>Haltung · Ausnahmen pro Charakter — Standard: wie Gruppe</div>
@@ -1236,7 +1244,7 @@ function Editor(props) {
     <button onClick={async () => {
         const v = !sel.visible;
         updSel('visible', v);
-        await window._sb.from('nscs').upsert({ id:sel.id, visible:v }, { onConflict:'id' });
+        await window._sb.from('nscs').update({ visible:v }).eq('id', sel.id);
       }}
       title={sel.visible ? 'Für Spieler sichtbar — klicken zum Verbergen' : 'Für Spieler verborgen — klicken zum Freigeben'}
       aria-label={sel.visible ? 'Für Spieler sichtbar' : 'Für Spieler verborgen'} aria-pressed={!!sel.visible}
@@ -1259,7 +1267,7 @@ function Editor(props) {
       <Preview sel={sel} nscs={nscs} charPersp={charPersp} unlocks={unlocks}
         persp={persp} setPersp={setPersp} vis={vis} openNsc={openNsc}
         updSel={updSel} toggleFieldVis={toggleFieldVis}
-        heroSlot={heroControls} visSlot={visToggle} deleteSel={deleteSel} onPortraitClick={() => sel.bild && setLightbox(true)}
+        heroSlot={heroControls} haltungSlot={haltungControls} visSlot={visToggle} deleteSel={deleteSel} onPortraitClick={() => sel.bild && setLightbox(true)}
         updNsc={updNsc} sbSlot={sbCard} createFromContact={createFromContact}
         addSection={k => { addSec(k); if (k === 'statblock' && !sel.steckbrief) setSb(emptySteck()); }}/>
     </div>
@@ -1437,7 +1445,7 @@ function SbSummary({ sb }) {
 }
 
 // ── Spieler-Vorschau — Nachbau des NSC-Detailpanels (charaktere/nsc.html) ───
-function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc, updSel, updNsc, toggleFieldVis, heroSlot, visSlot, onPortraitClick, deleteSel, sbSlot, addSection, createFromContact }) {
+function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc, updSel, updNsc, toggleFieldVis, heroSlot, haltungSlot, visSlot, onPortraitClick, deleteSel, sbSlot, addSection, createFromContact }) {
   const acc = divOf(sel.division).accent;
   const has = k => (sel.sections || []).includes(k);
   const dmView = persp === '__dm' || !charPersp.some(c => c.id === persp);
@@ -1659,7 +1667,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
       ...charPersp.map(c => ({ label:c.label, kind:'sc', color:'#ffb850', bild:null })),
       ...nscs.filter(n => n.id !== sel.id && n.name).map(n => ({ label:n.name, kind:'nsc', color:divOf(n.division).accent, bild:n.bild })),
     ].sort((a, b) => a.label.localeCompare(b.label, 'de'));
-    const TABS = [["ueber","Überblick"],["pers","Persönlichkeit"],["bez","Beziehungen"],["ausr","Ausrüstung"],["geh","Geheimnisse"],["sb","Statblock"]];
+    const TABS = [["ueber","Überblick"],["pers","Persönlichkeit"],["bez","Beziehungen"],["ausr","Ausrüstung"],["geh","Geheimnisse"],["sb","Statblock"],["haltung","Haltung"]];
     const TAB_OF = { bio:'ueber', aussehen:'pers', pers:'pers', routine:'pers', gewohnheiten:'pers', motive:'pers', begleiter:'bez', kontakte:'bez', ausr:'ausr', geheim:'geh', statblock:'sb' };
     const addRow = tk => {
       const miss = SECS.filter(([k]) => !has(k) && TAB_OF[k] === tk);
@@ -1700,15 +1708,6 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
               <LiveInput fit value={t} onChange={set} placeholder="Namensteil"/>
             </span>
           )}/>
-
-        {has('bio') && (
-          <React.Fragment>
-            {edHead('Biografie', ['bio'], 'bio')}
-            <div style={{ padding:'12px 16px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), fontFamily:BODY, fontSize:13, lineHeight:1.75, color:'var(--silver)' }}>
-              <LiveArea value={sel.biografie} onChange={v => updSel('biografie', v)} placeholder="Die Geschichte dieses NSC — Herkunft, Werdegang, prägende Ereignisse …" style={{ minHeight:90 }}/>
-            </div>
-          </React.Fragment>
-        )}
 
         {edHead('Eckdaten', [])}
 
@@ -2021,6 +2020,13 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
             {addRow('sb')}
           </React.Fragment>
         )}
+
+        {tab === 'haltung' && (
+          <React.Fragment>
+            {hint('Haltung gegenüber der Gruppe — gilt für alle Charaktere, außer bei Ausnahmen')}
+            {haltungSlot}
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   };
@@ -2077,8 +2083,8 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
             )}
           </div>
           {EDIT && (
-            <div style={{ display:'flex', alignItems:'center', gap:4 }}>
-              <input value={sel.bild || ''} onChange={e => updSel('bild', e.target.value)} placeholder="Bild: assets/images/npc/…"
+            <div style={{ display:'flex', alignItems:'center', gap:4, width:125, alignSelf:'center' }}>
+              <input value={sel.bild || ''} onChange={e => updSel('bild', e.target.value)} placeholder="Bildpfad"
                 style={{ ...inpSt, width:'auto', flex:1, minWidth:0, fontFamily:MONO, fontSize:9, padding:'5px 7px' }}/>
               {eyeFor('bild')}
             </div>
@@ -2129,6 +2135,15 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
                 );
               })}
             </div>}
+            {EDIT && has('bio') && (
+              <React.Fragment>
+                {edHead('Biografie', ['bio'], 'bio')}
+                <div style={{ padding:'12px 16px', border:`1px solid ${hexA(acc, 0.25)}`, background:hexA(acc, 0.04), fontFamily:BODY, fontSize:13, lineHeight:1.75, color:'var(--silver)' }}>
+                  <LiveArea value={sel.biografie} onChange={v => updSel('biografie', v)} placeholder="Die Geschichte dieses NSC — Herkunft, Werdegang, prägende Ereignisse …" style={{ minHeight:90 }}/>
+                </div>
+              </React.Fragment>
+            )}
+
           </div>
         </div>
         <div style={{ padding:'12px 26px 40px' }}>
