@@ -1158,7 +1158,19 @@ function Editor(props) {
                 <div key={glabel}>
                   {only !== 1 && <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:5 }}>{glabel}</div>}
                   <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center' }}>
-                    {defs.map(st => {
+                    {gi === 0 ? (() => {
+                      const cur = defs.find(d => (sel.status || []).includes(d.name));
+                      const col = cur ? cur.color : '#c8c0e8';
+                      return (
+                        <select value={cur ? cur.name : ''} aria-label="Zustand"
+                          onChange={e => { const rest = (sel.status || []).filter(x => !names.includes(x)); updSel('status', e.target.value ? [...rest, e.target.value] : rest); }}
+                          style={{ ...selSt, width:'auto', minWidth:170, padding:'6px 30px 6px 12px', fontFamily:MONO, fontSize:10, letterSpacing:'0.12em', textTransform:'uppercase',
+                            borderColor:hexA(col, 0.6), background:hexA(col, 0.12), color:'var(--white)' }}>
+                          <option value="">— kein Zustand —</option>
+                          {defs.map(d => <option key={d.name} value={d.name}>{d.glyph} {d.name}</option>)}
+                        </select>
+                      );
+                    })() : defs.map(st => {
                       const on = (sel.status || []).includes(st.name);
                       if (gi === 1) {
                         const col = HALTUNG_FARBE[st.name] || st.color;
