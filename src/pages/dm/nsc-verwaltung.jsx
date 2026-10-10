@@ -182,7 +182,7 @@ const BILD_GRUPPEN = { npc:'NSC-Porträts', races:'Rassen', monster:'Monster', g
 function BildPicker({ current, onPick, onClose }) {
   const data = window.BILDER_DATA || {};
   const keys = Object.keys(data);
-  const [group, setGroup] = useState((data.npc && data.npc.length) ? 'npc' : '*');
+  const [group, setGroup] = useState('npc');
   const [q, setQ] = useState('');
   const [limit, setLimit] = useState(96);
   const base = 'assets/images/';
