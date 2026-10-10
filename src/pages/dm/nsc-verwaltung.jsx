@@ -155,6 +155,15 @@ function HaltungIcon({ name, size = 18 }) {
     <svg {...p}><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
   );
 }
+/* Auge mit drei Wimpern: offen = sichtbar, geschlossen = verborgen */
+function VisEye({ open, size = 22 }) {
+  const p = { width:size, height:size, viewBox:'0 0 24 24', fill:'none', stroke:'currentColor', strokeWidth:1.7, strokeLinecap:'round', strokeLinejoin:'round', 'aria-hidden':true };
+  return open ? (
+    <svg {...p}><path d="M2 14c3-5 17-5 20 0-3 5-17 5-20 0Z"/><circle cx="12" cy="14" r="2.8"/><path d="M12 4v3"/><path d="M6.2 5.6 7.6 8"/><path d="M17.8 5.6 16.4 8"/></svg>
+  ) : (
+    <svg {...p}><path d="M3 11c3 5.5 15 5.5 18 0"/><path d="M12 15.5V19"/><path d="M6.4 14.2 5.2 17"/><path d="M17.6 14.2 18.8 17"/></svg>
+  );
+}
 function FieldHead({ label, eye }) {
   return (
     <span style={{ display:'flex', alignItems:'center', gap:4, marginBottom:5 }}>
@@ -1206,20 +1215,24 @@ function Editor(props) {
             <div style={{ fontFamily:BODY, fontSize:12, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))' }}>Kein Charakter passt zu „{haltungOvSearch.trim()}".</div>}
         </div>
       )}
-      <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginTop:12 }}>
-        <button onClick={async () => {
-            const v = !sel.visible;
-            updSel('visible', v);
-            await window._sb.from('nscs').upsert({ id:sel.id, visible:v }, { onConflict:'id' });
-          }}
-          style={{ padding:'7px 14px', borderRadius:3, fontFamily:MONO, fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', cursor:'pointer',
-            background:sel.visible ? 'rgba(95,227,154,0.12)' : 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
-            border:`1px solid ${sel.visible ? 'rgba(95,227,154,0.55)' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
-            color:sel.visible ? '#5fe39a' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' }}>
-          {sel.visible ? '◆ Für Spieler sichtbar' : '○ Verborgen'}
-        </button>
-      </div>
     </div>
+  );
+
+  // Sichtbarkeit für Spieler: Auge mit drei Wimpern (grün = sichtbar, geschlossen in Neutral-Farbe = verborgen)
+  const visToggle = (
+    <button onClick={async () => {
+        const v = !sel.visible;
+        updSel('visible', v);
+        await window._sb.from('nscs').upsert({ id:sel.id, visible:v }, { onConflict:'id' });
+      }}
+      title={sel.visible ? 'Für Spieler sichtbar — klicken zum Verbergen' : 'Für Spieler verborgen — klicken zum Freigeben'}
+      aria-label={sel.visible ? 'Für Spieler sichtbar' : 'Für Spieler verborgen'} aria-pressed={!!sel.visible}
+      style={{ width:38, height:34, display:'inline-flex', alignItems:'center', justifyContent:'center', cursor:'pointer', borderRadius:3,
+        background:sel.visible ? 'rgba(95,227,154,0.12)' : 'transparent',
+        border:`1px solid ${sel.visible ? 'rgba(95,227,154,0.55)' : hexA(HALTUNG_FARBE.Neutral, 0.35)}`,
+        color:sel.visible ? '#5fe39a' : HALTUNG_FARBE.Neutral }}>
+      <VisEye open={!!sel.visible}/>
+    </button>
   );
 
   return (
@@ -1233,7 +1246,7 @@ function Editor(props) {
       <Preview sel={sel} nscs={nscs} charPersp={charPersp} unlocks={unlocks}
         persp={persp} setPersp={setPersp} vis={vis} openNsc={openNsc}
         updSel={updSel} toggleFieldVis={toggleFieldVis}
-        heroSlot={heroControls} deleteSel={deleteSel} onPortraitClick={() => sel.bild && setLightbox(true)}
+        heroSlot={heroControls} visSlot={visToggle} deleteSel={deleteSel} onPortraitClick={() => sel.bild && setLightbox(true)}
         updNsc={updNsc} sbSlot={sbCard} createFromContact={createFromContact}
         addSection={k => { addSec(k); if (k === 'statblock' && !sel.steckbrief) setSb(emptySteck()); }}/>
     </div>
@@ -1411,7 +1424,7 @@ function SbSummary({ sb }) {
 }
 
 // ── Spieler-Vorschau — Nachbau des NSC-Detailpanels (charaktere/nsc.html) ───
-function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc, updSel, updNsc, toggleFieldVis, heroSlot, onPortraitClick, deleteSel, sbSlot, addSection, createFromContact }) {
+function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc, updSel, updNsc, toggleFieldVis, heroSlot, visSlot, onPortraitClick, deleteSel, sbSlot, addSection, createFromContact }) {
   const acc = divOf(sel.division).accent;
   const has = k => (sel.sections || []).includes(k);
   const dmView = persp === '__dm' || !charPersp.some(c => c.id === persp);
@@ -2027,6 +2040,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
         {dv.logo && (
           <span style={{ position:'absolute', right:25, top:20, width:340, height:340, background:`center / contain no-repeat url("${dv.logo}")`, opacity:0.06, pointerEvents:'none' }}/>
         )}
+        {EDIT && <div style={{ position:'absolute', top:14, right:16, zIndex:6 }}>{visSlot}</div>}
         {!EDIT && (
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 22px', borderBottom:`1px solid ${hexA(acc, 0.2)}` }}>
           <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
