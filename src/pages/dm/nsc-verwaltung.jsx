@@ -164,6 +164,19 @@ function VisEye({ open, size = 22 }) {
     <svg {...p}><path d="M3 11c3 5.5 15 5.5 18 0"/><path d="M12 15.5V19"/><path d="M6.4 14.2 5.2 17"/><path d="M17.6 14.2 18.8 17"/></svg>
   );
 }
+/* Schalter mit Wimpernauge: grün = für Spieler sichtbar, geschlossen in Neutral-Farbe = verborgen */
+function VisToggle({ on, onClick, label, size = 30 }) {
+  const col = on ? '#5fe39a' : HALTUNG_FARBE.Neutral;
+  return (
+    <button onClick={onClick} title={label + (on ? ' sichtbar — klicken zum Verbergen' : ' verborgen — klicken zum Freigeben')}
+      aria-label={label + (on ? ' sichtbar' : ' verborgen')} aria-pressed={!!on}
+      style={{ width:size + 8, height:size, flexShrink:0, display:'inline-flex', alignItems:'center', justifyContent:'center', cursor:'pointer', borderRadius:3, padding:0,
+        background:on ? 'rgba(95,227,154,0.12)' : 'transparent',
+        border:`1px solid ${on ? 'rgba(95,227,154,0.55)' : hexA(HALTUNG_FARBE.Neutral, 0.35)}`, color:col }}>
+      <VisEye open={!!on} size={Math.round(size * 0.7)}/>
+    </button>
+  );
+}
 function FieldHead({ label, eye }) {
   return (
     <span style={{ display:'flex', alignItems:'center', gap:4, marginBottom:5 }}>
@@ -1615,7 +1628,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
 
   // ── Live-Bearbeitung: dieselben Abschnitte, aber mit Eingabefeldern, +-Buttons und Umsortieren ──
   // Augen gibt es nur für Name und Bild (Spieler tragen die übrigen Fakten selbst ein)
-  const eyeFor = key => (key === 'name' || key === 'bild') ? <Eye on={vis(key)} onClick={() => toggleFieldVis(key)}/> : null;
+  const eyeFor = key => (key === 'name' || key === 'bild') ? <VisToggle on={vis(key)} onClick={() => toggleFieldVis(key)} label={key === 'name' ? 'Name' : 'Bild'}/> : null;
   const rmSecLive = k => updSel('sections', (sel.sections || []).filter(x => x !== k));
   const fIdx = (list, i) => (list[i].name || '').trim() ? list.slice(0, i + 1).filter(x => (x.name || '').trim()).length - 1 : null;
   const edHead = (title, eyeKeys, removeKey, removeLabel, color) => (
@@ -2066,7 +2079,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           {EDIT && (
             <div style={{ display:'flex', alignItems:'center', gap:4 }}>
               <input value={sel.bild || ''} onChange={e => updSel('bild', e.target.value)} placeholder="Bild: assets/images/npc/…"
-                style={{ ...inpSt, width:128, minWidth:0, fontFamily:MONO, fontSize:9, padding:'5px 7px' }}/>
+                style={{ ...inpSt, width:'auto', flex:1, minWidth:0, fontFamily:MONO, fontSize:9, padding:'5px 7px' }}/>
               {eyeFor('bild')}
             </div>
           )}
@@ -2079,11 +2092,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
                 <span style={{ display:'flex', alignItems:'center', gap:8 }}>
                   <LiveInput value={sel.name} onChange={v => updSel('name', v)} placeholder="Name"
                     style={{ fontFamily:DISP, fontWeight:400, fontSize:26, letterSpacing:'0.10em', color:'var(--white)', lineHeight:1.15 }}/>
-                  <button onClick={() => toggleFieldVis('name')} title="Ob Spieler den Namen sehen oder „Unbekannt“"
-                    style={{ flexShrink:0, padding:'3px 9px', borderRadius:10, fontFamily:MONO, fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase', cursor:'pointer',
-                      background:vis('name') ? 'rgba(95,227,154,0.12)' : 'transparent',
-                      border:`1px solid ${vis('name') ? 'rgba(95,227,154,0.5)' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
-                      color:vis('name') ? '#5fe39a' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' }}>{vis('name') ? '◉ Name sichtbar' : '⊘ Name verborgen'}</button>
+                  {eyeFor('name')}
                 </span>
               </React.Fragment>
             ) : (
