@@ -1155,7 +1155,7 @@ function Editor(props) {
               if (only !== undefined && only !== gi) return null;
               return (
                 <div key={glabel}>
-                  <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:5 }}>{glabel}</div>
+                  {only !== 1 && <div style={{ fontFamily:MONO, fontSize:7.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:5 }}>{glabel}</div>}
                   <div style={{ display:'flex', flexWrap:'wrap', gap:5, alignItems:'center' }}>
                     {defs.map(st => {
                       const on = (sel.status || []).includes(st.name);
