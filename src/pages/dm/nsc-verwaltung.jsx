@@ -1194,7 +1194,6 @@ function Editor(props) {
             color:sel.visible ? '#5fe39a' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' }}>
           {sel.visible ? '◆ Für Spieler sichtbar' : '○ Verborgen'}
         </button>
-        <button onClick={deleteSel} style={{ padding:'6px 12px', background:'transparent', border:'1px solid rgba(227,103,96,0.3)', borderRadius:3, color:'rgba(227,103,96,0.65)', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer' }}>✕ Löschen</button>
       </div>
     </div>
   );
@@ -1210,7 +1209,7 @@ function Editor(props) {
       <Preview sel={sel} nscs={nscs} charPersp={charPersp} unlocks={unlocks}
         persp={persp} setPersp={setPersp} vis={vis} openNsc={openNsc}
         updSel={updSel} toggleFieldVis={toggleFieldVis}
-        heroSlot={heroControls} onPortraitClick={() => sel.bild && setLightbox(true)}
+        heroSlot={heroControls} deleteSel={deleteSel} onPortraitClick={() => sel.bild && setLightbox(true)}
         updNsc={updNsc} sbSlot={sbCard} createFromContact={createFromContact}
         addSection={k => { addSec(k); if (k === 'statblock' && !sel.steckbrief) setSb(emptySteck()); }}/>
     </div>
@@ -1388,7 +1387,7 @@ function SbSummary({ sb }) {
 }
 
 // ── Spieler-Vorschau — Nachbau des NSC-Detailpanels (charaktere/nsc.html) ───
-function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc, updSel, updNsc, toggleFieldVis, heroSlot, onPortraitClick, sbSlot, addSection, createFromContact }) {
+function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc, updSel, updNsc, toggleFieldVis, heroSlot, onPortraitClick, deleteSel, sbSlot, addSection, createFromContact }) {
   const acc = divOf(sel.division).accent;
   const has = k => (sel.sections || []).includes(k);
   const dmView = persp === '__dm' || !charPersp.some(c => c.id === persp);
@@ -1769,6 +1768,9 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           );
         })()}
             {addRow('ueber')}
+            <div style={{ marginTop:40, paddingTop:16, borderTop:'1px solid rgba(227,103,96,0.18)', display:'flex', justifyContent:'flex-end' }}>
+              <button onClick={deleteSel} style={{ padding:'6px 12px', background:'transparent', border:'1px solid rgba(227,103,96,0.3)', borderRadius:3, color:'rgba(227,103,96,0.65)', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer' }}>✕ Diesen NSC löschen</button>
+            </div>
           </React.Fragment>
         )}
 
@@ -1997,16 +1999,18 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
         )}
       </div>}
 
-      <div style={{ background:'rgba(var(--panel-rgb),0.99)', border:`1px solid ${hexA(acc, 0.33)}`, borderRadius:6, boxShadow:`0 10px 50px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k))), 0 0 80px ${hexA(acc, 0.10)}`, overflow:'hidden', position:'relative' }}>
+      <div style={{ background:'rgba(var(--panel-rgb),0.99)', border:`1px solid ${hexA(acc, 0.33)}`, borderRadius:6, boxShadow:`0 10px 50px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k))), 0 0 80px ${hexA(acc, 0.10)}`, overflow:'clip', position:'relative' }}>
         {dv.logo && (
           <span style={{ position:'absolute', right:25, top:20, width:340, height:340, background:`center / contain no-repeat url("${dv.logo}")`, opacity:0.06, pointerEvents:'none' }}/>
         )}
+        {!EDIT && (
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 22px', borderBottom:`1px solid ${hexA(acc, 0.2)}` }}>
           <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
             № {String(sel.id).slice(0, 8).toUpperCase()} · {divisionOpen && sel.division !== 'Keine' ? divOf(sel.division).roman + ' · ' + sel.division : 'NSC'} · Ansicht: {perspName}
           </span>
           <span style={{ fontFamily:MONO, fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>NSC-Register · Spieleransicht</span>
         </div>
+        )}
         <div style={{ display:'flex', gap:22, padding:'24px 26px 14px', alignItems:'flex-start' }}>
           <div style={{ display:'flex', flexDirection:'column', gap:8, width:150, flexShrink:0 }}>
           <div onClick={onPortraitClick} title={sel.bild ? 'Zum Vergrößern klicken' : undefined} style={{ position:'relative', width:150, height:150, flexShrink:0, cursor:sel.bild && EDIT ? 'zoom-in' : undefined }}>
@@ -2037,7 +2041,11 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
                 <span style={{ display:'flex', alignItems:'center', gap:8 }}>
                   <LiveInput value={sel.name} onChange={v => updSel('name', v)} placeholder="Name"
                     style={{ fontFamily:DISP, fontWeight:400, fontSize:26, letterSpacing:'0.10em', color:'var(--white)', lineHeight:1.15 }}/>
-                  {eyeFor('name')}
+                  <button onClick={() => toggleFieldVis('name')} title="Ob Spieler den Namen sehen oder „Unbekannt“"
+                    style={{ flexShrink:0, padding:'3px 9px', borderRadius:10, fontFamily:MONO, fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase', cursor:'pointer',
+                      background:vis('name') ? 'rgba(95,227,154,0.12)' : 'transparent',
+                      border:`1px solid ${vis('name') ? 'rgba(95,227,154,0.5)' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
+                      color:vis('name') ? '#5fe39a' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' }}>{vis('name') ? '◉ Name sichtbar' : '⊘ Name verborgen'}</button>
                 </span>
               </React.Fragment>
             ) : (
@@ -2079,6 +2087,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
         <div style={{ padding:'12px 26px 40px' }}>
 
           {/* Vertrautheit */}
+          {!EDIT && (
           <div style={{ border:`1px solid ${aFn(0.35)}`, background:aFn(0.06), padding:'14px 16px', borderRadius:3, marginBottom:6, boxShadow:isMax ? `0 0 26px ${GOLDA(0.35)}` : 'none' }}>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:10, gap:10 }}>
               <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.3em', color:aFn(0.85), textTransform:'uppercase' }}>{isMax ? '✓ Eingeweiht' : '◈ Vertrautheit'}</span>
@@ -2096,6 +2105,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
               })}
             </div>
           </div>
+          )}
 
           {EDIT ? liveBody() : (
             <React.Fragment>
@@ -2437,10 +2447,12 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           )}
 
           {/* Footer stamp */}
+          {!EDIT && (
           <div style={{ marginTop:28, padding:'12px 14px', border:`1px dashed ${hexA(acc, 0.4)}`, background:hexA(acc, 0.04), fontFamily:MONO, fontSize:9, color:acc, letterSpacing:'0.16em', textTransform:'uppercase', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
             <span>{stage >= 4 ? '✓ Eingeweiht' : '◈ Vertrautheit ' + stage + ' · ' + STG[stage]}</span>
             <span style={{ opacity:0.6 }}>Meruria · NSC-Register</span>
           </div>
+          )}
         </div>
       </div>
     </React.Fragment>
