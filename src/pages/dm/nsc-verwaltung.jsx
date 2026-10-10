@@ -1961,8 +1961,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
           ○ Dieser NSC ist für Spieler komplett verborgen — die Vorschau zeigt, was sie nach Freischaltung sähen.
         </div>
       )}
-      <div style={{ display:'flex', alignItems:'center', gap:8, margin:'18px 0 18px', flexWrap:'wrap' }}>
-        <span style={{ fontFamily:MONO, fontSize:8.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Ansicht als</span>
+      {!dmView && <div style={{ display:'flex', alignItems:'center', gap:8, margin:'18px 0 18px', flexWrap:'wrap' }}>
         <span style={dmView
           ? { padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', borderRadius:3, background:'rgba(255,184,80,0.16)', border:'1px solid rgba(255,184,80,0.7)', color:'#ffb850' }
           : { padding:'6px 13px', fontFamily:MONO, fontSize:8.5, letterSpacing:'0.14em', textTransform:'uppercase', borderRadius:3, background:'rgba(var(--purple-rgb),calc(0.2*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.7*var(--kp)))', color:'var(--white)' }}>
@@ -1977,7 +1976,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
               style={{ padding:'6px 12px', background:'transparent', border:'1px solid rgba(var(--accent-rgb),calc(0.25*var(--ka)))', borderRadius:3, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', fontFamily:MONO, fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer' }}>○ Alles sperren</button>
           </React.Fragment>
         )}
-      </div>
+      </div>}
 
       <div style={{ background:'rgba(var(--panel-rgb),0.99)', border:`1px solid ${hexA(acc, 0.33)}`, borderRadius:6, boxShadow:`0 10px 50px rgba(var(--shadow-rgb),calc(0.5 * var(--shadow-k))), 0 0 80px ${hexA(acc, 0.10)}`, overflow:'hidden', position:'relative' }}>
         {dv.logo && (
