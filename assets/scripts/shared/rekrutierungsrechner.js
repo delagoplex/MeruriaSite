@@ -209,6 +209,14 @@
       }, extra || {}) }, label);
     }
 
+    // Beschriftete Zeile (Schlüssel links, Wert rechts)
+    function kv(k, v) {
+      return h('div', { key: k, style: { display: 'flex', gap: 12, alignItems: 'baseline', padding: '5px 0', borderBottom: '1px solid ' + cA(0.1) } },
+        h('span', { style: { width: 86, flexShrink: 0, fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: cA(0.7) } }, k),
+        h('span', { style: { flex: 1, minWidth: 0, fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.04em', color: 'var(--white)', overflowWrap: 'anywhere' } }, v)
+      );
+    }
+
     // Abschnitt mit Trennlinie
     function sec(label, content, first) {
       return h('div', { style: { marginTop: first ? 0 : 20, paddingTop: first ? 0 : 18, borderTop: first ? 'none' : '1px solid ' + cA(0.15) } },
@@ -287,23 +295,25 @@
 
     // Dauer-Auswahl (gilt für beide Richtungen)
     var dauerPicker = sec('Dauer der Rekrutierung',
-      h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' } },
+      h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 8 } },
         DAUER_PRESETS.map(function(p) {
-          return pillBtn(tage === p.tage, function() { setTage(p.tage); }, p.label);
+          return pillBtn(tage === p.tage, function() { setTage(p.tage); }, p.label, { padding: '9px 6px', whiteSpace: 'nowrap' });
         }),
-        h('input', {
-          type: 'number', min: 1, max: 365, value: tage,
-          onChange: function(e) {
-            var n = parseInt(e.target.value, 10);
-            setTage(isNaN(n) ? 1 : Math.max(1, Math.min(365, n)));
-          },
-          style: {
-            width: 72, padding: '8px 10px', background: 'rgba(var(--panel-rgb),0.9)',
-            border: '1px solid ' + cA(0.3), color: 'var(--white)', borderRadius: 4,
-            fontFamily: 'var(--font-mono)', fontSize: 12,
-          },
-        }),
-        h('span', { style: infoStyle }, 'Tage')
+        h('div', { style: { display: 'flex', alignItems: 'center', gap: 6, minWidth: 0 } },
+          h('input', {
+            type: 'number', min: 1, max: 365, value: tage, 'aria-label': 'Eigene Dauer in Tagen',
+            onChange: function(e) {
+              var n = parseInt(e.target.value, 10);
+              setTage(isNaN(n) ? 1 : Math.max(1, Math.min(365, n)));
+            },
+            style: {
+              width: '100%', minWidth: 0, boxSizing: 'border-box', padding: '8px 6px', background: 'rgba(var(--panel-rgb),0.9)',
+              border: '1px solid ' + cA(0.3), color: 'var(--white)', borderRadius: 4,
+              fontFamily: 'var(--font-mono)', fontSize: 12, textAlign: 'center',
+            },
+          }),
+          h('span', { style: infoStyle }, 'Tage')
+        )
       )
     );
 
@@ -368,11 +378,16 @@
     function zieheZurueck(id) {
       window._sb.from('rekrutierung_anfragen').delete().eq('id', id).then(function() { ladeAnfragen(); });
     }
-    var anfrageBox = selChar && playerRangNr !== null && h('div', { style: { marginTop: 20, paddingTop: 18, borderTop: '1px solid ' + cA(0.15) } },
+    var anfrageBox = selChar && playerRangNr !== null && h('div', { style: { marginTop: 24, paddingTop: 18, borderTop: '1px solid ' + cA(0.15) } },
       h('label', { style: labelStyle }, 'NSC anfragen'),
-      h('div', { style: Object.assign({ marginBottom: 10 }, infoStyle) },
-        'Rang ' + nscRang + ' ' + nscTitel + ' · ' + division.name.replace(/^Die\s+/, '') + ' · ' + dauerTxt + ' · für ' + charName(selChar),
-        h('br'), rasseTxt ? 'Rasse: ' + rasseTxt + (ra.talent ? ' · ' + ra.talent : '') + (ra.waffe ? ' · ' + ra.waffe : '') : 'Statblock wie in der Vorlage (keine Rasse gewählt)'),
+      h('div', { style: { marginBottom: 14 } },
+        kv('NSC', 'Rang ' + nscRang + ' ' + nscTitel),
+        kv('Division', division.name.replace(/^Die\s+/, '')),
+        kv('Dauer', dauerTxt),
+        kv('Für', charName(selChar)),
+        kv('Rasse', rasseTxt || 'wie in der Vorlage'),
+        ra && ra.talent ? kv('Talent', ra.talent) : null,
+        ra && ra.waffe ? kv('Waffe', ra.waffe) : null),
       h('textarea', {
         value: nachricht, onChange: function(e) { setNachricht(e.target.value); }, rows: 2,
         placeholder: 'Nachricht an die Spielleitung (optional) …',
@@ -428,12 +443,14 @@
 
       // Szenario A: Spieler zahlt
       scenario === 'PAY' && h('div', boxStyle('rgba(200,80,80,0.35)'),
-        h('span', { style: labelStyle }, 'NSC hat höheren Rang · Du zahlst für ' + dauerTxt),
+        h('span', { style: labelStyle }, 'Du zahlst'),
         h('span', { style: bigNumStyle('#ff9980') }, fmtHade(fee)),
-        h('span', { style: formulaStyle },
-          '(' + playerRangNr + ' − ' + nscRang + ') × ' + ev.nscPreis + ' Hade/Schritt × ' + dauerTxt + ' = ' + fee
+        h('span', { style: Object.assign({ display: 'block' }, infoStyle) }, 'für ' + dauerTxt + ' · NSC hat höheren Rang'),
+        h('div', { style: { marginTop: 14, paddingTop: 12, borderTop: '1px solid ' + cA(0.12) } },
+          kv('Rangstufen', (playerRangNr - nscRang) + '  (Rang ' + playerRangNr + ' → ' + nscRang + ')'),
+          kv('Preis', ev.nscPreis + ' Hade je Stufe und Tag')
         ),
-        h('div', { style: noteStyle }, 'Der NSC nimmt die Mission an und leistet sein Bestes.')
+        h('div', { style: Object.assign({}, noteStyle, { fontSize: 13, marginTop: 10 }) }, 'Der NSC nimmt die Mission an und leistet sein Bestes.')
       ),
 
       // Szenario B: Kostenlos, andere Division
@@ -452,10 +469,12 @@
 
       // Szenario C: Mentor-Honorar
       scenario === 'MENTOR' && h('div', boxStyle(cA(0.35)),
-        h('span', { style: labelStyle }, 'Gleiche Division · Du bist Mentor · Mögliches Honorar für ' + dauerTxt),
+        h('span', { style: labelStyle }, 'Mögliches Honorar für dich'),
         h('span', { style: bigNumStyle(accent) }, fmtHade(mentorFee)),
-        h('span', { style: formulaStyle },
-          '(' + nscRang + ' − ' + playerRangNr + ') × ' + ev.playerPreis + ' Hade/Schritt × ' + dauerTxt + ' = ' + mentorFee
+        h('span', { style: Object.assign({ display: 'block' }, infoStyle) }, 'für ' + dauerTxt + ' · gleiche Division · du bist Mentor'),
+        h('div', { style: { marginTop: 14, paddingTop: 12, borderTop: '1px solid ' + cA(0.12) } },
+          kv('Rangstufen', (nscRang - playerRangNr) + '  (Rang ' + nscRang + ' → ' + playerRangNr + ')'),
+          kv('Preis', ev.playerPreis + ' Hade je Stufe und Tag')
         ),
         h('div', { style: Object.assign({}, noteStyle, { marginBottom: 12 }) }, 'Der NSC zahlt dir das Honorar, wenn alle drei Bedingungen nach der Mission erfüllt sind:'),
 

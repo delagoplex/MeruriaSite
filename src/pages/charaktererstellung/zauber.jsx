@@ -177,9 +177,6 @@ function ZaubertypFilters({ filters, setFilters }) {
               </button>
             );
           })}
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: '10px', fontStyle: 'italic', color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))', padding: '4px 7px 0' }}>
-            Zauber mit wählbarer Schadensart erscheinen bei jeder ihrer Arten.
-          </div>
         </div>
       </FilterGroup>
     )}
