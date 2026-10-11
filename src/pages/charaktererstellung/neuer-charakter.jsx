@@ -138,7 +138,7 @@ function GlitchBtn({
   }, label), sub && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.14em',
       color: primary ? 'rgba(var(--accent-rgb),calc(.55*var(--ka)))' : 'rgba(var(--accent-rgb),calc(.28*var(--ka)))',
       marginTop: 5,
@@ -183,13 +183,13 @@ function Nav({
   }, "MERURIA"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(.25*var(--ka) + var(--tb)))'
     }
   }, "\u25C2"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.16em',
       color: 'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -203,7 +203,7 @@ function Nav({
     className: "no-print",
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.14em',
       color: 'rgba(var(--accent-rgb),calc(.45*var(--ka) + var(--tb)))',
       background: 'transparent',
@@ -243,7 +243,7 @@ function TypeSelectPhase({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.3em',
       color: 'rgba(var(--purple-rgb),calc(.5*var(--kp) + var(--tb)))',
       textTransform: 'uppercase'
@@ -264,7 +264,7 @@ function TypeSelectPhase({
     style: {
       fontFamily: 'var(--font-b)',
       fontWeight: 300,
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'rgba(var(--text-rgb),calc(.38*var(--kt) + var(--tb)))',
       letterSpacing: '.08em',
       maxWidth: 380,
@@ -397,7 +397,7 @@ function TagPhase({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.28em',
       color: 'rgba(var(--purple-rgb),calc(.5*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -418,7 +418,7 @@ function TagPhase({
     /*#__PURE__*/React.createElement("button", {
       onClick: onNext,
       style: {
-        fontFamily: 'var(--font-m)', fontSize: '8px', letterSpacing: '.16em',
+        fontFamily: 'var(--font-m)', fontSize: '11px', letterSpacing: '.16em',
         textTransform: 'uppercase', padding: '6px 14px', flexShrink: 0,
         background: 'transparent', border: '1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))',
         borderRadius: 3, cursor: 'pointer', color: 'rgba(var(--accent-rgb),calc(.4*var(--ka) + var(--tb)))',
@@ -432,7 +432,7 @@ function TagPhase({
     style: {
       fontFamily: 'var(--font-b)',
       fontWeight: 300,
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'rgba(var(--text-rgb),calc(.4*var(--kt) + var(--tb)))',
       lineHeight: 1.9,
       maxWidth: 580
@@ -541,7 +541,7 @@ function TagPhase({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(.38*var(--ka) + var(--tb)))',
       letterSpacing: '.1em'
     }
@@ -602,7 +602,7 @@ function QuizPhase({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.3em',
       color: 'color-mix(in srgb, rgba(94,232,208,.7), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase'
@@ -636,7 +636,7 @@ function QuizPhase({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.2em',
       color: 'rgba(var(--purple-rgb),calc(.5*var(--kp) + var(--tb)))',
       textTransform: 'uppercase'
@@ -644,7 +644,7 @@ function QuizPhase({
   }, "Schritt 2 \xB7 Charakteranalyse"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(.4*var(--ka) + var(--tb)))'
     }
   }, answered, " / ", total)), /*#__PURE__*/React.createElement("div", {
@@ -664,7 +664,7 @@ function QuizPhase({
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.2em',
       color: 'rgba(var(--purple-rgb),calc(.55*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1025,7 +1025,7 @@ function OutputPhase({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.28em',
       color: 'color-mix(in srgb, rgba(94,232,208,.55), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase',
@@ -1062,7 +1062,7 @@ function OutputPhase({
     style: {
       marginLeft: 'auto',
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.17em',
       color: 'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))',
       background: 'transparent',
@@ -1104,7 +1104,7 @@ function OutputPhase({
     /*#__PURE__*/React.createElement("div", { style: { display: 'flex', alignItems: 'baseline', gap: 8 } },
       /*#__PURE__*/React.createElement("div", { className: "sh-lbl" }, lbl),
       lbl2 && /*#__PURE__*/React.createElement("span", {
-        style: { fontFamily: 'var(--font-m)', fontSize: '7px', letterSpacing: '.16em',
+        style: { fontFamily: 'var(--font-m)', fontSize: '11px', letterSpacing: '.16em',
           color: 'color-mix(in srgb, rgba(251,191,36,.55), rgb(var(--ink-rgb)) var(--cm))', textTransform: 'uppercase' }
       }, lbl2)
     ),
@@ -1127,11 +1127,11 @@ function OutputPhase({
           }
         },
           /*#__PURE__*/React.createElement("div", {
-            style: { fontFamily: 'var(--font-m)', fontSize: '10px', letterSpacing: '.08em',
+            style: { fontFamily: 'var(--font-m)', fontSize: '12px', letterSpacing: '.08em',
               color: sel ? (isEmp ? 'color-mix(in srgb, rgba(253,230,138,.95), rgb(var(--ink-rgb)) var(--cm))' : 'var(--white)') : 'rgba(var(--text-rgb),calc(.75*var(--kt)))' }
           }, opt),
           hint && /*#__PURE__*/React.createElement("div", {
-            style: { fontFamily: 'var(--font-b)', fontSize: '9px', fontWeight: 300,
+            style: { fontFamily: 'var(--font-b)', fontSize: '11.5px', fontWeight: 300,
               color: sel ? (isEmp ? 'color-mix(in srgb, rgba(253,230,138,.5), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(.55*var(--kt)))') : 'rgba(var(--accent-rgb),calc(.38*var(--ka)))',
               marginTop: 2, lineHeight: 1.4 }
           }, hint)
@@ -1141,7 +1141,7 @@ function OutputPhase({
         className: `sh-val ${src === 'quiz' ? 'quiz-det' : ''}`
       }, val, src === 'quiz' && /*#__PURE__*/React.createElement("span", {
         style: {
-          fontFamily: 'var(--font-m)', fontSize: '8px',
+          fontFamily: 'var(--font-m)', fontSize: '11px',
           color: 'color-mix(in srgb, rgba(94,232,208,.4), rgb(var(--ink-rgb)) var(--cm))', marginLeft: 10, letterSpacing: '.1em'
         }
       }, "\u21AF per Quiz"))))), /*#__PURE__*/React.createElement("div", {
@@ -1151,7 +1151,7 @@ function OutputPhase({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-d)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '.22em',
       color: 'rgba(var(--accent-rgb),calc(.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1174,7 +1174,7 @@ function OutputPhase({
     style: {
       fontFamily: 'var(--font-b)',
       fontWeight: 300,
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'rgba(var(--text-rgb),calc(.45*var(--kt) + var(--tb)))',
       lineHeight: 1.75,
       margin: 0
@@ -1203,7 +1203,7 @@ function OutputPhase({
     placeholder: "XXXX-XXXX",
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '.12em',
       background: 'rgba(var(--bg-rgb),.5)',
       border: '1px solid rgba(var(--accent-rgb),calc(.18*var(--ka)))',
@@ -1219,7 +1219,7 @@ function OutputPhase({
     disabled: tokenState === 'checking' || !tokenInput.trim(),
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.12em',
       color: 'rgba(var(--accent-rgb),calc(.75*var(--ka) + var(--tb)))',
       background: 'rgba(var(--purple-rgb),calc(.08*var(--kp)))',
@@ -1233,7 +1233,7 @@ function OutputPhase({
   }, tokenState === 'checking' ? '…' : 'Würfelerlaubnis einlösen'), tokenState === 'error' && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'color-mix(in srgb, rgba(255,100,100,.75), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '.08em'
     }
@@ -1246,7 +1246,7 @@ function OutputPhase({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'color-mix(in srgb, rgba(94,232,208,.6), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '.18em',
       textTransform: 'uppercase'
@@ -1264,7 +1264,7 @@ function OutputPhase({
     },
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.15em',
       color: 'rgba(var(--accent-rgb),calc(.85*var(--ka) + var(--tb)))',
       background: 'rgba(var(--purple-rgb),calc(.08*var(--kp)))',
@@ -1287,7 +1287,7 @@ function OutputPhase({
     onClick: () => setStatsMode('manual'),
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.15em',
       color: 'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))',
       background: 'transparent',
@@ -1334,7 +1334,7 @@ function OutputPhase({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.18em',
       textTransform: 'uppercase',
       color: chosen === 'a' ? 'color-mix(in srgb, rgba(94,232,208,.7), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(.4*var(--ka)))',
@@ -1351,7 +1351,7 @@ function OutputPhase({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(.45*var(--ka) + var(--tb)))',
       letterSpacing: '.1em'
     }
@@ -1364,7 +1364,7 @@ function OutputPhase({
   }, rollA[i].val, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(.25*var(--ka) + var(--tb)))',
       marginLeft: 5
     }
@@ -1373,7 +1373,7 @@ function OutputPhase({
       textAlign: 'right',
       marginTop: 6,
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(.35*var(--ka) + var(--tb)))'
     }
   }, "\u03A3 ", rollA.reduce((s, r) => s + r.val, 0))), rollB && /*#__PURE__*/React.createElement("div", {
@@ -1391,7 +1391,7 @@ function OutputPhase({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.18em',
       textTransform: 'uppercase',
       color: chosen === 'b' ? 'color-mix(in srgb, rgba(94,232,208,.7), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(.4*var(--ka)))',
@@ -1408,7 +1408,7 @@ function OutputPhase({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(.45*var(--ka) + var(--tb)))',
       letterSpacing: '.1em'
     }
@@ -1421,7 +1421,7 @@ function OutputPhase({
   }, rollB[i].val, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(.25*var(--ka) + var(--tb)))',
       marginLeft: 5
     }
@@ -1430,7 +1430,7 @@ function OutputPhase({
       textAlign: 'right',
       marginTop: 6,
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(.35*var(--ka) + var(--tb)))'
     }
   }, "\u03A3 ", rollB.reduce((s, r) => s + r.val, 0)))), !rollB && tokenState === 'valid' && /*#__PURE__*/React.createElement("button", {
@@ -1438,7 +1438,7 @@ function OutputPhase({
     style: {
       alignSelf: 'flex-start',
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.13em',
       color: 'color-mix(in srgb, rgba(94,232,208,.75), rgb(var(--ink-rgb)) var(--cm))',
       background: 'transparent',
@@ -1460,7 +1460,7 @@ function OutputPhase({
   }, "\u21BA Zweiter Wurf"), rollB && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(.4*var(--ka) + var(--tb)))',
       letterSpacing: '.1em',
       margin: 0
@@ -1488,7 +1488,7 @@ function OutputPhase({
   }, /*#__PURE__*/React.createElement("label", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',
       letterSpacing: '.14em',
       textTransform: 'uppercase'
@@ -1519,7 +1519,7 @@ function OutputPhase({
   })))), getFinalStats() === null && KEYS.some(k => manual[k] !== '') && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'color-mix(in srgb, rgba(255,140,100,.7), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '.1em'
     }
@@ -1530,24 +1530,24 @@ function OutputPhase({
     /*#__PURE__*/React.createElement("button", {type:"button", onClick:()=>setShowDetails(v=>!v),
       style:{width:'100%',display:'flex',alignItems:'center',gap:10,padding:'13px 18px',
         background:showDetails?'rgba(var(--purple-rgb),calc(.06*var(--kp)))':'transparent',border:'none',cursor:'pointer',textAlign:'left'}},
-      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.26em',
+      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11.5px',letterSpacing:'.26em',
         textTransform:'uppercase',color:showDetails?'rgba(var(--text-rgb),calc(.8*var(--kt)))':'rgba(var(--accent-rgb),calc(.4*var(--ka)))'}},
         "Erscheinung & Pers\xF6nlichkeit"),
-      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(var(--purple-rgb),calc(.35*var(--kp) + var(--tb)))',marginLeft:'auto'}},
+      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'rgba(var(--purple-rgb),calc(.35*var(--kp) + var(--tb)))',marginLeft:'auto'}},
         showDetails ? '▲ Einklappen' : '▼ Erweitern (optional)'
       )
     ),
     showDetails && /*#__PURE__*/React.createElement("div", {style:{padding:'16px 18px 20px',borderTop:'1px solid rgba(var(--accent-rgb),calc(.1*var(--ka)))'}},
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.26em',
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.26em',
         color:'rgba(var(--purple-rgb),calc(.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:12}}, "Erscheinung"),
       /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(160px,1fr))',gap:10,marginBottom:18}},
         [['alter','Alter'],['geburtsort','Geburtsort'],['groesse','Gr\xF6\xDFe'],
          ['gewicht','Gewicht'],['augen','Augen'],['haare','Haare'],['haut','Haut / Schuppen']].map(([k,lbl])=>
           /*#__PURE__*/React.createElement("div", {key:k, style:{display:'flex',flexDirection:'column',gap:4}},
-            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
+            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.14em',
               color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',textTransform:'uppercase'}}, lbl),
             /*#__PURE__*/React.createElement("input", {value:(k==='alter'&&window.CharAge.fromBirth(details.geburtstag_jahr,details.geburtstag_doy)!=null)?String(window.CharAge.fromBirth(details.geburtstag_jahr,details.geburtstag_doy)):details[k], disabled:(k==='alter'&&window.CharAge.fromBirth(details.geburtstag_jahr,details.geburtstag_doy)!=null), onChange:e=>setDet(k,e.target.value),
-              style:{fontFamily:'var(--font-b)',fontSize:'12px',background:'rgba(var(--bg-rgb),.5)',
+              style:{fontFamily:'var(--font-b)',fontSize:'13px',background:'rgba(var(--bg-rgb),.5)',
                 border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))',borderRadius:3,color:'var(--white)',
                 outline:'none',padding:'6px 9px'},
               onFocus:e=>e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(.55*var(--kp)))',
@@ -1557,34 +1557,34 @@ function OutputPhase({
       ),
       /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(160px,1fr))',gap:10,marginBottom:18}},
         /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
-          /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
+          /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.14em',
             color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',textTransform:'uppercase'}}, "Geburtsdatum"),
           /*#__PURE__*/React.createElement(window.CharAge.BirthDatePicker, {doy:details.geburtstag_doy, jahr:details.geburtstag_jahr,
             onChange:({doy,jahr})=>setDetails(p=>({...p, geburtstag_doy:doy, geburtstag_jahr:jahr})),
-            buttonStyle:{fontFamily:'var(--font-m)', fontSize:'11px', background:'rgba(var(--bg-rgb),.5)', border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))', borderRadius:3, color:'var(--white)', outline:'none', padding:'6px 10px'}})
+            buttonStyle:{fontFamily:'var(--font-m)', fontSize:'12.5px', background:'rgba(var(--bg-rgb),.5)', border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))', borderRadius:3, color:'var(--white)', outline:'none', padding:'6px 10px'}})
         ),
         /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
-          /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
+          /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.14em',
             color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',textTransform:'uppercase'}}, "Lieblingsfarbe"),
           /*#__PURE__*/React.createElement("input", {value:details.lieblingsfarbe, onChange:e=>setDet('lieblingsfarbe',e.target.value),
-            style:{fontFamily:'var(--font-b)',fontSize:'12px',background:'rgba(var(--bg-rgb),.5)',
+            style:{fontFamily:'var(--font-b)',fontSize:'13px',background:'rgba(var(--bg-rgb),.5)',
               border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))',borderRadius:3,color:'var(--white)',
               outline:'none',padding:'6px 9px'},
             onFocus:e=>e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(.55*var(--kp)))',
             onBlur:e=>e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(.2*var(--ka)))'})
         )
       ),
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.26em',
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.26em',
         color:'rgba(var(--purple-rgb),calc(.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:12}}, "Pers\xF6nlichkeit"),
       /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:10}},
         [['geschichte','Geschichte / Erste Tage'],['persoenlichkeit','Pers\xF6nlichkeitsmerkmal'],
          ['ideal','Ideal'],['bindung','Bindung']].map(([k,lbl])=>
           /*#__PURE__*/React.createElement("div", {key:k, style:{display:'flex',flexDirection:'column',gap:4}},
-            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.14em',
+            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.14em',
               color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',textTransform:'uppercase'}}, lbl),
             /*#__PURE__*/React.createElement("textarea", {value:details[k], onChange:e=>setDet(k,e.target.value),
               rows:k==='geschichte'?4:2,
-              style:{fontFamily:'var(--font-b)',fontSize:'12px',background:'rgba(var(--bg-rgb),.5)',
+              style:{fontFamily:'var(--font-b)',fontSize:'13px',background:'rgba(var(--bg-rgb),.5)',
                 border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))',borderRadius:3,color:'var(--white)',
                 outline:'none',padding:'7px 10px',resize:'vertical',lineHeight:1.65},
               onFocus:e=>e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(.55*var(--kp)))',
@@ -1611,7 +1611,7 @@ function OutputPhase({
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-d)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '.22em',
       color: 'rgba(var(--accent-rgb),calc(.8*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1621,7 +1621,7 @@ function OutputPhase({
     style: {
       fontFamily: 'var(--font-b)',
       fontWeight: 300,
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'rgba(var(--text-rgb),calc(.45*var(--kt) + var(--tb)))',
       lineHeight: 1.6
     }
@@ -1645,7 +1645,7 @@ function OutputPhase({
       borderRadius: 3,
       color: 'rgba(var(--text-rgb),calc(.95*var(--kt) + var(--tb)))',
       fontFamily: 'var(--font-d)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '.18em',
       textTransform: 'uppercase',
       cursor: saving ? 'not-allowed' : 'pointer',
@@ -1670,7 +1670,7 @@ function OutputPhase({
   }, saving ? 'Speichern…' : 'Steckbrief öffnen →')), quizAnswers.length > 0 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-d)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '.22em',
       color: 'rgba(var(--accent-rgb),calc(.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1680,7 +1680,7 @@ function OutputPhase({
     style: {
       fontFamily: 'var(--font-b)',
       fontWeight: 300,
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'rgba(var(--text-rgb),calc(.38*var(--kt) + var(--tb)))',
       lineHeight: 1.85,
       marginBottom: 22
@@ -1693,7 +1693,7 @@ function OutputPhase({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.2em',
       color: 'rgba(var(--purple-rgb),calc(.55*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1757,7 +1757,7 @@ function OutputPhase({
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.28em',
       color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1809,7 +1809,7 @@ function OutputPhase({
     onClick: () => setShowNameModal(false),
     style: {
       fontFamily: 'var(--font-m)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.18em',
       textTransform: 'uppercase',
       padding: '9px 18px',
@@ -1837,7 +1837,7 @@ function OutputPhase({
     },
     style: {
       fontFamily: 'var(--font-d)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '.18em',
       textTransform: 'uppercase',
       padding: '9px 24px',
@@ -1891,13 +1891,13 @@ function BirthdayPicker({ doy, onChange }) {
   const M = MONTHS_M[mo];
   const selDay = doy && MS_M[mo]<=doy && doy<MS_M[mo]+M.days ? doy-MS_M[mo]+1 : null;
   const btnSt = {
-    fontFamily:'var(--font-m)', fontSize:'11px', background:'rgba(var(--bg-rgb),.5)',
+    fontFamily:'var(--font-m)', fontSize:'12.5px', background:'rgba(var(--bg-rgb),.5)',
     border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))', borderRadius:3, color: doy ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(.4*var(--ka)))',
     outline:'none', padding:'6px 10px', cursor:'pointer', textAlign:'left', width:'100%'
   };
   return /*#__PURE__*/React.createElement("div", {ref, style:{position:'relative'}},
     /*#__PURE__*/React.createElement("button", {type:"button", style:btnSt, onClick:()=>{if(!open){setMo(initMo());setOpen(true);}else setOpen(false);}},
-      doy ? doyText(doy) : 'Kein Datum', " ", /*#__PURE__*/React.createElement("span", {style:{opacity:.4,fontSize:10}}, "▾")
+      doy ? doyText(doy) : 'Kein Datum', " ", /*#__PURE__*/React.createElement("span", {style:{opacity:.4,fontSize:12}}, "▾")
     ),
     open && /*#__PURE__*/React.createElement("div", {style:{
       position:'absolute',top:'calc(100% + 3px)',left:0,zIndex:1500,
@@ -1906,7 +1906,7 @@ function BirthdayPicker({ doy, onChange }) {
     }},
       /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexWrap:'wrap',gap:2,padding:'7px 7px 5px',borderBottom:'1px solid rgba(var(--purple-rgb),calc(.12*var(--kp)))'}},
         MONTHS_M.map((m,i)=>/*#__PURE__*/React.createElement("button", {key:i, type:"button", onClick:()=>setMo(i),
-          style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.1em',padding:'3px 6px',cursor:'pointer',
+          style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.1em',padding:'3px 6px',cursor:'pointer',
             background:mo===i?'rgba(var(--purple-rgb),calc(.28*var(--kp)))':'transparent',
             border:`1px solid ${mo===i?'rgba(var(--purple-rgb),calc(.55*var(--kp)))':'rgba(var(--purple-rgb),calc(.12*var(--kp)))'}`,
             borderRadius:2,color:mo===i?'var(--white)':'rgba(var(--text-rgb),calc(.45*var(--kt)))'}},
@@ -1915,7 +1915,7 @@ function BirthdayPicker({ doy, onChange }) {
       ),
       /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'repeat(7,1fr)',gap:2,padding:'7px'}},
         Array.from({length:M.days},(_,i)=>i+1).map(d=>/*#__PURE__*/React.createElement("button", {key:d, type:"button", onClick:()=>pick(mo,d),
-          style:{fontFamily:'var(--font-m)',fontSize:'11px',padding:'6px 2px',cursor:'pointer',textAlign:'center',
+          style:{fontFamily:'var(--font-m)',fontSize:'12.5px',padding:'6px 2px',cursor:'pointer',textAlign:'center',
             background:selDay===d?'rgba(var(--purple-rgb),calc(.42*var(--kp)))':'rgba(var(--purple-rgb),calc(.05*var(--kp)))',
             border:`1px solid ${selDay===d?'rgba(var(--purple-rgb),calc(.75*var(--kp)))':'rgba(var(--purple-rgb),calc(.12*var(--kp)))'}`,
             borderRadius:2,color:selDay===d?'var(--white)':'rgba(var(--text-rgb),calc(.8*var(--kt)))'}},
@@ -1924,7 +1924,7 @@ function BirthdayPicker({ doy, onChange }) {
       ),
       /*#__PURE__*/React.createElement("div", {style:{padding:'4px 7px 7px',borderTop:'1px solid rgba(var(--purple-rgb),calc(.1*var(--kp)))'}},
         /*#__PURE__*/React.createElement("button", {type:"button", onClick:()=>{onChange(null);setOpen(false);},
-          style:{fontFamily:'var(--font-m)',fontSize:'7.5px',letterSpacing:'.18em',textTransform:'uppercase',
+          style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',
             color:'rgba(var(--text-rgb),calc(.3*var(--kt) + var(--tb)))',background:'transparent',border:'none',cursor:'pointer',padding:'2px 0'}},
           "Datum entfernen"
         )
@@ -2016,9 +2016,9 @@ function NscTagPhase({ nscTags, setNscTag, onNext }) {
   });
   return /*#__PURE__*/React.createElement("div", {style:{maxWidth:920,margin:'0 auto',padding:'44px 32px 80px',animation:'slideUp .4s ease'}},
     /*#__PURE__*/React.createElement("div", {style:{marginBottom:38}},
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.28em',color:'rgba(var(--purple-rgb),calc(.5*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:9}}, "Schritt 1 · NSC-Tags"),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'11.5px',letterSpacing:'.28em',color:'rgba(var(--purple-rgb),calc(.5*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:9}}, "Schritt 1 · NSC-Tags"),
       /*#__PURE__*/React.createElement("h2", {style:{fontFamily:'var(--font-d)',fontSize:'clamp(16px,3vw,26px)',fontWeight:300,letterSpacing:'.18em',color:'var(--white)',marginBottom:11}}, "Was weißt du schon?"),
-      /*#__PURE__*/React.createElement("p", {style:{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'12px',color:'rgba(var(--text-rgb),calc(.4*var(--kt) + var(--tb)))',lineHeight:1.9,maxWidth:580}},
+      /*#__PURE__*/React.createElement("p", {style:{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'13px',color:'rgba(var(--text-rgb),calc(.4*var(--kt) + var(--tb)))',lineHeight:1.9,maxWidth:580}},
         "Fülle alles aus, was du bereits über den NSC weißt. Leere Felder werden im nächsten Schritt durch gezielte Quizfragen eingegrenzt."
       )
     ),
@@ -2042,9 +2042,9 @@ function NscTagPhase({ nscTags, setNscTag, onNext }) {
     /*#__PURE__*/React.createElement(CatBlock, {title:"Lebensphase",items:NSC_LEBENSPHASE_LIST,selected:t.lebensphase,onSelect:v=>setNscTag('lebensphase',v)}),
     /*#__PURE__*/React.createElement(CatBlock, {title:"Gottheit",items:GOETTER,selected:t.gottheit,onSelect:v=>setNscTag('gottheit',v)}),
     /*#__PURE__*/React.createElement("div", {style:{marginTop:44,display:'flex',alignItems:'center',justifyContent:'flex-end',gap:14},className:"no-print"},
-      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(var(--accent-rgb),calc(.38*var(--ka) + var(--tb)))',letterSpacing:'.1em'}},
+      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11.5px',color:'rgba(var(--accent-rgb),calc(.38*var(--ka) + var(--tb)))',letterSpacing:'.1em'}},
         filledCount, " Feld", filledCount!==1?'er':'', " ausgefüllt"),
-      !t.name.trim() && /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'color-mix(in srgb, rgba(255,140,100,.6), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'.1em'}}, "Name ist Pflichtfeld"),
+      !t.name.trim() && /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'color-mix(in srgb, rgba(255,140,100,.6), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'.1em'}}, "Name ist Pflichtfeld"),
       /*#__PURE__*/React.createElement(GlitchBtn, {label:"Weiter",sub:"Zum Quiz",onClick:onNext,primary:!!t.name.trim(),style:{padding:'14px 36px',minWidth:0}})
     )
   );
@@ -2052,24 +2052,24 @@ function NscTagPhase({ nscTags, setNscTag, onNext }) {
 
 // ── NSC Form Helpers ────────────────────────────────────────────────────────
 const nscFieldSt = {
-  fontFamily:'var(--font-b)', fontSize:'12px', background:'rgba(var(--bg-rgb),.5)',
+  fontFamily:'var(--font-b)', fontSize:'13px', background:'rgba(var(--bg-rgb),.5)',
   border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))', borderRadius:3, color:'var(--white)',
   outline:'none', padding:'6px 9px', width:'100%', boxSizing:'border-box',
 };
 const nscRmBt = {
   background:'rgba(227,103,96,.08)', border:'1px solid rgba(227,103,96,.35)',
   borderRadius:2, color:'rgba(227,103,96,.8)', cursor:'pointer', padding:'4px 8px',
-  fontFamily:'var(--font-m)', fontSize:10, flexShrink:0, lineHeight:1,
+  fontFamily:'var(--font-m)', fontSize:12, flexShrink:0, lineHeight:1,
 };
 const nscAddBt = {
   background:'rgba(var(--purple-rgb),calc(.08*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))',
   borderRadius:2, color:'rgba(var(--text-rgb),calc(.7*var(--kt) + var(--tb)))', cursor:'pointer', padding:'4px 12px',
-  fontFamily:'var(--font-m)', fontSize:'8.5px', letterSpacing:'.18em', textTransform:'uppercase',
+  fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.18em', textTransform:'uppercase',
   marginTop:6, display:'inline-block',
 };
 function NscField(label, children) {
   return /*#__PURE__*/React.createElement("div", {key:label, style:{marginBottom:10}},
-    /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.16em',
+    /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.16em',
       color:'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))',textTransform:'uppercase',display:'block',marginBottom:3}}, label),
     children
   );
@@ -2085,11 +2085,11 @@ function NscSektionComp({ title, children }) {
       style:{width:'100%',padding:'11px 14px',display:'flex',alignItems:'center',gap:10,
         background:open?'rgba(var(--purple-rgb),calc(.07*var(--kp)))':'transparent',border:'none',borderRadius:'2px',
         cursor:'pointer',textAlign:'left'}},
-      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.26em',
+      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11.5px',letterSpacing:'.26em',
         textTransform:'uppercase',flexShrink:0,
         color:open?'var(--lav)':'rgba(var(--accent-rgb),calc(.38*var(--ka)))'}}, title),
       /*#__PURE__*/React.createElement("div", {style:{flex:1}}),
-      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(var(--purple-rgb),calc(.45*var(--kp) + var(--tb)))',flexShrink:0}},
+      /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'rgba(var(--purple-rgb),calc(.45*var(--kp) + var(--tb)))',flexShrink:0}},
         open?'▲':'▼')
     ),
     open && /*#__PURE__*/React.createElement("div", {style:{padding:'14px 14px 18px',borderTop:'1px solid rgba(var(--purple-rgb),calc(.12*var(--kp)))'}},
@@ -2251,7 +2251,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
   }
 
   const btnBase = {
-    fontFamily:'var(--font-m)', fontSize:'8px', letterSpacing:'.12em',
+    fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.12em',
     padding:'7px 14px', borderRadius:3, cursor:'pointer',
     textTransform:'uppercase', transition:'all .2s'
   };
@@ -2261,13 +2261,13 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     color:active?'rgba(var(--text-rgb),calc(.9*var(--kt)))':'rgba(var(--accent-rgb),calc(.45*var(--ka)))',
   });
   const fieldStyle = {
-    fontFamily:'var(--font-m)', fontSize:'11px', background:'rgba(var(--bg-rgb),.5)',
+    fontFamily:'var(--font-m)', fontSize:'12.5px', background:'rgba(var(--bg-rgb),.5)',
     border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))', borderRadius:3, color:'var(--white)',
     outline:'none', padding:'6px 9px',
   };
 
   if (saved) return /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',minHeight:'calc(calc(var(--vh, 1vh) * 100) - 52px)',gap:16,padding:40,animation:'fadeIn .5s'}},
-    /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.3em',color:'color-mix(in srgb, rgba(94,232,208,.7), rgb(var(--ink-rgb)) var(--cm))',textTransform:'uppercase'}}, "NSC gespeichert"),
+    /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'11.5px',letterSpacing:'.3em',color:'color-mix(in srgb, rgba(94,232,208,.7), rgb(var(--ink-rgb)) var(--cm))',textTransform:'uppercase'}}, "NSC gespeichert"),
     /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-d)',fontSize:'22px',fontWeight:300,letterSpacing:'.2em',color:'var(--white)'}}, "„", nscTags.name, "“ wurde angelegt."),
     /*#__PURE__*/React.createElement("div", {style:{display:'flex',gap:12,marginTop:8}},
       /*#__PURE__*/React.createElement("a", {href:'/dm/nsc-verwaltung.html', style:{...btnBase,color:'rgba(var(--accent-rgb),calc(.75*var(--ka) + var(--tb)))',background:'rgba(var(--purple-rgb),calc(.1*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))',padding:'10px 20px',textDecoration:'none'}}, "→ Zum NSC-Register"),
@@ -2275,13 +2275,13 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     )
   );
 
-  const sectionHd = label => /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-d)',fontSize:'10px',letterSpacing:'.22em',color:'rgba(var(--accent-rgb),calc(.6*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:14}}, label);
+  const sectionHd = label => /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-d)',fontSize:'12px',letterSpacing:'.22em',color:'rgba(var(--accent-rgb),calc(.6*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:14}}, label);
   const section = (children, extra={}) => /*#__PURE__*/React.createElement("div", {style:{marginBottom:28,padding:'18px 22px',border:'1px solid rgba(var(--accent-rgb),calc(.12*var(--ka)))',borderRadius:4,background:'rgba(var(--purple-rgb),calc(.02*var(--kp)))',...extra}}, children);
 
   return /*#__PURE__*/React.createElement("div", {style:{maxWidth:860,margin:'0 auto',padding:'44px 32px 80px',animation:'slideUp .4s ease'}},
     // Header
     /*#__PURE__*/React.createElement("div", {style:{marginBottom:32}},
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'9px',letterSpacing:'.28em',color:'color-mix(in srgb, rgba(94,232,208,.55), rgb(var(--ink-rgb)) var(--cm))',textTransform:'uppercase',marginBottom:9}}, "Schritt 3 \xB7 NSC-Vorschau"),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'11.5px',letterSpacing:'.28em',color:'color-mix(in srgb, rgba(94,232,208,.55), rgb(var(--ink-rgb)) var(--cm))',textTransform:'uppercase',marginBottom:9}}, "Schritt 3 \xB7 NSC-Vorschau"),
       /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-d)',fontSize:'clamp(18px,3vw,28px)',fontWeight:300,letterSpacing:'.18em',color:'var(--white)',marginBottom:6}}, nscTags.name || "Unbenannt"),
       /*#__PURE__*/React.createElement("div", {style:{height:1,background:'linear-gradient(90deg,rgba(var(--purple-rgb),calc(.45*var(--kp))) 0%,transparent 100%)'}})
     ),
@@ -2290,7 +2290,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
       rows.map(({lbl,val,src}) => /*#__PURE__*/React.createElement("div", {key:lbl,className:"sh-row"},
         /*#__PURE__*/React.createElement("div", {className:"sh-lbl"}, lbl),
         /*#__PURE__*/React.createElement("div", {className:`sh-val ${src==='quiz'?'quiz-det':src==='multi'?'multi':''}`}, val,
-          src==='quiz' && /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'color-mix(in srgb, rgba(94,232,208,.4), rgb(var(--ink-rgb)) var(--cm))',marginLeft:10,letterSpacing:'.1em'}}, "↯ per Quiz")
+          src==='quiz' && /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'color-mix(in srgb, rgba(94,232,208,.4), rgb(var(--ink-rgb)) var(--cm))',marginLeft:10,letterSpacing:'.1em'}}, "↯ per Quiz")
         )
       ))
     ),
@@ -2316,36 +2316,36 @@ function NscOutputPhase({ nscTags, nscPossible }) {
         /*#__PURE__*/React.createElement("button", {onClick:()=>setStatsMode('monster'), style:tabBtn(statsMode==='monster')}, "NPC-Monster übernehmen")
       ),
       // Leer
-      statsMode === 'leer' && /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'11px',color:'rgba(var(--text-rgb),calc(.3*var(--kt) + var(--tb)))',lineHeight:1.7}},
+      statsMode === 'leer' && /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'12.5px',color:'rgba(var(--text-rgb),calc(.3*var(--kt) + var(--tb)))',lineHeight:1.7}},
         "Keine Spielwerte hinterlegt. Kann später im NSC-Eintrag ergänzt werden."
       ),
       // Manuell
       statsMode === 'manuell' && /*#__PURE__*/React.createElement("div", null,
         /*#__PURE__*/React.createElement("div", {style:{display:'flex',gap:10,flexWrap:'wrap',marginBottom:14,alignItems:'flex-end'}},
           /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
-            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.12em',textTransform:'uppercase'}}, "RK"),
+            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.12em',textTransform:'uppercase'}}, "RK"),
             /*#__PURE__*/React.createElement("input", {type:'number',min:'1',max:'30',value:manual.rk,onChange:e=>setManual(p=>({...p,rk:e.target.value})),style:{...fieldStyle,width:52,textAlign:'center'}})
           ),
           /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
-            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.12em',textTransform:'uppercase'}}, "Rüstungstyp"),
+            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.12em',textTransform:'uppercase'}}, "Rüstungstyp"),
             /*#__PURE__*/React.createElement("input", {value:manual.ruestungstyp,onChange:e=>setManual(p=>({...p,ruestungstyp:e.target.value})),placeholder:"z.B. natürliche Rüstung",style:{...fieldStyle,width:180}})
           ),
           /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
-            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.12em',textTransform:'uppercase'}}, "TP"),
+            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.12em',textTransform:'uppercase'}}, "TP"),
             /*#__PURE__*/React.createElement("input", {type:'number',min:'1',value:manual.tp,onChange:e=>setManual(p=>({...p,tp:e.target.value})),style:{...fieldStyle,width:64,textAlign:'center'}})
           ),
           /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
-            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.12em',textTransform:'uppercase'}}, "TP-Würfel"),
+            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.12em',textTransform:'uppercase'}}, "TP-Würfel"),
             /*#__PURE__*/React.createElement("input", {value:manual.tp_wuerfel,onChange:e=>setManual(p=>({...p,tp_wuerfel:e.target.value})),placeholder:"z.B. 4W8+12",style:{...fieldStyle,width:110}})
           ),
           /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
-            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.12em',textTransform:'uppercase'}}, "Bewegung"),
+            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.12em',textTransform:'uppercase'}}, "Bewegung"),
             /*#__PURE__*/React.createElement("input", {value:manual.bewegung,onChange:e=>setManual(p=>({...p,bewegung:e.target.value})),placeholder:"z.B. 9 m",style:{...fieldStyle,width:90}})
           )
         ),
         /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:7,maxWidth:400}},
           ATTRS.map(a => /*#__PURE__*/React.createElement("div", {key:a,style:{display:'flex',flexDirection:'column',gap:4}},
-            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.1em',textTransform:'uppercase',textAlign:'center'}}, a),
+            /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.1em',textTransform:'uppercase',textAlign:'center'}}, a),
             /*#__PURE__*/React.createElement("input", {type:'number',min:'1',max:'30',value:manual[a],onChange:e=>setManual(p=>({...p,[a]:e.target.value})),
               style:{...fieldStyle,textAlign:'center',padding:'5px 2px'},
               onFocus:e=>e.target.style.borderColor='rgba(var(--purple-rgb),calc(.55*var(--kp)))',
@@ -2359,8 +2359,8 @@ function NscOutputPhase({ nscTags, nscPossible }) {
           /*#__PURE__*/React.createElement("div", {style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}},
             /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-d)',fontSize:'13px',letterSpacing:'.12em',color:'color-mix(in srgb, rgba(94,232,208,.9), rgb(var(--ink-rgb)) var(--cm))'}}, selectedMonster.name),
             /*#__PURE__*/React.createElement("div", {style:{display:'flex',gap:16}},
-              /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.1em'}}, "CR ", selectedMonster.cr),
-              /*#__PURE__*/React.createElement("button", {onClick:()=>setSelectedMonster(null),style:{fontFamily:'var(--font-m)',fontSize:'9px',color:'rgba(var(--accent-rgb),calc(.4*var(--ka) + var(--tb)))',background:'transparent',border:'none',cursor:'pointer'}}, "✕")
+              /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',letterSpacing:'.1em'}}, "CR ", selectedMonster.cr),
+              /*#__PURE__*/React.createElement("button", {onClick:()=>setSelectedMonster(null),style:{fontFamily:'var(--font-m)',fontSize:'11.5px',color:'rgba(var(--accent-rgb),calc(.4*var(--ka) + var(--tb)))',background:'transparent',border:'none',cursor:'pointer'}}, "✕")
             )
           ),
           /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexWrap:'wrap',gap:'10px 20px'}},
@@ -2369,8 +2369,8 @@ function NscOutputPhase({ nscTags, nscPossible }) {
              ['BEW', Object.entries(selectedMonster.bewegung||{}).map(([k,v])=>`${k} ${v}`).join(', ')||'—'],
              ...Object.entries(selectedMonster.attribute||{}).map(([k,v]) => [k, String(v)])
             ].map(([k,v]) => /*#__PURE__*/React.createElement("div", {key:k,style:{display:'flex',gap:5}},
-              /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'rgba(var(--accent-rgb),calc(.45*var(--ka) + var(--tb)))',letterSpacing:'.1em',textTransform:'uppercase',minWidth:28}}, k),
-              /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-d)',fontSize:'11px',color:'rgba(var(--text-rgb),calc(.8*var(--kt) + var(--tb)))'}}, v)
+              /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'rgba(var(--accent-rgb),calc(.45*var(--ka) + var(--tb)))',letterSpacing:'.1em',textTransform:'uppercase',minWidth:28}}, k),
+              /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-d)',fontSize:'12.5px',color:'rgba(var(--text-rgb),calc(.8*var(--kt) + var(--tb)))'}}, v)
             ))
           )
         ),
@@ -2384,7 +2384,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
               background:selectedMonster?.name===m.name?'rgba(94,232,208,.12)':'rgba(var(--bg-rgb),.4)',
               border:`1px solid rgba(${selectedMonster?.name===m.name?'94,232,208':'160,140,255'},.15)`,
               color:selectedMonster?.name===m.name?'color-mix(in srgb, rgba(94,232,208,.8), rgb(var(--ink-rgb)) var(--cm))':'rgba(var(--accent-rgb),calc(.55*var(--ka)))'}},
-            m.name, /*#__PURE__*/React.createElement("span", {style:{marginLeft:5,fontSize:'7px',color:'rgba(var(--accent-rgb),calc(.3*var(--ka) + var(--tb)))'}}, "CR ", m.cr)
+            m.name, /*#__PURE__*/React.createElement("span", {style:{marginLeft:5,fontSize:'11px',color:'rgba(var(--accent-rgb),calc(.3*var(--ka) + var(--tb)))'}}, "CR ", m.cr)
           ))
         )
       )
@@ -2422,7 +2422,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     // ── Kontakte ─────────────────────────────────────────────────────────
     NscSektion("Kontakte", [
       ...(['familie','freunde','rivalen'].flatMap(sub=>[
-        /*#__PURE__*/React.createElement("div", {key:'hd-'+sub, style:{fontFamily:'var(--font-m)',fontSize:'8px',letterSpacing:'.22em',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:6,marginTop:sub==='familie'?0:12}},
+        /*#__PURE__*/React.createElement("div", {key:'hd-'+sub, style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.22em',color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:6,marginTop:sub==='familie'?0:12}},
           sub==='familie'?'Familie':sub==='freunde'?'Freunde':'Rivalen'
         ),
         ...(extra.kontakte[sub]||[]).map((p,i)=>/*#__PURE__*/React.createElement("div", {key:sub+i, style:{display:'grid',gridTemplateColumns:'1fr 1fr auto',gap:6,marginBottom:6}},
@@ -2449,10 +2449,10 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     // ── Speichern ─────────────────────────────────────────────────────────
     /*#__PURE__*/React.createElement("div", {style:{padding:'20px 24px',border:'1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))',borderRadius:4,background:'rgba(var(--purple-rgb),calc(.04*var(--kp)))',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:16}},
       /*#__PURE__*/React.createElement("div", null,
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-d)',fontSize:'10px',letterSpacing:'.22em',color:'rgba(var(--accent-rgb),calc(.8*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:6}}, "NSC speichern"),
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'11px',color:'rgba(var(--text-rgb),calc(.45*var(--kt) + var(--tb)))',lineHeight:1.6}},
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-d)',fontSize:'12px',letterSpacing:'.22em',color:'rgba(var(--accent-rgb),calc(.8*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:6}}, "NSC speichern"),
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'12.5px',color:'rgba(var(--text-rgb),calc(.45*var(--kt) + var(--tb)))',lineHeight:1.6}},
           "Wird in der NSC-Tabelle angelegt. Sichtbarkeit: zun\xE4chst nur f\xFCr den DM."),
-        saveError && /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'8px',color:'color-mix(in srgb, rgba(255,100,100,.75), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'.08em',marginTop:6}}, saveError)
+        saveError && /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'11px',color:'color-mix(in srgb, rgba(255,100,100,.75), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'.08em',marginTop:6}}, saveError)
       ),
       /*#__PURE__*/React.createElement("button", {
         disabled: saving || !nscTags.name.trim(),
@@ -2462,7 +2462,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
           border:`1px solid rgba(var(--purple-rgb),${nscTags.name.trim()?'.55':'.18'})`,
           borderRadius:3,
           color:nscTags.name.trim()?'rgba(var(--text-rgb),calc(.95*var(--kt)))':'rgba(var(--purple-rgb),calc(.3*var(--kp)))',
-          fontFamily:'var(--font-d)',fontSize:'11px',letterSpacing:'.18em',textTransform:'uppercase',
+          fontFamily:'var(--font-d)',fontSize:'12.5px',letterSpacing:'.18em',textTransform:'uppercase',
           cursor:saving||!nscTags.name.trim()?'not-allowed':'pointer',
           opacity:saving?.55:1, transition:'all .2s', whiteSpace:'nowrap'}
       }, saving ? 'Speichern…' : nscTags.name.trim() ? 'NSC anlegen →' : 'Name erforderlich')

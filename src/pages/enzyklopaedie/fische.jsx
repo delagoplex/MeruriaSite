@@ -268,7 +268,7 @@ function FilterSidebar({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.25em',
       color: 'color-mix(in srgb, rgba(38,198,218,0.65), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase'
@@ -323,7 +323,7 @@ function FilterSidebar({
       color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
       cursor: 'pointer',
       padding: '0',
-      fontSize: '10px',
+      fontSize: '12px',
       lineHeight: 1
     }
   }, "\u2715")), /*#__PURE__*/React.createElement(FilterGroup, {
@@ -424,7 +424,7 @@ function FilterSidebar({
       borderRadius: '2px',
       color: 'rgba(230,90,90,0.7)',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       cursor: 'pointer',
       transition: 'all 0.15s',
@@ -534,7 +534,7 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.28em',
       color: 'color-mix(in srgb, rgba(38,198,218,0.35), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase',
@@ -567,7 +567,7 @@ function App() {
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       color: 'color-mix(in srgb, rgba(38,198,218,0.3), rgb(var(--ink-rgb)) var(--cm))'
     }

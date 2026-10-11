@@ -72,7 +72,7 @@ function ImgPlaceholder({ label, height, hue, img, fill, fit }) {
         <circle cx="12" cy="11" r="4" stroke={ac} strokeWidth="1" opacity="0.8"/>
         <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={ac} strokeWidth="1.1" opacity="0.8"/>
       </svg>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:`oklch(0.65 0.18 ${h} / 0.65)`, textTransform:'uppercase', zIndex:1, textAlign:'center', padding:'0 16px' }}>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:`oklch(0.65 0.18 ${h} / 0.65)`, textTransform:'uppercase', zIndex:1, textAlign:'center', padding:'0 16px' }}>
         artwork — {label ? label.toLowerCase() : 'bild'}
       </span>
     </div>
@@ -93,7 +93,7 @@ function FeaturedDisplay({ image }) {
         <div style={{ position:'absolute',bottom:0,left:0,width:18,height:18,borderBottom:`2px solid ${accent}0.35)`,borderLeft:`2px solid ${accent}0.35)`,pointerEvents:'none' }} />
         <div style={{ position:'absolute',bottom:0,right:0,width:18,height:18,borderBottom:`2px solid ${accent}0.35)`,borderRight:`2px solid ${accent}0.35)`,pointerEvents:'none' }} />
         {/* Collection badge */}
-        <div style={{ position:'absolute',top:12,left:12, fontFamily:'var(--font-mono)',fontSize:8, padding:'3px 9px', background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.42*var(--kp)))', borderRadius:2, color:'rgba(var(--text-rgb),calc(0.88*var(--kt) + var(--tb)))', letterSpacing:'0.14em', textTransform:'uppercase', animation:'pulseGlow 3s ease-in-out infinite' }}>
+        <div style={{ position:'absolute',top:12,left:12, fontFamily:'var(--font-mono)',fontSize:11, padding:'3px 9px', background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.42*var(--kp)))', borderRadius:2, color:'rgba(var(--text-rgb),calc(0.88*var(--kt) + var(--tb)))', letterSpacing:'0.14em', textTransform:'uppercase', animation:'pulseGlow 3s ease-in-out infinite' }}>
           {image.collectionName}
         </div>
       </div>
@@ -103,11 +103,11 @@ function FeaturedDisplay({ image }) {
           <h2 style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:16, letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase' }}>
             {image.title}
           </h2>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--purple-rgb),calc(0.62*var(--kp) + var(--tb)))', whiteSpace:'nowrap', paddingTop:3 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--purple-rgb),calc(0.62*var(--kp) + var(--tb)))', whiteSpace:'nowrap', paddingTop:3 }}>
             {fmtDate(image.date)}
           </span>
         </div>
-        <p style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'var(--silver)', lineHeight:1.7, marginBottom:10 }}>
+        <p style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'var(--silver)', lineHeight:1.7, marginBottom:10 }}>
           {image.desc}
         </p>
         <div style={{ display:'flex', gap:5, flexWrap:'wrap' }}>
@@ -153,10 +153,10 @@ function CollectionCard({ collection, onClick }) {
       <div style={{ position:'absolute', inset:0, padding:'12px 15px', display:'flex', flexDirection:'column', justifyContent:'flex-end' }}>
         <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between' }}>
           <div>
-            <div style={{ fontFamily:'var(--font-display)', fontSize:12, fontWeight:400, letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase', textShadow:'0 2px 12px rgba(0,0,0,0.8)' }}>
+            <div style={{ fontFamily:'var(--font-display)', fontSize:13, fontWeight:400, letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase', textShadow:'0 2px 12px rgba(0,0,0,0.8)' }}>
               {collection.name}
             </div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:8, color: hov ? 'color-mix(in srgb, rgba(180,155,255,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))', marginTop:3, letterSpacing:'0.12em', transition:'color 0.2s' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color: hov ? 'color-mix(in srgb, rgba(180,155,255,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))', marginTop:3, letterSpacing:'0.12em', transition:'color 0.2s' }}>
               {collection.images.length} Bilder
             </div>
           </div>
@@ -191,20 +191,20 @@ function OverlayImageCard({ image, onSelect }) {
       {hidden && (
         <div style={{
           position:'absolute', top:8, right:8, zIndex:2,
-          fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em',
+          fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em',
           padding:'2px 7px', borderRadius:2, textTransform:'uppercase',
           background:'rgba(var(--bg-rgb),0.75)', border:'1px solid rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
           color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
         }}>○ Verborgen</div>
       )}
       <div style={{ padding:'12px 14px 13px' }}>
-        <div style={{ fontFamily:'var(--font-display)', fontSize:11, fontWeight:400, letterSpacing:'0.14em', color: hidden ? 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' : 'rgba(var(--text-hi-rgb),calc(0.92*var(--kt)))', textTransform:'uppercase', marginBottom:4 }}>
+        <div style={{ fontFamily:'var(--font-display)', fontSize:12.5, fontWeight:400, letterSpacing:'0.14em', color: hidden ? 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' : 'rgba(var(--text-hi-rgb),calc(0.92*var(--kt)))', textTransform:'uppercase', marginBottom:4 }}>
           {image.title}
         </div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', marginBottom:7 }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', marginBottom:7 }}>
           {fmtDate(image.date)}
         </div>
-        <p style={{ fontFamily:'var(--font-body)', fontSize:11, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', lineHeight:1.65, marginBottom:8, display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
+        <p style={{ fontFamily:'var(--font-body)', fontSize:12.5, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', lineHeight:1.65, marginBottom:8, display:'-webkit-box', WebkitLineClamp:2, WebkitBoxOrient:'vertical', overflow:'hidden' }}>
           {image.desc}
         </p>
         <div style={{ display:'flex', flexWrap:'wrap', gap:4 }}>
@@ -230,7 +230,7 @@ function CollectionOverlay({ collection, onClose, onSelectImage }) {
       <div className="gal-head" style={{ position:'sticky', top:0, zIndex:10, display:'flex', alignItems:'center', gap:18, padding:'13px 28px', background:'rgba(var(--bg-rgb),0.97)', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))', backdropFilter:'blur(12px)' }}>
         <button
           onClick={onClose}
-          style={{ display:'inline-flex', alignItems:'center', gap:8, fontFamily:'var(--font-body)', fontWeight:300, fontSize:11, letterSpacing:'0.12em', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', background:'rgba(var(--purple-rgb),calc(0.07*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', padding:'7px 14px', borderRadius:3, cursor:'pointer', transition:'all 0.2s', textDecoration:'none', flexShrink:0 }}
+          style={{ display:'inline-flex', alignItems:'center', gap:8, fontFamily:'var(--font-body)', fontWeight:300, fontSize:12.5, letterSpacing:'0.12em', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', background:'rgba(var(--purple-rgb),calc(0.07*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', padding:'7px 14px', borderRadius:3, cursor:'pointer', transition:'all 0.2s', textDecoration:'none', flexShrink:0 }}
           onMouseEnter={e => { e.currentTarget.style.color='var(--white)'; e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.15*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.48*var(--kp)))'; }}
           onMouseLeave={e => { e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'; e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.07*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.2*var(--kp)))'; }}
         >
@@ -240,14 +240,14 @@ function CollectionOverlay({ collection, onClose, onSelectImage }) {
           Zurück zur Galerie
         </button>
         <div className="gal-head-title" style={{ flex:1 }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.25em', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:3 }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.25em', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:3 }}>
             Sammlung
           </div>
           <h2 style={{ fontFamily:'var(--font-display)', fontSize:16, fontWeight:300, letterSpacing:'0.22em', color:'var(--white)', textTransform:'uppercase' }}>
             {collection.name}
           </h2>
         </div>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))' }}>
           {collection.images.length} Bilder
         </span>
       </div>
@@ -306,13 +306,13 @@ function ImageModal({ image, onClose }) {
           <button
             className="gal-modal-close"
             onClick={onClose}
-            style={{ alignSelf:'flex-end', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:12, lineHeight:1, padding:'6px 9px', marginBottom:20, transition:'all 0.15s' }}
+            style={{ alignSelf:'flex-end', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3, color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:13, lineHeight:1, padding:'6px 9px', marginBottom:20, transition:'all 0.15s' }}
             onMouseEnter={e => { e.currentTarget.style.color='var(--white)'; e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.5*var(--kp)))'; }}
             onMouseLeave={e => { e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))'; e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.08*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.22*var(--kp)))'; }}
           >✕</button>
 
           {/* Collection badge */}
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:10 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:10 }}>
             {image.collectionName}
           </span>
 
@@ -322,7 +322,7 @@ function ImageModal({ image, onClose }) {
           </h2>
 
           {/* Date */}
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', marginBottom:18 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', marginBottom:18 }}>
             {fmtDate(image.date)}
           </span>
 
@@ -448,7 +448,7 @@ function GalleryPage() {
 
         {/* Left C */}
         <div style={{ display:'flex', flexDirection:'column', gap:11 }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.38*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'0 2px 6px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))' }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.38*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'0 2px 6px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))' }}>
             Sammlungen
           </div>
           {leftCols.map(col => (
@@ -461,7 +461,7 @@ function GalleryPage() {
 
         {/* Right C */}
         <div style={{ display:'flex', flexDirection:'column', gap:11 }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.38*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'0 2px 6px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))' }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.38*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'0 2px 6px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))' }}>
             Sammlungen
           </div>
           {rightCols.map(col => (
@@ -473,9 +473,9 @@ function GalleryPage() {
       {/* Carousel D */}
       <div style={{ marginTop:16, borderTop:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }}>
         <div style={{ display:'flex', alignItems:'center', gap:12, padding:'13px 28px 6px' }}>
-          <span style={{ fontFamily:'var(--font-display)', fontSize:9, letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>Alle Bilder</span>
+          <span style={{ fontFamily:'var(--font-display)', fontSize:11.5, letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>Alle Bilder</span>
           <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }} />
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))' }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))' }}>
             {allImgs.length} Einträge · Klicken &amp; Ziehen zum Drehen
           </span>
         </div>
@@ -484,8 +484,8 @@ function GalleryPage() {
 
       {/* Footer */}
       <div style={{ borderTop:'1px solid rgba(var(--purple-rgb),calc(0.07*var(--kp)))', padding:'13px 28px', display:'flex', justifyContent:'space-between' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--purple-rgb),calc(0.26*var(--kp) + var(--tb)))', letterSpacing:'0.1em' }}>Meruria — Galerie</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color:'rgba(var(--purple-rgb),calc(0.22*var(--kp) + var(--tb)))' }}>{cols.length} Sammlungen · {allImgs.length} Bilder</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--purple-rgb),calc(0.26*var(--kp) + var(--tb)))', letterSpacing:'0.1em' }}>Meruria — Galerie</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--purple-rgb),calc(0.22*var(--kp) + var(--tb)))' }}>{cols.length} Sammlungen · {allImgs.length} Bilder</span>
       </div>
     </div>
   );

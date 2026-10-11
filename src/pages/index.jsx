@@ -263,7 +263,7 @@ function PortalCard({ p, index }) {
         {/* tagline — one short line */}
         <div style={{
           fontFamily:'var(--font-body)', fontWeight:300,
-          fontSize:'12px', letterSpacing:'0.04em',
+          fontSize:'13px', letterSpacing:'0.04em',
           color:'rgba(var(--text-rgb),calc(0.62*var(--kt) + var(--tb)))',
           position:'relative', zIndex:1,
           maxWidth:'85%',
@@ -280,7 +280,7 @@ function PortalCard({ p, index }) {
           display:'flex', alignItems:'center', justifyContent:'center', gap:10,
         }}>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'8.5px',
+            fontFamily:'var(--font-mono)', fontSize:'11px',
             letterSpacing:'0.28em', color: hover ? acSoft : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',
             textTransform:'uppercase',
             transition:'color 0.3s',
@@ -336,13 +336,13 @@ function SectionEyebrow({ left, right }) {
   return (
     <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
       <span style={{
-        fontFamily:'var(--font-mono)', fontSize:'10px',
+        fontFamily:'var(--font-mono)', fontSize:'12px',
         letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
         textTransform:'uppercase',
       }}>◈ {left}</span>
       <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
       {right && <span style={{
-        fontFamily:'var(--font-mono)', fontSize:'9px',
+        fontFamily:'var(--font-mono)', fontSize:'11.5px',
         letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
         textTransform:'uppercase',
       }}>{right}</span>}
@@ -491,7 +491,7 @@ function HeuteStrip() {
             letterSpacing:'0.18em', color:'#d9b06b', textTransform:'uppercase',
           }}>{today.month}</div>
           <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
             letterSpacing:'0.25em', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
             textTransform:'uppercase', marginTop:3,
           }}>{today.weekday} · {today.year}</div>
@@ -501,7 +501,7 @@ function HeuteStrip() {
       {/* Sign + vibe */}
       <div style={{ minWidth:0 }}>
         <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'9px',
+          fontFamily:'var(--font-mono)', fontSize:'11.5px',
           letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
           textTransform:'uppercase', marginBottom:4,
         }}>Im Zeichen</div>
@@ -512,7 +512,7 @@ function HeuteStrip() {
         }}>{today.sign}</div>
         <div style={{
           fontFamily:'var(--font-body)', fontWeight:300,
-          fontSize:'11px', letterSpacing:'0.06em',
+          fontSize:'12.5px', letterSpacing:'0.06em',
           color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:3,
         }}>{today.vibe}</div>
       </div>
@@ -521,18 +521,18 @@ function HeuteStrip() {
       <div style={{ display:'flex', alignItems:'center', gap:18, flexShrink:0, padding:'0 16px', borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', borderRight:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}>
         <div style={{ textAlign:'center' }}>
           <MoonIcon phaseDay={today.goldDay} cycleLen={28} vollmondDay={16} color="#d9b06b" size={30}/>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(217,176,107,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Goldmond</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(217,176,107,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Goldmond</div>
         </div>
         <div style={{ textAlign:'center' }}>
           <MoonIcon phaseDay={today.ashDay} cycleLen={17} vollmondDay={12} color="#a8b6d4" size={26}/>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(168,182,212,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Aschmond</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(168,182,212,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Aschmond</div>
         </div>
       </div>
 
       {/* Next holiday */}
       <div style={{ textAlign:'right', flexShrink:0 }}>
         <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'9px',
+          fontFamily:'var(--font-mono)', fontSize:'11.5px',
           letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
           textTransform:'uppercase', marginBottom:4,
         }}>Nächstes Fest · in {today.daysUntil} {today.daysUntil === 1 ? 'Tag' : 'Tagen'}</div>
@@ -548,7 +548,7 @@ function HeuteStrip() {
         flexShrink:0, paddingLeft:18, borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
       }}>
         <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'7.5px',
+          fontFamily:'var(--font-mono)', fontSize:'11px',
           letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
           textTransform:'uppercase',
         }}>Tag steuern</div>
@@ -568,7 +568,7 @@ function HeuteStrip() {
             style={{
               ...btnBase,
               width:'auto', padding:'0 12px', fontFamily:'var(--font-display)',
-              fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase',
+              fontSize:12, letterSpacing:'0.22em', textTransform:'uppercase',
               opacity: isToday ? 0.45 : 1,
               cursor: isToday ? 'default' : 'pointer',
             }}
@@ -585,7 +585,7 @@ function HeuteStrip() {
           >▶</button>
         </div>
         <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'8px',
+          fontFamily:'var(--font-mono)', fontSize:'11px',
           letterSpacing:'0.2em', color: isToday ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' : '#d9b06b',
           textTransform:'uppercase', minHeight:10,
         }}>{isToday ? '— Heute —' : (offset > 0 ? `+${offset} Tag${offset===1?'':'e'}` : `${offset} Tag${offset===-1?'':'e'}`)}</div>
@@ -628,11 +628,11 @@ function MTKatTag({ k }) {
   const meta = MT_KAT[k];
   return (
     <span style={{
-      fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+      fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em',
       color: meta.color, textTransform:'uppercase',
       display:'inline-flex', alignItems:'center', gap:'5px'
     }}>
-      <span style={{ fontSize:'10px', lineHeight:1 }}>{meta.glyph}</span>
+      <span style={{ fontSize:'12px', lineHeight:1 }}>{meta.glyph}</span>
       {meta.label}
     </span>
   );
@@ -659,7 +659,7 @@ function MTQuestRow({ q, active, onClick }) {
       <div style={{ minWidth:0, display:'flex', alignItems:'center', gap:'10px' }}>
         {q.status === 'neu' && (
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.15em',
+            fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.15em',
             padding:'2px 6px', background:'rgba(127,184,255,0.18)',
             border:'1px solid rgba(127,184,255,0.45)', borderRadius:'2px',
             color:'#a3c8ff', textTransform:'uppercase', flexShrink:0
@@ -667,7 +667,7 @@ function MTQuestRow({ q, active, onClick }) {
         )}
         {q.status === 'empfohlen' && (
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.15em',
+            fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.15em',
             padding:'2px 6px', background:'rgba(255,141,181,0.18)',
             border:'1px solid rgba(255,141,181,0.45)', borderRadius:'2px',
             color:'#ffb3ce', textTransform:'uppercase', flexShrink:0
@@ -688,7 +688,7 @@ function MTQuestRow({ q, active, onClick }) {
 function MTFilterChip({ label, count, active, onClick, color }) {
   return (
     <button onClick={onClick} style={{
-      fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em',
+      fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em',
       padding:'5px 11px', height:'24px',
       background: active ? 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))' : 'transparent',
       border: `1px solid ${active ? 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
@@ -701,7 +701,7 @@ function MTFilterChip({ label, count, active, onClick, color }) {
       onMouseLeave={e=>{ if (!active) { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'; e.currentTarget.style.color = color || 'rgba(var(--text-rgb),calc(0.55*var(--kt)))'; } }}
     >
       {label}
-      <span style={{ opacity:0.55, fontSize:'9px' }}>{count}</span>
+      <span style={{ opacity:0.55, fontSize:'11.5px' }}>{count}</span>
     </button>
   );
 }
@@ -777,7 +777,7 @@ function MTRewardRow({ icon, label, value, accent }) {
         }}>{icon}</div>
         <span style={{
           fontFamily:'var(--font-body)', fontWeight:300,
-          fontSize:'12.5px', color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
+          fontSize:'13px', color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
           letterSpacing:'0.04em'
         }}>{label}</span>
       </div>
@@ -802,7 +802,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
         <MTCategoryIcon k={q.kategorie}/>
         <div style={{ flex:1, minWidth:0 }}>
           <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
             color: MT_KAT[q.kategorie].color, letterSpacing:'0.25em',
             textTransform:'uppercase', marginBottom:'4px', opacity:0.85
           }}>{MT_KAT[q.kategorie].label} · STUFE {q.lv}</div>
@@ -815,7 +815,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
         </div>
         <div style={{ textAlign:'right' }}>
           <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',
+            fontFamily:'var(--font-mono)', fontSize:'11px', color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',
             letterSpacing:'0.2em', textTransform:'uppercase', marginBottom:'4px'
           }}>SCHWIERIGKEIT</div>
           <MTSchwierigkeit level={q.sw}/>
@@ -839,7 +839,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
               <MTSigil name={q.auftraggeber}/>
               <div>
                 <div style={{
-                  fontFamily:'var(--font-mono)', fontSize:'9px', color:'var(--lav2)',
+                  fontFamily:'var(--font-mono)', fontSize:'11.5px', color:'var(--lav2)',
                   letterSpacing:'0.22em', textTransform:'uppercase', marginBottom:'3px'
                 }}>Auftraggeber</div>
                 <div style={{
@@ -848,7 +848,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
                 }}>{q.auftraggeber}</div>
                 <div style={{
                   fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-                  fontSize:'11px', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:'2px'
+                  fontSize:'12.5px', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:'2px'
                 }}>{q.region}</div>
               </div>
             </div>
@@ -861,7 +861,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
             }}>{q.desc}</div>
 
             <div style={{
-              fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:500,
+              fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:500,
               letterSpacing:'0.28em', color:'var(--lav2)',
               textTransform:'uppercase', marginBottom:'8px',
               paddingBottom:'4px', borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))'
@@ -890,7 +890,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
         {view === 'anweisungen' && (
           <div style={{ animation:'fadeInUp 0.25s ease' }}>
             <div style={{
-              fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:500,
+              fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:500,
               letterSpacing:'0.28em', color:'var(--lav2)',
               textTransform:'uppercase', marginBottom:'14px',
               paddingBottom:'4px', borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))'
@@ -958,7 +958,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
                           }}/>
                         </div>
                         <span style={{
-                          fontFamily:'var(--font-mono)', fontSize:'11px',
+                          fontFamily:'var(--font-mono)', fontSize:'12.5px',
                           color: done ? 'var(--lav2)' : 'var(--white)',
                           letterSpacing:'0.1em'
                         }}>{n} / {step.max}</span>
@@ -980,7 +980,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
         display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px'
       }}>
         <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'8.5px',
+          fontFamily:'var(--font-mono)', fontSize:'11px',
           color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))', letterSpacing:'0.2em', textTransform:'uppercase'
         }}>
           ID · {q.id.toUpperCase()}
@@ -1092,14 +1092,14 @@ function MissionsterminalSection() {
       {/* Eyebrow row */}
       <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:'10px',
+          fontFamily:'var(--font-mono)', fontSize:'12px',
           letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◈ Missionsterminal</span>
         <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
         <div style={{
           display:'flex', alignItems:'center', gap:'12px',
-          fontFamily:'var(--font-mono)', fontSize:'9px',
+          fontFamily:'var(--font-mono)', fontSize:'11.5px',
           color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', letterSpacing:'0.22em',
           textTransform:'uppercase',
         }}>
@@ -1155,7 +1155,7 @@ function MissionsterminalSection() {
                 placeholder="suchen…"
                 style={{
                   background:'transparent', border:'none', outline:'none',
-                  fontFamily:'var(--font-mono)', fontSize:'10px',
+                  fontFamily:'var(--font-mono)', fontSize:'12px',
                   color:'var(--white)', letterSpacing:'0.08em', width:'100px'
                 }}
               />
@@ -1168,7 +1168,7 @@ function MissionsterminalSection() {
             gap:'12px', padding:'9px 18px',
             borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
             background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
-            fontFamily:'var(--font-mono)', fontSize:'8.5px',
+            fontFamily:'var(--font-mono)', fontSize:'11px',
             color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase'
           }}>
             <div>Auftrag</div>
@@ -1179,7 +1179,7 @@ function MissionsterminalSection() {
           {/* List */}
           <div style={{ flex:1, minHeight:0, overflowY:'auto' }}>
             {loading && (
-              <div style={{ padding:'40px 20px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>
+              <div style={{ padding:'40px 20px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'11.5px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>
                 ◈ Lade Aufträge…
               </div>
             )}
@@ -1187,7 +1187,7 @@ function MissionsterminalSection() {
               <div style={{
                 padding:'40px 20px', textAlign:'center',
                 fontFamily:'var(--font-body)', fontStyle:'italic',
-                fontSize:'12px', color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))'
+                fontSize:'13px', color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))'
               }}>
                 Keine Aufträge im Filter.
               </div>
@@ -1207,7 +1207,7 @@ function MissionsterminalSection() {
             padding:'9px 18px',
             borderTop:'1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
             display:'flex', alignItems:'center', justifyContent:'space-between',
-            fontFamily:'var(--font-mono)', fontSize:'8.5px',
+            fontFamily:'var(--font-mono)', fontSize:'11px',
             color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))', letterSpacing:'0.2em', textTransform:'uppercase',
             background:'rgba(var(--bg-rgb),0.5)'
           }}>
@@ -1222,7 +1222,7 @@ function MissionsterminalSection() {
             right={
               <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
                 <button onClick={()=>setView('details')} style={{
-                  fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+                  fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em',
                   padding:'4px 10px', height:'24px',
                   background: view==='details' ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
                   border:`1px solid ${view==='details' ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
@@ -1231,7 +1231,7 @@ function MissionsterminalSection() {
                   transition:'all 0.15s'
                 }}>Details</button>
                 <button onClick={()=>setView('anweisungen')} style={{
-                  fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+                  fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em',
                   padding:'4px 10px', height:'24px',
                   background: view==='anweisungen' ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
                   border:`1px solid ${view==='anweisungen' ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
@@ -1267,7 +1267,7 @@ function MissionsterminalSection() {
               onStepClick={(stepIdx, max) => stepClick(selected.id, stepIdx, max)}
             />
           ) : (
-            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>
+            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:'11.5px', color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>
               {loading ? '◈ Verbinde…' : '— keine Aufträge —'}
             </div>
           )}
@@ -1344,7 +1344,7 @@ function RecentCard({ item, idx, total, gold }) {
         padding:'2px 6px',
         background: gold ? goldA(0.15) : cA(0.12),
         border: `1px solid ${gold ? goldA(0.55) : cA(0.45)}`,
-        fontFamily:'var(--font-mono)', fontSize:6.5,
+        fontFamily:'var(--font-mono)', fontSize:11,
         color: gold ? 'oklch(0.85 0.13 75)' : c,
         letterSpacing:'0.2em', textTransform:'uppercase',
         zIndex:2, whiteSpace:'nowrap',
@@ -1356,13 +1356,13 @@ function RecentCard({ item, idx, total, gold }) {
         <svg viewBox="0 0 100 100" width="52" height="52" stroke={c} fill="none" style={{ color:c, filter:`drop-shadow(0 0 10px ${cA(0.6)})` }}>
           {item.icon}
         </svg>
-        <div style={{ marginTop:10, fontFamily:'var(--font-display)', fontSize:10.5, letterSpacing:'0.1em', color:'var(--white)', textTransform:'uppercase', lineHeight:1.2, overflowWrap:'anywhere' }}>
+        <div style={{ marginTop:10, fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.1em', color:'var(--white)', textTransform:'uppercase', lineHeight:1.2, overflowWrap:'anywhere' }}>
           {item.name}
         </div>
-        <div style={{ marginTop:6, fontFamily:'var(--font-mono)', fontSize:7, color:cA(0.85), letterSpacing:'0.18em', textTransform:'uppercase' }}>
+        <div style={{ marginTop:6, fontFamily:'var(--font-mono)', fontSize:11, color:cA(0.85), letterSpacing:'0.18em', textTransform:'uppercase' }}>
           {item.cat}
         </div>
-        <div style={{ position:'absolute', bottom:9, left:0, right:0, fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', letterSpacing:'0.16em', textTransform:'uppercase' }}>
+        <div style={{ position:'absolute', bottom:9, left:0, right:0, fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', letterSpacing:'0.16em', textTransform:'uppercase' }}>
           {item.date}
         </div>
       </div>
@@ -1375,12 +1375,12 @@ function RecentRow({ items, kind, title }) {
     <div>
       <div style={{ display:'flex', alignItems:'baseline', gap:14, marginBottom:8 }}>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:9,
+          fontFamily:'var(--font-mono)', fontSize:11.5,
           letterSpacing:'0.3em', color: kind === 'komplett' ? 'oklch(0.82 0.14 80)' : 'rgba(var(--purple-rgb),calc(0.65*var(--kp)))',
           textTransform:'uppercase',
         }}>{kind === 'komplett' ? '✓' : '◈'} {title}</span>
         <div style={{ flex:1, height:1, background:`linear-gradient(to right, ${kind === 'komplett' ? 'oklch(0.82 0.14 80 / 0.5)' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))'}, rgba(var(--purple-rgb),calc(0.04*var(--kp))))` }}/>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
           Letzte {items.length}
         </span>
       </div>
@@ -1431,13 +1431,13 @@ function KollektikonSection() {
     <div>
       <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:'10px',
+          fontFamily:'var(--font-mono)', fontSize:'12px',
           letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◈ Kollektikon</span>
         <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:'9px',
+          fontFamily:'var(--font-mono)', fontSize:'11.5px',
           letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
           textTransform:'uppercase',
         }}>Forschungsstatus · Planet Meruria</span>
@@ -1465,7 +1465,7 @@ function KollektikonSection() {
           background:'rgba(var(--panel-rgb),0.5)',
         }}>
           <div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:6 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:6 }}>
               Sammlung der Ressourcen
             </div>
             <div style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:400, letterSpacing:'0.22em', color:'var(--white)', textTransform:'uppercase' }}>
@@ -1483,7 +1483,7 @@ function KollektikonSection() {
             <div style={{ fontFamily:'var(--font-display)', fontSize:'30px', fontWeight:300, color:'var(--white)', lineHeight:1 }}>
               {totalFound}<span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:'18px' }}> / {totalAll}</span>
             </div>
-            <div style={{ marginTop:5, display:'flex', justifyContent:'flex-end', gap:10, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase' }}>
+            <div style={{ marginTop:5, display:'flex', justifyContent:'flex-end', gap:10, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', textTransform:'uppercase' }}>
               <span style={{ color:'rgba(var(--text-hi-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>
                 <span style={{ display:'inline-block', width:7, height:7, background:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt)))', marginRight:4, verticalAlign:'middle' }}/>
                 {Math.round(overallPct*100)} % Gesichtet
@@ -1550,7 +1550,7 @@ function _vg_unused() {
           }}>I</div>
 
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'10px',
+            fontFamily:'var(--font-mono)', fontSize:'12px',
             letterSpacing:'0.4em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))',
             textTransform:'uppercase', marginBottom:14,
             position:'relative', zIndex:1,
@@ -1585,7 +1585,7 @@ function _vg_unused() {
 
           <div style={{
             display:'flex', alignItems:'center', gap:10,
-            fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
+            fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:400,
             letterSpacing:'0.28em', color:'var(--lav)',
             textTransform:'uppercase', position:'relative', zIndex:1,
           }}>
@@ -1681,7 +1681,7 @@ function NeuerCharakterButton() {
         </div>
         <div style={{ position:'relative', zIndex:2, maxWidth:'88%' }}>
           <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'8.5px',
+            fontFamily:'var(--font-mono)', fontSize:'11px',
             letterSpacing:'0.32em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
             textTransform:'uppercase', marginBottom:'14px',
             display:'flex', alignItems:'center', gap:'10px',
@@ -1711,7 +1711,7 @@ function NeuerCharakterButton() {
           </div>
           <p style={{
             fontFamily:'var(--font-body)', fontWeight:300,
-            fontSize:'12.5px', lineHeight:1.85,
+            fontSize:'13px', lineHeight:1.85,
             color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing:'0.03em',
             maxWidth:'500px', marginBottom:'20px', textWrap:'pretty',
           }}>
@@ -1721,16 +1721,16 @@ function NeuerCharakterButton() {
             {[{n:'01',l:'Tag-Auswahl'},{n:'02',l:'Quiz'},{n:'03',l:'Charakterbogen'}].map((s,i,arr) => (
               <React.Fragment key={s.n}>
                 <div style={{ display:'flex', alignItems:'center', gap:'7px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))', padding:'3px 7px', border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))', borderRadius:'2px', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>{s.n}</span>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>{s.l}</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.15em', color:'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))', padding:'3px 7px', border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))', borderRadius:'2px', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>{s.n}</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>{s.l}</span>
                 </div>
-                {i < arr.length-1 && <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))' }}>→</span>}
+                {i < arr.length-1 && <span style={{ fontFamily:'var(--font-mono)', fontSize:'12px', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))' }}>→</span>}
               </React.Fragment>
             ))}
           </div>
           <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
             <span style={{
-              fontFamily:'var(--font-display)', fontSize:'10px',
+              fontFamily:'var(--font-display)', fontSize:'12px',
               letterSpacing:'0.28em',
               color: hov ? 'var(--white)' : 'var(--lav)',
               textTransform:'uppercase',
@@ -1812,7 +1812,7 @@ function RecentCharCard({ c }) {
       <div style={{ flex:1, minWidth:0, display:'flex', flexDirection:'column', justifyContent:'center' }}>
         <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:4 }}>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
+            fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em',
             padding:'2px 6px', borderRadius:2,
             background: isSC ? 'rgba(127,184,255,0.16)' : 'rgba(255,141,181,0.16)',
             border:`1px solid ${isSC ? 'rgba(127,184,255,0.45)' : 'rgba(255,141,181,0.45)'}`,
@@ -1820,7 +1820,7 @@ function RecentCharCard({ c }) {
             textTransform:'uppercase', flexShrink:0,
           }}>{c.kind}</span>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
+            fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em',
             color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase',
             whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
           }}>vor {c.days} {c.days === 1 ? 'Tag' : 'Tagen'}</span>
@@ -1833,13 +1833,13 @@ function RecentCharCard({ c }) {
           transition:'color 0.2s',
         }}>{c.name}</div>
         <div style={{
-          fontFamily:'var(--font-body)', fontWeight:300, fontSize:11,
+          fontFamily:'var(--font-body)', fontWeight:300, fontSize:12.5,
           color: accent, letterSpacing:'0.04em', marginTop:2,
           whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
         }}>{c.rasse} · {c.klasse}{c.div ? ` · ${c.div.replace(/^Die\s+/, '')}` : ''}</div>
         {c.tagline && <div style={{
           fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-          fontSize:10.5, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
+          fontSize:12, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
           letterSpacing:'0.02em', marginTop:4, lineHeight:1.4,
           whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
         }}>„{c.tagline}"</div>}
@@ -1903,7 +1903,7 @@ function RecentCharacters() {
     <div style={{ display:'flex', flexDirection:'column', height:'100%' }}>
       <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:14 }}>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:9,
+          fontFamily:'var(--font-mono)', fontSize:11.5,
           letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◇ Zuletzt hinzugefügt</span>
@@ -1915,7 +1915,7 @@ function RecentCharacters() {
         gap:10,
       }}>
         {chars.length === 0
-          ? <div style={{ gridColumn:'1/-1', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>◈ Lade…</div>
+          ? <div style={{ gridColumn:'1/-1', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>◈ Lade…</div>
           : chars.map(c => <RecentCharCard key={c.name + c.kind} c={c}/>)
         }
       </div>
@@ -2110,13 +2110,13 @@ function Tageskarte() {
     <div>
       <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:'10px',
+          fontFamily:'var(--font-mono)', fontSize:'12px',
           letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◈ Tageskarte</span>
         <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:'9px',
+          fontFamily:'var(--font-mono)', fontSize:'11.5px',
           letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
           textTransform:'uppercase',
         }}>Große Arkana · 22 Karten</span>
@@ -2139,7 +2139,7 @@ function Tageskarte() {
           <div style={{ width:42, height:1, background:'rgba(var(--purple-rgb),calc(0.6*var(--kp)))', marginLeft:'auto', marginBottom:18 }}/>
           <p style={{
             fontFamily:'var(--font-body)', fontWeight:300,
-            fontSize:'12.5px', lineHeight:1.85,
+            fontSize:'13px', lineHeight:1.85,
             color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
             maxWidth:'280px', marginLeft:'auto',
             textWrap:'pretty',
@@ -2171,7 +2171,7 @@ function Tageskarte() {
         {/* Right meta + buttons */}
         <div style={{ textAlign:'left' }}>
           <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
             letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
             textTransform:'uppercase', marginBottom:14,
           }}>{flipped ? 'Gezogen · ' + card[0] : 'Verdeckt'}</div>
@@ -2185,7 +2185,7 @@ function Tageskarte() {
             }}>{card[1]}</div>
           )}
           <button onClick={draw} style={{
-            fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
+            fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:400,
             letterSpacing:'0.22em', padding:'12px 22px',
             background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
             border:'1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))',
@@ -2199,7 +2199,7 @@ function Tageskarte() {
             {flipped ? 'Neue Karte ziehen' : 'Karte aufdecken'}
           </button>
           <button onClick={clear} disabled={!flipped} style={{
-            fontFamily:'var(--font-display)', fontSize:'10px', fontWeight:400,
+            fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:400,
             letterSpacing:'0.22em', padding:'10px 20px',
             background:'transparent',
             border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))',
@@ -2227,7 +2227,7 @@ function CTAButton({ href, label, glyph='◈' }) {
     <div style={{ display:'flex', justifyContent:'center' }}>
       <a href={href} style={{
         display:'inline-flex', alignItems:'center', gap:10,
-        fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
+        fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:400,
         letterSpacing:'0.28em', padding:'9px 24px',
         background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
         border:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))',
@@ -2243,7 +2243,7 @@ function CTAButton({ href, label, glyph='◈' }) {
           width:16, height:16, borderRadius:'50%',
           border:'1px solid currentColor',
           display:'inline-flex', alignItems:'center', justifyContent:'center',
-          fontSize:9,
+          fontSize:11.5,
         }}>{glyph}</span>
         <span>{label}</span>
         <span style={{ fontSize:13 }}>→</span>
@@ -2348,7 +2348,7 @@ function App() {
         }}>
           <div style={{ width:60, height:1, background:'linear-gradient(to right, transparent, rgba(var(--purple-rgb),calc(0.6*var(--kp))))' }}/>
           <div style={{
-            fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:400,
+            fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:400,
             letterSpacing:'0.5em', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
             textTransform:'uppercase',
           }}>
@@ -2368,13 +2368,13 @@ function App() {
         {/* Section header */}
         <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:36 }}>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'10px',
+            fontFamily:'var(--font-mono)', fontSize:'12px',
             letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
             textTransform:'uppercase',
           }}>◈ Bereiche</span>
           <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))', transformOrigin:'left', animation:'line-grow 1.4s ease-out' }}/>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
             letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
             textTransform:'uppercase',
           }}>06 / Übersichtsseiten</span>
@@ -2396,13 +2396,13 @@ function App() {
       }}>
         <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:18 }}>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'10px',
+            fontFamily:'var(--font-mono)', fontSize:'12px',
             letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
             textTransform:'uppercase',
           }}>◈ Charaktere</span>
           <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
             letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
             textTransform:'uppercase',
           }}>Spielercharaktere &amp; NSC</span>
@@ -2428,13 +2428,13 @@ function App() {
       }}>
         <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:18 }}>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'10px',
+            fontFamily:'var(--font-mono)', fontSize:'12px',
             letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
             textTransform:'uppercase',
           }}>◈ Heute in Meruria</span>
           <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
             letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
             textTransform:'uppercase',
           }}>Zum Kalender</span>
@@ -2479,13 +2479,13 @@ function App() {
       <section style={{ position:'relative', zIndex:5, marginTop:24, borderTop:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }}>
         <div style={{ display:'flex', alignItems:'center', gap:16, padding:'18px 48px 8px', maxWidth:'1440px', margin:'0 auto' }}>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'10px',
+            fontFamily:'var(--font-mono)', fontSize:'12px',
             letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
             textTransform:'uppercase',
           }}>◈ Aus der Galerie</span>
           <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.4*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
             letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
             textTransform:'uppercase',
           }}>Klicken &amp; Ziehen zum Drehen</span>

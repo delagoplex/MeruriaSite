@@ -95,7 +95,7 @@ function SichtSection({ sicht, accent }) {
         <div style={{ display:'flex', gap:'6px', marginBottom:'14px' }}>
           {[['Normalform', false], ['Wandelform', true]].map(([label, val]) => (
             <button key={label} onClick={() => setShowWandel(val)} style={{
-              fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'10px', letterSpacing:'0.1em',
+              fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', letterSpacing:'0.1em',
               padding:'5px 12px', borderRadius:'3px', cursor:'pointer',
               border:`1px solid ${val === showWandel ? accent+'88' : accent+'28'}`,
               background: val === showWandel ? `${accent}1c` : 'transparent',
@@ -110,7 +110,7 @@ function SichtSection({ sicht, accent }) {
       }}>
         <div>
           <FovDiagram sicht={sicht} accent={accent} wandelform={showWandel} />
-          <div style={{ textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'8px', color:`${accent}44`, marginTop:'8px', letterSpacing:'0.15em' }}>
+          <div style={{ textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'11px', color:`${accent}44`, marginTop:'8px', letterSpacing:'0.15em' }}>
             SICHTFELD
           </div>
         </div>
@@ -121,12 +121,12 @@ function SichtSection({ sicht, accent }) {
             { label:'Sichtfeld',   value:`${active.radius}°` },
           ].map(row => (
             <div key={row.label}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'3px' }}>{row.label}</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.2em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'3px' }}>{row.label}</div>
               <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', fontWeight:'300', color:'rgba(var(--text2-rgb),calc(0.85*var(--kt) + var(--tb)))' }}>{row.value}</div>
             </div>
           ))}
           {notiz && (
-            <div style={{ fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:'300', fontStyle:'italic', color:`${accent}66`, marginTop:'4px', lineHeight:'1.6' }}>
+            <div style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:'300', fontStyle:'italic', color:`${accent}66`, marginTop:'4px', lineHeight:'1.6' }}>
               {notiz}
             </div>
           )}
@@ -152,7 +152,7 @@ function useScrollReveal() {
 function NotFound() {
   return (
     <div style={{ minHeight:'calc(var(--vh, 1vh) * 100)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'20px', padding:'40px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Rassenarchiv</div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Rassenarchiv</div>
       <h1 style={{ fontFamily:'var(--font-display)', fontSize:'32px', fontWeight:'300', letterSpacing:'0.15em', color:'var(--white)', textTransform:'uppercase' }}>
         {RASSE || 'Rasse'} nicht gefunden
       </h1>
@@ -339,7 +339,7 @@ function RaceGallery({ images, label = 'Illustration', width = 360 }) {
           justifyContent: 'space-between',
           alignItems: 'center',
           fontFamily: 'var(--font-mono)',
-          fontSize: '8px',
+          fontSize: '11px',
           letterSpacing: '0.18em',
           color: 'rgba(var(--accent-rgb),0.6)',
           textTransform: 'uppercase'
@@ -442,7 +442,7 @@ function RaceGallery({ images, label = 'Illustration', width = 360 }) {
                     padding: '8px 12px',
                     cursor: 'pointer',
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '10px',
+                    fontSize: '12px',
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase'
                   }}
@@ -450,7 +450,7 @@ function RaceGallery({ images, label = 'Illustration', width = 360 }) {
 
                 <div style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '9px',
+                  fontSize: '11.5px',
                   letterSpacing: '0.18em',
                   color: 'rgba(var(--accent-rgb),0.72)',
                   textTransform: 'uppercase'
@@ -468,7 +468,7 @@ function RaceGallery({ images, label = 'Illustration', width = 360 }) {
                     padding: '8px 12px',
                     cursor: 'pointer',
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '10px',
+                    fontSize: '12px',
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase'
                   }}
@@ -655,7 +655,7 @@ function TraitRoller({ section }) {
       <div className="rd-trait-grid" style={{ marginTop:'20px' }}>
         {section.merkmale.map((m,i) => (
           <div key={i} className={`rd-trait-pill${i===idx?' active':''}`} onClick={() => { setIdx(i); setResult(m); }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', opacity:0.5, marginRight:'8px' }}>{i+1}</span>{m}
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', opacity:0.5, marginRight:'8px' }}>{i+1}</span>{m}
           </div>
         ))}
       </div>
@@ -685,7 +685,7 @@ function RollTables({ section }) {
               ))}
             </div>
             <div style={{ padding:'8px 16px 12px' }}>
-              <button className="rd-dice-btn" style={{ fontSize:'10px', padding:'8px 16px' }} onClick={() => roll(t.name, t.eintraege)}>Würfeln</button>
+              <button className="rd-dice-btn" style={{ fontSize:'12px', padding:'8px 16px' }} onClick={() => roll(t.name, t.eintraege)}>Würfeln</button>
               {results[t.name] && <div className="rd-roll-result" style={{ fontSize:'14px', padding:'12px 20px' }}>{results[t.name]}</div>}
             </div>
           </div>
@@ -713,7 +713,7 @@ function VariantCards({ section }) {
             {va.farbe}
           </button>
         ))}
-        <button className="rd-dice-btn" style={{ fontSize:'11px', padding:'7px 14px', marginLeft:'auto' }} onClick={rollRandom}>
+        <button className="rd-dice-btn" style={{ fontSize:'12.5px', padding:'7px 14px', marginLeft:'auto' }} onClick={rollRandom}>
           <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.5">
             <rect x="3" y="3" width="18" height="18" rx="3"/>
             <circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/>
@@ -980,12 +980,12 @@ function Radar({ data: rd }) {
         <div className="rd-radar-desc">
           {rd.labels.map((label,i) => (
             <div key={label} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'10px' }}>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>{label}</span>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.15em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>{label}</span>
               <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
                 <div style={{ width:'80px', height:'3px', background:'rgba(var(--accent-rgb),calc(0.1*var(--ka)))', borderRadius:'2px', overflow:'hidden' }}>
                   <div style={{ height:'100%', width:`${rd.values[i]}%`, background:`rgba(var(--accent-rgb),calc(0.75*var(--ka)))`, borderRadius:'2px' }} />
                 </div>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--text2-rgb),calc(0.5*var(--kt) + var(--tb)))', width:'28px' }}>{rd.values[i]}</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', color:'rgba(var(--text2-rgb),calc(0.5*var(--kt) + var(--tb)))', width:'28px' }}>{rd.values[i]}</span>
               </div>
             </div>
           ))}
@@ -1035,7 +1035,7 @@ function Quiz({ data: qd }) {
         </>
       ) : (
         <div className="rd-quiz-result">
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:'12px' }}>Empfehlung</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', marginBottom:'12px' }}>Empfehlung</div>
           <div className="rd-quiz-result-class" style={{ color:`rgba(var(--accent-rgb),calc(1*var(--ka) + var(--tb)))` }}>{winner}</div>
           <div className="rd-quiz-result-desc">{qd.klassen[winner] || '—'}</div>
           <button className="rd-quiz-reset" onClick={reset}>Nochmal</button>
@@ -1274,7 +1274,7 @@ function GebaeudekatalogTab({ race }) {
       {/* Habitatprofil */}
       <section style={{ marginBottom:'48px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'20px' }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:acc(0.5), textTransform:'uppercase' }}>01 · Steckbrief</span>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.3em', color:acc(0.5), textTransform:'uppercase' }}>01 · Steckbrief</span>
           <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),calc(0.12*var(--ka)))` }}/>
         </div>
         <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, letterSpacing:'0.18em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px' }}>Habitatprofil</h2>
@@ -1317,7 +1317,7 @@ function GebaeudekatalogTab({ race }) {
       {/* Gebäudekatalog */}
       <section>
         <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'20px' }}>
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.3em', color:acc(0.5), textTransform:'uppercase' }}>02 · Bausystem</span>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.3em', color:acc(0.5), textTransform:'uppercase' }}>02 · Bausystem</span>
           <div style={{ flex:1, height:'1px', background:`rgba(var(--accent-rgb),calc(0.12*var(--ka)))` }}/>
         </div>
         <h2 style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, letterSpacing:'0.18em', color:'var(--white)', textTransform:'uppercase', marginBottom:'20px' }}>Gebäudekatalog</h2>
@@ -1538,7 +1538,7 @@ function App() {
       <div style={{ display: tab === 'gebaeude' ? undefined : 'none' }}>
         {gebRace
           ? <GebaeudekatalogTab race={gebRace} />
-          : <div style={{ padding:'80px 48px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Noch keine Gebäudedaten für diese Rasse.</div>
+          : <div style={{ padding:'80px 48px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Noch keine Gebäudedaten für diese Rasse.</div>
         }
       </div>
       {selectedTalent && <TalentModal talent={selectedTalent} onClose={() => setSelectedTalent(null)} />}

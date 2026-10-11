@@ -274,7 +274,7 @@ function TOCSidebar({
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.3em',
       color: `${ACCENT}55`,
       textTransform: 'uppercase'
@@ -282,7 +282,7 @@ function TOCSidebar({
   }, THEME.label)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '400',
       letterSpacing: '0.14em',
       color: `${ACCENT}cc`,
@@ -306,7 +306,7 @@ function TOCSidebar({
         cursor: 'pointer',
         fontFamily: 'var(--font-body)',
         fontWeight: entry.indent ? '300' : '400',
-        fontSize: '11px',
+        fontSize: '12.5px',
         letterSpacing: '0.1em',
         fontVariant: 'small-caps',
         color: isActive ? ACCENT : entry.indent ? THEME.tocIndent : THEME.toc,
@@ -542,7 +542,7 @@ function DivisionPage({
     className: "reveal-left",
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.32em',
       color: `${accent}77`,
       textTransform: 'uppercase',
@@ -749,7 +749,7 @@ function DivisionPage({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12.5px',
+      fontSize: '13px',
       lineHeight: 1.8,
       color: THEME.text,
       letterSpacing: '0.02em',
@@ -759,7 +759,7 @@ function DivisionPage({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.24em',
       textTransform: 'uppercase',
       color: `${accent}99`,
@@ -852,7 +852,7 @@ function DivisionPage({
       style: {
         fontFamily: 'var(--font-body)',
         fontWeight: '300',
-        fontSize: '12px',
+        fontSize: '13px',
         lineHeight: 1.7,
         color: `rgba(${THEME.dim},${dimAlpha + THEME.dimBoost})`,
         letterSpacing: '0.01em'
@@ -875,7 +875,7 @@ function DivisionPage({
         gap: '7px',
         fontFamily: 'var(--font-body)',
         fontWeight: '300',
-        fontSize: '11.5px',
+        fontSize: '12.5px',
         lineHeight: 1.6,
         color: `rgba(${THEME.dim},${dimAlpha + THEME.dimBoost})`,
         letterSpacing: '0.01em'

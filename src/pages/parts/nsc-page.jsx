@@ -31,7 +31,7 @@ function FilterChip({ active, label, count, onClick, accent }) {
     <button onClick={onClick} style={{
       display:'inline-flex', alignItems:'center', gap:'8px',
       padding:'5px 10px',
-      fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.14em', textTransform:'uppercase',
+      fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.14em', textTransform:'uppercase',
       background: active ? hexA(ac, 0.18) : 'rgba(var(--panel-rgb),0.6)',
       border: `1px solid ${active ? hexA(ac, 0.7) : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`,
       color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.65*var(--kt)))',
@@ -40,7 +40,7 @@ function FilterChip({ active, label, count, onClick, accent }) {
     onMouseEnter={e => { if (!active) { e.currentTarget.style.borderColor = hexA(ac, 0.45); e.currentTarget.style.color = 'var(--white)'; } }}
     onMouseLeave={e => { if (!active) { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'; e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'; } }}>
       <span>{label}</span>
-      {typeof count === 'number' && <span style={{ fontSize:'8px', color: active ? hexA(ac, 0.95) : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', fontVariantNumeric:'tabular-nums' }}>{count}</span>}
+      {typeof count === 'number' && <span style={{ fontSize:'11px', color: active ? hexA(ac, 0.95) : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', fontVariantNumeric:'tabular-nums' }}>{count}</span>}
     </button>
   );
 }
@@ -54,10 +54,10 @@ function FilterGroup({ title, values, selected, onToggle, getCount, labelFor }) 
         background:'transparent', border:'none', cursor:'pointer',
         borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
       }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.8*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.8*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
           ◇ {title}
         </span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'12px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))' }}>
           {expanded ? '−' : '+'}
         </span>
       </button>
@@ -85,13 +85,13 @@ function TraitPills({ items, acc, max=3 }) {
       {items.slice(0, max).map((e, i) => (
         <span key={i} style={{
           padding:'3px 7px',
-          fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', textTransform:'uppercase',
+          fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', textTransform:'uppercase',
           color:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt) + var(--tb)))', background: hexA(acc, 0.1),
           border:`1px solid ${hexA(acc, 0.3)}`, borderRadius:2,
         }}>{e}</span>
       ))}
       {items.length > max && (
-        <span style={{ padding:'3px 7px', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
+        <span style={{ padding:'3px 7px', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           +{items.length - max}
         </span>
       )}
@@ -175,7 +175,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
             </div>
             <div style={{ flex:1, minWidth:0, paddingTop:'4px', paddingRight: compact ? 60 : 90 }}>
               {nsc.titel && (
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.18em',
                   color:acc, textTransform:'uppercase', marginBottom:3,
                 }}>
                   {nsc.titel}
@@ -204,8 +204,8 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
                 <div style={{ display:'flex', alignItems:'center', gap:8, flexWrap:'wrap', marginBottom:7 }}>
                   {headBits.map((b, i) => (
                     <React.Fragment key={i}>
-                      {i > 0 && <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:9 }}>·</span>}
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
+                      {i > 0 && <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:11.5 }}>·</span>}
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.18em',
                         color: acc, textTransform:'uppercase' }}>{b}</span>
                     </React.Fragment>
                   ))}
@@ -232,7 +232,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
               fontFamily:'var(--font-body)', fontSize: compact ? 11 : 12.5, fontStyle:'italic',
               color:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt) + var(--tb)))',
               lineHeight:1.55 }}>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.24em',
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.24em',
                 color: hexA(acc, 0.7), textTransform:'uppercase', marginRight:6 }}>◇</span>
               {nsc.unvergesslich}
             </div>
@@ -256,7 +256,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
               display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4px 12px',
               paddingTop:'10px',
               borderTop:`1px solid ${hexA(acc, 0.22)}`,
-              fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.16em', textTransform:'uppercase',
+              fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.16em', textTransform:'uppercase',
             }}>
               {nsc.division && nsc.division !== 'Keine' &&
                 <MetaLine label="Division"     value={`${romanFor(nsc) ? `${romanFor(nsc)} · ` : ''}${(nsc.division || '—').replace(/^Die /,'')}`} acc={acc} divisionAccent unlocked={openK('division')}/>}
@@ -280,7 +280,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
           {!isUnknown && (
             <div style={{
               position:'relative', zIndex:1, marginTop:10,
-              fontFamily:'var(--font-mono)', fontSize:7.5,
+              fontFamily:'var(--font-mono)', fontSize:11,
               color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', letterSpacing:'0.20em',
               textTransform:'uppercase',
             }}>
@@ -292,7 +292,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
               position:'relative', zIndex:1, marginTop:10, padding:'6px 10px',
               border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
               background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
-              fontFamily:'var(--font-mono)', fontSize:8,
+              fontFamily:'var(--font-mono)', fontSize:11,
               color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', letterSpacing:'0.20em',
               textTransform:'uppercase',
               animation:'pulse-glow 3.5s ease-in-out infinite',
@@ -310,7 +310,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
 function MetaLine({ label, value, acc, unlocked=true, divisionAccent }) {
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}>
-      <span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:7.5 }}>{label}</span>
+      <span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:11 }}>{label}</span>
       <span style={{
         color: !unlocked ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))'
              : divisionAccent ? acc : 'rgba(var(--text-rgb),calc(0.78*var(--kt)))',
@@ -345,11 +345,11 @@ function StatTile({ label, value, color, active, onClick }) {
         textShadow: color ? `0 0 12px ${color}55` : 'none' }}>
         {value.toString().padStart(2,'0')}
       </div>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase', whiteSpace:'nowrap' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase', whiteSpace:'nowrap' }}>
         {label}
       </div>
       {active && (
-        <div style={{ position:'absolute', top:3, right:5, fontFamily:'var(--font-mono)', fontSize:8, color:c, lineHeight:1 }}>✓</div>
+        <div style={{ position:'absolute', top:3, right:5, fontFamily:'var(--font-mono)', fontSize:11, color:c, lineHeight:1 }}>✓</div>
       )}
     </button>
   );
@@ -364,14 +364,14 @@ function ActivePill({ label, onRemove }) {
       border:'1px solid rgba(var(--accent-rgb),calc(0.55*var(--ka)))',
       borderRadius:2,
       color:'var(--white)',
-      fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em',
+      fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.14em',
       cursor:'pointer', textTransform:'uppercase',
       transition:'all 0.15s',
     }}
     onMouseEnter={e => { e.currentTarget.style.background='rgba(227,103,96,0.25)'; e.currentTarget.style.borderColor='rgba(227,103,96,0.7)'; }}
     onMouseLeave={e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.22*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.55*var(--ka)))'; }}>
       <span>{label}</span>
-      <span style={{ fontSize:10, lineHeight:1 }}>×</span>
+      <span style={{ fontSize:12, lineHeight:1 }}>×</span>
     </button>
   );
 }
@@ -540,7 +540,7 @@ function App() {
 
   if (dataLoading) return (
     <div style={{ position:'fixed', inset:0, background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:12, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
         ◈ Lade NSC-Register …
       </div>
     </div>
@@ -549,8 +549,8 @@ function App() {
   if (loadError) return (
     <div style={{ minHeight:'100vh', display:'grid', placeItems:'center', padding:24, background:'#05040f' }}>
       <div role="alert" style={{ maxWidth:560, padding:24, border:'1px solid rgba(227,103,96,0.4)', borderLeft:'3px solid #e36760', background:'rgba(227,103,96,0.06)' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.2em', color:'#e99a93', textTransform:'uppercase', marginBottom:10 }}>NSC-Register konnte nicht geladen werden</div>
-        <div style={{ fontFamily:'var(--font-body)', fontSize:12, lineHeight:1.6, color:'rgba(220,210,255,0.7)' }}>{loadError}</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:12, letterSpacing:'0.2em', color:'#e99a93', textTransform:'uppercase', marginBottom:10 }}>NSC-Register konnte nicht geladen werden</div>
+        <div style={{ fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.6, color:'rgba(220,210,255,0.7)' }}>{loadError}</div>
       </div>
     </div>
   );
@@ -567,7 +567,7 @@ function App() {
       <div style={{ position:'relative', zIndex:5, maxWidth:1380, margin:'0 auto', padding:'46px 36px 80px' }}>
         {/* Breadcrumb + Blickwinkel-Wahl */}
         <div className="reveal-up" style={{ marginBottom:14, display:'flex', alignItems:'center', justifyContent:'space-between', gap:14, flexWrap:'wrap' }}>
-          <div style={{ display:'flex', alignItems:'center', gap:10, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:10, fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
             <a href="/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Meruria</a>
             <span style={{ opacity:0.4 }}>›</span>
             <a href="/charaktere/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Charaktere</a>
@@ -575,13 +575,13 @@ function App() {
             <span style={{ color:'var(--lav)' }}>NSC</span>
           </div>
           <div style={{ display:'flex', alignItems:'flex-start', gap:10, flexWrap:'wrap' }}>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase', paddingTop:7, flexShrink:0 }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase', paddingTop:7, flexShrink:0 }}>
               ◇ Blickwinkel
             </span>
             <div style={{ display:'flex', gap:6, flexWrap:'wrap', alignItems:'flex-start' }}>
               {/* "Alle" chip */}
               <button onClick={() => setPerspective('alle')} style={{
-                fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase',
+                fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.14em', textTransform:'uppercase',
                 padding:'5px 12px', borderRadius:3, cursor:'pointer', border:'1px solid',
                 background: perspective === 'alle' ? 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.05*var(--ka)))',
                 borderColor: perspective === 'alle' ? 'rgba(var(--accent-rgb),calc(0.7*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
@@ -590,7 +590,7 @@ function App() {
                 transition:'all 0.15s',
               }}>Alle</button>
               {/* Separator */}
-              {players.length > 0 && <span style={{ color:'rgba(var(--purple-rgb),calc(0.2*var(--kp) + var(--tb)))', alignSelf:'center', fontSize:12 }}>|</span>}
+              {players.length > 0 && <span style={{ color:'rgba(var(--purple-rgb),calc(0.2*var(--kp) + var(--tb)))', alignSelf:'center', fontSize:13 }}>|</span>}
               {/* Player groups */}
               {players.map(player => {
                 const playerActive = perspective === player.id;
@@ -600,7 +600,7 @@ function App() {
                   <div key={player.id} style={{ display:'flex', gap:4, alignItems:'center', flexWrap:'wrap' }}>
                     {/* Player chip */}
                     <button onClick={() => setPerspective(player.id)} style={{
-                      fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.12em', textTransform:'uppercase',
+                      fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.12em', textTransform:'uppercase',
                       padding:'5px 11px', borderRadius:3, cursor:'pointer', border:'1px solid',
                       background: playerActive ? 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))' : (anyCharActive ? 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))'),
                       borderColor: playerActive ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : (anyCharActive ? 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))'),
@@ -613,7 +613,7 @@ function App() {
                       const charActive = perspective === c.id;
                       return (
                         <button key={c.id} onClick={() => setPerspective(c.id)} style={{
-                          fontFamily:'var(--font-body)', fontWeight:300, fontSize:11, letterSpacing:'0.04em',
+                          fontFamily:'var(--font-body)', fontWeight:300, fontSize:12.5, letterSpacing:'0.04em',
                           padding:'4px 10px', borderRadius:3, cursor:'pointer', border:'1px solid',
                           background: charActive ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
                           borderColor: charActive ? 'rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
@@ -624,7 +624,7 @@ function App() {
                       );
                     })}
                     {players.indexOf(player) < players.length - 1 && (
-                      <span style={{ color:'rgba(var(--purple-rgb),calc(0.2*var(--kp) + var(--tb)))', fontSize:12 }}>|</span>
+                      <span style={{ color:'rgba(var(--purple-rgb),calc(0.2*var(--kp) + var(--tb)))', fontSize:13 }}>|</span>
                     )}
                   </div>
                 );
@@ -645,7 +645,7 @@ function App() {
           </div>
           {/* Gesamtfortschritt — im Kollektikon-Stil */}
           <div className="nsc-progress" style={{ textAlign:'right', minWidth:240 }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:8 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.28em', color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:8 }}>
               Gesamtfortschritt
             </div>
             <div style={{ fontFamily:'var(--font-display)', fontWeight:300, fontSize:42, color:'var(--white)', lineHeight:1 }}>
@@ -671,7 +671,7 @@ function App() {
                 }}/>
               </div>
             </div>
-            <div className="nsc-progress-legend" style={{ marginTop:6, display:'flex', justifyContent:'flex-end', gap:14, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase' }}>
+            <div className="nsc-progress-legend" style={{ marginTop:6, display:'flex', justifyContent:'flex-end', gap:14, fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.18em', textTransform:'uppercase' }}>
               <span style={{ color:'rgba(var(--text-hi-rgb),calc(0.7*var(--kt) + var(--tb)))' }}>
                 <span style={{ display:'inline-block', width:8, height:8, background:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt)))', marginRight:5, verticalAlign:'middle' }}/>
                 {Math.round((knownCount/stats.total)*100)} % Gerüchte
@@ -696,7 +696,7 @@ function App() {
                 <svg width="10" height="10" viewBox="0 0 10 10"><polygon points={hexPoints(10)} fill="#7c4dff" stroke="rgba(var(--accent-rgb),calc(0.8*var(--ka)))" strokeWidth="0.5"/></svg>
                 <span style={{ fontFamily:'var(--font-display)', fontSize:13, letterSpacing:'0.22em', color:'var(--white)', textTransform:'uppercase' }}>Filter</span>
                 {activeFilterCount > 0 && (
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em',
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.1em',
                     padding:'2px 6px', background:'rgba(var(--purple-rgb),calc(0.25*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))', color:'var(--white)', borderRadius:2 }}>
                     {activeFilterCount}
                   </span>
@@ -705,7 +705,7 @@ function App() {
               {activeFilterCount > 0 && (
                 <button onClick={clearAll} style={{
                   background:'transparent', border:'none', cursor:'pointer',
-                  fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em',
+                  fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em',
                   color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase',
                   padding:'4px 0', textDecoration:'underline', textUnderlineOffset:3,
                 }}
@@ -724,7 +724,7 @@ function App() {
                   width:'100%', padding:'9px 30px 9px 12px',
                   background:'rgba(var(--bg-rgb),0.7)', border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))',
                   borderRadius:2, color:'var(--white)',
-                  fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.06em',
+                  fontFamily:'var(--font-mono)', fontSize:12.5, letterSpacing:'0.06em',
                   outline:'none', transition:'border-color 0.2s, box-shadow 0.2s',
                 }}
                 onFocus={e => { e.target.style.borderColor='rgba(var(--purple-rgb),calc(0.7*var(--kp)))'; e.target.style.boxShadow='0 0 12px rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; }}
@@ -752,14 +752,14 @@ function App() {
             {/* Toolbar */}
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:14, marginBottom:18, flexWrap:'wrap' }}>
               <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
                   Register
                 </span>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))' }}>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))' }}>
                   {filtered.length.toString().padStart(2,'0')} / {nscs.length.toString().padStart(2,'0')} NSC
                 </span>
                 {perspective !== 'alle' && (
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em',
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em',
                     padding:'3px 8px', background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',
                     color:'var(--lav)', textTransform:'uppercase', borderRadius:2 }}>
                     ◇ Blickwinkel: {perspective === 'alle' ? 'Alle' : players.find(p => p.id === perspective)?.label || perspectives.find(p => p.id === perspective)?.label || perspective}
@@ -767,13 +767,13 @@ function App() {
                 )}
               </div>
               <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Sortieren</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Sortieren</span>
                 <select value={sort} onChange={e => setSort(e.target.value)} style={{
                   padding:'5px 10px',
                   background:'rgba(var(--bg-rgb),0.7)',
                   border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))',
                   borderRadius:2, color:'var(--white)',
-                  fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.1em',
+                  fontFamily:'var(--font-mono)', fontSize:12, letterSpacing:'0.1em',
                   cursor:'pointer', outline:'none',
                 }}>
                   <option value="kennenstufe-desc">Vertrautheit ↓</option>
@@ -789,7 +789,7 @@ function App() {
             {activeFilterCount > 0 && (
               <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginBottom:18, padding:'10px 12px',
                 background:'rgba(var(--purple-rgb),calc(0.06*var(--kp)))', border:'1px dashed rgba(var(--accent-rgb),calc(0.25*var(--ka)))', borderRadius:2 }}>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.24em', color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))', textTransform:'uppercase', padding:'4px 4px 4px 0' }}>Aktiv:</span>
+                <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.24em', color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))', textTransform:'uppercase', padding:'4px 4px 4px 0' }}>Aktiv:</span>
                 {search && <ActivePill label={`„${search}"`} onRemove={() => setSearch('')} />}
                 {Object.entries(filters).map(([group, vals]) =>
                   vals.map(v => (
@@ -817,7 +817,7 @@ function App() {
                 <div style={{ fontFamily:'var(--font-display)', fontSize:14, letterSpacing:'0.22em', color:'var(--lav)', textTransform:'uppercase', marginBottom:8 }}>
                   Keine NSC im Register
                 </div>
-                <div style={{ fontFamily:'var(--font-body)', fontSize:12, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginBottom:14 }}>
+                <div style={{ fontFamily:'var(--font-body)', fontSize:13, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginBottom:14 }}>
                   Mit den aktuellen Filtern bleibt das Archiv leer.
                 </div>
                 <button onClick={clearAll} style={{
@@ -825,7 +825,7 @@ function App() {
                   background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
                   border:'1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))',
                   color:'var(--white)',
-                  fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em',
+                  fontFamily:'var(--font-mono)', fontSize:12, letterSpacing:'0.22em',
                   cursor:'pointer', borderRadius:2, textTransform:'uppercase',
                 }}>Filter zurücksetzen</button>
               </div>
@@ -855,8 +855,8 @@ function App() {
 
       {/* FOOTER */}
       <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)))', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>MERURIA // NSC-REGISTER</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>MERURIA // NSC-REGISTER</div>
       </div>
 
       {/* Detail Panel */}

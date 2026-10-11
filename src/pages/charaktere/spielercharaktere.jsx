@@ -260,7 +260,7 @@ function AttributesGrid({ stats, acc, dense }) {
   const max = Math.max(...STAT_ORDER.map(k => stats[k]));
   return (
     <div style={{ position:'relative', zIndex:1, marginBottom: dense ? '0' : '12px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:`${hexA(acc,0.8)}`, textTransform:'uppercase', marginBottom:'6px' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.32em', color:`${hexA(acc,0.8)}`, textTransform:'uppercase', marginBottom:'6px' }}>
         ◇ Attribute
       </div>
       <div style={{ display:'grid', gridTemplateColumns:'repeat(6, 1fr)', gap:'4px' }}>
@@ -269,10 +269,10 @@ function AttributesGrid({ stats, acc, dense }) {
           const isMax = v === max;
           return (
             <div key={k} style={{ padding: dense ? '4px 2px' : '6px 2px', textAlign:'center', background: isMax ? hexA(acc, 0.16) : 'rgba(var(--bg-rgb),0.55)', border: `1px solid ${isMax ? acc : hexA(acc,0.18)}`, borderRadius:'2px', boxShadow: isMax ? `0 0 10px ${hexA(acc,0.35)} inset, 0 0 6px ${hexA(acc,0.25)}` : 'none', position:'relative', overflow:'hidden' }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.18em', color: isMax ? acc : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))', textTransform:'uppercase', marginBottom:'1px' }}>{STAT_LABEL[k]}</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.18em', color: isMax ? acc : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))', textTransform:'uppercase', marginBottom:'1px' }}>{STAT_LABEL[k]}</div>
               <div style={{ fontFamily:'var(--font-display)', fontSize: dense ? '14px' : '16px', fontWeight:400, color: isMax ? 'var(--white)' : 'rgba(var(--text-hi-rgb),calc(0.88*var(--kt)))', textShadow: isMax ? `0 0 10px ${hexA(acc,0.6)}` : 'none', lineHeight:1, fontVariantNumeric:'tabular-nums' }}>{v}</div>
               {!dense && (
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color: isMax ? hexA(acc,0.95) : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))', marginTop:'2px', fontVariantNumeric:'tabular-nums' }}>{abilityMod(v)}</div>
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', color: isMax ? hexA(acc,0.95) : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))', marginTop:'2px', fontVariantNumeric:'tabular-nums' }}>{abilityMod(v)}</div>
               )}
             </div>
           );
@@ -292,10 +292,10 @@ function CombatStats({ char, acc, dense }) {
     { label:'Hade',       value: fmtHade(char.vermoegen) },
   ];
   return (
-    <div style={{ position:'relative', zIndex:1, marginTop: dense ? '6px' : '4px', marginBottom: dense ? '0' : '14px', paddingTop:'10px', borderTop:`1px dashed ${hexA(acc, 0.18)}`, display:'flex', alignItems:'baseline', flexWrap:'wrap', columnGap:'10px', rowGap:'6px', fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.10em' }}>
+    <div style={{ position:'relative', zIndex:1, marginTop: dense ? '6px' : '4px', marginBottom: dense ? '0' : '14px', paddingTop:'10px', borderTop:`1px dashed ${hexA(acc, 0.18)}`, display:'flex', alignItems:'baseline', flexWrap:'wrap', columnGap:'10px', rowGap:'6px', fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.10em' }}>
       {items.map((t, i) => (
         <span key={t.label} style={{ display:'inline-flex', alignItems:'baseline', gap:'5px' }}>
-          <span style={{ color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', fontSize:'8px', letterSpacing:'0.22em' }}>{t.label}</span>
+          <span style={{ color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase', fontSize:'11px', letterSpacing:'0.22em' }}>{t.label}</span>
           <span style={{ color:'rgba(var(--text-hi-rgb),calc(0.88*var(--kt) + var(--tb)))', fontVariantNumeric:'tabular-nums' }}>{t.value}</span>
           {i < items.length-1 && <span style={{ color:'rgba(var(--accent-rgb),calc(0.20*var(--ka) + var(--tb)))' }}>·</span>}
         </span>
@@ -309,17 +309,17 @@ function SkillsList({ skills, acc }) {
   if (!skills || !skills.length) return null;
   return (
     <div style={{ position:'relative', zIndex:1, marginBottom:'14px' }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.32em', color:`${hexA(acc,0.8)}`, textTransform:'uppercase', marginBottom:'6px' }}>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.32em', color:`${hexA(acc,0.8)}`, textTransform:'uppercase', marginBottom:'6px' }}>
         ◇ Geübte Fähigkeiten
       </div>
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'2px 12px' }}>
         {skills.map((s, i) => (
-          <div key={i} style={{ display:'flex', alignItems:'baseline', gap:'7px', padding:'3px 8px 3px 6px', borderLeft:`2px solid ${hexA(acc, 0.45)}`, background: hexA(acc, 0.04), fontFamily:'var(--font-body)', fontSize:'11px', fontWeight:400, color:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt) + var(--tb)))' }}>
+          <div key={i} style={{ display:'flex', alignItems:'baseline', gap:'7px', padding:'3px 8px 3px 6px', borderLeft:`2px solid ${hexA(acc, 0.45)}`, background: hexA(acc, 0.04), fontFamily:'var(--font-body)', fontSize:'12.5px', fontWeight:400, color:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt) + var(--tb)))' }}>
             <svg width="4" height="4" viewBox="0 0 4 4" style={{ flexShrink:0, transform:'translateY(-1px)' }}>
               <polygon points={hexPoints(4)} fill={acc} />
             </svg>
             <span style={{ flex:1, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{s.name}</span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:'10.5px', color: acc, fontVariantNumeric:'tabular-nums', textShadow:`0 0 8px ${hexA(acc,0.4)}` }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:'12px', color: acc, fontVariantNumeric:'tabular-nums', textShadow:`0 0 8px ${hexA(acc,0.4)}` }}>
               {(s.mod >= 0 ? '+' : '') + s.mod}
             </span>
           </div>
@@ -333,11 +333,11 @@ function SkillsList({ skills, acc }) {
 function FilterChip({ active, label, count, onClick, accent }) {
   const ac = accent || 'rgba(var(--purple-rgb),calc(1*var(--kp)))';
   return (
-    <button onClick={onClick} style={{ display:'inline-flex', alignItems:'center', gap:'8px', padding:'5px 10px', fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.14em', textTransform:'uppercase', background: active ? `${ac.replace('1)','0.18)')}` : 'rgba(var(--panel-rgb),0.6)', border: `1px solid ${active ? ac.replace('1)','0.7)') : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`, color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.65*var(--kt)))', borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', whiteSpace:'nowrap' }}
+    <button onClick={onClick} style={{ display:'inline-flex', alignItems:'center', gap:'8px', padding:'5px 10px', fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.14em', textTransform:'uppercase', background: active ? `${ac.replace('1)','0.18)')}` : 'rgba(var(--panel-rgb),0.6)', border: `1px solid ${active ? ac.replace('1)','0.7)') : 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'}`, color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.65*var(--kt)))', borderRadius:'2px', cursor:'pointer', transition:'all 0.15s', whiteSpace:'nowrap' }}
     onMouseEnter={e => { if (!active) { e.currentTarget.style.borderColor = ac.replace('1)','0.45)'); e.currentTarget.style.color = 'var(--white)'; } }}
     onMouseLeave={e => { if (!active) { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.18*var(--ka)))'; e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'; } }}>
       <span>{label}</span>
-      {typeof count === 'number' && <span style={{ fontSize:'8px', color: active ? `${ac.replace('1)','0.95)')}` : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', fontVariantNumeric:'tabular-nums' }}>{count}</span>}
+      {typeof count === 'number' && <span style={{ fontSize:'11px', color: active ? `${ac.replace('1)','0.95)')}` : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', fontVariantNumeric:'tabular-nums' }}>{count}</span>}
     </button>
   );
 }
@@ -350,8 +350,8 @@ function FilterGroup({ title, values, selected, onToggle, getCount, labelFor }) 
   return (
     <div style={{ marginBottom:'18px' }}>
       <button onClick={() => setExpanded(!expanded)} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', width:'100%', padding:'6px 0', marginBottom:'8px', background:'transparent', border:'none', cursor:'pointer', borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)))' }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:`${acc}cc`, textTransform:'uppercase' }}>◇ {title}</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))' }}>{expanded ? '−' : '+'}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.32em', color:`${acc}cc`, textTransform:'uppercase' }}>◇ {title}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:'12px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))' }}>{expanded ? '−' : '+'}</span>
       </button>
       {expanded && (
         <div style={{ display:'flex', flexWrap:'wrap', gap:'6px' }}>
@@ -368,7 +368,7 @@ function FilterGroup({ title, values, selected, onToggle, getCount, labelFor }) 
 function MetaLine({ label, value, acc, highlight, divisionAccent }) {
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:'1px', minWidth:0 }}>
-      <span style={{ color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:'7.5px' }}>{label}</span>
+      <span style={{ color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:'11px' }}>{label}</span>
       <span style={{ color: divisionAccent ? acc : (highlight ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.78*var(--kt)))'), textShadow: (highlight || divisionAccent) ? `0 0 10px ${hexA(acc, 0.4)}` : 'none', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{value}</span>
     </div>
   );
@@ -403,8 +403,8 @@ function CharCard({ char, compact, delay }) {
               <svg width="7" height="7" viewBox="0 0 7 7" style={{ flexShrink:0 }}>
                 <polygon points={hexPoints(7)} fill={acc} />
               </svg>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:'7px', letterSpacing:'0.28em', color:hexA(acc,0.85), textTransform:'uppercase' }}>Spieler</span>
-              <span style={{ fontFamily:'var(--font-display)', fontSize:'12px', letterSpacing:'0.12em', color:'var(--white)', textShadow:`0 0 8px ${hexA(acc,0.45)}` }}>{char.spieler}</span>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.28em', color:hexA(acc,0.85), textTransform:'uppercase' }}>Spieler</span>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:'13px', letterSpacing:'0.12em', color:'var(--white)', textShadow:`0 0 8px ${hexA(acc,0.45)}` }}>{char.spieler}</span>
             </div>
 
             {/* Header row: portrait + name + status */}
@@ -418,12 +418,12 @@ function CharCard({ char, compact, delay }) {
                   <h3 style={{ fontFamily:'var(--font-display)', fontSize: compact ? '15px' : '17px', fontWeight:400, letterSpacing:'0.06em', color:'var(--white)', textShadow: hov ? `0 0 14px ${hexA(acc,0.55)}` : 'none', lineHeight:1.15, textWrap:'balance' }}>{char.name}</h3>
                 </div>
                 <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap', marginBottom:'8px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color: acc, textTransform:'uppercase', textShadow:`0 0 10px ${hexA(acc,0.35)}` }}>{char.rasse}</span>
-                  <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:'9px' }}>·</span>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color: acc, textTransform:'uppercase', textShadow:`0 0 10px ${hexA(acc,0.35)}` }}>{char.klasse}</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em', color: acc, textTransform:'uppercase', textShadow:`0 0 10px ${hexA(acc,0.35)}` }}>{char.rasse}</span>
+                  <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:'11.5px' }}>·</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em', color: acc, textTransform:'uppercase', textShadow:`0 0 10px ${hexA(acc,0.35)}` }}>{char.klasse}</span>
                 </div>
                 {/* Status pill */}
-                <div style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'3px 8px', background:`${statusDef.color}15`, border:`1px solid ${statusDef.color}55`, borderRadius:'2px', fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.22em', textTransform:'uppercase', color: statusDef.color }}>
+                <div style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'3px 8px', background:`${statusDef.color}15`, border:`1px solid ${statusDef.color}55`, borderRadius:'2px', fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.22em', textTransform:'uppercase', color: statusDef.color }}>
                   <span style={{ width:'5px', height:'5px', borderRadius:'50%', background: statusDef.color, animation: char.status === 'Aktiv' ? 'pulse-dot 2.2s ease-in-out infinite' : 'none' }} />
                   {statusDef.label}
                 </div>
@@ -449,7 +449,7 @@ function CharCard({ char, compact, delay }) {
             )}
 
             {/* Footer meta strip */}
-            <div style={{ position:'relative', zIndex:1, display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4px 12px', paddingTop:'10px', borderTop:`1px solid ${hexA(acc, 0.22)}`, fontFamily:'var(--font-mono)', fontSize:'8.5px', letterSpacing:'0.16em', textTransform:'uppercase' }}>
+            <div style={{ position:'relative', zIndex:1, display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4px 12px', paddingTop:'10px', borderTop:`1px solid ${hexA(acc, 0.22)}`, fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.16em', textTransform:'uppercase' }}>
               <MetaLine label="Division" value={char.division.replace(/^Die /,'')} acc={acc} divisionAccent />
               <MetaLine label="Gesinnung" value={char.gesinnung} acc={acc} />
               <MetaLine label="Hintergrund" value={char.hintergrund} acc={acc} />
@@ -476,9 +476,9 @@ function StatTile({ label, value, color, active, onClick }) {
       <div style={{ fontFamily:'var(--font-display)', fontSize:'22px', fontWeight:300, color:c, lineHeight:1, marginBottom:'4px', textShadow: color ? `0 0 14px ${color}55` : 'none' }}>
         {String(value).padStart(2,'0')}
       </div>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>{label}</div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>{label}</div>
       {active && (
-        <div style={{ position:'absolute', top:'4px', right:'6px', fontFamily:'var(--font-mono)', fontSize:'9px', color: c, lineHeight:1 }}>✓</div>
+        <div style={{ position:'absolute', top:'4px', right:'6px', fontFamily:'var(--font-mono)', fontSize:'11.5px', color: c, lineHeight:1 }}>✓</div>
       )}
     </button>
   );
@@ -487,11 +487,11 @@ function StatTile({ label, value, color, active, onClick }) {
 // ── ACTIVE FILTER PILL ────────────────────────────────────
 function ActivePill({ label, onRemove }) {
   return (
-    <button onClick={onRemove} style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'4px 8px', background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.55*var(--ka)))', borderRadius:'2px', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.14em', cursor:'pointer', textTransform:'uppercase', transition:'all 0.15s' }}
+    <button onClick={onRemove} style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'4px 8px', background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.55*var(--ka)))', borderRadius:'2px', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.14em', cursor:'pointer', textTransform:'uppercase', transition:'all 0.15s' }}
     onMouseEnter={e => { e.currentTarget.style.background='rgba(227,103,96,0.25)'; e.currentTarget.style.borderColor='rgba(227,103,96,0.7)'; }}
     onMouseLeave={e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.22*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.55*var(--ka)))'; }}>
       <span>{label}</span>
-      <span style={{ fontSize:'10px', lineHeight:1 }}>×</span>
+      <span style={{ fontSize:'12px', lineHeight:1 }}>×</span>
     </button>
   );
 }
@@ -639,7 +639,7 @@ function App() {
       <div style={{ position:'relative', zIndex:5, maxWidth:'1380px', margin:'0 auto', padding:'46px 36px 80px' }}>
 
         {/* Breadcrumb */}
-        <div className="reveal-up" style={{ marginBottom:'14px', display:'flex', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
+        <div className="reveal-up" style={{ marginBottom:'14px', display:'flex', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           <a href="/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Meruria</a>
           <span style={{ opacity:0.4 }}>›</span>
           <a href="/charaktere/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Charaktere</a>
@@ -668,7 +668,7 @@ function App() {
 
         {/* Loading indicator */}
         {loading && (
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'.3em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'60px 0' }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'.3em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'60px 0' }}>
             Lade Charaktere…
           </div>
         )}
@@ -683,11 +683,11 @@ function App() {
                   <svg width="10" height="10" viewBox="0 0 10 10"><polygon points={hexPoints(10)} fill="#7c4dff" stroke="rgba(var(--accent-rgb),calc(0.8*var(--ka)))" strokeWidth="0.5"/></svg>
                   <span style={{ fontFamily:'var(--font-display)', fontSize:'13px', letterSpacing:'0.22em', color:'var(--white)', textTransform:'uppercase' }}>Filter</span>
                   {activeFilterCount > 0 && (
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.1em', padding:'2px 6px', background:'rgba(var(--purple-rgb),calc(0.25*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))', color:'var(--white)', borderRadius:'2px' }}>{activeFilterCount}</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.1em', padding:'2px 6px', background:'rgba(var(--purple-rgb),calc(0.25*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))', color:'var(--white)', borderRadius:'2px' }}>{activeFilterCount}</span>
                   )}
                 </div>
                 {activeFilterCount > 0 && (
-                  <button onClick={clearAll} style={{ background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase', padding:'4px 0', textDecoration:'underline', textUnderlineOffset:'3px' }}
+                  <button onClick={clearAll} style={{ background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase', padding:'4px 0', textDecoration:'underline', textUnderlineOffset:'3px' }}
                   onMouseEnter={e => e.currentTarget.style.color = 'var(--white)'}
                   onMouseLeave={e => e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))'}>
                     Zurücksetzen
@@ -699,7 +699,7 @@ function App() {
               <div style={{ position:'relative', marginBottom:'18px' }}>
                 <input value={search} onChange={e => setSearch(e.target.value)}
                   placeholder="Name, Klasse, Rasse..."
-                  style={{ width:'100%', padding:'9px 30px 9px 12px', background:'rgba(var(--bg-rgb),0.7)', border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))', borderRadius:'2px', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.06em', outline:'none', transition:'border-color 0.2s, box-shadow 0.2s' }}
+                  style={{ width:'100%', padding:'9px 30px 9px 12px', background:'rgba(var(--bg-rgb),0.7)', border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))', borderRadius:'2px', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'12.5px', letterSpacing:'0.06em', outline:'none', transition:'border-color 0.2s, box-shadow 0.2s' }}
                   onFocus={e => { e.target.style.borderColor='rgba(var(--purple-rgb),calc(0.7*var(--kp)))'; e.target.style.boxShadow='0 0 12px rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; }}
                   onBlur={e => { e.target.style.borderColor='rgba(var(--accent-rgb),calc(0.22*var(--ka)))'; e.target.style.boxShadow='none'; }} />
                 <svg width="12" height="12" viewBox="0 0 12 12" style={{ position:'absolute', right:'10px', top:'50%', transform:'translateY(-50%)', opacity:0.5 }}>
@@ -723,14 +723,14 @@ function App() {
               {/* Toolbar */}
               <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'14px', marginBottom:'18px', flexWrap:'wrap' }}>
                 <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Register</span>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Register</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em', color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))' }}>
                     {String(filtered.length).padStart(2,'0')} / {String(characters.length).padStart(2,'0')} Charaktere
                   </span>
                 </div>
                 <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Sortieren</span>
-                  <select value={sort} onChange={e => setSort(e.target.value)} style={{ padding:'5px 10px', background:'rgba(var(--bg-rgb),0.7)', border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))', borderRadius:'2px', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.1em', cursor:'pointer', outline:'none' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Sortieren</span>
+                  <select value={sort} onChange={e => setSort(e.target.value)} style={{ padding:'5px 10px', background:'rgba(var(--bg-rgb),0.7)', border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))', borderRadius:'2px', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'12px', letterSpacing:'0.1em', cursor:'pointer', outline:'none' }}>
                     <option value="name">Name (A–Z)</option>
                     <option value="stufe-desc">Stufe ↓</option>
                     <option value="stufe-asc">Stufe ↑</option>
@@ -760,7 +760,7 @@ function App() {
               {/* Active filter pills */}
               {activeFilterCount > 0 && (
                 <div style={{ display:'flex', flexWrap:'wrap', gap:'6px', marginBottom:'18px', padding:'10px 12px', background:'rgba(var(--purple-rgb),calc(0.06*var(--kp)))', border:'1px dashed rgba(var(--accent-rgb),calc(0.25*var(--ka)))', borderRadius:'2px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.24em', color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))', textTransform:'uppercase', padding:'4px 4px 4px 0' }}>Aktiv:</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.24em', color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))', textTransform:'uppercase', padding:'4px 4px 4px 0' }}>Aktiv:</span>
                   {search && <ActivePill label={`„${search}"`} onRemove={() => setSearch('')} />}
                   {Object.entries(filters).map(([group, vals]) =>
                     vals.map(v => (
@@ -778,8 +778,8 @@ function App() {
                     <text x="24" y="30" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fill="#7c4dff" opacity="0.7">∅</text>
                   </svg>
                   <div style={{ fontFamily:'var(--font-display)', fontSize:'14px', letterSpacing:'0.22em', color:'var(--lav)', textTransform:'uppercase', marginBottom:'8px' }}>Keine Charaktere im Register</div>
-                  <div style={{ fontFamily:'var(--font-body)', fontSize:'12px', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginBottom:'14px' }}>Mit den aktuellen Filtern bleibt das Archiv leer.</div>
-                  <button onClick={clearAll} style={{ padding:'7px 16px', background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'10px', letterSpacing:'0.22em', cursor:'pointer', borderRadius:'2px', textTransform:'uppercase' }}>Filter zurücksetzen</button>
+                  <div style={{ fontFamily:'var(--font-body)', fontSize:'13px', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginBottom:'14px' }}>Mit den aktuellen Filtern bleibt das Archiv leer.</div>
+                  <button onClick={clearAll} style={{ padding:'7px 16px', background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:'12px', letterSpacing:'0.22em', cursor:'pointer', borderRadius:'2px', textTransform:'uppercase' }}>Filter zurücksetzen</button>
                 </div>
               ) : (
                 <div style={{ display:'grid', gridTemplateColumns: tweaks.compactCards ? 'repeat(auto-fill, minmax(310px, 1fr))' : 'repeat(auto-fill, minmax(400px, 1fr))', gap:'16px' }}>
@@ -804,8 +804,8 @@ function App() {
 
       {/* ── FOOTER ── */}
       <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)))', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:'7px', color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>MERURIA // SPIELERCHARAKTERE</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>MERURIA // SPIELERCHARAKTERE</div>
       </div></div>
   );
 }

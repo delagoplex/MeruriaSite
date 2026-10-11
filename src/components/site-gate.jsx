@@ -46,7 +46,7 @@ function LoginForm({ onAuth }) {
             <polygon points={hexPts} fill="rgba(80,160,220,0.08)" stroke="rgba(80,160,220,0.35)" strokeWidth="1.2"/>
             <text x="20" y="25" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fill="rgba(80,160,220,0.8)">⚔</text>
           </svg>
-          <div style={{ fontFamily:'var(--font-display)', fontSize:'11px', letterSpacing:'0.45em', color:'color-mix(in srgb, rgba(150,190,230,0.45), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase' }}>Meruria</div>
+          <div style={{ fontFamily:'var(--font-display)', fontSize:'12.5px', letterSpacing:'0.45em', color:'color-mix(in srgb, rgba(150,190,230,0.45), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase' }}>Meruria</div>
         </div>
 
         <form onSubmit={handleSubmit} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'12px' }}>
@@ -86,12 +86,12 @@ function LoginForm({ onAuth }) {
             />
           </div>
           {error && (
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.22em', color:'rgba(220,80,80,0.8)', textTransform:'uppercase', animation:'fadeIn 0.15s ease' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.22em', color:'rgba(220,80,80,0.8)', textTransform:'uppercase', animation:'fadeIn 0.15s ease' }}>
               {error}
             </div>
           )}
           <button type="submit" disabled={loading} style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.28em',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.28em',
             padding:'8px 24px', background:'rgba(80,160,220,0.1)',
             border:'1px solid rgba(80,160,220,0.3)', borderRadius:'3px',
             color: loading ? 'color-mix(in srgb, rgba(150,200,240,0.4), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(150,200,240,0.75), rgb(var(--ink-rgb)) var(--cm))',

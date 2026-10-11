@@ -10,11 +10,11 @@ const { useMemo } = React;
 const MONO = 'var(--font-mono)';
 const sel = {
   background: 'rgba(var(--panel-rgb),0.6)', border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius: 2,
-  color: 'var(--white)', fontFamily: 'var(--font-body)', fontSize: 12, padding: '6px 8px', minWidth: 0, cursor: 'pointer',
+  color: 'var(--white)', fontFamily: 'var(--font-body)', fontSize: 13, padding: '6px 8px', minWidth: 0, cursor: 'pointer',
 };
-const lab = { fontFamily: MONO, fontSize: 7.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', marginBottom: 3 };
+const lab = { fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', marginBottom: 3 };
 const btn = {
-  fontFamily: MONO, fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase', padding: '7px 11px', borderRadius: 2, cursor: 'pointer',
+  fontFamily: MONO, fontSize: 11.5, letterSpacing: '0.16em', textTransform: 'uppercase', padding: '7px 11px', borderRadius: 2, cursor: 'pointer',
   border: '1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))', background: 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))', color: 'var(--white)',
 };
 
@@ -55,8 +55,8 @@ function RassePicker({ monster, value, onChange, compact, layout }) {
 
   const grid = layout === 'grid';
   const selW = grid ? { ...sel, flex: 1, width: '100%', boxSizing: 'border-box' } : { ...sel, flex: 1 };
-  const die = { ...btn, padding: '0 9px', minWidth: 32, height: 31, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 4, fontSize: 12, letterSpacing: 0, flexShrink: 0 };
-  const dieTxt = { fontFamily: MONO, fontSize: 8, letterSpacing: '0.12em', textTransform: 'uppercase' };
+  const die = { ...btn, padding: '0 9px', minWidth: 32, height: 31, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 4, fontSize: 13, letterSpacing: 0, flexShrink: 0 };
+  const dieTxt = { fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase' };
   const Feld = ({ label, span, min, children }) => (
     <div style={{ minWidth: 0, gridColumn: grid && span ? '1 / -1' : undefined, flex: grid ? undefined : '1 1 ' + (min || 150) + 'px' }}>
       <div style={lab}>{label}</div>

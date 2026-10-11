@@ -49,7 +49,7 @@ html, body { overflow: hidden; }
 
 .section-label {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.28em;
   color: rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)));
   text-transform: uppercase;

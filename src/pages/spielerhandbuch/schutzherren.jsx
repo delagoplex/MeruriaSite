@@ -41,7 +41,7 @@ function Sidebar({ active, onSelect }) {
       borderRight:'1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.45) 0%, rgba(var(--bg-rgb),0.7) 100%)',
     }}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'18px',paddingLeft:'4px'}}>◈ Kapitel</div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'18px',paddingLeft:'4px'}}>◈ Kapitel</div>
       {/* Grundlagen — hervorgehobener Primär-Eintrag */}
       {(() => {
         const on = active === 'grundlagen';
@@ -62,13 +62,13 @@ function Sidebar({ active, onSelect }) {
             <span style={{position:'absolute',top:-1,left:-1,width:10,height:10,borderTop:`1px solid rgba(var(--accent-rgb),${on?0.85:0.35})`,borderLeft:`1px solid rgba(var(--accent-rgb),${on?0.85:0.35})`,transition:'border-color 0.18s'}}/>
             <span style={{position:'absolute',bottom:-1,right:-1,width:10,height:10,borderBottom:`1px solid rgba(var(--accent-rgb),${on?0.85:0.35})`,borderRight:`1px solid rgba(var(--accent-rgb),${on?0.85:0.35})`,transition:'border-color 0.18s'}}/>
             <span style={{minWidth:0}}>
-              <span style={{display:'block',fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.3em',color: on ? 'rgba(var(--accent-rgb),calc(0.65*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))',textTransform:'uppercase',marginBottom:'4px',transition:'color 0.18s'}}>01 · Primär ◆</span>
-              <span style={{display:'block',fontFamily:'var(--font-display)',fontSize:'12px',fontWeight: on ? 500 : 400,letterSpacing:'0.14em',color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',textTransform:'uppercase',transition:'color 0.18s'}}>Grundlagen</span>
+              <span style={{display:'block',fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.3em',color: on ? 'rgba(var(--accent-rgb),calc(0.65*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))',textTransform:'uppercase',marginBottom:'4px',transition:'color 0.18s'}}>01 · Primär ◆</span>
+              <span style={{display:'block',fontFamily:'var(--font-display)',fontSize:'13px',fontWeight: on ? 500 : 400,letterSpacing:'0.14em',color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',textTransform:'uppercase',transition:'color 0.18s'}}>Grundlagen</span>
             </span>
           </button>
         );
       })()}
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.3em',color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',textTransform:'uppercase',margin:'0 0 8px 4px'}}>◇ Schutzherren</div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.3em',color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',textTransform:'uppercase',margin:'0 0 8px 4px'}}>◇ Schutzherren</div>
       <nav style={{display:'flex',flexDirection:'column',gap:'2px'}}>
         {CATEGORIES.filter(c=>c.id!=='grundlagen').map((cat,i) => {
           const on = cat.id === active;
@@ -83,16 +83,16 @@ function Sidebar({ active, onSelect }) {
               onMouseEnter={e=>{if(!on){e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.06*var(--kp)))';e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.15*var(--kp)))';}}}
               onMouseLeave={e=>{if(!on){e.currentTarget.style.background='transparent';e.currentTarget.style.borderColor='transparent';}}}
             >
-              <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color: on ? 'var(--lav)' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))',minWidth:'18px'}}>{String(i+2).padStart(2,'0')}</span>
-              <span style={{fontFamily:'var(--font-display)',fontSize:'11px',fontWeight: on ? 500 : 400,letterSpacing: cat.label.length > 15 ? '0.08em' : '0.12em',color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',textTransform:'uppercase',whiteSpace:'nowrap'}}>{cat.label}</span>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.18em',color: on ? 'var(--lav)' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))',minWidth:'18px'}}>{String(i+2).padStart(2,'0')}</span>
+              <span style={{fontFamily:'var(--font-display)',fontSize:'12.5px',fontWeight: on ? 500 : 400,letterSpacing: cat.label.length > 15 ? '0.08em' : '0.12em',color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',textTransform:'uppercase',whiteSpace:'nowrap'}}>{cat.label}</span>
             </button>
           );
         })}
       </nav>
 
       <div style={{marginTop:'40px',padding:'14px 12px',background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',borderRadius:'3px'}}>
-        <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'8px'}}>◈ Hinweis</div>
-        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'10.5px',lineHeight:1.6,color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'}}>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'8px'}}>◈ Hinweis</div>
+        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12px',lineHeight:1.6,color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'}}>
           Alle Tabellen lassen sich direkt auswürfeln — oder ihr wählt gemeinsam einen Eintrag aus.
         </p>
       </div>
@@ -103,7 +103,7 @@ function Sidebar({ active, onSelect }) {
 function SectionHeader({ mono, title, sub }) {
   return (
     <div style={{marginBottom:'22px'}}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'10px'}}>◈ {mono}</div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'11.5px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'10px'}}>◈ {mono}</div>
       <h2 style={{fontFamily:'var(--font-display)',fontSize:'clamp(28px,3.5vw,42px)',fontWeight:'300',letterSpacing:'0.14em',color:'var(--white)',textShadow:'0 0 28px rgba(var(--purple-rgb),calc(0.32*var(--kp)))',lineHeight:1.05,textTransform:'uppercase'}}>{title}</h2>
       {sub && <p style={{marginTop:'12px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'13px',color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',letterSpacing:'0.04em',maxWidth:'620px',lineHeight:1.7}}>{sub}</p>}
       <div style={{marginTop:'18px',width:'72px',height:'1px',background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.7*var(--kp))), rgba(var(--purple-rgb),calc(0*var(--kp))))'}}/>
@@ -211,13 +211,13 @@ function RollTable({ table, onJump }) {
       </TW>
       {result !== null && (
         <div style={{animation:'resultPop 0.32s ease forwards',display:'flex',alignItems:'center',gap:'14px',flexWrap:'wrap',padding:'13px 18px',background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',borderRadius:'3px',marginBottom:'14px'}}>
-          <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.28em',color:'rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>Ergebnis · {result+1}</span>
+          <span style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.28em',color:'rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>Ergebnis · {result+1}</span>
           <span style={{fontFamily:'var(--font-body)',fontWeight:400,fontSize:'13px',color:'var(--white)',lineHeight:1.6,flex:1,minWidth:'200px'}}>{resText}</span>
           {jumpId && (
             <button onClick={()=>onJump(jumpId)} style={{
               display:'inline-flex',alignItems:'center',gap:'7px',padding:'6px 13px',
               background:'rgba(var(--purple-rgb),calc(0.14*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))',borderRadius:'2px',
-              fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.22em',color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
+              fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.22em',color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
               textTransform:'uppercase',cursor:'pointer',transition:'all 0.15s',
             }}
               onMouseEnter={e=>{e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.28*var(--kp)))';e.currentTarget.style.color='#fff';}}
@@ -248,7 +248,7 @@ function Blocks({ blocks, onJump }) {
         );
         if (b.table) return (
           <div key={i} className="reveal-up">
-            <div style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.26em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',margin:'4px 0 10px'}}>◇ {b.table.title}</div>
+            <div style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.26em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',margin:'4px 0 10px'}}>◇ {b.table.title}</div>
             <RollTable table={b.table} onJump={onJump}/>
           </div>
         );

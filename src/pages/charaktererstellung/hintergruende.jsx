@@ -151,21 +151,21 @@ function DualRangeSlider({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.9*var(--ka) + var(--tb)))',
       letterSpacing: '0.08em'
     }
   }, valLo.toLocaleString('de-DE')), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.1em'
     }
   }, "HADE"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.9*var(--ka) + var(--tb)))',
       letterSpacing: '0.08em'
     }
@@ -261,14 +261,14 @@ function DualRangeSlider({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       letterSpacing: '0.1em'
     }
   }, steps[0].toLocaleString('de-DE')), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       letterSpacing: '0.1em'
     }
@@ -349,7 +349,7 @@ function FilterSidebar({
     placeholder: "Hintergrund suchen\u2026",
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       fontWeight: '300',
       padding: '6px 10px 6px 28px',
       background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
@@ -399,7 +399,7 @@ function FilterSidebar({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.25em',
       color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
@@ -444,7 +444,7 @@ function FilterSidebar({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: (filters.faehigkeiten || []).includes(f) ? 'var(--white)' : 'var(--silver)',
       letterSpacing: '0.03em'
@@ -487,7 +487,7 @@ function FilterSidebar({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '10.5px',
+      fontSize: '12px',
       fontWeight: '300',
       color: (filters.werkzeuge || []).includes(w) ? 'var(--white)' : 'var(--silver)',
       letterSpacing: '0.02em',
@@ -545,14 +545,14 @@ function FilterSidebar({
         alignItems: 'center',
         justifyContent: 'center',
         transition: 'all 0.18s',
-        fontSize: '9px',
+        fontSize: '11.5px',
         color: iconColor,
         fontFamily: 'var(--font-mono)'
       }
     }, icon), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         fontWeight: '300',
         color: val !== null ? 'var(--white)' : 'var(--silver)',
         letterSpacing: '0.03em',
@@ -561,7 +561,7 @@ function FilterSidebar({
     }, "Sprachen"), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '7.5px',
+        fontSize: '11px',
         letterSpacing: '0.1em',
         color: isTrue ? 'color-mix(in srgb, rgba(80,220,110,0.6), rgb(var(--ink-rgb)) var(--cm))' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
         transition: 'color 0.18s'
@@ -621,7 +621,7 @@ function FilterSidebar({
       borderRadius: '2px',
       color: 'rgba(230,90,90,0.65)',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       cursor: 'pointer',
       transition: 'all 0.15s',
@@ -678,7 +678,7 @@ function BackgroundRow({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: active ? '400' : '300',
       color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       letterSpacing: '0.04em',
@@ -689,7 +689,7 @@ function BackgroundRow({
   }, h.name), !compact && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '10px',
+      fontSize: '12px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
@@ -741,7 +741,7 @@ function GesinnungBadge({
   return /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.12em',
       padding: '2px 8px',
       background: s.bg,
@@ -802,7 +802,7 @@ function W6Table({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.26em',
       color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -810,7 +810,7 @@ function W6Table({
   }, title), showTables && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.12em',
       padding: '1px 6px',
       background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
@@ -831,7 +831,7 @@ function W6Table({
       borderRadius: '2px',
       color: rolling ? 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' : 'rgba(var(--accent-rgb),calc(0.65*var(--ka)))',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       cursor: rolling ? 'not-allowed' : 'pointer',
       transition: 'all 0.15s',
@@ -897,7 +897,7 @@ function W6Table({
       width: '32px',
       padding: '5px 8px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       fontWeight: '400',
@@ -908,7 +908,7 @@ function W6Table({
     style: {
       padding: '5px 8px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       fontWeight: '400',
@@ -929,7 +929,7 @@ function W6Table({
       style: {
         padding: '7px 8px',
         fontFamily: 'var(--font-mono)',
-        fontSize: '9px',
+        fontSize: '11.5px',
         color: isHit ? 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.7*var(--ka)))',
         textAlign: 'center',
         borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
@@ -966,7 +966,7 @@ function W6Table({
     }, /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '9px',
+        fontSize: '11.5px',
         color: isHit ? 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))',
         flexShrink: 0,
         minWidth: '16px',
@@ -996,7 +996,7 @@ function MetaItem({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.26em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -1004,7 +1004,7 @@ function MetaItem({
   }, label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
@@ -1028,7 +1028,7 @@ function SectionHeader({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.28em',
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1083,7 +1083,7 @@ function BackgroundDetail({
   }, h.name), h.hintergrundVariante && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.12em',
       padding: '3px 8px',
       background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
@@ -1097,7 +1097,7 @@ function BackgroundDetail({
   }, "Variante: ", h.hintergrundVariante.name)), h.kurzbeschreibung && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12.5px',
+      fontSize: '13px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
@@ -1111,7 +1111,7 @@ function BackgroundDetail({
     key: i,
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12.5px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.82,
       color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
@@ -1130,7 +1130,7 @@ function BackgroundDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1139,7 +1139,7 @@ function BackgroundDetail({
   }, "Variante des ", h.name, ": ", h.hintergrundVariante.name), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
@@ -1166,7 +1166,7 @@ function BackgroundDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.26em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1182,7 +1182,7 @@ function BackgroundDetail({
     key: f,
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '10.5px',
+      fontSize: '12px',
       fontWeight: '300',
       padding: '2px 8px',
       background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
@@ -1213,7 +1213,7 @@ function BackgroundDetail({
     renderEntry: e => /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11.5px',
+        fontSize: '12.5px',
         fontWeight: '300',
         color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
         lineHeight: 1.65,
@@ -1233,7 +1233,7 @@ function BackgroundDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '400',
       letterSpacing: '0.18em',
       color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
@@ -1243,7 +1243,7 @@ function BackgroundDetail({
   }, h.merkmal.name), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.78,
       color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
@@ -1262,7 +1262,7 @@ function BackgroundDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.2em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1271,7 +1271,7 @@ function BackgroundDetail({
   }, "Merkmalvariante"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '10.5px',
+      fontSize: '12px',
       fontWeight: '400',
       letterSpacing: '0.16em',
       color: 'color-mix(in srgb, rgba(180,170,240,0.7), rgb(var(--ink-rgb)) var(--cm))',
@@ -1281,7 +1281,7 @@ function BackgroundDetail({
   }, h.merkmalVariante.name), h.merkmalVariante.bedingung && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       lineHeight: 1.7,
       color: 'color-mix(in srgb, rgba(180,170,220,0.6), rgb(var(--ink-rgb)) var(--cm))',
@@ -1291,7 +1291,7 @@ function BackgroundDetail({
   }, h.merkmalVariante.bedingung), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.78,
       color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
@@ -1307,7 +1307,7 @@ function BackgroundDetail({
     renderEntry: e => /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11.5px',
+        fontSize: '12.5px',
         fontWeight: '300',
         color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
         lineHeight: 1.65,
@@ -1321,7 +1321,7 @@ function BackgroundDetail({
     renderEntry: e => /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11.5px',
+        fontSize: '12.5px',
         fontWeight: '300',
         color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
         lineHeight: 1.65,
@@ -1341,7 +1341,7 @@ function BackgroundDetail({
     renderEntry: e => /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11.5px',
+        fontSize: '12.5px',
         fontWeight: '300',
         color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
         lineHeight: 1.65,
@@ -1355,7 +1355,7 @@ function BackgroundDetail({
     renderEntry: e => /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11.5px',
+        fontSize: '12.5px',
         fontWeight: '300',
         color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
         lineHeight: 1.65,
@@ -1373,7 +1373,7 @@ function BackgroundDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1382,7 +1382,7 @@ function BackgroundDetail({
   }, h.sonstigeHinweise.titel), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -1419,7 +1419,7 @@ function EmptyState({
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.2em',
       color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1526,7 +1526,7 @@ function App() {
   }, "Hintergr\xFCnde"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.15em'
     }
@@ -1540,7 +1540,7 @@ function App() {
   }, /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em'

@@ -174,7 +174,7 @@
     }; };
 
     var labelStyle = {
-      fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.18em',
+      fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.18em',
       textTransform: 'uppercase', color: cA(0.8), display: 'block', marginBottom: 8,
     };
 
@@ -185,12 +185,12 @@
     }; };
 
     var formulaStyle = {
-      fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
+      fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       letterSpacing: '0.06em', lineHeight: 1.6,
     };
 
     var infoStyle = {
-      fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em',
+      fontFamily: 'var(--font-mono)', fontSize: 12.5, letterSpacing: '0.1em',
       color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
     };
 
@@ -202,7 +202,7 @@
     function pillBtn(active, onClick, label, extra) {
       return h('button', { key: label, onClick: onClick, style: Object.assign({
         padding: '8px 14px', cursor: 'pointer', borderRadius: 4,
-        fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.08em',
+        fontFamily: 'var(--font-mono)', fontSize: 12.5, letterSpacing: '0.08em',
         background: active ? cA(0.18) : 'rgba(var(--panel-rgb),0.5)',
         border: '1px solid ' + (active ? accent : 'rgba(var(--purple-rgb),calc(0.15*var(--kp)))'),
         color: active ? accent : 'color-mix(in srgb, rgba(180,170,220,0.75), rgb(var(--ink-rgb)) var(--cm))',
@@ -212,8 +212,8 @@
     // Beschriftete Zeile (Schlüssel links, Wert rechts)
     function kv(k, v) {
       return h('div', { key: k, style: { display: 'flex', gap: 12, alignItems: 'baseline', padding: '5px 0', borderBottom: '1px solid ' + cA(0.1) } },
-        h('span', { style: { width: 86, flexShrink: 0, fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: cA(0.7) } }, k),
-        h('span', { style: { flex: 1, minWidth: 0, fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.04em', color: 'var(--white)', overflowWrap: 'anywhere' } }, v)
+        h('span', { style: { width: 86, flexShrink: 0, fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: cA(0.7) } }, k),
+        h('span', { style: { flex: 1, minWidth: 0, fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.04em', color: 'var(--white)', overflowWrap: 'anywhere' } }, v)
       );
     }
 
@@ -227,15 +227,15 @@
 
     // ── Loading ──────────────────────────────────────────────────
     if (loading) {
-      return h('div', { style: { padding: '20px 0', fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing: '0.22em', textTransform: 'uppercase' }}, '◈ Lade…');
+      return h('div', { style: { padding: '20px 0', fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing: '0.22em', textTransform: 'uppercase' }}, '◈ Lade…');
     }
 
     if (!window.SITE_USER) {
-      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.14em' }}, 'Bitte einloggen, um den Rechner zu nutzen.'));
+      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.14em' }}, 'Bitte einloggen, um den Rechner zu nutzen.'));
     }
 
     if (chars.length === 0) {
-      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.14em' }}, 'Kein Spielercharakter gefunden.'));
+      return h('div', boxStyle(), h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.14em' }}, 'Kein Spielercharakter gefunden.'));
     }
 
     // Suchfeld + aufgeklappte Charakterliste (Einzelwahl bzw. Mehrfachwahl), für beide Richtungen
@@ -251,7 +251,7 @@
       style: {
         width: '100%', boxSizing: 'border-box', marginBottom: 8, padding: '9px 12px',
         background: 'rgba(var(--panel-rgb),0.9)', border: '1px solid ' + cA(0.3), color: 'var(--white)',
-        borderRadius: 4, fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.06em',
+        borderRadius: 4, fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.06em',
       },
     });
     function charRow(c, on, multi, onPick) {
@@ -269,11 +269,11 @@
           style: { accentColor: accent, width: 14, height: 14, flexShrink: 0 } }),
         h(Portrait, { char: c, size: 40, accent: cA(0.5) }),
         h('div', { style: { flex: 1, minWidth: 0 } },
-          h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--white)', letterSpacing: '0.06em', marginBottom: 2 } }, charName(c)),
+          h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--white)', letterSpacing: '0.06em', marginBottom: 2 } }, charName(c)),
           h('div', { style: infoStyle },
             ((c.char_data && c.char_data.rank) || '—') + (e.rangNr ? ' (Rang ' + e.rangNr + ')' : '') + ' · ' + (e.playerDiv || '—').replace(/^Die\s+/, ''))
         ),
-        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 12, color: res.col, whiteSpace: 'nowrap' } }, res.t)
+        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 13, color: res.col, whiteSpace: 'nowrap' } }, res.t)
       );
     }
     function charList(multi) {
@@ -309,7 +309,7 @@
             style: {
               width: '100%', minWidth: 0, boxSizing: 'border-box', padding: '8px 6px', background: 'rgba(var(--panel-rgb),0.9)',
               border: '1px solid ' + cA(0.3), color: 'var(--white)', borderRadius: 4,
-              fontFamily: 'var(--font-mono)', fontSize: 12, textAlign: 'center',
+              fontFamily: 'var(--font-mono)', fontSize: 13, textAlign: 'center',
             },
           }),
           h('span', { style: infoStyle }, 'Tage')
@@ -397,7 +397,7 @@
       }),
       h('button', { onClick: sendeAnfrage, disabled: busy, style: {
         width: '100%', padding: '11px 14px', cursor: busy ? 'default' : 'pointer', borderRadius: 4,
-        fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase',
+        fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.14em', textTransform: 'uppercase',
         background: cA(0.18), border: '1px solid ' + accent, color: accent, opacity: busy ? 0.6 : 1,
       } }, busy ? '… sende' : '✉ Diesen NSC anfragen'),
       anfMsg && h('div', { style: Object.assign({}, noteStyle, { color: anfMsg.ok ? '#80dfb0' : '#ff9980', marginTop: 10 }) }, anfMsg.t)
@@ -414,10 +414,10 @@
           return h('div', { key: a.id, style: { display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', borderRadius: 4,
             border: '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', background: 'rgba(var(--panel-rgb),0.5)' } },
             h('div', { style: { flex: 1, minWidth: 0 } },
-              h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--white)', letterSpacing: '0.04em' } }, (tt || 'Rang ' + a.rang) + ' · Rang ' + a.rang),
+              h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--white)', letterSpacing: '0.04em' } }, (tt || 'Rang ' + a.rang) + ' · Rang ' + a.rang),
               h('div', { style: infoStyle }, (dv ? dv.name.replace(/^Die\s+/, '') : a.division_id) + (ch ? ' · für ' + charName(ch) : '') + (a.rasse ? ' · ' + a.rasse : ''))
             ),
-            h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: col } }, a.status),
+            h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 12.5, letterSpacing: '0.1em', textTransform: 'uppercase', color: col } }, a.status),
             a.status === 'offen' && h('button', { onClick: function() { zieheZurueck(a.id); }, title: 'Anfrage zurückziehen', style: {
               background: 'transparent', border: 'none', cursor: 'pointer', color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', fontSize: 14 } }, '✕')
           );
@@ -436,7 +436,7 @@
 
       // Kein Rang gesetzt
       selChar && playerRangNr === null && h('div', boxStyle('rgba(200,120,80,0.3)'),
-        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 12, lineHeight: 1.6, color: 'color-mix(in srgb, rgba(200,170,130,0.9), rgb(var(--ink-rgb)) var(--cm))', letterSpacing: '0.06em' }},
+        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 13, lineHeight: 1.6, color: 'color-mix(in srgb, rgba(200,170,130,0.9), rgb(var(--ink-rgb)) var(--cm))', letterSpacing: '0.06em' }},
           'Deinem Charakter ist noch kein Divisionsrang zugewiesen. Bitte im Steckbrief eintragen.'
         )
       ),
@@ -483,7 +483,7 @@
           var labels = { erfolg: 'Auftrag erfolgreich abgeschlossen', beschuetzt: 'NSC beschützt', keinTrauma: 'Kein Trauma erlitten' };
           return h('label', { key: key, style: {
             display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer',
-            fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.06em',
+            fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.06em',
             color: checks[key] ? 'var(--white)' : 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))',
             marginBottom: 8, userSelect: 'none',
           }},
@@ -503,7 +503,7 @@
         allChecked && h('div', { style: {
           marginTop: 6, padding: '8px 12px',
           background: cA(0.12), border: '1px solid ' + cA(0.4), borderRadius: 3,
-          fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.06em',
+          fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: '0.06em',
           color: accent,
         }},
           '✓ Alle Bedingungen erfüllt — Honorar: ' + fmtHade(mentorFee)

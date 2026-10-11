@@ -44,7 +44,7 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
   if (src) return (
     <div style={base} {...ev}>
       <img src={src} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} alt={label} />
-      <div style={{position:"absolute",bottom:5,right:7,fontFamily:"var(--font-mono)",fontSize:6.5,
+      <div style={{position:"absolute",bottom:5,right:7,fontFamily:"var(--font-mono)",fontSize:11,
         color:"color-mix(in srgb, rgba(255,255,255,0.3), rgb(var(--ink-rgb)) var(--cm))",background:"rgba(0,0,0,0.6)",padding:"1px 5px",borderRadius:2,letterSpacing:".12em"}}>ersetzen</div>
       <input ref={inp} type="file" accept="image/*" style={{display:"none"}} onChange={e=>load(e.target.files[0])} />
     </div>
@@ -65,10 +65,10 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
             <circle cx="12" cy="11" r="4" stroke={ac} strokeWidth="1" opacity="0.8"/>
             <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={ac} strokeWidth="1.1" opacity="0.8"/>
           </svg>}
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".22em",zIndex:1,
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".22em",zIndex:1,
         color:`oklch(0.65 0.18 ${h} / 0.58)`,textTransform:"uppercase",textAlign:"center",padding:"0 10px"}}>
         {(label||"artwork").toLowerCase()}</span>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".1em",zIndex:1,
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".1em",zIndex:1,
         color:`oklch(0.65 0.18 ${h} / ${drag?0.9:0.28})`,transition:"color .2s"}}>
         {drag?"▼ loslassen":"klicken · ziehen"}</span>
       <input ref={inp} type="file" accept="image/*" style={{display:"none"}} onChange={e=>load(e.target.files[0])} />
@@ -80,7 +80,7 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
 function SecTitle({ label }) {
   return (
     <div style={{marginBottom:10}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>{label}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>{label}</span>
       <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.65*var(--kp))),transparent)",marginTop:4}} />
     </div>
   );
@@ -100,8 +100,8 @@ function Corners({op=0.4,sz=14}) {
 function IRow({label,value,bright}) {
   return (
     <div style={{display:"flex",alignItems:"baseline",gap:6,padding:"3.5px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
-      <span style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:bright?"var(--white)":"var(--silver)",flex:1}}>{value}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+      <span style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:bright?400:300,color:bright?"var(--white)":"var(--silver)",flex:1}}>{value}</span>
     </div>
   );
 }
@@ -186,7 +186,7 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
     width:'100%',maxWidth:560,maxHeight:'calc(var(--vh, 1vh) * 80)',display:'flex',flexDirection:'column',boxShadow:'0 8px 40px rgba(var(--shadow-rgb),calc(0.7 * var(--shadow-k)))',
   };
   const tabBtn = active => ({
-    fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.16em',textTransform:'uppercase',
+    fontFamily:'var(--font-mono)',fontSize:11.5,letterSpacing:'.16em',textTransform:'uppercase',
     padding:'7px 14px',background:active?'rgba(var(--purple-rgb),calc(0.18*var(--kp)))':'transparent',
     border:'none',borderBottom:active?'2px solid rgba(var(--purple-rgb),calc(0.7*var(--kp)))':'2px solid transparent',
     cursor:'pointer',color:active?'rgba(var(--text-rgb),calc(0.9*var(--kt)))':'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',transition:'all .15s',
@@ -211,11 +211,11 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
         <div style={{padding:'10px 12px',display:'flex',gap:8}}>
           <input value={q} onChange={e=>setQ(e.target.value)} autoFocus
             placeholder="Zauber suchen…"
-            style={{flex:1,fontFamily:'var(--font-body)',fontSize:12,background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
+            style={{flex:1,fontFamily:'var(--font-body)',fontSize:13,background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',
               border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',borderRadius:3,padding:'6px 10px',
               color:'var(--white)',outline:'none'}} />
           <select value={filterKlasse} onChange={e=>setFilterKlasse(e.target.value)}
-            style={{fontFamily:'var(--font-mono)',fontSize:9,background:'rgb(var(--panel-rgb))',
+            style={{fontFamily:'var(--font-mono)',fontSize:11.5,background:'rgb(var(--panel-rgb))',
               border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',borderRadius:3,padding:'6px 8px',
               color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',outline:'none',flexShrink:0,width:130}}>
             <option value="" style={{background:'rgb(var(--panel-rgb))',color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'}}>Alle Klassen</option>
@@ -227,7 +227,7 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
             const active = filterGrad === v;
             return (
               <button key={v} onClick={()=>setFilterGrad(v)}
-                style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.1em',
+                style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.1em',
                   padding:'3px 7px',borderRadius:2,cursor:'pointer',transition:'all .12s',
                   background: active ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
                   border: active ? '1px solid rgba(var(--purple-rgb),calc(0.55*var(--kp)))' : '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
@@ -243,7 +243,7 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
               const active = filterArt.includes(a);
               return (
                 <button key={a} title={a} onClick={()=>setFilterArt(f => f.includes(a) ? f.filter(x=>x!==a) : [...f, a])}
-                  style={{display:'flex',alignItems:'center',gap:4,fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.08em',
+                  style={{display:'flex',alignItems:'center',gap:4,fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.08em',
                     padding:'2px 7px 2px 4px',borderRadius:2,cursor:'pointer',transition:'all .12s',
                     background: active ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
                     border: active ? '1px solid rgba(var(--purple-rgb),calc(0.55*var(--kp)))' : '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
@@ -270,8 +270,8 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
                     {mode==='schaden' ? <window.DamageIcon type={z.schadenTyp} size={24} /> : <window.SchoolIcon school={z.schule} size={26} />}
                   </div>
               }
-              <span style={{fontFamily:'var(--font-body)',fontSize:12.5,color:'var(--white)',flex:1}}>{z.name}</span>
-              <span style={{fontFamily:'var(--font-mono)',fontSize:8.5,color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',whiteSpace:'nowrap'}}>
+              <span style={{fontFamily:'var(--font-body)',fontSize:13,color:'var(--white)',flex:1}}>{z.name}</span>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:11,color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',whiteSpace:'nowrap'}}>
                 {mode==='heilung' ? `Grad ${z.grad} · ${z._heilungsDice} TP`
                   : mode==='schaden' ? `Grad ${z.grad} · ${z.schaden} · ${z.schadenTyp||'?'}`
                   : `Grad ${z.grad} · ${z.schule||'?'}`}
@@ -328,21 +328,21 @@ function ZauberPreview({ zauberEntry, onClose }) {
             <div style={{fontFamily:'var(--font-display)',fontSize:16,letterSpacing:'.18em',
               color:'var(--white)',textTransform:'uppercase',marginBottom:5}}>{fullSpell.name}</div>
             <div style={{display:'flex',flexWrap:'wrap',gap:5}}>
-              <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
+              <span style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.12em',
                 padding:'2px 8px',background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
                 borderRadius:2,color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))'}}>{gradLabel}</span>
               {fullSpell.schule && (
-                <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
+                <span style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.12em',
                   padding:'2px 8px',background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
                   borderRadius:2,color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))',display:'inline-flex',alignItems:'center',gap:5}}><window.SchoolIcon school={fullSpell.schule} size={14} />{fullSpell.schule}</span>
               )}
               {fullSpell.ritual && (
-                <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
+                <span style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.12em',
                   padding:'2px 8px',background:'rgba(94,232,208,0.06)',border:'1px solid rgba(94,232,208,0.2)',
                   borderRadius:2,color:'color-mix(in srgb, rgba(94,232,208,0.6), rgb(var(--ink-rgb)) var(--cm))'}}>Ritual</span>
               )}
               {fullSpell.konzentration && (
-                <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',
+                <span style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.12em',
                   padding:'2px 8px',background:'rgba(251,191,36,0.06)',border:'1px solid rgba(251,191,36,0.2)',
                   borderRadius:2,color:'color-mix(in srgb, rgba(251,191,36,0.6), rgb(var(--ink-rgb)) var(--cm))'}}>Konzentration</span>
               )}
@@ -364,9 +364,9 @@ function ZauberPreview({ zauberEntry, onClose }) {
               {metaItems.map(({label, value}) => (
                 <div key={label} style={{background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
                   borderRadius:3,padding:'8px 10px'}}>
-                  <div style={{fontFamily:'var(--font-mono)',fontSize:7.5,letterSpacing:'.2em',
+                  <div style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.2em',
                     color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:3}}>{label}</div>
-                  <div style={{fontFamily:'var(--font-body)',fontSize:11.5,color:'var(--white)',fontWeight:300}}>{value}</div>
+                  <div style={{fontFamily:'var(--font-body)',fontSize:12.5,color:'var(--white)',fontWeight:300}}>{value}</div>
                 </div>
               ))}
             </div>
@@ -374,7 +374,7 @@ function ZauberPreview({ zauberEntry, onClose }) {
 
           {/* Material */}
           {fullSpell.material && (
-            <div style={{fontFamily:'var(--font-mono)',fontSize:8.5,color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
+            <div style={{fontFamily:'var(--font-mono)',fontSize:11,color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
               marginBottom:12,fontStyle:'italic'}}>Material: {fullSpell.material}</div>
           )}
 
@@ -382,19 +382,19 @@ function ZauberPreview({ zauberEntry, onClose }) {
           {(fullSpell.schaden || fullSpell.rettungswurfAttribut || fullSpell.istAngriff) && (
             <div style={{display:'flex',gap:6,marginBottom:14,flexWrap:'wrap'}}>
               {fullSpell.schaden && (
-                <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.1em',padding:'4px 10px',
+                <span style={{fontFamily:'var(--font-mono)',fontSize:11.5,letterSpacing:'.1em',padding:'4px 10px',
                   background:'rgba(249,115,22,0.07)',border:'1px solid rgba(249,115,22,0.22)',
                   borderRadius:3,color:typeColor,display:'inline-flex',alignItems:'center',gap:6}}><window.DamageIcon type={fullSpell.schadenTyp} size={16} />{fullSpell.schaden} {fullSpell.schadenTyp||'Schaden'}</span>
               )}
               {fullSpell.rettungswurfAttribut && (
-                <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.1em',padding:'4px 10px',
+                <span style={{fontFamily:'var(--font-mono)',fontSize:11.5,letterSpacing:'.1em',padding:'4px 10px',
                   background:'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
                   borderRadius:3,color:'rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))'}}>
                   RW: {fullSpell.rettungswurfAttribut}{fullSpell.halbiert ? ' · ½ bei Erfolg' : ''}
                 </span>
               )}
               {fullSpell.istAngriff && (
-                <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.1em',padding:'4px 10px',
+                <span style={{fontFamily:'var(--font-mono)',fontSize:11.5,letterSpacing:'.1em',padding:'4px 10px',
                   background:'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
                   borderRadius:3,color:'rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))'}}>Zauberangriff</span>
               )}
@@ -404,7 +404,7 @@ function ZauberPreview({ zauberEntry, onClose }) {
           {/* Beschreibung */}
           <div style={{display:'flex',flexDirection:'column',gap:9}}>
             {(fullSpell.beschreibung || []).map((p, i) => (
-              <p key={i} style={{fontFamily:'var(--font-body)',fontSize:12.5,fontWeight:300,
+              <p key={i} style={{fontFamily:'var(--font-body)',fontSize:13,fontWeight:300,
                 color:'var(--silver)',lineHeight:1.82,margin:0}}>{p}</p>
             ))}
           </div>
@@ -412,11 +412,11 @@ function ZauberPreview({ zauberEntry, onClose }) {
           {/* Klassen */}
           {fullSpell.klassen && fullSpell.klassen.length > 0 && (
             <div style={{marginTop:16,paddingTop:12,borderTop:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))'}}>
-              <div style={{fontFamily:'var(--font-mono)',fontSize:7.5,letterSpacing:'.22em',
+              <div style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.22em',
                 color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:7}}>Klassen</div>
               <div style={{display:'flex',flexWrap:'wrap',gap:4}}>
                 {fullSpell.klassen.map(k => (
-                  <span key={k} style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.1em',
+                  <span key={k} style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.1em',
                     padding:'2px 8px',background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.13*var(--kp)))',
                     borderRadius:2,color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))'}}>{k}</span>
                 ))}
@@ -450,12 +450,12 @@ function ZauberSection({ zauber, updZauber, editing, charKlasse = '' }) {
     <>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
         <div>
-          <div style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.28em',color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:4}}>Zauber</div>
+          <div style={{fontFamily:'var(--font-mono)',fontSize:11.5,letterSpacing:'.28em',color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:4}}>Zauber</div>
           <div style={{width:28,height:1,background:'linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.65*var(--kp))),transparent)'}} />
         </div>
         {editing && (
           <button onClick={()=>setShowPicker(true)}
-            style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.16em',textTransform:'uppercase',
+            style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.16em',textTransform:'uppercase',
               padding:'5px 12px',background:'transparent',border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
               borderRadius:3,cursor:'pointer',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',transition:'all .15s'}}
             onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.6*var(--kp)))';e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))';}}
@@ -465,7 +465,7 @@ function ZauberSection({ zauber, updZauber, editing, charKlasse = '' }) {
         )}
       </div>
       {zauber.length === 0 && (
-        <div style={{fontFamily:'var(--font-mono)',fontSize:9,color:'rgba(var(--accent-rgb),calc(0.2*var(--ka) + var(--tb)))',padding:'8px 0'}}>Keine Zauber eingetragen.</div>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:11.5,color:'rgba(var(--accent-rgb),calc(0.2*var(--ka) + var(--tb)))',padding:'8px 0'}}>Keine Zauber eingetragen.</div>
       )}
       <div style={{display:'flex',flexDirection:'column',gap:5}}>
         {zauber.map(z => {
@@ -487,8 +487,8 @@ function ZauberSection({ zauber, updZauber, editing, charKlasse = '' }) {
                 {isHeil ? '💚' : <window.SchoolIcon school={z.schule} size={26} />}
               </div>
               <div style={{flex:1,minWidth:0}}>
-                <div style={{fontFamily:'var(--font-body)',fontSize:12.5,color:'var(--white)',fontWeight:400}}>{z.name}</div>
-                <div style={{fontFamily:'var(--font-mono)',fontSize:8,color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',marginTop:1}}>
+                <div style={{fontFamily:'var(--font-body)',fontSize:13,color:'var(--white)',fontWeight:400}}>{z.name}</div>
+                <div style={{fontFamily:'var(--font-mono)',fontSize:11,color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',marginTop:1}}>
                   {gradBadge(z.grad)}
                   {z.schule && ` · ${z.schule}`}
                   {isHeil && z.heilung && ` · 💚 ${z.heilung} TP`}
@@ -582,15 +582,15 @@ function CharCard({ ch, onSelect, onDelete, onExport }) {
     <div style={{background:"rgba(var(--panel-rgb),0.95)",border:"1px solid rgba(200,60,60,0.45)",borderRadius:6,
       padding:"20px 16px",display:"flex",flexDirection:"column",gap:12,alignItems:"center",justifyContent:"center",
       minHeight:220}}>
-      <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",color:"color-mix(in srgb, rgba(230,110,110,0.85), rgb(var(--ink-rgb)) var(--cm))",
+      <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".12em",color:"color-mix(in srgb, rgba(230,110,110,0.85), rgb(var(--ink-rgb)) var(--cm))",
         textTransform:"uppercase",textAlign:"center"}}>„{ch.name}" löschen?</div>
       <div style={{display:"flex",gap:8}}>
         <button onClick={()=>{onDelete(ch.id);setDelConfirm(false);}}
-          style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",textTransform:"uppercase",
+          style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".12em",textTransform:"uppercase",
             padding:"6px 14px",background:"rgba(200,50,50,0.2)",border:"1px solid rgba(200,60,60,0.5)",
             borderRadius:3,cursor:"pointer",color:"color-mix(in srgb, rgba(240,140,140,0.9), rgb(var(--ink-rgb)) var(--cm))"}}>Löschen</button>
         <button onClick={()=>setDelConfirm(false)}
-          style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",textTransform:"uppercase",
+          style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".12em",textTransform:"uppercase",
             padding:"6px 14px",background:"transparent",border:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",
             borderRadius:3,cursor:"pointer",color:"rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))"}}>Abbrechen</button>
       </div>
@@ -622,14 +622,14 @@ function CharCard({ ch, onSelect, onDelete, onExport }) {
           background:"linear-gradient(to top,rgba(var(--bg-rgb),0.98) 0%,transparent 100%)",pointerEvents:"none"}} />
         {/* Level-Badge */}
         {level && <div style={{position:"absolute",top:8,right:8,
-          fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".16em",
+          fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".16em",
           background:"rgba(var(--bg-rgb),0.82)",border:"1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))",
           borderRadius:3,padding:"2px 7px",color:"rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))"}}>
           Stufe {level}
         </div>}
         {/* Typ-Badge für NSC */}
         {ch.type === 'nsc' && <div style={{position:"absolute",top:8,left:8,
-          fontFamily:"var(--font-mono)",fontSize:7,letterSpacing:".14em",
+          fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".14em",
           background:"rgba(var(--bg-rgb),0.82)",border:"1px solid rgba(180,120,60,0.4)",
           borderRadius:3,padding:"2px 7px",color:"color-mix(in srgb, rgba(220,170,100,0.75), rgb(var(--ink-rgb)) var(--cm))"}}>NSC</div>}
 
@@ -637,7 +637,7 @@ function CharCard({ ch, onSelect, onDelete, onExport }) {
         {hover && <div style={{position:"absolute",top:8,left:8,display:"flex",gap:5}}>
           <button onClick={e=>{e.stopPropagation();onExport(ch);}}
             title="Exportieren"
-            style={{fontFamily:"var(--font-mono)",fontSize:10,width:26,height:26,display:"flex",alignItems:"center",
+            style={{fontFamily:"var(--font-mono)",fontSize:12,width:26,height:26,display:"flex",alignItems:"center",
               justifyContent:"center",background:"rgba(var(--bg-rgb),0.85)",border:"1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))",
               borderRadius:3,cursor:"pointer",color:"rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))",transition:"all .15s"}}
             onMouseEnter={e=>e.currentTarget.style.color="var(--white)"}
@@ -659,7 +659,7 @@ function CharCard({ ch, onSelect, onDelete, onExport }) {
           wordBreak:"break-word",lineHeight:1.35}}>{ch.name}</div>
         <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
           {[ch.race, ch.class, subclass, ch.division].filter(Boolean).map((t,i)=>(
-            <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:7,padding:"1px 6px",
+            <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"1px 6px",
               background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))",borderRadius:2,
               color:"rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))",letterSpacing:".06em",whiteSpace:"nowrap"}}>{t}</span>
           ))}
@@ -719,13 +719,13 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
   });
 
   const selStyle = {
-    fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",textTransform:"uppercase",
+    fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".12em",textTransform:"uppercase",
     padding:"5px 10px",background:"rgb(var(--panel-rgb))",border:"1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))",
     borderRadius:3,cursor:"pointer",color:"rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))",outline:"none",colorScheme:"dark"
   };
 
   const toolBtn = {
-    fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".16em",textTransform:"uppercase",
+    fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".16em",textTransform:"uppercase",
     padding:"6px 14px",background:"transparent",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:3,
     cursor:"pointer",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",transition:"all .18s"
   };
@@ -741,7 +741,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
           {/* Zurück-Button */}
           <a href="/index.html"
             style={{display:"inline-flex",alignItems:"center",gap:6,fontFamily:"var(--font-mono)",
-              fontSize:8,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",
+              fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",
               textDecoration:"none",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:3,
               padding:"5px 12px",transition:"all .18s",flexShrink:0}}
             onMouseEnter={e=>{e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))";e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.5*var(--kp)))";}}
@@ -749,7 +749,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
             ← Zurück
           </a>
           <div>
-            <div style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",
+            <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",
               textTransform:"uppercase",marginBottom:3}}>Meruria · Charaktere</div>
             <h1 style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:22,letterSpacing:".2em",
               color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 28px rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}}>
@@ -770,7 +770,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
           </button>
           <input ref={importRef} type="file" accept=".json,application/json" style={{display:"none"}} onChange={handleImport} />
           <button onClick={onNew}
-            style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".18em",textTransform:"uppercase",
+            style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".18em",textTransform:"uppercase",
               padding:"7px 18px",background:"rgba(var(--purple-rgb),calc(0.18*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))",
               borderRadius:3,cursor:"pointer",color:"rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))",transition:"all .18s"}}
             onMouseEnter={e=>{e.currentTarget.style.background="rgba(var(--purple-rgb),calc(0.3*var(--kp)))";e.currentTarget.style.borderColor="rgba(var(--accent-rgb),calc(0.7*var(--ka)))";}}
@@ -783,7 +783,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
       {/* Filter-Leiste */}
       <div className="mc-filter" style={{display:"flex",gap:8,alignItems:"center",marginBottom:22,flexWrap:"wrap"}}>
         <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Suchen …"
-          style={{fontFamily:"var(--font-body)",fontSize:12,color:"var(--white)",
+          style={{fontFamily:"var(--font-body)",fontSize:13,color:"var(--white)",
             background:"rgba(var(--purple-rgb),calc(0.06*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))",
             borderRadius:4,padding:"5px 11px",outline:"none",width:180,colorScheme:"dark"}} />
 
@@ -815,7 +815,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
         </button>
 
         {hasFilter && <button onClick={()=>{setQ('');setRaceF('');setClassF('');setDivF('');}}
-          style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".12em",padding:"5px 10px",
+          style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".12em",padding:"5px 10px",
             background:"transparent",border:"1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))",borderRadius:3,
             cursor:"pointer",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",transition:"all .15s"}}
           onMouseEnter={e=>e.currentTarget.style.color="color-mix(in srgb, rgba(200,160,255,0.7), rgb(var(--ink-rgb)) var(--cm))"}
@@ -823,7 +823,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
           × Filter löschen
         </button>}
 
-        <span style={{fontFamily:"var(--font-mono)",fontSize:8,color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",
+        <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",
           marginLeft:"auto",letterSpacing:".12em"}}>
           {sorted.length} Charakter{sorted.length!==1?'e':''}
         </span>
@@ -831,7 +831,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
 
       {/* Grid */}
       {sorted.length === 0
-        ? <div style={{textAlign:"center",padding:"60px 0",fontFamily:"var(--font-mono)",fontSize:9,
+        ? <div style={{textAlign:"center",padding:"60px 0",fontFamily:"var(--font-mono)",fontSize:11.5,
             letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>
             Keine Charaktere gefunden
           </div>
@@ -853,7 +853,7 @@ function EmptyState() {
   return (
     <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",display:"flex",alignItems:"center",justifyContent:"center"}}>
       <div style={{maxWidth:480,width:"100%",padding:"0 24px",textAlign:"center"}}>
-        <div style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:16}}>
+        <div style={{fontFamily:"var(--font-mono)",fontSize:11.5,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:16}}>
           Meruria · Charaktere
         </div>
         <div style={{fontFamily:"var(--font-display)",fontSize:20,letterSpacing:".22em",color:"rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))",textTransform:"uppercase",marginBottom:8}}>
@@ -867,7 +867,7 @@ function EmptyState() {
             style={{display:"inline-flex",alignItems:"center",gap:8,padding:"11px 22px",
               background:"transparent",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",
               borderRadius:3,color:"rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))",fontFamily:"var(--font-mono)",
-              fontSize:9,letterSpacing:".18em",textTransform:"uppercase",textDecoration:"none",transition:"all .2s"}}
+              fontSize:11.5,letterSpacing:".18em",textTransform:"uppercase",textDecoration:"none",transition:"all .2s"}}
             onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.5*var(--kp)))";e.currentTarget.style.color="rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))";}}
             onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.25*var(--kp)))";e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))";}}>
             ← Zurück
@@ -876,7 +876,7 @@ function EmptyState() {
             style={{display:"inline-flex",alignItems:"center",gap:10,padding:"12px 28px",
               background:"rgba(var(--purple-rgb),calc(0.18*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.55*var(--kp)))",
               borderRadius:3,color:"rgba(var(--text-rgb),calc(0.95*var(--kt) + var(--tb)))",fontFamily:"var(--font-display)",
-              fontSize:11,letterSpacing:".18em",textTransform:"uppercase",textDecoration:"none",transition:"all .2s"}}
+              fontSize:12.5,letterSpacing:".18em",textTransform:"uppercase",textDecoration:"none",transition:"all .2s"}}
             onMouseEnter={e=>{e.currentTarget.style.background="rgba(var(--purple-rgb),calc(0.32*var(--kp)))";e.currentTarget.style.borderColor="rgba(var(--accent-rgb),calc(0.8*var(--ka)))";e.currentTarget.style.color="var(--white)";}}
             onMouseLeave={e=>{e.currentTarget.style.background="rgba(var(--purple-rgb),calc(0.18*var(--kp)))";e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.55*var(--kp)))";e.currentTarget.style.color="rgba(var(--text-rgb),calc(0.95*var(--kt) + var(--tb)))";}}>
             Charakter erstellen →
@@ -909,7 +909,7 @@ function App() {
 
   if (loading) return (
     <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11.5,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>
         Lade Charaktere…
       </span>
     </div>

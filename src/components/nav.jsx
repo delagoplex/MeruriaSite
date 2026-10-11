@@ -230,7 +230,7 @@ function NavItem({ tab }) {
 
   const dur = '1.4s';
 
-  const triggerStyle = { fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid var(--nav-btn-border)', color: 'var(--nav-text)', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap', textDecoration: 'none', display: 'inline-block', cursor: 'pointer' };
+  const triggerStyle = { fontFamily: 'var(--font-display)', fontSize: '12.5px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid var(--nav-btn-border)', color: 'var(--nav-text)', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap', textDecoration: 'none', display: 'inline-block', cursor: 'pointer' };
   const triggerHoverOn  = (e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; };
   const triggerHoverOff = (e) => { e.currentTarget.style.color = 'var(--nav-text)'; e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; };
 
@@ -253,7 +253,7 @@ function NavItem({ tab }) {
           {tab.items.map((item, i) =>
             <React.Fragment key={i}>
               {item.highlight ? (
-                <a href={item.href} style={{ display:'block', whiteSpace:'nowrap', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'12px', letterSpacing:'0.1em', color:'var(--lav)', textDecoration:'none', transition:'color 0.15s, padding-left 0.15s, background 0.15s', textShadow:'0 0 10px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 20px rgba(var(--purple-rgb),calc(0.35*var(--kp)))', background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' }}
+                <a href={item.href} style={{ display:'block', whiteSpace:'nowrap', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:'500', fontSize:'13px', letterSpacing:'0.1em', color:'var(--lav)', textDecoration:'none', transition:'color 0.15s, padding-left 0.15s, background 0.15s', textShadow:'0 0 10px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 20px rgba(var(--purple-rgb),calc(0.35*var(--kp)))', background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' }}
                   onMouseEnter={e => { e.currentTarget.style.color='var(--white)'; e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.paddingLeft='24px'; e.currentTarget.style.paddingRight = '12px'; e.currentTarget.style.textShadow='0 0 14px rgba(var(--purple-rgb),calc(1*var(--kp))), 0 0 28px rgba(var(--purple-rgb),calc(0.6*var(--kp)))'; }}
                   onMouseLeave={e => { e.currentTarget.style.color='var(--lav)'; e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.paddingLeft='18px'; e.currentTarget.style.paddingRight = '18px'; e.currentTarget.style.textShadow='0 0 10px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 20px rgba(var(--purple-rgb),calc(0.35*var(--kp)))'; }}>
                   {item.label}
@@ -264,9 +264,9 @@ function NavItem({ tab }) {
                   {glitchActive && <div key={`bgb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, animation: `neu-bg-glitch2 ${dur} ease forwards` }} />}
                   {glitchActive && <div key={`sc-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, height: '2px', background: 'rgba(200,185,255,0.7)', pointerEvents: 'none', zIndex: 1, animation: `neu-scanline ${dur} ease forwards` }} />}
                   <div style={{ position: 'relative', zIndex: 2 }}>
-                    {glitchActive && <div key={`txa-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: 'var(--lav)', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-a ${dur} ease forwards` }}>{item.label}</div>}
-                    {glitchActive && <div key={`txb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: '#7c4dff', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-b ${dur} ease forwards` }}>{item.label}</div>}
-                    <a key={`lnk-${glitchKey}`} href={item.href} style={{ display: 'block', whiteSpace: 'nowrap', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '12px', letterSpacing: '0.1em', color: 'var(--lav)', textDecoration: 'none', transition: 'color 0.15s, padding-left 0.15s', textShadow: '0 0 10px rgba(var(--purple-rgb),calc(0.8*var(--kp))), 0 0 20px rgba(var(--purple-rgb),calc(0.4*var(--kp)))', background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', position: 'relative', zIndex: 2, ...(glitchActive ? { animation: `neu-txt-main ${dur} ease forwards` } : {}) }}
+                    {glitchActive && <div key={`txa-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '13px', letterSpacing: '0.1em', color: 'var(--lav)', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-a ${dur} ease forwards` }}>{item.label}</div>}
+                    {glitchActive && <div key={`txb-${glitchKey}`} aria-hidden="true" style={{ position: 'absolute', inset: 0, padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '13px', letterSpacing: '0.1em', color: '#7c4dff', pointerEvents: 'none', zIndex: 1, animation: `neu-txt-b ${dur} ease forwards` }}>{item.label}</div>}
+                    <a key={`lnk-${glitchKey}`} href={item.href} style={{ display: 'block', whiteSpace: 'nowrap', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '500', fontSize: '13px', letterSpacing: '0.1em', color: 'var(--lav)', textDecoration: 'none', transition: 'color 0.15s, padding-left 0.15s', textShadow: '0 0 10px rgba(var(--purple-rgb),calc(0.8*var(--kp))), 0 0 20px rgba(var(--purple-rgb),calc(0.4*var(--kp)))', background: 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', position: 'relative', zIndex: 2, ...(glitchActive ? { animation: `neu-txt-main ${dur} ease forwards` } : {}) }}
                       onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.paddingLeft = '24px'; e.currentTarget.style.paddingRight = '12px'; e.currentTarget.style.textShadow = '0 0 14px rgba(var(--accent-rgb),calc(1*var(--ka))), 0 0 28px rgba(var(--purple-rgb),calc(0.6*var(--kp)))'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--lav)'; e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))'; e.currentTarget.style.paddingLeft = '18px'; e.currentTarget.style.paddingRight = '18px'; e.currentTarget.style.textShadow = '0 0 10px rgba(var(--purple-rgb),calc(0.8*var(--kp))), 0 0 20px rgba(var(--purple-rgb),calc(0.4*var(--kp)))'; }}>
                       {item.label}
@@ -274,7 +274,7 @@ function NavItem({ tab }) {
                   </div>
                 </div>
               ) : (
-                <a href={item.href} style={{ display: 'block', whiteSpace: 'nowrap', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', letterSpacing: '0.1em', color: 'var(--nav-item-text)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid var(--nav-item-border)' : 'none', transition: 'all 0.15s' }}
+                <a href={item.href} style={{ display: 'block', whiteSpace: 'nowrap', padding: '10px 18px', fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', letterSpacing: '0.1em', color: 'var(--nav-item-text)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid var(--nav-item-border)' : 'none', transition: 'all 0.15s' }}
                   onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.background = 'var(--nav-item-hover-bg)'; e.currentTarget.style.paddingLeft = '24px'; e.currentTarget.style.paddingRight = '12px'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--nav-item-text)'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.paddingLeft = '18px'; e.currentTarget.style.paddingRight = '18px'; }}>
                   <span style={{ display:'flex', alignItems:'center', gap:'5px' }}>
@@ -365,7 +365,7 @@ function AccountModal({ onClose }) {
     outline: 'none', padding: '4px 0', width: '100%',
   };
   const labelStyle = {
-    fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '.22em',
+    fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '.22em',
     color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform: 'uppercase', display: 'block', marginBottom: 6,
   };
 
@@ -395,7 +395,7 @@ function AccountModal({ onClose }) {
           onMouseEnter={e => e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))'}
           onMouseLeave={e => e.currentTarget.style.color='rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))'}>×</button>
 
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.32em',
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'.32em',
           color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:6 }}>
           Konto · Meruria
         </div>
@@ -421,7 +421,7 @@ function AccountModal({ onClose }) {
             placeholder="Name eingeben …"
             style={inputStyle}
           />
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))',
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))',
             letterSpacing:'.1em', marginTop:6 }}>
             Wird auf der Spielercharaktere-Seite als Gruppenüberschrift angezeigt.
           </div>
@@ -433,7 +433,7 @@ function AccountModal({ onClose }) {
             style={{ display:'flex', alignItems:'center', gap:8, background:'transparent', border:'none',
               cursor:'pointer', padding:0, width:'100%', textAlign:'left' }}>
             <span style={{ ...labelStyle, marginBottom:0, flex:1 }}>Passwort ändern</span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',
               transition:'transform .2s', display:'inline-block',
               transform: pwOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
           </button>
@@ -459,12 +459,12 @@ function AccountModal({ onClose }) {
               })}
 
               {pwError && (
-                <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.1em',
+                <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'.1em',
                   color:'color-mix(in srgb, rgba(240,100,100,0.85), rgb(var(--ink-rgb)) var(--cm))', marginTop:-4 }}>{pwError}</div>
               )}
 
               <button onClick={handlePasswordChange} disabled={pwSaving}
-                style={{ fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'.18em',
+                style={{ fontFamily:'var(--font-display)', fontSize:12.5, letterSpacing:'.18em',
                   textTransform:'uppercase', padding:'9px 16px', cursor: pwSaving ? 'not-allowed' : 'pointer',
                   background: pwSaved ? 'rgba(80,200,140,0.18)' : 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
                   border: `1px solid ${pwSaved ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))'}`,
@@ -478,7 +478,7 @@ function AccountModal({ onClose }) {
 
         <div style={{ display:'flex', gap:10 }}>
           <button onClick={handleSave} disabled={saving || !draft.trim()}
-            style={{ flex:1, fontFamily:'var(--font-display)', fontSize:11, letterSpacing:'.18em',
+            style={{ flex:1, fontFamily:'var(--font-display)', fontSize:12.5, letterSpacing:'.18em',
               textTransform:'uppercase', padding:'10px 20px', cursor: saving ? 'not-allowed' : 'pointer',
               background: saved ? 'rgba(80,200,140,0.18)' : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
               border: `1px solid ${saved ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))'}`,
@@ -487,7 +487,7 @@ function AccountModal({ onClose }) {
             {saved ? '✓ Gespeichert' : saving ? 'Speichern…' : 'Speichern'}
           </button>
           <button onClick={onClose}
-            style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.18em',
+            style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'.18em',
               textTransform:'uppercase', padding:'10px 18px', cursor:'pointer',
               background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
               borderRadius:3, color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', transition:'all .2s' }}
@@ -536,7 +536,7 @@ function UserMenu() {
 
   const dropItemStyle = {
     display:'block', width:'100%', padding:'9px 16px',
-    fontFamily:'var(--font-body)', fontSize:12, fontWeight:300,
+    fontFamily:'var(--font-body)', fontSize:13, fontWeight:300,
     letterSpacing:'.06em', color:'var(--nav-item-text)', textAlign:'left',
     background:'transparent', border:'none', cursor:'pointer', transition:'all .15s',
   };
@@ -545,7 +545,7 @@ function UserMenu() {
     <div ref={ref} style={{ position:'relative', alignSelf:'stretch', display:'flex', alignItems:'center' }}>
       <button
         onClick={() => setOpen(o => !o)}
-        style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'.18em',
+        style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'.18em',
           textTransform:'uppercase', padding:'5px 11px',
           background: open ? 'var(--nav-btn-hover-bg)' : 'transparent',
           border:'1px solid var(--nav-btn-border)', borderRadius:3,
@@ -565,11 +565,11 @@ function UserMenu() {
 
           {/* User info header */}
           <div style={{ padding:'12px 16px 10px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }}>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'.22em',
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'.22em',
               color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:3 }}>
               {user.role === 'dm' ? 'Spielleitung' : 'Spieler'}
             </div>
-            <div style={{ fontFamily:'var(--font-body)', fontSize:11.5, fontWeight:300,
+            <div style={{ fontFamily:'var(--font-body)', fontSize:12.5, fontWeight:300,
               color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', overflow:'hidden', textOverflow:'ellipsis',
               whiteSpace:'nowrap', maxWidth:168 }}>
               {user.email}
@@ -632,7 +632,7 @@ function MobileNavSection({ tab, onClose, open, onToggle }) {
 
   if (tab.href && !tab.items) {
     return (
-      <a href={tab.href} onClick={onClose} style={{ display: 'block', padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', textDecoration: 'none', borderBottom: '1px solid var(--nav-item-border)', transition: 'color 0.15s' }}>
+      <a href={tab.href} onClick={onClose} style={{ display: 'block', padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '12.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', textDecoration: 'none', borderBottom: '1px solid var(--nav-item-border)', transition: 'color 0.15s' }}>
         {tab.label}
       </a>
     );
@@ -642,17 +642,17 @@ function MobileNavSection({ tab, onClose, open, onToggle }) {
     <div>
       <div style={{ display: 'flex', alignItems: 'stretch', borderBottom: '1px solid var(--nav-item-border)', background: 'linear-gradient(90deg, rgba(var(--purple-rgb),calc(0.42*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.04*var(--kp))) 100%)' }}>
         {tab.href
-          ? <a href={tab.href} onClick={onClose} style={{ flex: 1, padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', textDecoration: 'none', transition: 'color 0.15s' }}>{tab.label}</a>
-          : <span style={{ flex: 1, padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)' }}>{tab.label}</span>
+          ? <a href={tab.href} onClick={onClose} style={{ flex: 1, padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '12.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)', textDecoration: 'none', transition: 'color 0.15s' }}>{tab.label}</a>
+          : <span style={{ flex: 1, padding: '14px 24px', fontFamily: 'var(--font-display)', fontSize: '12.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--nav-text)' }}>{tab.label}</span>
         }
-        <button onClick={onToggle} aria-expanded={open} style={{ padding: '14px 20px', fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--nav-text)', opacity: 0.5, background: 'transparent', border: 'none', borderLeft: '1px solid var(--nav-item-border)', cursor: 'pointer' }}>
+        <button onClick={onToggle} aria-expanded={open} style={{ padding: '14px 20px', fontFamily: 'var(--font-mono)', fontSize: '11.5px', color: 'var(--nav-text)', opacity: 0.5, background: 'transparent', border: 'none', borderLeft: '1px solid var(--nav-item-border)', cursor: 'pointer' }}>
           {open ? '▲' : '▼'}
         </button>
       </div>
       {open && (
         <div style={{ background: 'rgba(var(--accent-rgb),calc(0.05*var(--ka)))' }}>
           {tab.items.map((item, i) => (
-            <a key={i} href={item.href} onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '11px 24px 11px 36px', fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: '300', letterSpacing: '0.1em', color: 'var(--nav-item-text)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid var(--nav-item-border)' : 'none', transition: 'color 0.15s' }}>
+            <a key={i} href={item.href} onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '11px 24px 11px 36px', fontFamily: 'var(--font-body)', fontSize: '13px', fontWeight: '300', letterSpacing: '0.1em', color: 'var(--nav-item-text)', textDecoration: 'none', borderBottom: i < tab.items.length - 1 ? '1px solid var(--nav-item-border)' : 'none', transition: 'color 0.15s' }}>
               {item.label}
               {item.locked && (
                 <svg width="8" height="10" viewBox="0 0 8 10" fill="none" style={{ flexShrink: 0, opacity: 0.5 }}>
@@ -833,7 +833,7 @@ function SiteNav({ rightLabel }) {
         </nav>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           {rightLabel && (
-            <div className="meruria-nav-label" style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', letterSpacing: '0.15em' }}>{rightLabel}</div>
+            <div className="meruria-nav-label" style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))', letterSpacing: '0.15em' }}>{rightLabel}</div>
           )}
           <UserMenu />
           <ThemeToggle />

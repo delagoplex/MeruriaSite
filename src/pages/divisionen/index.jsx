@@ -484,7 +484,7 @@ function DivisionCard({
   }, div.name), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: `${acc}88`,
       textTransform: 'uppercase'
@@ -493,7 +493,7 @@ function DivisionCard({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12.5px',
+      fontSize: '13px',
       lineHeight: 1.85,
       color: 'rgba(var(--text-hi-rgb),calc(0.6*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
@@ -574,7 +574,7 @@ function DivisionCard({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '400',
       letterSpacing: '0.13em',
       color: `${acc}ee`
@@ -582,7 +582,7 @@ function DivisionCard({
   }, div.leiter.name), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '6.5px',
+      fontSize: '11px',
       letterSpacing: '0.2em',
       color: `${acc}55`,
       textTransform: 'uppercase'
@@ -591,7 +591,7 @@ function DivisionCard({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       lineHeight: 1.65,
       color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.01em',
@@ -609,7 +609,7 @@ function DivisionCard({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '12px',
+      fontSize: '13px',
       letterSpacing: '0.22em',
       color: hov ? acc : `${acc}65`,
       textTransform: 'uppercase',
@@ -735,14 +735,14 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em'
     }
   }, "\u25C8 ARCHIV-STATUS: NOMINAL \u25C8 EPOCHE: UNBEKANNT"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em'
     }

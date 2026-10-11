@@ -320,7 +320,7 @@ function CountsSection({ countsMap, thresholdsMap, onSaved }) {
           Tags{activeTags ? ` (${activeTags})` : ''} {tagsOpen ? '▴' : '▾'}
         </button>
         <button className={`reveal-mode-btn${onlyFound ? ' active' : ''}`} onClick={() => setOnlyFound(o => !o)}>Nur entdeckte</button>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', whiteSpace: 'nowrap' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11.5px', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', whiteSpace: 'nowrap' }}>
           {found}/{all.length} entdeckt · {displayed.length} angezeigt
         </span>
       </div>
@@ -536,7 +536,7 @@ function App() {
         </div>
 
         {loading ? (
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', padding: '24px 0' }}>Lädt…</div>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', padding: '24px 0' }}>Lädt…</div>
         ) : activeTab === 'mengen' ? (
           <CountsSection countsMap={countsMap} thresholdsMap={thresholdsMap} onSaved={handleCountSaved} />
         ) : activeTab === 'randomizer' ? (

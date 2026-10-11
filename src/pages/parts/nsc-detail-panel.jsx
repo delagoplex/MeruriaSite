@@ -38,12 +38,12 @@ function DPSection({ title, acc, count, total, hint }) {
   const allOpen = count >= total && total > 0;
   return (
     <div style={{ marginBottom: 10, marginTop: 22, display:'flex', alignItems:'center', gap:10 }}>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.30em',
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.30em',
         color: count > 0 ? acc : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', textTransform:'uppercase' }}>
         ◇ {title}
       </span>
       <div style={{ flex:1, height:1, background: count > 0 ? dpHA(acc, 0.4) : 'rgba(var(--accent-rgb),calc(0.12*var(--ka)))' }} />
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em',
         color: allOpen ? 'rgba(var(--text-rgb),calc(0.7*var(--kt)))' : (count > 0 ? 'rgba(var(--text-rgb),calc(0.5*var(--kt)))' : 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))'), textTransform:'uppercase' }}>
         {hint || (total > 0 ? `${count} / ${total} entdeckt` : '—')}
       </span>
@@ -59,7 +59,7 @@ function DPLocked({ acc, hint }) {
       border:`1px dashed ${dpHA(acc, 0.25)}`,
       background:'rgba(var(--purple-rgb),calc(0.03*var(--kp)))', borderRadius:2,
       display:'flex', alignItems:'center', gap:8,
-      fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em', textTransform:'uppercase',
+      fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.18em', textTransform:'uppercase',
       color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
     }}>
       <span style={{ width:6, height:6, border:`1px solid ${dpHA(acc, 0.45)}`, display:'inline-block' }}/>
@@ -72,7 +72,7 @@ function DPLocked({ acc, hint }) {
 function FactRow({ label, value, isOpen, toggleState, acc, gm, onToggle }) {
   return (
     <React.Fragment>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', whiteSpace:'nowrap', paddingTop:2 }}>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', whiteSpace:'nowrap', paddingTop:2 }}>
         {label}
       </span>
       <div style={{ display:'flex', alignItems:'center', gap:10, justifyContent:'space-between', flexWrap:'wrap' }}>
@@ -83,7 +83,7 @@ function FactRow({ label, value, isOpen, toggleState, acc, gm, onToggle }) {
             {value || <span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontStyle:'italic' }}>—</span>}
           </span>
         ) : (
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:dpHA(acc, 0.55), letterSpacing:'0.18em', textTransform:'uppercase', display:'inline-flex', alignItems:'center', gap:6 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:12, color:dpHA(acc, 0.55), letterSpacing:'0.18em', textTransform:'uppercase', display:'inline-flex', alignItems:'center', gap:6 }}>
             <span style={{ width:6, height:6, border:`1px solid ${dpHA(acc, 0.45)}`, display:'inline-block' }}/>
             Unbekannt
           </span>
@@ -101,7 +101,7 @@ function Pills({ items, acc }) {
       {items.map((e, i) => (
         <span key={i} style={{
           padding:'5px 10px',
-          fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.16em', textTransform:'uppercase',
+          fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.16em', textTransform:'uppercase',
           color:'var(--white)', background: dpHA(acc, 0.14),
           border:`1px solid ${dpHA(acc, 0.45)}`, borderRadius:2,
         }}>
@@ -120,7 +120,7 @@ function Bullets({ items, acc, columns=1 }) {
           padding:'5px 10px 5px 8px',
           borderLeft:`2px solid ${dpHA(acc, 0.55)}`,
           background: dpHA(acc, 0.05),
-          fontFamily:'var(--font-body)', fontSize:12.5, color:'var(--white)',
+          fontFamily:'var(--font-body)', fontSize:13, color:'var(--white)',
         }}>
           <svg width="4" height="4" viewBox="0 0 4 4" style={{ flexShrink:0, transform:'translateY(-1px)' }}>
             <polygon points={dpHex(4)} fill={acc} />
@@ -135,7 +135,7 @@ function Bullets({ items, acc, columns=1 }) {
 // ── Indexierte Liste (jeder Eintrag toggle-bar) ──────────
 function IndexedList({ items, keyPrefix, isOpen, onToggle, toggleState, gm, acc, render, lockedHint }) {
   if (!items || items.length === 0) {
-    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>—</div>;
+    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:13, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>—</div>;
   }
   const anyVisible = items.some((_, i) => gm || isOpen(`${keyPrefix}-${i}`));
   if (!anyVisible) return <DPLocked acc={acc} hint={lockedHint || 'Unbekannt'}/>;
@@ -167,17 +167,17 @@ function RoutineEntry({ entry, open, acc }) {
       borderRadius:2,
     }}>
       <div style={{ display:'flex', alignItems:'baseline', gap:10, flexWrap:'wrap', marginBottom:3 }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em',
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em',
           color:acc, textTransform:'uppercase' }}>{entry.zeit}</span>
         {entry.ort && (
           <React.Fragment>
-            <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:9 }}>·</span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em',
+            <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:11.5 }}>·</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.14em',
               color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>{entry.ort}</span>
           </React.Fragment>
         )}
       </div>
-      <div style={{ fontFamily:'var(--font-body)', fontSize:12.5, color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', lineHeight:1.55 }}>
+      <div style={{ fontFamily:'var(--font-body)', fontSize:13, color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', lineHeight:1.55 }}>
         {entry.tat}
       </div>
     </div>
@@ -198,7 +198,7 @@ function starPoints(cx, cy, rOut, rIn) {
 // ── Routine-Zeitachse — Sterne, verbunden durch vertikale Linie ──
 function RoutineTimeline({ entries, isOpen, onToggle, toggleState, gm, acc }) {
   if (!entries || entries.length === 0) {
-    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>—</div>;
+    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:13, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>—</div>;
   }
   const ROW_GAP = 12;        // vertikaler Abstand zwischen Einträgen
   const STAR_R  = 9;         // Stern-Außenradius
@@ -271,7 +271,7 @@ function AusEntry({ item, open, acc }) {
 // ── Ausrüstungs-Grid (3 Items pro Reihe) ─────────────────
 function AusGrid({ items, isOpen, onToggle, toggleState, gm, acc }) {
   if (!items || items.length === 0) {
-    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>—</div>;
+    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:13, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>—</div>;
   }
   const visible = items.map((it, i) => ({ it, i, k: `aus-${i}`, open: isOpen(`aus-${i}`) }));
   if (!gm && !visible.some(x => x.open)) {
@@ -304,13 +304,13 @@ function GeheimnisEntry({ text, idx, acc }) {
       border:`1px solid ${dpHA(acc, 0.4)}`,
       background:`linear-gradient(135deg, ${dpHA(acc, 0.10)}, ${dpHA(acc, 0.04)})`,
       borderRadius:2, position:'relative',
-      fontFamily:'var(--font-body)', fontSize:12.5, color:'var(--white)', lineHeight:1.6,
+      fontFamily:'var(--font-body)', fontSize:13, color:'var(--white)', lineHeight:1.6,
     }}>
       <div style={{ position:'absolute', top:-1, left:-1,
         padding:'2px 6px',
         background: dpHA(acc, 0.20),
         border:`1px solid ${dpHA(acc, 0.55)}`,
-        fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
+        fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em',
         color:acc, textTransform:'uppercase',
       }}>Geheim · {(idx+1).toString().padStart(2,'0')}</div>
       <div style={{ marginTop:14 }}>{text}</div>
@@ -361,7 +361,7 @@ function KontaktEntry({ p, acc, badgeColor, onSelectNsc }) {
           <polygon points={dpHex(32)} fill={dpHA(badgeColor || acc, 0.12)} stroke={ringColor} strokeWidth="1.2"/>
         </svg>
         <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
-          fontFamily:'var(--font-display)', fontSize:11, fontWeight:400, letterSpacing:'0.04em',
+          fontFamily:'var(--font-display)', fontSize:12.5, fontWeight:400, letterSpacing:'0.04em',
           color: p.verstorben ? 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))' : 'var(--white)' }}>{initials}</div>
       </div>
       <div style={{ flex:1, minWidth:0, display:'flex', flexDirection:'column', gap:2 }}>
@@ -374,20 +374,20 @@ function KontaktEntry({ p, acc, badgeColor, onSelectNsc }) {
           {p.verstorben && (
             <span style={{
               padding:'1px 6px',
-              fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
+              fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em',
               background:'rgba(227,103,96,0.15)',
               border:'1px solid rgba(227,103,96,0.55)',
               color:'#e36760', textTransform:'uppercase', borderRadius:2,
             }}>Gefallen</span>
           )}
         </div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.16em',
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.16em',
           color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>
           {p.rolle}
         </div>
       </div>
       {clickable && (
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.18em',
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:12, letterSpacing:'0.18em',
           color: hov ? acc : dpHA(acc, 0.5), flexShrink:0, transition:'color 0.18s' }}>→</span>
       )}
     </div>
@@ -397,7 +397,7 @@ function KontaktEntry({ p, acc, badgeColor, onSelectNsc }) {
 // ── Begleiter-Karte ──────────────────────────────────────
 function BegleiterCard({ b, acc }) {
   if (!b) {
-    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:12, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>Keiner.</div>;
+    return <div style={{ fontFamily:'var(--font-body)', fontStyle:'italic', fontSize:13, color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', padding:'4px 0' }}>Keiner.</div>;
   }
   return (
     <div style={{ display:'flex', alignItems:'center', gap:14, padding:'10px 12px',
@@ -413,7 +413,7 @@ function BegleiterCard({ b, acc }) {
       </div>
       <div style={{ flex:1, minWidth:0 }}>
         <div style={{ fontFamily:'var(--font-display)', fontSize:13, letterSpacing:'0.08em', color:'var(--white)' }}>{b.name}</div>
-        <div style={{ fontFamily:'var(--font-body)', fontSize:11.5, color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', marginTop:2 }}>{b.art}</div>
+        <div style={{ fontFamily:'var(--font-body)', fontSize:12.5, color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', marginTop:2 }}>{b.art}</div>
       </div>
     </div>
   );
@@ -502,20 +502,20 @@ function FactGuessForm({ nsc, keys, unlocked, characterId, onCorrect, acc }) {
   if (!candidates.length) return null;
   return (
     <div style={{ margin:'18px 0 22px', padding:'14px 16px', border:`1px solid ${dpHA(acc,0.25)}`, borderLeft:`2px solid ${dpHA(acc,0.75)}`, background:dpHA(acc,0.045), borderRadius:2 }}>
-      <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.24em', color:dpHA(acc,0.8), textTransform:'uppercase', marginBottom:10 }}>Wissen eintragen</div>
+      <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.24em', color:dpHA(acc,0.8), textTransform:'uppercase', marginBottom:10 }}>Wissen eintragen</div>
       {!characterId ? (
-        <div style={{ fontFamily:'var(--font-body)', fontSize:12, color:'rgba(200,190,240,0.6)' }}>Wähle zuerst einen deiner Charaktere als Blickwinkel.</div>
+        <div style={{ fontFamily:'var(--font-body)', fontSize:13, color:'rgba(200,190,240,0.6)' }}>Wähle zuerst einen deiner Charaktere als Blickwinkel.</div>
       ) : (
         <form onSubmit={submit} style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto', gap:8 }}>
-          <select aria-label="Information, die du erfahren hast" value={factKey} onChange={event => setFactKey(event.target.value)} style={{ gridColumn:'1 / -1', minWidth:0, padding:'8px 9px', border:`1px solid ${dpHA(acc,0.28)}`, borderRadius:2, background:'rgba(5,4,15,0.85)', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:9 }}>
+          <select aria-label="Information, die du erfahren hast" value={factKey} onChange={event => setFactKey(event.target.value)} style={{ gridColumn:'1 / -1', minWidth:0, padding:'8px 9px', border:`1px solid ${dpHA(acc,0.28)}`, borderRadius:2, background:'rgba(5,4,15,0.85)', color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:11.5 }}>
             {candidates.map(key => <option key={key} value={key}>{dpFactLabel(key)}</option>)}
           </select>
-          <input aria-label="Eintrag" value={guess} onChange={event => setGuess(event.target.value)} placeholder="Was hat dein Charakter erfahren? …" autoComplete="off" style={{ minWidth:0, padding:'8px 10px', border:`1px solid ${dpHA(acc,0.28)}`, borderRadius:2, background:'rgba(5,4,15,0.85)', color:'var(--white)', fontFamily:'var(--font-body)', fontSize:12 }} />
-          <button type="submit" disabled={busy || !guess.trim()} style={{ padding:'8px 12px', border:`1px solid ${dpHA(acc,0.5)}`, borderRadius:2, background:dpHA(acc,0.12), color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.12em', textTransform:'uppercase', cursor:busy ? 'wait' : 'pointer', opacity:busy || !guess.trim() ? 0.55 : 1 }}>{busy ? 'Prüfe …' : 'Eintragen'}</button>
+          <input aria-label="Eintrag" value={guess} onChange={event => setGuess(event.target.value)} placeholder="Was hat dein Charakter erfahren? …" autoComplete="off" style={{ minWidth:0, padding:'8px 10px', border:`1px solid ${dpHA(acc,0.28)}`, borderRadius:2, background:'rgba(5,4,15,0.85)', color:'var(--white)', fontFamily:'var(--font-body)', fontSize:13 }} />
+          <button type="submit" disabled={busy || !guess.trim()} style={{ padding:'8px 12px', border:`1px solid ${dpHA(acc,0.5)}`, borderRadius:2, background:dpHA(acc,0.12), color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase', cursor:busy ? 'wait' : 'pointer', opacity:busy || !guess.trim() ? 0.55 : 1 }}>{busy ? 'Prüfe …' : 'Eintragen'}</button>
         </form>
       )}
-      {status && <div role="status" style={{ marginTop:9, fontFamily:'var(--font-body)', fontSize:11, color:status.startsWith('Richtige') ? 'rgba(95,227,154,0.9)' : 'rgba(200,190,240,0.65)' }}>{status}</div>}
-      {reveal && <div key={reveal.key} style={{ marginTop:10, padding:'9px 11px', border:`1px solid ${dpHA(acc,0.28)}`, background:dpHA(acc,0.06), fontFamily:'var(--font-body)', fontSize:12, lineHeight:1.6 }}><NscFactReveal text={reveal.text}/></div>}
+      {status && <div role="status" style={{ marginTop:9, fontFamily:'var(--font-body)', fontSize:12.5, color:status.startsWith('Richtige') ? 'rgba(95,227,154,0.9)' : 'rgba(200,190,240,0.65)' }}>{status}</div>}
+      {reveal && <div key={reveal.key} style={{ marginTop:10, padding:'9px 11px', border:`1px solid ${dpHA(acc,0.28)}`, background:dpHA(acc,0.06), fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.6 }}><NscFactReveal text={reveal.text}/></div>}
     </div>
   );
 }
@@ -607,14 +607,14 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
         <div className="nsc-panel-head" style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'14px 22px',
           borderBottom:`1px solid ${dpHA(acc, 0.2)}`,
           position:'sticky', top:0, background:'rgba(var(--panel-rgb),0.98)', zIndex:5 }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
             № {nsc.id.toUpperCase()} · {visible('division') && nsc.division && nsc.division !== 'Keine' ? `${dpRoman(nsc) ? `${dpRoman(nsc)} · ` : ''}${nsc.division}` : 'NSC'}
             {gm && <span style={{ marginLeft:10, color:'color-mix(in srgb, #ffb850, rgb(var(--ink-rgb)) var(--cm))', fontWeight:600 }}>· SPIELLEITUNG</span>}
           </div>
           <button onClick={onClose} style={{
             background:'transparent', border:`1px solid ${dpHA(acc, 0.5)}`, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
             cursor:'pointer', padding:'4px 10px',
-            fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.2em', textTransform:'uppercase', borderRadius:2,
+            fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.2em', textTransform:'uppercase', borderRadius:2,
           }}
             onMouseEnter={e=>{e.currentTarget.style.color='var(--white)';e.currentTarget.style.borderColor=acc;e.currentTarget.style.background=dpHA(acc, 0.18);}}
             onMouseLeave={e=>{e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))';e.currentTarget.style.borderColor=dpHA(acc, 0.5);e.currentTarget.style.background='transparent';}}
@@ -639,7 +639,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
           <div style={{ flex:1, minWidth:0, paddingTop:6 }}>
             {/* Titel-Kicker */}
             {nsc.titel && (
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.18em',
                 color:acc, textTransform:'uppercase', marginBottom:4 }}>
                 {nsc.titel}
               </div>
@@ -667,8 +667,8 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
                   ['alter', nsc.alter ? `${nsc.alter} Jahre` : null],
                 ].filter(([k,v]) => visible(k) && v).map(([k,v], i, a) => (
                   <React.Fragment key={k}>
-                    {i > 0 && <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:9 }}>·</span>}
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.18em',
+                    {i > 0 && <span style={{ color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', fontSize:11.5 }}>·</span>}
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.18em',
                       color: isOpen(k) ? acc : 'rgba(var(--text-rgb),calc(0.45*var(--kt)))',
                       textTransform:'uppercase', fontStyle: isOpen(k) ? 'normal' : 'italic' }}>
                       {v}
@@ -772,7 +772,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
                       display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))', gap:'10px 26px' }}>
                       {rows.map(r => (
                         <div key={r.k} style={(r.k === 'merkmale' || r.k === 'weiteres') ? { gridColumn:'1 / -1' } : null}>
-                          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.48*var(--ka) + var(--tb)))', textTransform:'uppercase', display:'block', marginBottom:2 }}>{r.label}</span>
+                          <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.48*var(--ka) + var(--tb)))', textTransform:'uppercase', display:'block', marginBottom:2 }}>{r.label}</span>
                           <span style={{ fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.6, whiteSpace:'pre-wrap', display:'block',
                             color: open ? 'var(--silver)' : 'rgba(var(--text-rgb),calc(0.5*var(--kt)))',
                             fontStyle: open ? 'normal' : 'italic' }}>{r.v}</span>
@@ -845,7 +845,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
                     padding:'6px 10px 6px 8px',
                     borderLeft:`2px solid ${dpHA(acc, open ? 0.55 : 0.25)}`,
                     background: dpHA(acc, open ? 0.05 : 0.02),
-                    fontFamily:'var(--font-body)', fontSize:12.5, color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', lineHeight:1.55,
+                    fontFamily:'var(--font-body)', fontSize:13, color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', lineHeight:1.55,
                   }}>{it}</div>
                 )}/>
             </React.Fragment>
@@ -861,7 +861,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
                     padding:'6px 10px 6px 8px',
                     borderLeft:`2px solid ${dpHA(acc, open ? 0.55 : 0.25)}`,
                     background: dpHA(acc, open ? 0.05 : 0.02),
-                    fontFamily:'var(--font-body)', fontSize:12.5, color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', lineHeight:1.55,
+                    fontFamily:'var(--font-body)', fontSize:13, color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', lineHeight:1.55,
                   }}>{it}</div>
                 )}/>
             </React.Fragment>
@@ -875,7 +875,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
                 render={(it, i, open) => (
                   <span style={{
                     display:'inline-block', padding:'5px 10px',
-                    fontFamily:'var(--font-mono)', fontSize:9.5, letterSpacing:'0.16em', textTransform:'uppercase',
+                    fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.16em', textTransform:'uppercase',
                     color:'var(--white)', background: dpHA(acc, 0.14),
                     border:`1px solid ${dpHA(acc, 0.45)}`, borderRadius:2,
                     opacity: open ? 1 : 0.55,
@@ -895,7 +895,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
                     padding:'5px 10px 5px 8px',
                     borderLeft:`2px solid ${dpHA(acc, 0.55)}`,
                     background: dpHA(acc, 0.05),
-                    fontFamily:'var(--font-body)', fontSize:12.5, color:'var(--white)',
+                    fontFamily:'var(--font-body)', fontSize:13, color:'var(--white)',
                     opacity: open ? 1 : 0.55,
                   }}>
                     <svg width="4" height="4" viewBox="0 0 4 4" style={{ flexShrink:0, transform:'translateY(-1px)' }}>
@@ -916,7 +916,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
                   <div style={{ padding:'10px 14px',
                     border:`1px solid ${dpHA('#e36760', 0.4)}`,
                     background:'rgba(227,103,96,0.06)',
-                    fontFamily:'var(--font-body)', fontSize:12.5, fontStyle:'italic',
+                    fontFamily:'var(--font-body)', fontSize:13, fontStyle:'italic',
                     color: open ? 'color-mix(in srgb, rgba(240,200,200,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(240,200,200,0.5), rgb(var(--ink-rgb)) var(--cm))', lineHeight:1.65 }}>
                     {it}
                   </div>
@@ -949,11 +949,11 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
               border:`1px solid rgba(214,178,92,${isOpen('habe') ? 0.5 : 0.25})`,
               background:'linear-gradient(135deg, rgba(214,178,92,0.10), rgba(214,178,92,0.03))',
               boxShadow: isOpen('habe') ? '0 0 18px rgba(214,178,92,0.12)' : 'none' }}>
-              <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(214,178,92,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>◈ Vermögen</span>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.3em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(214,178,92,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>◈ Vermögen</span>
               <span style={{ flex:1 }}/>
               <span style={isOpen('habe') || gm
                 ? { fontFamily:'var(--font-mono)', fontSize:14, letterSpacing:'0.1em', color:'color-mix(in srgb, #e8c878, rgb(var(--ink-rgb)) var(--cm))', textShadow:'0 0 10px rgba(214,178,92,0.4)' }
-                : { fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.16em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(214,178,92,0.4), rgb(var(--ink-rgb)) var(--cm))' }}>
+                : { fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.16em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(214,178,92,0.4), rgb(var(--ink-rgb)) var(--cm))' }}>
                 {isOpen('habe') || gm ? nsc.habe.toLocaleString('de-DE') + ' Hade' : 'Unbekannt'}
               </span>
               {gm && <UnlockToggle state={ts('habe')} onClick={() => tg('habe')} size="sm"/>}
@@ -972,7 +972,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
                 ].filter(([, , items]) => items.length > 0).map(([title, prefix, items, color, glyph]) => (
                   <div key={prefix}>
                     <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:6 }}>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.24em', color, textTransform:'uppercase' }}>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.24em', color, textTransform:'uppercase' }}>
                         {glyph} {title}
                       </span>
                       <div style={{ flex:1, height:1, background:'rgba(var(--accent-rgb),calc(0.12*var(--ka)))' }}/>
@@ -998,7 +998,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
           <div style={{ marginTop:28, padding:'12px 14px',
             border:`1px dashed ${dpHA(acc, 0.4)}`,
             background: dpHA(acc, 0.04),
-            fontFamily:'var(--font-mono)', fontSize:9,
+            fontFamily:'var(--font-mono)', fontSize:11.5,
             color: acc, letterSpacing:'0.16em', textTransform:'uppercase',
             display:'flex', alignItems:'center', justifyContent:'space-between',
           }}>

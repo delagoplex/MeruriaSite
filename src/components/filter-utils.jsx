@@ -122,7 +122,7 @@ function useDragScroll({ horizontal = false, vertical = false } = {}) {
 
 function XBtn({ onClick }) {
   return (
-    <button onClick={onClick} style={{ width:'16px', height:'16px', fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(230,90,90,0.9)', background:'rgba(200,60,60,0.15)', border:'1px solid rgba(220,80,80,0.5)', borderRadius:'2px', cursor:'pointer', padding:0, lineHeight:1, transition:'all 0.15s', flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center' }}
+    <button onClick={onClick} style={{ width:'16px', height:'16px', fontFamily:'var(--font-mono)', fontSize:'11px', color:'rgba(230,90,90,0.9)', background:'rgba(200,60,60,0.15)', border:'1px solid rgba(220,80,80,0.5)', borderRadius:'2px', cursor:'pointer', padding:0, lineHeight:1, transition:'all 0.15s', flexShrink:0, display:'flex', alignItems:'center', justifyContent:'center' }}
       onMouseEnter={e => { e.currentTarget.style.color='#fff'; e.currentTarget.style.background='rgba(200,60,60,0.35)'; e.currentTarget.style.borderColor='rgba(230,90,90,0.8)'; }}
       onMouseLeave={e => { e.currentTarget.style.color='rgba(230,90,90,0.9)'; e.currentTarget.style.background='rgba(200,60,60,0.15)'; e.currentTarget.style.borderColor='rgba(220,80,80,0.5)'; }}>
       ✕
@@ -143,7 +143,7 @@ function FilterGroup({ title, active, onReset, children, collapsible }) {
               <polygon points="1,1 7,4 1,7" fill="rgba(var(--accent-rgb),calc(1*var(--ka)))" />
             </svg>
           )}
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'8px', letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>{title}</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>{title}</div>
         </div>
         {active && onReset && <XBtn onClick={e => { e.stopPropagation(); onReset(); }} />}
       </div>

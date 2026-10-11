@@ -2051,7 +2051,7 @@ function SimAccessDenied() {
       top: '18px',
       left: '22px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       textDecoration: 'none',
@@ -2070,7 +2070,7 @@ function SimAccessDenied() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.42em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'

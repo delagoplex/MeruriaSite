@@ -104,7 +104,7 @@ function Sidebar({ active, onSelect }) {
       borderRight:'1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.45) 0%, rgba(var(--bg-rgb),0.7) 100%)',
     }}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'18px',paddingLeft:'4px'}}>◈ Kapitel</div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'18px',paddingLeft:'4px'}}>◈ Kapitel</div>
       <nav style={{display:'flex',flexDirection:'column',gap:'2px'}}>
         {CATEGORIES.map((cat,i) => {
           const on = cat.id === active;
@@ -119,16 +119,16 @@ function Sidebar({ active, onSelect }) {
               onMouseEnter={e=>{if(!on){e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.06*var(--kp)))';e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.15*var(--kp)))';}}}
               onMouseLeave={e=>{if(!on){e.currentTarget.style.background='transparent';e.currentTarget.style.borderColor='transparent';}}}
             >
-              <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color: on ? 'var(--lav)' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))',minWidth:'18px'}}>{String(i+1).padStart(2,'0')}</span>
-              <span style={{fontFamily:'var(--font-display)',fontSize:'11px',fontWeight: on ? 500 : 400,letterSpacing:'0.12em',color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',textTransform:'uppercase'}}>{cat.label}</span>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.18em',color: on ? 'var(--lav)' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))',minWidth:'18px'}}>{String(i+1).padStart(2,'0')}</span>
+              <span style={{fontFamily:'var(--font-display)',fontSize:'12.5px',fontWeight: on ? 500 : 400,letterSpacing:'0.12em',color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',textTransform:'uppercase'}}>{cat.label}</span>
             </button>
           );
         })}
       </nav>
 
       <div style={{marginTop:'40px',padding:'14px 12px',background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',borderRadius:'3px'}}>
-        <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'8px'}}>◈ Hinweis</div>
-        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'10.5px',lineHeight:1.6,color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'}}>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'8px'}}>◈ Hinweis</div>
+        <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12px',lineHeight:1.6,color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'}}>
           Diese Seite sammelt Meta-Informationen, die du außerhalb der Spielwelt brauchst.
         </p>
       </div>
@@ -139,7 +139,7 @@ function Sidebar({ active, onSelect }) {
 function SectionHeader({ mono, title, sub }) {
   return (
     <div style={{marginBottom:'22px'}}>
-      <div style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'10px'}}>◈ {mono}</div>
+      <div style={{fontFamily:'var(--font-mono)',fontSize:'11.5px',letterSpacing:'0.32em',color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:'10px'}}>◈ {mono}</div>
       <h2 style={{fontFamily:'var(--font-display)',fontSize:'clamp(18px,3.5vw,42px)',fontWeight:'300',letterSpacing:'0.14em',color:'var(--white)',textShadow:'0 0 28px rgba(var(--purple-rgb),calc(0.32*var(--kp)))',lineHeight:1.05,textTransform:'uppercase'}}>{title}</h2>
       {sub && <p style={{marginTop:'12px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'13px',color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',letterSpacing:'0.04em',maxWidth:'620px',lineHeight:1.7}}>{sub}</p>}
       <div style={{marginTop:'18px',width:'72px',height:'1px',background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.7*var(--kp))), rgba(var(--purple-rgb),calc(0*var(--kp))))'}}/>
@@ -219,10 +219,10 @@ function AufstiegContent() {
                         <polygon points="13,1 25,7.5 25,21.5 13,28 1,21.5 1,7.5"
                           fill="rgba(var(--purple-rgb),calc(0.08*var(--kp)))" stroke={tierEdge} strokeWidth="0.9"/>
                       </svg>
-                      <span style={{position:'relative',fontFamily:'var(--font-display)',fontSize:'12px',fontWeight:500,color:'var(--white)'}}>{row.lvl}</span>
+                      <span style={{position:'relative',fontFamily:'var(--font-display)',fontSize:'13px',fontWeight:500,color:'var(--white)'}}>{row.lvl}</span>
                     </span>
                     {isFirst && (
-                      <span style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.2em',color:tierEdge,textTransform:'uppercase'}}>
+                      <span style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.2em',color:tierEdge,textTransform:'uppercase'}}>
                         {row.lvl === 1 ? 'Stufe I — IV' : row.lvl === 5 ? 'Stufe V — X' : row.lvl === 11 ? 'Stufe XI — XVI' : 'Stufe XVII — XX'}
                       </span>
                     )}
@@ -235,7 +235,7 @@ function AufstiegContent() {
                   </td>
                   <td>
                     <span style={{
-                      fontFamily:'var(--font-mono)',fontSize:'12px',
+                      fontFamily:'var(--font-mono)',fontSize:'13px',
                       padding:'3px 10px',background:'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
                       border:`1px solid ${tierEdge}`,borderRadius:'2px',
                       color:'var(--white)',letterSpacing:'0.04em',
@@ -258,9 +258,9 @@ function AufstiegContent() {
           const tEdge = ['rgba(94,232,208,0.6)','rgba(var(--accent-rgb),calc(0.7*var(--ka)))','rgba(255,200,140,0.65)','rgba(255,160,220,0.7)'][i];
           return (
             <div key={c.t} className="reveal-up" style={{padding:'14px 14px',background:'rgba(var(--purple-rgb),calc(0.05*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))',borderTop:`2px solid ${tEdge}`,borderRadius:'0 0 3px 3px'}}>
-              <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.24em',color:tEdge,textTransform:'uppercase',marginBottom:'5px'}}>{c.t}</div>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.24em',color:tEdge,textTransform:'uppercase',marginBottom:'5px'}}>{c.t}</div>
               <div style={{fontFamily:'var(--font-display)',fontSize:'14px',fontWeight:400,letterSpacing:'0.1em',color:'var(--white)',textTransform:'uppercase',marginBottom:'5px'}}>{c.r}</div>
-              <div style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'11px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',lineHeight:1.55}}>{c.e}</div>
+              <div style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'12.5px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',lineHeight:1.55}}>{c.e}</div>
             </div>
           );
         })}
@@ -302,17 +302,17 @@ function SchadenContent() {
             {/* category header */}
             <div style={{display:'flex',alignItems:'baseline',gap:'14px',marginBottom:'14px'}}>
               <span style={{
-                fontFamily:'var(--font-mono)', fontSize:'9px',
+                fontFamily:'var(--font-mono)', fontSize:'11.5px',
                 letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
                 textTransform:'uppercase',
               }}>◇ {String(ci+1).padStart(2,'0')} · {cat.label}</span>
               <span style={{
                 fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-                fontSize:'11.5px', color:'rgba(var(--text-rgb),calc(0.42*var(--kt) + var(--tb)))',
+                fontSize:'12.5px', color:'rgba(var(--text-rgb),calc(0.42*var(--kt) + var(--tb)))',
               }}>{cat.sub}</span>
               <div style={{flex:1,height:1,background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.32*var(--kp))), rgba(var(--purple-rgb),calc(0.03*var(--kp))))'}}/>
               <span style={{
-                fontFamily:'var(--font-mono)', fontSize:'8px',
+                fontFamily:'var(--font-mono)', fontSize:'11px',
                 letterSpacing:'0.24em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
               }}>{items.length} TYPEN</span>
             </div>
@@ -341,9 +341,9 @@ function SchadenContent() {
                   <div style={{flex:1,minWidth:0}}>
                     <div style={{display:'flex',alignItems:'baseline',gap:'8px',marginBottom:'6px'}}>
                       <span style={{fontFamily:'var(--font-display)',fontSize:'15px',fontWeight:500,letterSpacing:'0.18em',color:'var(--white)',textTransform:'uppercase'}}>{s.name}</span>
-                      <span style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.22em',color:`oklch(0.78 0.15 ${s.hue} / 0.7)`,textTransform:'uppercase'}}>schaden</span>
+                      <span style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.22em',color:`oklch(0.78 0.15 ${s.hue} / 0.7)`,textTransform:'uppercase'}}>schaden</span>
                     </div>
-                    <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'11.5px',lineHeight:1.65,color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',letterSpacing:'0.01em'}}>{s.desc}</p>
+                    <p style={{fontFamily:'var(--font-body)',fontWeight:300,fontSize:'12.5px',lineHeight:1.65,color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',letterSpacing:'0.01em'}}>{s.desc}</p>
                   </div>
                 </div>
               ))}
@@ -377,7 +377,7 @@ function HeiltrankContent() {
                 <td style={{color:'var(--white)',fontWeight:400,fontStyle:'italic',fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.05em'}}>{p.name}</td>
                 <td><span className={`tag-rar tag-${p.rarKey}`}>{p.rar}</span></td>
                 <td className="mono" style={{color:'rgba(var(--text-rgb),calc(0.95*var(--kt) + var(--tb)))',fontSize:'13px'}}>{p.tp}</td>
-                <td style={{color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',fontStyle:'italic',fontSize:'11.5px'}}>{p.notes}</td>
+                <td style={{color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',fontStyle:'italic',fontSize:'12.5px'}}>{p.notes}</td>
               </tr>
             ))}
           </tbody>
@@ -409,10 +409,10 @@ function HeiltrankContent() {
                 <circle cx="18" cy="36" r="1.2" fill="rgba(255,255,255,0.6)"/>
                 <circle cx="23" cy="39" r="0.8" fill="rgba(255,255,255,0.5)"/>
               </svg>
-              <div style={{fontFamily:'var(--font-display)',fontSize:'12px',fontWeight:400,letterSpacing:'0.14em',color:colors[i],textTransform:'uppercase',marginBottom:'8px',minHeight:'30px',display:'flex',alignItems:'center',justifyContent:'center'}}>{p.name}</div>
-              <div style={{fontFamily:'var(--font-mono)',fontSize:'7.5px',letterSpacing:'0.24em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'4px'}}>Durchschnitt</div>
+              <div style={{fontFamily:'var(--font-display)',fontSize:'13px',fontWeight:400,letterSpacing:'0.14em',color:colors[i],textTransform:'uppercase',marginBottom:'8px',minHeight:'30px',display:'flex',alignItems:'center',justifyContent:'center'}}>{p.name}</div>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.24em',color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',textTransform:'uppercase',marginBottom:'4px'}}>Durchschnitt</div>
               <div style={{fontFamily:'var(--font-display)',fontSize:'22px',fontWeight:300,color:'var(--white)',lineHeight:1}}>{avg} TP</div>
-              <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',marginTop:'6px'}}>Max. {max}</div>
+              <div style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',marginTop:'6px'}}>Max. {max}</div>
             </div>
           );
         })}
@@ -463,7 +463,7 @@ function InspirationContent() {
                 <circle cx="32" cy="32" r="2" fill="rgba(200,180,255,calc(0.7*var(--ka)))"/>
                 <circle cx="8" cy="32" r="1.5" fill="rgba(200,180,255,calc(0.5*var(--ka)))"/>
               </svg>
-              <span style={{fontFamily:'var(--font-mono)',fontSize:'8.5px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))'}}>{r.n}</span>
+              <span style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))'}}>{r.n}</span>
             </div>
             <div>
               <div style={{fontFamily:'var(--font-display)',fontSize:'13px',fontWeight:500,letterSpacing:'0.16em',color:'var(--white)',textTransform:'uppercase',marginBottom:'8px'}}>{r.t}</div>
@@ -480,7 +480,7 @@ function InspirationContent() {
         borderRadius:'0 3px 3px 0',
       }}>
         <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
-          <span style={{fontFamily:'var(--font-mono)',fontSize:'9px',letterSpacing:'0.28em',color:'rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>Maximalwert</span>
+          <span style={{fontFamily:'var(--font-mono)',fontSize:'11.5px',letterSpacing:'0.28em',color:'rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>Maximalwert</span>
           <div style={{display:'flex',gap:'6px'}}>
             {[1,2,3,4].map(i => (
               <svg key={i} viewBox="0 0 40 40" width="22" height="22">
@@ -489,7 +489,7 @@ function InspirationContent() {
               </svg>
             ))}
           </div>
-          <span style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12px',color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'}}>= vier Inspirationen, die ein Charakter gleichzeitig halten kann.</span>
+          <span style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'13px',color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'}}>= vier Inspirationen, die ein Charakter gleichzeitig halten kann.</span>
         </div>
       </div>
     </div>
@@ -627,7 +627,7 @@ function RichtungenContent() {
             border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))',
             borderRadius:'3px',
             color:'rgba(var(--text-rgb),calc(0.95*var(--kt) + var(--tb)))',
-            fontFamily:'var(--font-display)',fontSize:'11px',letterSpacing:'0.2em',
+            fontFamily:'var(--font-display)',fontSize:'12.5px',letterSpacing:'0.2em',
             textTransform:'uppercase',
             cursor: rolling ? 'wait' : 'pointer',
             transition:'all 0.18s',
@@ -647,15 +647,15 @@ function RichtungenContent() {
           <div style={{marginTop:'14px',minHeight:'56px'}}>
             {display !== null && (
               <div style={{animation: result && !rolling ? 'resultPop 0.32s ease forwards' : 'none'}}>
-                <div style={{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'4px',textTransform:'uppercase'}}>{rolling ? 'würfelt...' : 'Ergebnis'}</div>
+                <div style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.28em',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'4px',textTransform:'uppercase'}}>{rolling ? 'würfelt...' : 'Ergebnis'}</div>
                 <div style={{fontFamily:'var(--font-display)',fontSize:'28px',fontWeight:300,color:'var(--white)',textShadow:'0 0 20px rgba(var(--accent-rgb),calc(0.55*var(--ka)))',lineHeight:1}}>
                   {display} {active && <span style={{fontSize:'14px',color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',letterSpacing:'0.12em'}}>· {active.dir}</span>}
                 </div>
-                {active && <div style={{marginTop:'4px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'11.5px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'}}>({active.sub})</div>}
+                {active && <div style={{marginTop:'4px',fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12.5px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'}}>({active.sub})</div>}
               </div>
             )}
             {display === null && (
-              <div style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'12px',color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'}}>Noch kein Wurf</div>
+              <div style={{fontFamily:'var(--font-body)',fontWeight:300,fontStyle:'italic',fontSize:'13px',color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'}}>Noch kein Wurf</div>
             )}
           </div>
         </div>
@@ -685,7 +685,7 @@ function RichtungenContent() {
                       <td style={{color: isActive ? 'var(--white)' : undefined,fontWeight:isActive?400:300,fontFamily:'var(--font-display)',fontSize:'13px',letterSpacing:'0.06em',textTransform:'uppercase'}}>
                         {r.dir}
                       </td>
-                      <td style={{color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',fontStyle:'italic',fontSize:'11.5px'}}>
+                      <td style={{color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',fontStyle:'italic',fontSize:'12.5px'}}>
                         {r.sub}
                       </td>
                     </tr>

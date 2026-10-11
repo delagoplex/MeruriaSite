@@ -60,10 +60,10 @@ body::before {
 /* ── Masthead ────────────────────────────────────────────────────── */
 .masthead { text-align:center; padding:72px 24px 28px; position:relative; z-index:1; }
 .eyebrow {
-  font-family:var(--font-mono); font-size:10px; letter-spacing:0.32em;
+  font-family:var(--font-mono); font-size:12px; letter-spacing:0.32em;
   color:color-mix(in srgb,var(--acc) 70%,transparent); text-transform:uppercase;
 }
-.eyebrow::before,.eyebrow::after { content:"◇"; opacity:0.7; margin:0 14px; font-size:9px; }
+.eyebrow::before,.eyebrow::after { content:"◇"; opacity:0.7; margin:0 14px; font-size:11.5px; }
 h1.title {
   font-family:var(--font-display); font-weight:300; letter-spacing:0.25em;
   font-size:clamp(42px,6vw,80px); margin:18px 0 12px; color:var(--white);
@@ -116,7 +116,7 @@ h1.title {
 }
 .deck-btn.active .deck-btn-label { color:var(--acc-soft); }
 .deck-btn-sub {
-  font-family:var(--font-mono); font-size:8.5px; letter-spacing:0.2em;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em;
   text-transform:uppercase; color:rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)));
 }
 
@@ -218,7 +218,7 @@ h1.title {
 
 .cf-frame { position:absolute; inset:6px; border:1px solid var(--acc-line); border-radius:6px; pointer-events:none; }
 .cf-rank {
-  font-family:var(--font-mono); font-size:8px; letter-spacing:0.3em;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.3em;
   text-align:center; text-transform:uppercase;
   color:color-mix(in srgb,var(--acc) 75%,transparent);
 }
@@ -242,12 +242,12 @@ h1.title {
 
 .cf-name {
   text-align:center; font-family:var(--font-display); font-weight:400;
-  font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--white);
+  font-size:13px; letter-spacing:0.22em; text-transform:uppercase; color:var(--white);
   line-height:1.2; text-shadow:0 0 12px color-mix(in srgb,var(--acc) 40%,transparent);
 }
 .cf-keywords {
   text-align:center; font-family:var(--font-body); font-weight:300; font-style:italic;
-  font-size:10.5px; letter-spacing:0.04em; color:rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb))); margin-top:6px;
+  font-size:12px; letter-spacing:0.04em; color:rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb))); margin-top:6px;
 }
 .cf-divider {
   width:36px; height:1px;
@@ -268,7 +268,7 @@ h1.title {
   gap:10px; margin:32px auto 0; position:relative; z-index:1;
 }
 .btn {
-  font-family:var(--font-display); font-size:11px; font-weight:400;
+  font-family:var(--font-display); font-size:12.5px; font-weight:400;
   letter-spacing:0.22em; text-transform:uppercase; padding:13px 30px;
   border-radius:3px; cursor:pointer;
   border:1px solid color-mix(in srgb,var(--acc) 50%,transparent);
@@ -286,7 +286,7 @@ h1.title {
 .action-row { display:flex; gap:12px; align-items:center; }
 .pick-row { flex-wrap:wrap; justify-content:center; }
 .pick-select {
-  font-family:var(--font-display); font-size:10px; font-weight:400;
+  font-family:var(--font-display); font-size:12px; font-weight:400;
   letter-spacing:0.18em; text-transform:uppercase; padding:11px 30px 11px 14px;
   border-radius:3px; border:1px solid color-mix(in srgb,var(--acc) 40%,transparent);
   background-color:rgba(var(--panel-rgb),0.9);
@@ -304,7 +304,7 @@ h1.title {
 section.block { padding:80px 0 32px; position:relative; z-index:1; }
 .section-head { text-align:center; margin-bottom:36px; }
 .section-eyebrow {
-  font-family:var(--font-mono); font-size:9px; letter-spacing:0.32em;
+  font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.32em;
   color:color-mix(in srgb,var(--acc) 60%,transparent); text-transform:uppercase; margin-bottom:8px;
 }
 h2.section-title {
@@ -343,7 +343,7 @@ h2.section-title {
 .cl-item.flash { animation:flash-hi 1600ms ease-out; }
 .cl-item.is-drawn::after {
   content:"◈"; position:absolute; right:8px; top:50%; transform:translateY(-50%);
-  color:var(--acc); font-size:11px; text-shadow:0 0 8px color-mix(in srgb,var(--acc) 80%,transparent);
+  color:var(--acc); font-size:12.5px; text-shadow:0 0 8px color-mix(in srgb,var(--acc) 80%,transparent);
 }
 
 .cl-glyph { display:flex; align-items:center; justify-content:center; opacity:0.85; }
@@ -360,10 +360,10 @@ h2.section-title {
 .cl-item.is-drawn .cl-name { color:var(--acc-soft); }
 .cl-keys {
   font-family:var(--font-body); font-weight:300; font-style:italic;
-  font-size:12px; line-height:1.6; letter-spacing:0.04em; color:rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)));
+  font-size:13px; line-height:1.6; letter-spacing:0.04em; color:rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)));
 }
 .cl-badge {
-  display:inline-block; font-family:var(--font-mono); font-size:7px;
+  display:inline-block; font-family:var(--font-mono); font-size:11px;
   letter-spacing:0.2em; text-transform:uppercase; padding:2px 7px;
   border-radius:999px; margin-top:2px; width:fit-content;
 }
@@ -394,7 +394,7 @@ html[data-deck="flueche"] #segenSection   { display:none; }
   pointer-events:auto; transition:padding 320ms cubic-bezier(.2,.7,.2,1);
 }
 .tray-label {
-  font-family:var(--font-mono); font-size:9px; letter-spacing:0.32em;
+  font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.32em;
   text-transform:uppercase; color:color-mix(in srgb,var(--acc) 70%,transparent);
   writing-mode:vertical-rl; transform:rotate(180deg); padding-bottom:6px;
   overflow:hidden; transition:opacity 240ms ease,width 280ms ease;
@@ -414,7 +414,7 @@ html[data-deck="flueche"] #segenSection   { display:none; }
   gap:8px; flex-shrink:0; overflow:hidden; transition:width 280ms ease,gap 280ms ease;
 }
 .tray-clear-btn {
-  font-family:var(--font-mono); font-size:8px; letter-spacing:0.2em;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em;
   text-transform:uppercase; color:rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb))); background:transparent;
   border:1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp))); border-radius:2px; padding:4px 9px;
   cursor:pointer; white-space:nowrap; transition:color 0.2s,border-color 0.2s,background 0.2s;
@@ -449,11 +449,11 @@ html[data-deck="flueche"] #segenSection   { display:none; }
   box-shadow:0 28px 60px rgba(var(--shadow-rgb),calc(0.75 * var(--shadow-k))),0 0 0 1px color-mix(in srgb,var(--acc) 50%,transparent) inset,0 0 32px color-mix(in srgb,var(--acc) 45%,transparent);
 }
 .drawn .cf-frame { inset:4px; border-radius:4px; }
-.drawn .cf-rank { font-size:6.5px; letter-spacing:0.22em; }
+.drawn .cf-rank { font-size:11px; letter-spacing:0.22em; }
 .drawn .cf-symbol { flex:1; }
 .drawn .cf-art svg { width:62%; height:62%; }
-.drawn .cf-name { font-size:7.5px; letter-spacing:0.16em; line-height:1.2; }
-.drawn .cf-keywords { font-size:6.5px; line-height:1.4; margin-top:4px; }
+.drawn .cf-name { font-size:11px; letter-spacing:0.16em; line-height:1.2; }
+.drawn .cf-keywords { font-size:11px; line-height:1.4; margin-top:4px; }
 .drawn .cf-corner { width:10px; height:10px; }
 .drawn .cf-corner.tl { top:6px; left:7px; }
 .drawn .cf-corner.br { bottom:6px; right:7px; }
@@ -461,7 +461,7 @@ html[data-deck="flueche"] #segenSection   { display:none; }
 .drawn .remove {
   position:absolute; top:-6px; right:-6px; width:18px; height:18px;
   border-radius:50%; background:var(--bg-1); border:1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)));
-  color:rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb))); font-family:var(--font-mono); font-size:11px; line-height:14px;
+  color:rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb))); font-family:var(--font-mono); font-size:12.5px; line-height:14px;
   text-align:center; cursor:pointer; opacity:0; transition:opacity 200ms ease,color 200ms,border-color 200ms;
 }
 .drawn:hover .remove { opacity:1; }
@@ -496,7 +496,7 @@ footer {
   position:relative; z-index:1; padding:36px 32px;
   border-top:1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)));
   display:flex; justify-content:space-between; align-items:center;
-  font-family:var(--font-mono); font-size:8px; letter-spacing:0.25em;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.25em;
   color:rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb))); text-transform:uppercase;
 }
 

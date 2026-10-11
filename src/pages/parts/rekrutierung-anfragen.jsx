@@ -15,10 +15,10 @@ const fmtHade = n => (n || 0).toLocaleString('de-DE') + ' Hade';
 const fmtDat = iso => new Date(iso).toLocaleString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
 const dauerTxt = t => t === 1 ? '1 Tag' : t + ' Tage';
 
-const lab = { fontFamily:MONO, fontSize:10, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))', display:'block', marginBottom:6 };
-const info = { fontFamily:MONO, fontSize:12, letterSpacing:'0.06em', color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.6 };
+const lab = { fontFamily:MONO, fontSize:12, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))', display:'block', marginBottom:6 };
+const info = { fontFamily:MONO, fontSize:13, letterSpacing:'0.06em', color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.6 };
 const inp = { width:'100%', padding:'9px 12px', background:'rgba(var(--panel-rgb),0.9)', border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', color:'var(--white)', borderRadius:4, fontFamily:BODY, fontSize:14 };
-const btnBase = { padding:'10px 18px', cursor:'pointer', borderRadius:4, fontFamily:MONO, fontSize:11, letterSpacing:'0.14em', textTransform:'uppercase' };
+const btnBase = { padding:'10px 18px', cursor:'pointer', borderRadius:4, fontFamily:MONO, fontSize:12.5, letterSpacing:'0.14em', textTransform:'uppercase' };
 
 // Statblock der Anfrage: Rekrutierungs-NSC (Division, Rang) mit gewählter Rasse/Talent/Waffe
 function statblockZu(a) {
@@ -45,9 +45,9 @@ function StatblockInfo({ m }) {
       <div style={{ display:'flex', gap:6, marginTop:10, flexWrap:'wrap' }}>
         {['STR','DEX','CON','INT','WIS','CHA'].map(k => (
           <div key={k} style={{ minWidth:52, textAlign:'center', padding:'6px 4px', border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', borderRadius:3 }}>
-            <div style={{ fontFamily:MONO, fontSize:9, letterSpacing:'0.14em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))' }}>{k}</div>
+            <div style={{ fontFamily:MONO, fontSize:11.5, letterSpacing:'0.14em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))' }}>{k}</div>
             <div style={{ fontFamily:DISP, fontSize:16, color:'var(--white)' }}>{A[k]}</div>
-            <div style={{ fontFamily:MONO, fontSize:10, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))' }}>{mod(A[k])}</div>
+            <div style={{ fontFamily:MONO, fontSize:12, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))' }}>{mod(A[k])}</div>
           </div>
         ))}
       </div>
@@ -168,7 +168,7 @@ function App() {
                       background:on ? 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))' : 'rgba(var(--panel-rgb),0.5)', color:'var(--white)' }}>
                       <div style={{ display:'flex', justifyContent:'space-between', gap:10 }}>
                         <span style={{ fontFamily:DISP, fontSize:16, letterSpacing:'0.04em', color:dv.accent }}>{titel}</span>
-                        <span style={{ fontFamily:MONO, fontSize:10, letterSpacing:'0.12em', textTransform:'uppercase', color:statusCol(r.status) }}>{r.status}</span>
+                        <span style={{ fontFamily:MONO, fontSize:12, letterSpacing:'0.12em', textTransform:'uppercase', color:statusCol(r.status) }}>{r.status}</span>
                       </div>
                       <div style={info}>Rang {r.rang} · {kurz(dv.name)}{r.rasse ? ' · ' + r.rasse : ''}</div>
                       <div style={{ ...info, opacity:0.8 }}>für {ch ? ch.name : '—'} · {fmtDat(r.created_at)}</div>

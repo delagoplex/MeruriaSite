@@ -46,7 +46,7 @@ function ImageUpload({ imageUrl, onUploaded, bucket, pathPrefix, shape = 'square
           ? <img src={imageUrl} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} alt=""/>
           : <div style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
-              fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.18em',
+              fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: '0.18em',
               color: 'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform: 'uppercase',
             }}>
               {uploading

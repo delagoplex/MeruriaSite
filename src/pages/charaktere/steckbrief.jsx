@@ -41,7 +41,7 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
   if (src) return (
     <div style={base} {...ev}>
       <img src={src} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} alt={label} />
-      <div style={{position:"absolute",bottom:5,right:7,fontFamily:"var(--font-mono)",fontSize:6.5,
+      <div style={{position:"absolute",bottom:5,right:7,fontFamily:"var(--font-mono)",fontSize:11,
         color:"color-mix(in srgb, rgba(255,255,255,0.3), rgb(var(--ink-rgb)) var(--cm))",background:"rgba(0,0,0,0.6)",padding:"1px 5px",borderRadius:2,letterSpacing:".12em"}}>ersetzen</div>
       <input ref={inp} type="file" accept="image/*" style={{display:"none"}} onChange={e=>load(e.target.files[0])} />
     </div>
@@ -62,10 +62,10 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
             <circle cx="12" cy="11" r="4" stroke={ac} strokeWidth="1" opacity="0.8"/>
             <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={ac} strokeWidth="1.1" opacity="0.8"/>
           </svg>}
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".22em",zIndex:1,
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".22em",zIndex:1,
         color:`oklch(0.65 0.18 ${h} / 0.58)`,textTransform:"uppercase",textAlign:"center",padding:"0 10px"}}>
         {(label||"artwork").toLowerCase()}</span>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:6.5,letterSpacing:".1em",zIndex:1,
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".1em",zIndex:1,
         color:`oklch(0.65 0.18 ${h} / ${drag?0.9:0.28})`,transition:"color .2s"}}>
         {drag?"▼ loslassen":"klicken · ziehen"}</span>
       <input ref={inp} type="file" accept="image/*" style={{display:"none"}} onChange={e=>load(e.target.files[0])} />
@@ -77,7 +77,7 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
 function SecTitle({ label }) {
   return (
     <div style={{marginBottom:10}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:8,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>{label}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>{label}</span>
       <div style={{width:24,height:1,background:"linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.65*var(--kp))),transparent)",marginTop:4}} />
     </div>
   );
@@ -97,8 +97,8 @@ function Corners({op=0.4,sz=14}) {
 function IRow({label,value,bright}) {
   return (
     <div style={{display:"flex",alignItems:"baseline",gap:6,padding:"3.5px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
-      <span style={{fontFamily:"var(--font-mono)",fontSize:7.5,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
-      <span style={{fontFamily:"var(--font-body)",fontSize:11.5,fontWeight:bright?400:300,color:bright?"var(--white)":"var(--silver)",flex:1}}>{value}</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"}}>{label}</span>
+      <span style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:bright?400:300,color:bright?"var(--white)":"var(--silver)",flex:1}}>{value}</span>
     </div>
   );
 }
@@ -129,15 +129,15 @@ function SteckbriefPage() {
   if (loading) return (
     <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",paddingTop:"var(--nav-h)",display:"flex",alignItems:"center",justifyContent:"center"}}>
       {SiteNav && <SiteNav />}
-      <span style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>Lade Charakter…</span>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:11.5,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>Lade Charakter…</span>
     </div>
   );
 
   if (err || !char) return (
     <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",paddingTop:"var(--nav-h)",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16}}>
       {SiteNav && <SiteNav />}
-      <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(227,103,96,0.8)"}}>{err || 'Unbekannter Fehler'}</span>
-      <a href="/charaktere/spielercharaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:9,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))",textDecoration:"underline"}}>← Zurück zur Übersicht</a>
+      <span style={{fontFamily:"var(--font-mono)",fontSize:12.5,color:"rgba(227,103,96,0.8)"}}>{err || 'Unbekannter Fehler'}</span>
+      <a href="/charaktere/spielercharaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:11.5,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))",textDecoration:"underline"}}>← Zurück zur Übersicht</a>
     </div>
   );
 

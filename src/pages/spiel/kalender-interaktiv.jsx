@@ -416,7 +416,7 @@ function renderDetail() {
     holEl.innerHTML = hols.map(h => `
       <div class="detail-holiday ${h.kind}">
         <div class="detail-holiday-top">
-          <span class="detail-holiday-name">${h.name}${h.span > 1 ? ` <span style="color:var(--dim);font-size:11px;">(Tag ${h.dayOfFeast}/${h.span})</span>` : ''}</span>
+          <span class="detail-holiday-name">${h.name}${h.span > 1 ? ` <span style="color:var(--dim);font-size:12.5px;">(Tag ${h.dayOfFeast}/${h.span})</span>` : ''}</span>
           <span class="detail-holiday-tag ${h.kind}">${kindLabel[h.kind]}</span>
         </div>
         <div class="detail-holiday-desc">${h.desc}</div>
@@ -498,7 +498,7 @@ function openDayPopup(abs) {
     for (const h of hols) {
       html += `<div class="detail-holiday ${h.kind}" style="margin-bottom:8px">
         <div class="detail-holiday-top">
-          <span class="detail-holiday-name">${h.name}${h.span>1?` <span style="color:var(--dim);font-size:11px;">(Tag ${h.dayOfFeast}/${h.span})</span>`:''}</span>
+          <span class="detail-holiday-name">${h.name}${h.span>1?` <span style="color:var(--dim);font-size:12.5px;">(Tag ${h.dayOfFeast}/${h.span})</span>`:''}</span>
           <span class="detail-holiday-tag ${h.kind}">${kindLabel[h.kind]}</span>
         </div>
         <div class="detail-holiday-desc">${h.desc}</div>

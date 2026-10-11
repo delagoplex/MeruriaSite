@@ -112,7 +112,7 @@ function Chip({
     onClick: onClick,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.15em',
       padding: '0 10px',
       height: '16px',
@@ -145,7 +145,7 @@ function ZaubertypFilters({ filters, setFilters }) {
     border: `1px solid ${active ? 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))' : 'transparent'}`,
     borderRadius: '2px', transition: 'all 0.15s', ...extra
   });
-  const label = active => ({ fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: '300', color: active ? 'var(--white)' : 'var(--silver)', letterSpacing: '0.03em' });
+  const label = active => ({ fontFamily: 'var(--font-body)', fontSize: '12.5px', fontWeight: '300', color: active ? 'var(--white)' : 'var(--silver)', letterSpacing: '0.03em' });
   const typen = [['heil', 'Heilzauber', '💚'], ['schaden', 'Schadenszauber', null]];
   return <>
     <FilterGroup title="Zaubertyp" active={filters.typ.length > 0}
@@ -155,7 +155,7 @@ function ZaubertypFilters({ filters, setFilters }) {
           const active = filters.typ.includes(id);
           return (
             <button key={id} onClick={() => toggleTyp(id)} style={row(active)}>
-              <span style={{ width: 18, display: 'flex', justifyContent: 'center', fontSize: '11px', opacity: active ? 1 : 0.6 }}>
+              <span style={{ width: 18, display: 'flex', justifyContent: 'center', fontSize: '12.5px', opacity: active ? 1 : 0.6 }}>
                 {emoji || <window.DamageIcon type="Feuer" size={16} />}
               </span>
               <span style={label(active)}>{name}</span>
@@ -191,12 +191,12 @@ function SearchTextToggle({ checked, onChange }) {
       <span style={{
         width: '14px', height: '14px', flexShrink: 0, borderRadius: '2px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: '9px', lineHeight: 1, fontFamily: 'var(--font-mono)',
+        fontSize: '11.5px', lineHeight: 1, fontFamily: 'var(--font-mono)',
         border: `1px solid ${checked ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))'}`,
         background: checked ? 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))' : 'transparent',
         color: 'var(--white)', transition: 'all 0.18s'
       }}>{checked ? '✓' : ''}</span>
-      <span style={{ fontFamily: 'var(--font-body)', fontSize: '10.5px', fontWeight: '300', letterSpacing: '0.03em', transition: 'color 0.18s',
+      <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: '300', letterSpacing: '0.03em', transition: 'color 0.18s',
         color: checked ? 'var(--white)' : 'var(--silver)' }}>Auch im Text suchen</span>
     </label>
   );
@@ -276,7 +276,7 @@ function FilterSidebar({
     placeholder: "Zauber suchen\u2026",
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       fontWeight: '300',
       padding: '6px 10px 6px 28px',
       background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
@@ -329,7 +329,7 @@ function FilterSidebar({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.25em',
       color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
@@ -375,7 +375,7 @@ function FilterSidebar({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: filters.schule.includes(s) ? 'var(--white)' : 'var(--silver)',
       letterSpacing: '0.03em'
@@ -436,7 +436,7 @@ function FilterSidebar({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: filters.klassen.includes(c) ? 'var(--white)' : 'var(--silver)',
       letterSpacing: '0.03em'
@@ -496,7 +496,7 @@ function FilterSidebar({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '10.5px',
+      fontSize: '12px',
       fontWeight: '300',
       color: filters.zeitaufwand.includes(z) ? 'var(--white)' : 'var(--silver)',
       letterSpacing: '0.03em'
@@ -556,14 +556,14 @@ function FilterSidebar({
         alignItems: 'center',
         justifyContent: 'center',
         transition: 'all 0.18s',
-        fontSize: '9px',
+        fontSize: '11.5px',
         color: iconColor,
         fontFamily: 'var(--font-mono)'
       }
     }, icon), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         fontWeight: '300',
         color: val !== null ? 'var(--white)' : 'var(--silver)',
         letterSpacing: '0.03em',
@@ -572,7 +572,7 @@ function FilterSidebar({
     }, label), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '7.5px',
+        fontSize: '11px',
         letterSpacing: '0.1em',
         color: isTrue ? 'color-mix(in srgb, rgba(80,220,110,0.6), rgb(var(--ink-rgb)) var(--cm))' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
         transition: 'color 0.18s'
@@ -615,7 +615,7 @@ function FilterSidebar({
       borderRadius: '2px',
       color: 'rgba(230,90,90,0.65)',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       cursor: 'pointer',
       transition: 'all 0.15s',
@@ -681,7 +681,7 @@ function SpellRow({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: active ? 'var(--white)' : 'var(--silver)',
       fontWeight: '400'
     }
@@ -693,7 +693,7 @@ function SpellRow({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: active ? '400' : '300',
       color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       letterSpacing: '0.03em',
@@ -704,7 +704,7 @@ function SpellRow({
   }, zauber.name), !compact && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: sc,
       letterSpacing: '0.18em',
       marginTop: '1px',
@@ -719,7 +719,7 @@ function SpellRow({
   }, zauber.konzentration && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.1em',
       padding: '2px 5px',
       background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
@@ -730,7 +730,7 @@ function SpellRow({
   }, "K"), zauber.ritual && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.1em',
       padding: '2px 5px',
       background: 'rgba(100,200,120,0.08)',
@@ -749,7 +749,7 @@ function DescBlock({
     return /*#__PURE__*/React.createElement("p", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '12.5px',
+        fontSize: '13px',
         fontWeight: '300',
         lineHeight: 1.82,
         color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
@@ -768,7 +768,7 @@ function DescBlock({
     }, item.titel && /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '8px',
+        fontSize: '11px',
         letterSpacing: '0.22em',
         color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
         textTransform: 'uppercase',
@@ -779,7 +779,7 @@ function DescBlock({
         width: '100%',
         borderCollapse: 'collapse',
         fontFamily: 'var(--font-body)',
-        fontSize: '11.5px'
+        fontSize: '12.5px'
       }
     }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, item.spalten.map((col, i) => /*#__PURE__*/React.createElement("th", {
       key: i,
@@ -787,7 +787,7 @@ function DescBlock({
         padding: '6px 10px',
         textAlign: i === item.spalten.length - 1 ? 'center' : 'left',
         fontFamily: 'var(--font-mono)',
-        fontSize: '8px',
+        fontSize: '11px',
         letterSpacing: '0.18em',
         color: 'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))',
         fontWeight: '400',
@@ -832,7 +832,7 @@ function MetaItem({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.26em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -840,7 +840,7 @@ function MetaItem({
   }, label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: accent || 'rgba(var(--text-rgb),calc(0.8*var(--kt)))',
       letterSpacing: '0.02em',
@@ -897,7 +897,7 @@ function SpellDetail({
   }, zauber.konzentration && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.12em',
       padding: '3px 8px',
       background: 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
@@ -909,7 +909,7 @@ function SpellDetail({
   }, "Konzentration"), zauber.ritual && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.12em',
       padding: '3px 8px',
       background: 'rgba(80,180,100,0.08)',
@@ -930,7 +930,7 @@ function SpellDetail({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.2em',
       color: sc,
       textTransform: 'uppercase'
@@ -938,12 +938,12 @@ function SpellDetail({
   }, zauber.schule), /*#__PURE__*/React.createElement("span", {
     style: {
       color: 'rgba(var(--accent-rgb),calc(0.25*var(--ka) + var(--tb)))',
-      fontSize: '10px'
+      fontSize: '12px'
     }
   }, "\xB7"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.15em',
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))'
     }
@@ -985,7 +985,7 @@ function SpellDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.26em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1001,7 +1001,7 @@ function SpellDetail({
     key: k,
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '10.5px',
+      fontSize: '12px',
       fontWeight: '300',
       padding: '2px 8px',
       background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
@@ -1043,7 +1043,7 @@ function EmptyState({
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.2em',
       color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1197,7 +1197,7 @@ function App() {
   }, "Zauber"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.15em'
     }
@@ -1268,7 +1268,7 @@ function App() {
     style: {
       padding: '8px 12px 4px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',

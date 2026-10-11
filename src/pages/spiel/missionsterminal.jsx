@@ -189,7 +189,7 @@ function KategorieTag({
   return /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       color: meta.color,
       textTransform: 'uppercase',
@@ -199,7 +199,7 @@ function KategorieTag({
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: '10px',
+      fontSize: '12px',
       lineHeight: 1
     }
   }, meta.glyph), meta.label);
@@ -249,7 +249,7 @@ function QuestRow({
   }, q.status === 'neu' && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.15em',
       padding: '2px 6px',
       background: 'rgba(127,184,255,0.18)',
@@ -262,7 +262,7 @@ function QuestRow({
   }, "NEU"), q.status === 'empfohlen' && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.15em',
       padding: '2px 6px',
       background: 'rgba(255,141,181,0.18)',
@@ -302,7 +302,7 @@ function FilterChip({
     onClick: onClick,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9.5px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       padding: '5px 11px',
       height: '22px',
@@ -334,7 +334,7 @@ function FilterChip({
   }, label, /*#__PURE__*/React.createElement("span", {
     style: {
       opacity: 0.55,
-      fontSize: '9px'
+      fontSize: '11.5px'
     }
   }, count));
 }
@@ -509,7 +509,7 @@ function RewardRow({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: 300,
-      fontSize: '12.5px',
+      fontSize: '13px',
       color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em'
     }
@@ -574,7 +574,7 @@ function DetailCard({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: KAT[q.kategorie].color,
       letterSpacing: '0.25em',
       textTransform: 'uppercase',
@@ -600,7 +600,7 @@ function DetailCard({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'var(--muted-dim)',
       letterSpacing: '0.2em',
       textTransform: 'uppercase',
@@ -639,7 +639,7 @@ function DetailCard({
   }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'var(--purple-bright)',
       letterSpacing: '0.22em',
       textTransform: 'uppercase',
@@ -658,7 +658,7 @@ function DetailCard({
       fontFamily: 'var(--font-body)',
       fontWeight: 300,
       fontStyle: 'italic',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'var(--muted)',
       marginTop: '2px'
     }
@@ -677,7 +677,7 @@ function DetailCard({
   q.requirements && q.requirements.length > 0 && /*#__PURE__*/React.createElement("div", { style: { marginBottom: '24px' } },
     /*#__PURE__*/React.createElement("div", {
       style: {
-        fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: 500,
+        fontFamily: 'var(--font-display)', fontSize: '12.5px', fontWeight: 500,
         letterSpacing: '0.28em', color: 'var(--purple-bright)', textTransform: 'uppercase',
         marginBottom: '8px', paddingBottom: '4px', borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))'
       }
@@ -698,7 +698,7 @@ function DetailCard({
             /*#__PURE__*/React.createElement("polygon", { points: "6,1 11,4 11,8 6,11 1,8 1,4" })
           ),
           /*#__PURE__*/React.createElement("span", {
-            style: { fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '.18em', textTransform: 'uppercase', color: 'color-mix(in srgb, rgba(200,185,255,0.85), rgb(var(--ink-rgb)) var(--cm))' }
+            style: { fontFamily: 'var(--font-mono)', fontSize: '11.5px', letterSpacing: '.18em', textTransform: 'uppercase', color: 'color-mix(in srgb, rgba(200,185,255,0.85), rgb(var(--ink-rgb)) var(--cm))' }
           }, r.count > 1 ? `${r.count}× ${r.label}` : r.label)
         )
       )
@@ -707,7 +707,7 @@ function DetailCard({
   /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: 500,
       letterSpacing: '0.28em',
       color: 'var(--purple-bright)',
@@ -781,7 +781,7 @@ function DetailCard({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: 500,
       letterSpacing: '0.28em',
       color: 'var(--purple-bright)',
@@ -908,7 +908,7 @@ function DetailCard({
     })), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         color: done ? 'var(--purple-bright)' : 'var(--white)',
         letterSpacing: '0.1em'
       }
@@ -924,7 +924,7 @@ function DetailCard({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: 'color-mix(in srgb, rgba(127,184,255,0.7), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase',
@@ -935,7 +935,7 @@ function DetailCard({
       fontFamily: 'var(--font-body)',
       fontWeight: 300,
       fontStyle: 'italic',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       color: 'color-mix(in srgb, rgba(200,210,240,0.7), rgb(var(--ink-rgb)) var(--cm))',
       lineHeight: 1.6
     }
@@ -953,7 +953,7 @@ function DetailCard({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8.5px',
+      fontSize: '11px',
       color: 'var(--muted-dim)',
       letterSpacing: '0.2em',
       textTransform: 'uppercase'
@@ -972,7 +972,7 @@ function DetailCard({
     onClick: onWithdraw,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.15em',
       padding: '5px 12px',
       background: 'transparent',
@@ -996,7 +996,7 @@ function DetailCard({
     disabled: accepted,
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.28em',
       padding: '9px 28px',
       background: accepted ? 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
@@ -1032,7 +1032,7 @@ function DetailCard({
       borderRadius: '50%',
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize: '10px'
+      fontSize: '12px'
     }
   }, "\u21B5"), accepted ? 'Beworben' : 'Akzeptieren'))));
 }
@@ -1116,7 +1116,7 @@ function CharPickerModal({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.28em',
       color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1141,7 +1141,7 @@ function CharPickerModal({
       padding: '20px 0',
       textAlign: 'center',
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: 300,
       color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       fontStyle: 'italic'
@@ -1199,7 +1199,7 @@ function CharPickerModal({
   }, ch.name), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: 300,
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       marginTop: '1px'
@@ -1225,7 +1225,7 @@ function CharPickerModal({
     style: {
       flex: 1,
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '.18em',
       textTransform: 'uppercase',
       padding: '10px',
@@ -1240,7 +1240,7 @@ function CharPickerModal({
     onClick: onClose,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.18em',
       textTransform: 'uppercase',
       padding: '10px 16px',
@@ -1388,7 +1388,7 @@ function App() {
       alignItems: 'center',
       gap: '14px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       color: 'var(--muted)',
       letterSpacing: '0.15em'
     }
@@ -1515,7 +1515,7 @@ function App() {
       border: 'none',
       outline: 'none',
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       color: 'var(--white)',
       letterSpacing: '0.08em',
       width: '90px'
@@ -1529,7 +1529,7 @@ function App() {
       borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
       background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8.5px',
+      fontSize: '11px',
       color: 'var(--muted-dim)',
       letterSpacing: '0.22em',
       textTransform: 'uppercase'
@@ -1545,7 +1545,7 @@ function App() {
       padding: '40px 20px',
       textAlign: 'center',
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '.2em'
     }
@@ -1555,7 +1555,7 @@ function App() {
       textAlign: 'center',
       fontFamily: 'var(--font-body)',
       fontStyle: 'italic',
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'var(--muted-dim)'
     }
   }, quests.length === 0 ? 'Keine Aufträge verfügbar.' : 'Keine Aufträge im Filter.'), filtered.map(q => /*#__PURE__*/React.createElement(QuestRow, {
@@ -1572,7 +1572,7 @@ function App() {
       alignItems: 'center',
       justifyContent: 'space-between',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8.5px',
+      fontSize: '11px',
       color: 'var(--muted-dim)',
       letterSpacing: '0.2em',
       textTransform: 'uppercase',
@@ -1585,7 +1585,7 @@ function App() {
       alignItems: 'center',
       justifyContent: 'center',
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.2em',
       color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -1601,7 +1601,7 @@ function App() {
       onClick: () => setView('details'),
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '9px',
+        fontSize: '11.5px',
         letterSpacing: '0.18em',
         padding: '4px 10px',
         height: '22px',
@@ -1617,7 +1617,7 @@ function App() {
       onClick: () => setView('anweisungen'),
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '9px',
+        fontSize: '11.5px',
         letterSpacing: '0.18em',
         padding: '4px 10px',
         height: '22px',
@@ -1677,14 +1677,14 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.22em'
     }
   }, "\u25C8 KONTEXT-TIPPS \xB7 [TAB] WECHSELT ANSICHT \xB7 [\u21B5] AKZEPTIEREN"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.22em'
     }

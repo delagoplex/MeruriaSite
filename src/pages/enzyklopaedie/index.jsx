@@ -501,7 +501,7 @@ function CenterPlate({
   }, !selected ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.32em',
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -548,7 +548,7 @@ function CenterPlate({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -559,7 +559,7 @@ function CenterPlate({
     style: {
       marginTop: '18px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.28em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -588,7 +588,7 @@ function CenterPlate({
   }, selected.glyph)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.3em',
       color: `${acc}aa`,
       textTransform: 'uppercase',
@@ -612,12 +612,12 @@ function CenterPlate({
     }
   }, selected.name.toUpperCase(), selected.locked && /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: '12px'
+      fontSize: '13px'
     }
   }, "\uD83D\uDD12")), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: `${acc}99`,
       textTransform: 'uppercase',
@@ -634,7 +634,7 @@ function CenterPlate({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       lineHeight: 1.7,
       color: 'rgba(var(--text-hi-rgb),calc(0.7*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
@@ -646,7 +646,7 @@ function CenterPlate({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '10.5px',
+      fontSize: '12px',
       lineHeight: 1.55,
       color: 'rgba(var(--text-rgb),calc(0.48*var(--kt) + var(--tb)))',
       letterSpacing: '0.01em',
@@ -664,7 +664,7 @@ function CenterPlate({
       display: 'inline-block',
       padding: '8px 18px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.28em',
       color: `${acc}aa`,
       textTransform: 'uppercase',
@@ -678,7 +678,7 @@ function CenterPlate({
       display: 'inline-block',
       padding: '9px 22px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.32em',
       color: 'var(--white)',
       textTransform: 'uppercase',
@@ -702,7 +702,7 @@ function CenterPlate({
       display: 'inline-block',
       padding: '8px 18px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.28em',
       color: `${acc}aa`,
       textTransform: 'uppercase',
@@ -862,7 +862,7 @@ function EntryHex({
       position: 'relative',
       zIndex: 1,
       fontFamily: 'var(--font-display)',
-      fontSize: '10px',
+      fontSize: '12px',
       fontWeight: '400',
       letterSpacing: '0.16em',
       color: active ? 'var(--white)' : 'rgba(var(--text-hi-rgb),calc(0.78*var(--kt)))',
@@ -877,7 +877,7 @@ function EntryHex({
     }
   }, entry.name, locked && /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: '8px',
+      fontSize: '11px',
       opacity: 0.7
     }
   }, "\uD83D\uDD12")), /*#__PURE__*/React.createElement("div", {
@@ -885,7 +885,7 @@ function EntryHex({
       position: 'relative',
       zIndex: 1,
       fontFamily: 'var(--font-mono)',
-      fontSize: '6.5px',
+      fontSize: '11px',
       letterSpacing: '0.24em',
       color: `${acc}99`,
       textTransform: 'uppercase',
@@ -965,7 +965,7 @@ function App() {
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.4em',
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'

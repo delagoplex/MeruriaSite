@@ -138,6 +138,8 @@ assets/
 
 ## Styling approach
 
+**Minimum font size:** labels and badges at least 11px, running text at least 13px (a one-off raise was applied site-wide). `node tools/check-font-sizes.mjs` lists declarations below 11px (px values in CSS and JSX only).
+
 Static layout and typography are in CSS files. Dynamic styles — those that depend on accent color, hover/tilt state, computed values, or tweaks — remain as JSX `style={{ }}` objects. Nav colors use CSS variables (`var(--nav-bg)` etc.) so the dark/light toggle works without JS.
 
 **Shared CSS classes (base.css):**
