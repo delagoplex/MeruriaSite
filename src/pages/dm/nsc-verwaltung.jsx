@@ -534,6 +534,15 @@ function useSbBasis({ rasse, unterrasse, division, rang, allStats, onRasse }) {
     onRasse(rasse, subOf(rasse).opts.includes(l) ? l : '');
     setSbOpt(p => ({ ...p, linie:l, talent:lt || (RA.talente({ rasse:rasse, linie:l }).includes(p.talent) ? p.talent : null) }));
   };
+  // Rasse/Linie im Statblock-Panel setzen: gilt auch oben beim NSC (und umgekehrt, die Werte kommen von dort)
+  const setRasse = r => {
+    onRasse(r, '');
+    setSbOpt(p => ({ ...p, linie:null, talent:null, groesse:null }));
+  };
+  const setLinie = l => {
+    if (rasse) onRasse(rasse, l && subOf(rasse).opts.includes(l) ? l : '');
+    setSbOpt(p => ({ ...p, linie:l || null, talent:(l && RA.linienTalent({ rasse:rasse, linie:l })) || (RA.talente({ rasse:rasse, linie:l }).includes(p.talent) ? p.talent : null) }));
+  };
   const sbSel = { ...selSt, padding:'7px 9px', fontSize:12 };
   const sbTreffer = sbSuche.trim().length >= 2
     ? (allStats || []).filter(x => (sbMonster || x.art === 'NSC') && x.src.name.toLowerCase().includes(sbSuche.trim().toLowerCase())).slice(0, 12)
@@ -544,12 +553,12 @@ function useSbBasis({ rasse, unterrasse, division, rang, allStats, onRasse }) {
     : null;
   const reset = () => { setSbWahl(null); setSbSuche(''); setSbOpt({ linie:null, talent:null, groesse:null, waffe:null }); };
   return { sbWahl, setSbWahl, sbSuche, setSbSuche, sbMonster, setSbMonster, sbOpt, setSbOpt, RA, linienOpts, sbLinie, sbTalente, sbGroessen, sbEff, sbFaehig, sbErgebnis,
-    wuerfelRasse, wuerfelWaffe, wuerfelTalent, wuerfelLinie, sbSel, sbTreffer, sbVorschlag, reset };
+    wuerfelRasse, wuerfelWaffe, wuerfelTalent, wuerfelLinie, sbSel, sbTreffer, sbVorschlag, reset, setRasse, setLinie };
 }
 
 function SbBasisPanel({ b, rasse, rang, statsReady, noLabel }) {
   const { sbWahl, setSbWahl, sbSuche, setSbSuche, sbMonster, setSbMonster, sbOpt, setSbOpt, RA, linienOpts, sbLinie, sbTalente, sbGroessen, sbEff, sbFaehig, sbErgebnis,
-    wuerfelRasse, wuerfelWaffe, wuerfelTalent, wuerfelLinie, sbSel, sbTreffer, sbVorschlag } = b;
+    wuerfelRasse, wuerfelWaffe, wuerfelTalent, wuerfelLinie, sbSel, sbTreffer, sbVorschlag, setRasse, setLinie } = b;
   return (
       <div style={noLabel ? null : { marginTop:26 }}>
         {!noLabel && <label style={{ ...lbSt, display:'block', marginBottom:6 }}>Statblock-Grundlage <span style={{ opacity:0.55 }}>· optional, später frei anpassbar</span></label>}
@@ -582,6 +591,21 @@ function SbBasisPanel({ b, rasse, rang, statsReady, noLabel }) {
               </div>
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:10 }}>
                 <div>
+                  <label style={{ ...lbSt, display:'block', marginBottom:4 }}>Rasse</label>
+                  <select value={rasse || ''} onChange={e => setRasse(e.target.value)} style={sbSel}>
+                    <option value="">— keine —</option>
+                    {[...T().rassen].sort((a, c) => a.name.localeCompare(c.name, 'de')).map(r => <option key={r.name} value={r.name}>{r.name}</option>)}
+                  </select>
+                </div>
+                {linienOpts.length > 0 && (
+                  <div>
+                    <label style={{ ...lbSt, display:'block', marginBottom:4 }}>Linie / Abstammung</label>
+                    <select value={sbLinie || ''} onChange={e => setLinie(e.target.value)} style={sbSel}>
+                      {linienOpts.map(o => <option key={o.linie} value={o.linie}>{o.linie}</option>)}
+                    </select>
+                  </div>
+                )}
+                <div>
                   <label style={{ ...lbSt, display:'block', marginBottom:4 }}>Waffe</label>
                   <select value={sbOpt.waffe || ''} onChange={e => setSbOpt(p => ({ ...p, waffe:e.target.value || null }))} style={sbSel}>
                     <option value="">— wie Vorlage —</option>
@@ -595,18 +619,10 @@ function SbBasisPanel({ b, rasse, rang, statsReady, noLabel }) {
                 <div>
                   <label style={{ ...lbSt, display:'block', marginBottom:4 }}>Angeborenes Talent</label>
                   <select value={sbEff.talent || ''} disabled={!sbTalente.length} onChange={e => setSbOpt(p => ({ ...p, talent:e.target.value || null }))} style={{ ...sbSel, opacity:sbTalente.length ? 1 : 0.5 }}>
-                    <option value="">{sbTalente.length ? '— keines —' : (rasse ? '— kein Talent —' : '— erst Rasse oben wählen —')}</option>
+                    <option value="">{sbTalente.length ? '— keines —' : (rasse ? '— kein Talent —' : '— erst Rasse wählen —')}</option>
                     {sbTalente.map(t => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </div>
-                {linienOpts.length > 0 && (
-                  <div>
-                    <label style={{ ...lbSt, display:'block', marginBottom:4 }}>Linie / Abstammung</label>
-                    <select value={sbLinie || ''} onChange={e => setSbOpt(p => ({ ...p, linie:e.target.value || null }))} style={sbSel}>
-                      {linienOpts.map(o => <option key={o.linie} value={o.linie}>{o.linie}</option>)}
-                    </select>
-                  </div>
-                )}
                 {sbGroessen.length > 1 && (
                   <div>
                     <label style={{ ...lbSt, display:'block', marginBottom:4 }}>Größe</label>
@@ -617,7 +633,7 @@ function SbBasisPanel({ b, rasse, rang, statsReady, noLabel }) {
                 )}
               </div>
               <div style={{ fontFamily:BODY, fontSize:11.5, fontWeight:300, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', marginBottom:10 }}>
-                {rasse ? <>Vorschau mit der Rasse des NSC: <b style={{ color:'var(--white)', fontWeight:500 }}>{rasse}{sbLinie ? ' – ' + sbLinie : ''}</b>. Geändert gegenüber der Vorlage ist grün markiert.</> : 'Oben beim NSC eine Rasse wählen (oder „Rasse würfeln"), dann erscheint sie hier im Statblock.'}
+                {rasse ? <>Vorschau mit der Rasse des NSC: <b style={{ color:'var(--white)', fontWeight:500 }}>{rasse}{sbLinie ? ' – ' + sbLinie : ''}</b>. Rasse und Linie gelten auch oben beim NSC. Geändert gegenüber der Vorlage ist grün markiert.</> : 'Eine Rasse wählen (oder „Rasse würfeln"); sie wird auch oben beim NSC eingetragen.'}
               </div>
             </div>
           ) : (
