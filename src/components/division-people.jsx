@@ -26,11 +26,18 @@ function useDivisionPeople() {
   const [data, setData] = React.useState({ sc:[], nsc:[], slots:{}, rand:{}, ready:false });
   const load = React.useCallback(async () => {
     if (!window._sb) return;
-    const [{ data: scs }, { data: nscs }, { data: sets }] = await Promise.all([
+    const [{ data: scs }, nscRes, { data: sets }] = await Promise.all([
       window._sb.from('characters').select('id,name,char_data').eq('type', 'spieler').eq('visible', true),
       window._sb.from('nsc_public_directory').select('id,name,bild,division,rang'),
       window._sb.from('settings').select('key,value').like('key', 'division_slots_%'),
     ]);
+    // Ältere Datenbank ohne Spalte "rang" im Verzeichnis (Migration 048): ohne Rang erneut laden,
+    // statt alle NSC zu verlieren
+    let nscs = nscRes.data;
+    if (nscRes.error) {
+      const retry = await window._sb.from('nsc_public_directory').select('id,name,bild,division');
+      nscs = retry.data;
+    }
     const slots = {};
     (sets || []).forEach(r => { slots[r.key.replace('division_slots_', '')] = parseSlots(r.value); });
     const sc = (scs || []).map(scToPerson), nsc = (nscs || []).map(nscToPerson);
