@@ -71,11 +71,18 @@ function BekannteSection({ division, sidebar = false }) {
   const dp = window.useDivisionPeople();
   const [editing, _bk_setEditing] = _bk_useState(false);
   const isDM = !!(window.SITE_USER && window.SITE_USER.role === 'dm');
-  const toEntry = p => ({ key:p.key, name:p.name, rolle:p.sub, beschreibung:'', bild:p.bild });
+  const toEntry = p => ({ key:p.key, name:p.name, rolle:[p.rankTitle, p.sub].filter(Boolean).join(' · '), beschreibung:'', bild:p.bild });
   const picked = dp.peopleOf(division).map(toEntry);
   const loreList = division.bekannte || [];
-  const bekannte = picked.length ? picked : loreList;      // ohne SC/NSC bleibt die Lore-Liste
+  // Echte Personen (SC/NSC) der Division; ohne sie bleiben die bekannten Lore-Einträge (ohne "Unbekannt"-Füller)
+  const loreKnown = loreList.filter(b => !/unbekannt/i.test(b.name || ''));
+  const bekannte = picked.length ? picked : loreKnown;
   const allList = dp.allOf(division).map(toEntry);
+  const members = dp.allOf(division);
+  const _dm = division.mitglieder || {};
+  const counts = dp.ready
+    ? { gesamt:members.length, nsc:members.filter(p => p.k === 'NSC').length, sc:members.filter(p => p.k === 'SC').length }
+    : { gesamt:_dm.gesamt ?? '…', nsc:_dm.nsc ?? '…', sc:_dm.sc ?? '…' };
   const featured = bekannte[0];
   const popup = showPopup && <_BekanntePopup bekannte={allList.length ? allList : loreList} divisionName={divisionName} accent={accent} onClose={()=>_bk_setShowPopup(false)} />;
   const editBtn = isDM && (
@@ -94,9 +101,14 @@ function BekannteSection({ division, sidebar = false }) {
       <div style={{ flex:1, minWidth:0, padding:'48px 32px 80px', display:'flex', flexDirection:'column', gap:'20px' }}>
         {popup}
         {editor}
-        {editBtn}
 
         {/* Featured member */}
+        {bekannte.length === 0 && (
+          <div style={{ padding:'20px 22px', border:`1px dashed ${accent}33`, borderRadius:'6px', fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.14em', color:`${accent}99`, textTransform:'uppercase' }}>
+            Noch keine bekannten Mitglieder
+          </div>
+        )}
+        {featured && (
         <div style={{ border:`1px solid ${accent}28`, borderRadius:'6px', background:`linear-gradient(135deg,${accent}09 0%,rgba(var(--panel-rgb),0.9) 100%)`, overflow:'hidden', transition:'border-color 0.2s' }}
           onMouseEnter={e=>e.currentTarget.style.borderColor=`${accent}55`}
           onMouseLeave={e=>e.currentTarget.style.borderColor=`${accent}28`}>
@@ -109,11 +121,12 @@ function BekannteSection({ division, sidebar = false }) {
             {featured && <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'13px', lineHeight:'1.8', color:'var(--muted)' }}>{featured.beschreibung}</p>}
           </div>
         </div>
+        )}
 
         {/* Member count + Alle anzeigen */}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px', padding:'12px 18px', border:`1px solid ${accent}18`, borderRadius:'4px', background:`${accent}07` }}>
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.12em', color:`${accent}77`, textTransform:'uppercase', lineHeight:1.6 }}>
-            ca. {m.gesamt ?? '?'} Mitglieder<span style={{ opacity:0.6 }}> · NSC: {m.nsc ?? '?'} · SC: {m.sc ?? '?'}</span>
+            {counts.gesamt} {counts.gesamt === 1 ? 'Mitglied' : 'Mitglieder'}<span style={{ opacity:0.6 }}> · NSC: {counts.nsc} · SC: {counts.sc}</span>
           </span>
           <button onClick={()=>_bk_setShowPopup(true)} style={{ display:'inline-flex', alignItems:'center', gap:'6px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', letterSpacing:'0.08em', color:`${accent}99`, background:`${accent}0e`, border:`1px solid ${accent}28`, borderRadius:'3px', padding:'6px 11px', cursor:'pointer', transition:'all 0.2s', flexShrink:0 }}
             onMouseEnter={e=>{e.currentTarget.style.background=`${accent}20`;e.currentTarget.style.color='var(--white)';}}
@@ -136,6 +149,7 @@ function BekannteSection({ division, sidebar = false }) {
             </div>
           ))}
         </div>
+        {editBtn}
       </div>
     );
   }
@@ -146,7 +160,6 @@ function BekannteSection({ division, sidebar = false }) {
       {popup}
       {editor}
       <SectionBanner label="Bekannte Mitglieder" accent={accent} />
-      {editBtn && <div style={{ marginBottom:'16px' }}>{editBtn}</div>}
 
       <div className="reveal" style={{ marginBottom:'36px' }}>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.28em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'16px' }}>Bekanntestes Mitglied</div>
@@ -167,7 +180,7 @@ function BekannteSection({ division, sidebar = false }) {
         {/* Member count + Alle anzeigen */}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px', padding:'12px 18px', border:`1px solid ${accent}18`, borderRadius:'4px', background:`${accent}07`, marginTop:'12px' }}>
           <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.12em', color:`${accent}77`, textTransform:'uppercase', lineHeight:1.6 }}>
-            ca. {m.gesamt ?? '?'} Mitglieder<span style={{ opacity:0.6 }}> · NSC: {m.nsc ?? '?'} · SC: {m.sc ?? '?'}</span>
+            {counts.gesamt} {counts.gesamt === 1 ? 'Mitglied' : 'Mitglieder'}<span style={{ opacity:0.6 }}> · NSC: {counts.nsc} · SC: {counts.sc}</span>
           </span>
           <button onClick={()=>_bk_setShowPopup(true)} style={{ display:'inline-flex', alignItems:'center', gap:'6px', fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12px', letterSpacing:'0.08em', color:`${accent}99`, background:`${accent}0e`, border:`1px solid ${accent}28`, borderRadius:'3px', padding:'6px 11px', cursor:'pointer', transition:'all 0.2s', flexShrink:0 }}
             onMouseEnter={e=>{e.currentTarget.style.background=`${accent}20`;e.currentTarget.style.color='var(--white)';}}
@@ -183,7 +196,7 @@ function BekannteSection({ division, sidebar = false }) {
       </div>
 
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'14px' }}>
-        {bekannte.slice(1,4).map((b,i) => (
+        {bekannte.slice(1,6).map((b,i) => (
           <div key={i} className="reveal" style={{ padding:'18px', border:`1px solid ${accent}18`, borderRadius:'4px', background:'rgba(var(--panel-rgb),0.7)', transition:'border-color 0.2s, transform 0.2s' }}
             onMouseEnter={e=>{e.currentTarget.style.borderColor=`${accent}40`;e.currentTarget.style.transform='translateY(-2px)';}}
             onMouseLeave={e=>{e.currentTarget.style.borderColor=`${accent}18`;e.currentTarget.style.transform='translateY(0)';}}>
@@ -194,6 +207,7 @@ function BekannteSection({ division, sidebar = false }) {
           </div>
         ))}
       </div>
+      {editBtn && <div style={{ marginTop:'16px' }}>{editBtn}</div>}
     </section>
   );
 }

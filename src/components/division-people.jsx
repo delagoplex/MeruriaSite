@@ -3,10 +3,10 @@
 // Zufällig aus den Spielercharakteren und NSC der Division; die SL kann Plätze fest vergeben.
 
 /* ── Bekannte Personen je Division ──
-   Drei Plätze pro Division. Standard: zufällig aus den Spielercharakteren und NSC der Division
+   Sechs Plätze pro Division (1 führendes Mitglied + 5 weitere). Standard: zufällig aus den Spielercharakteren und NSC der Division
    (nur, was die Spieler sehen dürfen). Die SL kann einzelne Plätze fest vergeben; gespeichert in
    settings.division_slots_<id> als JSON [null | { k:'SC'|'NSC', id }, …]. */
-const DIV_SLOTS = 3;
+const DIV_SLOTS = 6;   // 1 führendes Mitglied + 5 weitere (eine Reihe)
 const divSlotKey = id => 'division_slots_' + id;
 function parseSlots(v) {
   let a = [];
@@ -16,11 +16,11 @@ function parseSlots(v) {
 function scToPerson(r) {
   const d = r.char_data || {};
   return { key:'SC:' + r.id, k:'SC', id:r.id, name:d.name || r.name || '—', bild:d.bild || null,
-    sub:['Spielercharakter', d.class].filter(Boolean).join(' · '), division:d.division || null };
+    sub:['Spielercharakter', d.class].filter(Boolean).join(' · '), division:d.division || null, rankRaw:d.rank || null };
 }
 function nscToPerson(r) {
   return { key:'NSC:' + r.id, k:'NSC', id:r.id, name:r.name || 'Unbekannt', bild:r.bild || null,
-    sub:'NSC', division:r.division || null };
+    sub:'NSC', division:r.division || null, rankRaw:r.rang != null ? String(r.rang) : null };
 }
 function useDivisionPeople() {
   const [data, setData] = React.useState({ sc:[], nsc:[], slots:{}, rand:{}, ready:false });
@@ -28,7 +28,7 @@ function useDivisionPeople() {
     if (!window._sb) return;
     const [{ data: scs }, { data: nscs }, { data: sets }] = await Promise.all([
       window._sb.from('characters').select('id,name,char_data').eq('type', 'spieler').eq('visible', true),
-      window._sb.from('nsc_public_directory').select('id,name,bild,division'),
+      window._sb.from('nsc_public_directory').select('id,name,bild,division,rang'),
       window._sb.from('settings').select('key,value').like('key', 'division_slots_%'),
     ]);
     const slots = {};
@@ -48,16 +48,38 @@ function useDivisionPeople() {
     const slots = data.slots[div.id] || parseSlots('[]');
     const fixed = slots.map(r => (r ? byKey[r.k + ':' + r.id] || null : null));
     const used = new Set(fixed.filter(Boolean).map(p => p.key));
+    // freie Plätze: die höchsten Ränge der Division; bei gleichem Rang entscheidet der Zufall
+    const rk = rankFn(div);
     const pool = [...data.sc, ...data.nsc]
       .filter(p => p.division === div.name && !used.has(p.key) && !(p.k === 'NSC' && p.name === 'Unbekannt'))
-      .sort((a, b) => (data.rand[a.key] || 0) - (data.rand[b.key] || 0));
+      .sort((a, b) => rk(a).no - rk(b).no || (data.rand[a.key] || 0) - (data.rand[b.key] || 0));
     let next = 0;
-    return fixed.map(f => f || pool[next++] || null).filter(Boolean);
+    return fixed.map(f => f || pool[next++] || null).filter(Boolean)
+      .map(p => ({ ...p, rankNo:rk(p).no, rankTitle:rk(p).title }))
+      .sort(byRank(div));
   };
   // alle bekannten Personen der Division (für Listen wie "Alle anzeigen")
-  const allOf = div => [...data.sc, ...data.nsc]
-    .filter(p => p.division === div.name && !(p.k === 'NSC' && p.name === 'Unbekannt'))
-    .sort((a, b) => a.name.localeCompare(b.name, 'de'));
+  // Rang einer Person innerhalb der Division (Rang 1 = höchster); unbekannt = 99
+  const rankFn = div => {
+    const dv = (window.DIVISIONS_DATA || []).find(x => x.name === div.name);
+    const raenge = dv ? dv.raenge : [];
+    // Keine Division ohne Rang: ohne gültigen Rang gilt der niedrigste (Rang 10)
+    const lowest = raenge.reduce((lo, x) => (!lo || x.rang > lo.rang) ? x : lo, null);
+    return p => {
+      // NSC: Rang als Zahl 1–10 (oder Titel), SC: Rangtitel
+      const n = parseInt(p.rankRaw, 10);
+      const r = raenge.find(x => x.titel === p.rankRaw) || (p.k === 'NSC' && String(n) === String(p.rankRaw).trim() ? raenge.find(x => x.rang === n) : null) || lowest;
+      return r ? { no:r.rang, title:r.titel } : { no:99, title:null };
+    };
+  };
+  const byRank = div => { const rk = rankFn(div); return (a, b) => rk(a).no - rk(b).no || a.name.localeCompare(b.name, 'de'); };
+  const allOf = div => {
+    const rk = rankFn(div);
+    return [...data.sc, ...data.nsc]
+      .filter(p => p.division === div.name && !(p.k === 'NSC' && p.name === 'Unbekannt'))
+      .map(p => ({ ...p, rankNo:rk(p).no, rankTitle:rk(p).title }))
+      .sort(byRank(div));
+  };
   return { ...data, byKey, peopleOf, allOf, slotsOf:div => data.slots[div.id] || parseSlots('[]'), reload:load };
 }
 
@@ -117,7 +139,7 @@ function DivisionPeopleEditor({ d, slots: startSlots, scAll, onClose, onSaved })
           <span style={{ flex:1 }}/>
           <button onClick={onClose} aria-label="Schließen" style={{ background:'transparent', border:'none', cursor:'pointer', color:'var(--white)', fontSize:20, lineHeight:1 }}>×</button>
         </div>
-        <div style={{ padding:'14px 18px', display:'grid', gridTemplateColumns:`repeat(${DIV_SLOTS}, minmax(0, 1fr))`, gap:12 }}>
+        <div style={{ padding:'14px 18px', display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(150px, 1fr))', gap:12 }}>
           {slots.map((r, i) => {
             const p = r ? byKey[r.k + ':' + r.id] : null;
             const on = active === i;

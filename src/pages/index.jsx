@@ -2527,7 +2527,7 @@ function DivisionHolo({ d, rect, off, tilt, instant }) {
                   <div style={{ position:'absolute', inset:0, pointerEvents:'none', background:'linear-gradient(180deg, transparent 40%, rgba(4,7,12,0.88) 100%)' }}/>
                   <div style={{ position:'absolute', left:0, right:0, bottom:0, padding:'14px 12px 7px' }}>
                     <div style={{ fontFamily:'var(--font-display)', fontSize:13.5, letterSpacing:'0.08em', color:'#f0eeff', textShadow:`0 0 10px ${d.acc}aa`, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{p.name}</div>
-                    <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', color:`${d.acc}dd`, textTransform:'uppercase', marginTop:2, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{p.sub}</div>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', color:`${d.acc}dd`, textTransform:'uppercase', marginTop:2, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{[p.rankTitle, p.sub].filter(Boolean).join(' · ')}</div>
                   </div>
                 </div>
               ))}
@@ -2591,7 +2591,7 @@ function DivisionStrip() {
     clearTimeout(offTimer.current);
     const switching = !!(holo && !holo.off && holo.d.n !== d.n);
     seqRef.current += 1;
-    setHolo({ d:{ ...d, people:people.peopleOf(d) }, rect, off:false, tilt:{ x:0, y:0 }, seq:seqRef.current, instant:switching });
+    setHolo({ d:{ ...d, people:people.peopleOf(d).slice(0, 3) }, rect, off:false, tilt:{ x:0, y:0 }, seq:seqRef.current, instant:switching });
   };
   const move = t => setHolo(h => (h && !h.off) ? { ...h, tilt:t } : h);
   const leave = () => {
