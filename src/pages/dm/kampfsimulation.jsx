@@ -402,8 +402,22 @@ function NscRasseBox({ modus, onModus, opt, onOpt }) {
     modus !== 'aus' && /*#__PURE__*/React.createElement("div", { className: "sim-rasse-hint dim" }, "HG und XP werden an die ver\xE4nderten Werte angepasst. Gilt nur f\xFCr NSC-Statbl\xF6cke (Unterart NPC)."));
 }
 
+const stepBtnStyle = {
+  width: 24,
+  height: 24,
+  lineHeight: '20px',
+  padding: 0,
+  fontSize: '1rem',
+  fontFamily: 'var(--font-mono)',
+  color: 'var(--white)',
+  background: 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
+  border: '1px solid rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
+  borderRadius: 3,
+  cursor: 'pointer'
+};
 function MonsterPicker({
   onAdd,
+  onRemove,
   onClose,
   selected,
   monsterFilter,
@@ -599,9 +613,7 @@ function MonsterPicker({
       }
     }, "?"), /*#__PURE__*/React.createElement("span", {
       className: "sim-monster-row-name"
-    }, count > 0 && /*#__PURE__*/React.createElement("span", {
-      className: "sim-picker-count"
-    }, "\xD7", count), m.name, /*#__PURE__*/React.createElement("span", {
+    }, m.name,/*#__PURE__*/React.createElement("span", {
       className: "sim-tags"
     }, m.art && /*#__PURE__*/React.createElement("span", {
       className: "sim-tag"
@@ -609,7 +621,39 @@ function MonsterPicker({
       className: "sim-tag sim-tag-sub"
     }, m.unterart))), /*#__PURE__*/React.createElement("span", {
       className: "sim-monster-row-meta"
-    }, "HG ", formatCR(m.cr), " \xB7 ", m.tp, " TP"), onDetail && /*#__PURE__*/React.createElement("button", {
+    }, "HG ", formatCR(m.cr), " \xB7 ", m.tp, " TP"), onRemove && /*#__PURE__*/React.createElement("span", {
+      style: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 4,
+        flexShrink: 0
+      },
+      onClick: e => e.stopPropagation()
+    }, /*#__PURE__*/React.createElement("button", {
+      title: "Eins entfernen",
+      disabled: count === 0,
+      onClick: () => onRemove(m),
+      style: {
+        ...stepBtnStyle,
+        opacity: count === 0 ? 0.3 : 1,
+        cursor: count === 0 ? 'default' : 'pointer'
+      }
+    }, "−"), /*#__PURE__*/React.createElement("span", {
+      style: {
+        minWidth: 20,
+        textAlign: 'center',
+        fontFamily: 'var(--font-mono)',
+        fontSize: '0.78rem',
+        color: count > 0 ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))'
+      }
+    }, count), /*#__PURE__*/React.createElement("button", {
+      title: "Hinzuf\xFCgen",
+      onClick: () => onAdd({
+        ...mitRasse(m),
+        _kind: 'monster'
+      }),
+      style: stepBtnStyle
+    }, "+")), onDetail && /*#__PURE__*/React.createElement("button", {
       className: "sim-monster-row-info",
       title: "Details",
       onClick: e => {
@@ -784,6 +828,7 @@ function PlayerModal({
   currentGroup,
   onSave,
   onAddExisting,
+  onRemoveExisting,
   onDelete,
   onClose,
   dbChars
@@ -991,11 +1036,8 @@ function PlayerModal({
         padding: '5px 10px',
         fontSize: '0.68rem'
       },
-      onClick: () => {
-        onAddExisting(p);
-        onClose();
-      }
-    }, "Hinzuf\xFCgen"), /*#__PURE__*/React.createElement("button", {
+      onClick: () => inGroup ? onRemoveExisting(p) : onAddExisting(p)
+    }, inGroup ? '− Entfernen' : '+ Hinzuf\xFCgen'), /*#__PURE__*/React.createElement("button", {
       className: "sim-btn sim-btn-danger",
       style: {
         padding: '5px 8px',
@@ -1007,7 +1049,7 @@ function PlayerModal({
     const type = tab === 'npc' ? 'nsc' : 'spieler';
     const rows = (dbChars || []).filter(r => r.type === type);
     const q = dbSearch.trim().toLowerCase();
-    const filtered = q ? rows.filter(r => (r.name || '').toLowerCase().includes(q) || (r.char_data?.class || r.char_data?.klasse || '').toLowerCase().includes(q)) : rows;
+    const filtered = q ? rows.filter(r => (r.name || '').toLowerCase().includes(q) || (r.spielerName || '').toLowerCase().includes(q) || (r.char_data?.class || r.char_data?.klasse || '').toLowerCase().includes(q)) : rows;
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
       className: "sim-search",
       placeholder: "Suchen\u2026",
@@ -1024,11 +1066,34 @@ function PlayerModal({
       }
     }, type === 'nsc' ? 'Keine NSC in der DB.' : 'Keine Spielercharaktere in der DB.'), /*#__PURE__*/React.createElement("div", {
       className: "sim-saved-chars"
-    }, filtered.map(row => {
+    }, (type === 'spieler' ? [...filtered].sort((a, b) => {
+      // nach Spieler gruppiert (ohne Namen zuletzt), innerhalb eines Spielers nach Charaktername
+      const an = a.spielerName || '', bn = b.spielerName || '';
+      if (!an !== !bn) return an ? -1 : 1;
+      return an.localeCompare(bn, 'de') || (a.name || '').localeCompare(b.name || '', 'de');
+    }) : filtered).map((row, idx, arr) => {
       const p = dbRowToSimPlayer(row);
       const inGroup = (currentGroup || []).some(c => c.id === p.id);
-      return /*#__PURE__*/React.createElement("div", {
-        key: row.id,
+      const newPlayer = type === 'spieler' && (idx === 0 || (arr[idx - 1].spielerName || '') !== (row.spielerName || ''));
+      return /*#__PURE__*/React.createElement(React.Fragment, {
+        key: row.id
+      }, newPlayer && /*#__PURE__*/React.createElement("div", {
+        style: {
+          margin: idx === 0 ? '2px 0 6px' : '14px 0 6px',
+          padding: '4px 2px',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.72rem',
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          color: 'var(--white)',
+          borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.55*var(--kp)))'
+        }
+      }, '❖ ' + (row.spielerName || 'Ohne Spielername'), /*#__PURE__*/React.createElement("span", {
+        style: {
+          marginLeft: 8,
+          color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))'
+        }
+      }, '(' + arr.filter(r => (r.spielerName || '') === (row.spielerName || '')).length + ')')), /*#__PURE__*/React.createElement("div", {
         className: `sim-saved-char-row${inGroup ? ' sim-saved-char-row-dimmed' : ''}`
       }, /*#__PURE__*/React.createElement("div", {
         className: "sim-saved-char-name"
@@ -1046,11 +1111,8 @@ function PlayerModal({
           padding: '5px 10px',
           fontSize: '0.68rem'
         },
-        onClick: () => {
-          onAddExisting(p);
-          onClose();
-        }
-      }, "Hinzuf\xFCgen"));
+        onClick: () => inGroup ? onRemoveExisting(p) : onAddExisting(p)
+      }, inGroup ? '− Entfernen' : '+ Hinzuf\xFCgen')));
     }), q && filtered.length === 0 && rows.length > 0 && /*#__PURE__*/React.createElement("p", {
       style: {
         color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
@@ -2051,7 +2113,7 @@ function SimAccessDenied() {
       top: '18px',
       left: '22px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       textDecoration: 'none',
@@ -2070,7 +2132,7 @@ function SimAccessDenied() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.42em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -2135,9 +2197,19 @@ function SimApp() {
   const [dbChars, setDbChars] = useState([]);
   useEffect(() => {
     if (window._sb) {
-      window._sb.from('characters').select('id, name, type, char_data').order('name').then(({
+      window._sb.from('characters').select('id, name, type, char_data, owner_id').order('name').then(async ({
         data
-      }) => setDbChars(data || []));
+      }) => {
+        const rows = data || [];
+        // Spielername (Anzeigename des Kontos) je Charakter, damit in der Auswahl sichtbar ist, wem er gehört
+        const ownerIds = [...new Set(rows.filter(r => r.type === 'spieler' && r.owner_id).map(r => r.owner_id))];
+        let names = {};
+        if (ownerIds.length) {
+          const { data: profs } = await window._sb.from('profiles').select('id, display_name').in('id', ownerIds);
+          names = Object.fromEntries((profs || []).map(p => [p.id, p.display_name]));
+        }
+        setDbChars(rows.map(r => ({ ...r, spielerName: r.type === 'spieler' ? names[r.owner_id] || null : null })));
+      });
     }
   }, []);
   const [detailMonster, setDetailMonster] = useState(null);
@@ -2326,6 +2398,14 @@ function SimApp() {
     }, () => simulateCombat(group1, group2)))
   }))), modal?.type === 'monster' && /*#__PURE__*/React.createElement(MonsterPicker, {
     onAdd: m => addToGroup(modal.target === 1 ? setGroup1 : setGroup2, m),
+    // entfernt das zuletzt hinzugefügte Exemplar dieses Monsters aus der Zielgruppe
+    onRemove: m => (modal.target === 1 ? setGroup1 : setGroup2)(g => {
+      const key = m.name + (m.source || '');
+      for (let i = g.length - 1; i >= 0; i--) {
+        if (g[i]._kind === 'monster' && g[i].name + (g[i].source || '') === key) return g.filter((_, j) => j !== i);
+      }
+      return g;
+    }),
     onClose: () => setModal(null),
     selected: selectedForModal,
     monsterFilter: monsterFilter,
@@ -2342,6 +2422,8 @@ function SimApp() {
     onAddExisting: p => {
       addToGroup(modal.target === 1 ? setGroup1 : setGroup2, p);
     },
+    // nimmt den Charakter wieder aus der Zielgruppe (Fenster bleibt offen)
+    onRemoveExisting: p => (modal.target === 1 ? setGroup1 : setGroup2)(g => g.filter(c => c.id !== p.id)),
     onDelete: handleDeletePlayer,
     onClose: () => setModal(null),
     dbChars: dbChars

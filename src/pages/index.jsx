@@ -1,5 +1,6 @@
 // Page entry for /index.html
-import '../components/nav.jsx';
+import '../components/nav.jsx'
+import '../components/division-people.jsx';
 import '../components/site-gate.jsx';
 import '../components/footer.jsx';
 import '../components/carousel.jsx';
@@ -36,29 +37,29 @@ var NAV_TABS = [
 // ── Portal cards (6 player-facing overview pages) ──
 var PORTALS = [
   { id:'spielerhandbuch',   href:'/spielerhandbuch/index.html',   n:'I',   label:'Spielerhandbuch',   hue:250,
-    tag:'Regeln & Welt-Verständnis',
+    tag:'Regeln & Weltlogik',
     blurb:'Wie die Welt funktioniert — Realismus, Handwerk, Schutzherren, Gesinnungen und Regierungsformen.',
-    peek:['Realismus','Sammeln & Handwerk','Schutzherren','Gesinnungen','Regierungsformen'] },
+    peek:[{l:'Informationen',href:'/spielerhandbuch/informationen.html'},{l:'Vorgeschichte',href:'/spielerhandbuch/vorgeschichte.html'},{l:'Sitzung Null'},{l:'Realismus',href:'/spielerhandbuch/realismus.html'},{l:'Sammeln & Handwerk',href:'/spielerhandbuch/sammeln-und-handwerk.html'},{l:'Schutzherren',href:'/spielerhandbuch/schutzherren.html'},{l:'Gesinnungen'},{l:'Regierungsformen'}] },
   { id:'charaktererstellung', href:'/charaktererstellung/index.html', n:'II',  label:'Charaktererstellung', hue:235,
-    tag:'Werde wer du sein willst',
+    tag:'Vom Konzept zum Charakterbogen',
     blurb:'Rassen, Klassen, Talente, Hintergründe, Zauber und Ausrüstung — alles für deinen neuen Charakter.',
-    peek:['Neuer Charakter','Rassen','Klassen','Talente','Hintergründe','Zauber','Ausrüstung'] },
+    peek:[{l:'Neuer Charakter',href:'/charaktererstellung/neuer-charakter.html'},{l:'Rassen',href:'/charaktererstellung/rassen.html'},{l:'Klassen',href:'/charaktererstellung/klassen.html'},{l:'Talente',href:'/charaktererstellung/talente.html'},{l:'Hintergründe',href:'/charaktererstellung/hintergruende.html'},{l:'Zauber',href:'/charaktererstellung/zauber.html'},{l:'Ausrüstung',href:'/charaktererstellung/ausruestung.html'}] },
   { id:'enzyklopaedie',    href:'/enzyklopaedie/index.html',        n:'III', label:'Enzyklopädie',        hue:215,
-    tag:'Die Welt im Detail',
-    blurb:'Völker, Orte, Götter, Religionen, Organisationen — alles, was in Meruria existiert.',
-    peek:['Völker','Orte','Ressourcen','Organisationen','Gottheiten','Religionen','Monster','Galerie'] },
+    tag:'Nachschlagewerk der Welt',
+    blurb:'Völker, Orte, Gottheiten, Religionen und Organisationen — geordnet und nachschlagbar.',
+    peek:[{l:'Völker'},{l:'Orte'},{l:'Organisationen'},{l:'Gottheiten',href:'/enzyklopaedie/gottheiten.html'},{l:'Religionen'},{l:'Galerie',href:'/enzyklopaedie/galerie.html'}] },
   { id:'divisionen',       href:'/divisionen/index.html',           n:'IV',  label:'Divisionen',           hue:290,
-    tag:'Acht Wege, das Schicksal zu formen',
-    blurb:'Die acht Divisionen sind das Rückgrat der Welt. Kuratoren, Sturmritter, Sentinels und mehr.',
-    peek:['I — Kuratoren','II — Sturmritter','III — Sentinels','IV — Friedenshüter','V — Outfitters','VI — Pathfinders','VII — Quellensucher','VIII — Bergungsgarde'] },
+    tag:'Die acht wichtigsten Organisationen',
+    blurb:'Aufbau, Aufgaben und Leitung der acht Divisionen — von den Kuratoren bis zur Bergungsgarde.',
+    peek:[{l:'I — Kuratoren',href:'/divisionen/kuratoren.html'},{l:'II — Sturmritter',href:'/divisionen/sturmritter.html'},{l:'III — Sentinels',href:'/divisionen/sentinels.html'},{l:'IV — Friedenshüter',href:'/divisionen/friedenshueter.html'},{l:'V — Outfitters',href:'/divisionen/outfitters.html'},{l:'VI — Pathfinders',href:'/divisionen/pathfinders.html'},{l:'VII — Quellensucher',href:'/divisionen/quellensucher.html'},{l:'VIII — Bergungsgarde',href:'/divisionen/bergungsgarde.html'}] },
   { id:'charaktere',       href:'/charaktere/index.html',           n:'V',   label:'Charaktere',           hue:30,
-    tag:'Helden, Schurken, Verbündete',
-    blurb:'Die Steckbriefe aller Charaktere — Spielercharaktere, NSCs und alles dazwischen.',
-    peek:['Spielercharaktere','Verbündete','Antagonisten','Begegnete Seelen'] },
+    tag:'SC & NSC im Überblick',
+    blurb:'Die Steckbriefe aller Figuren — eigene Charaktere, Mitspielende und NSC.',
+    peek:[{l:'Meine Charaktere',href:'/charaktere/mein-charakter.html'},{l:'Spielercharaktere',href:'/charaktere/spielercharaktere.html'},{l:'NSC',href:'/charaktere/nsc.html'}] },
   { id:'tools',            href:'/spiel/kollektikon.html',           n:'VI',  label:'Spiel',                hue:175,
-    tag:'Werkzeuge für die Expedition',
+    tag:'Werkzeuge am Spieltisch',
     blurb:'Kollektikon, Karte, Kalender, Missionsterminal, Rezepte und Steckbrief — alles auf einen Blick.',
-    peek:['Kollektikon','Karte','Kalender','Missionsterminal','Rezepte','Steckbrief'] },
+    peek:[{l:'Kollektikon',href:'/spiel/kollektikon.html'},{l:'Karte',href:'/spiel/karte.html'},{l:'Kalender',href:'/spiel/kalender.html'},{l:'Missionsterminal',href:'/spiel/missionsterminal.html'},{l:'Rezepte',href:'/spielerhandbuch/rezepte.html'},{l:'Steckbrief',href:'/charaktere/steckbrief.html'}] },
 ];
 
 // ── Carousel placeholder images (drop-in art targets) ──
@@ -173,6 +174,7 @@ function PortalCard({ p, index }) {
   const acBorder  = hover ? `oklch(0.68 0.18 ${p.hue} / 0.8)` : `oklch(0.68 0.18 ${p.hue} / 0.22)`;
   const acGlow    = `oklch(0.68 0.18 ${p.hue} / 0.4)`;
 
+  const EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
   return (
     <a
       ref={ref}
@@ -184,19 +186,16 @@ function PortalCard({ p, index }) {
     >
       <div style={{
         position:'relative', overflow:'hidden',
-        padding:'28px 22px 24px',
         background: `repeating-linear-gradient(-45deg, transparent, transparent 12px, ${acStripe} 12px, ${acStripe} 13px), linear-gradient(160deg, rgba(var(--panel-rgb),0.85) 0%, rgba(var(--panel-rgb),0.92) 100%)`,
         border: `1px solid ${acBorder}`,
         borderRadius:'4px',
         boxShadow: hover
-          ? `0 0 0 1px ${acGlow}, 0 24px 60px rgba(0,0,0,0.55), 0 0 80px ${acGlow}`
-          : `0 12px 32px rgba(0,0,0,0.4)`,
+          ? `0 0 0 1px ${acGlow}, 0 24px 60px rgba(var(--shadow-rgb),calc(0.55*var(--shadow-k))), 0 0 80px ${acGlow}`
+          : `0 12px 32px rgba(var(--shadow-rgb),calc(0.4*var(--shadow-k)))`,
         transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.3s',
         transform: hover ? 'translateY(-3px)' : 'translateY(0)',
         cursor:'pointer',
-        minHeight: 260,
-        display:'flex', flexDirection:'column', alignItems:'center',
-        textAlign:'center',
+        height: 280,
         containerType:'inline-size',
       }}>
         {/* corner brackets */}
@@ -216,17 +215,20 @@ function PortalCard({ p, index }) {
         <div style={{
           position:'absolute', inset:0,
           background:`radial-gradient(ellipse at 50% 38%, ${acGlow} 0%, transparent 55%)`,
-          opacity: hover ? 1 : 0.18,
+          opacity: hover ? 0.5 : 0.18,
           transition:'opacity 0.7s ease-out',
           pointerEvents:'none',
         }}/>
 
-        {/* ── BIG hex sigil with Roman numeral ── */}
+        {/* ── Hex sigil — glides to the top-left corner on hover ── */}
         <div style={{
-          position:'relative', width:96, height:96,
-          marginBottom:18, marginTop:6,
+          position:'absolute', zIndex:2,
+          top: hover ? 20 : 34,
+          left: hover ? '20px' : '50%',
+          width: hover ? 46 : 96, height: hover ? 46 : 96,
+          transform: hover ? 'translateX(0)' : 'translateX(-50%)',
+          transition:`top 0.45s ${EASE}, left 0.45s ${EASE}, width 0.45s ${EASE}, height 0.45s ${EASE}, transform 0.45s ${EASE}`,
           display:'flex', alignItems:'center', justifyContent:'center',
-          zIndex:1,
         }}>
           <svg viewBox="0 0 100 100" style={{
             position:'absolute', inset:0, width:'100%', height:'100%',
@@ -236,71 +238,104 @@ function PortalCard({ p, index }) {
             <polygon points="50,3 92,27 92,73 50,97 8,73 8,27" fill="none" stroke={ac} strokeWidth="1.2" opacity="0.85"/>
             <polygon points="50,14 82,32 82,68 50,86 18,68 18,32" fill="none" stroke={ac} strokeWidth="0.6" opacity="0.5"/>
           </svg>
-          {/* inner static glyph (counter-rotates so numeral stays upright is overkill — keep it still by being outside the rotating svg) */}
           <span style={{
             position:'relative', zIndex:2,
             fontFamily:'var(--font-display)', fontWeight:400,
-            fontSize:'30px', letterSpacing:'0.04em',
-            color: hover ? '#ffffff' : acSoft,
+            fontSize: hover ? '15px' : '30px', letterSpacing:'0.04em',
+            color: hover ? 'var(--white)' : acSoft,
             textShadow: hover
               ? `0 0 24px ${acGlow}, 0 0 48px ${acGlow}`
               : `0 0 14px ${acGlow}`,
-            transition:'color 0.3s, text-shadow 0.3s',
+            transition:`color 0.3s, text-shadow 0.3s, font-size 0.45s ${EASE}`,
           }}>{p.n}</span>
         </div>
 
-        {/* title */}
+        {/* title — slides up beside the hex */}
         <h3 style={{
+          position:'absolute', zIndex:2, margin:0,
+          top: hover ? 22 : 148,
+          left: hover ? '80px' : '50%',
+          transform: hover ? 'translateX(0)' : 'translateX(-50%)',
           fontFamily:'var(--font-display)', fontWeight:400,
-          fontSize:'clamp(10px, 5cqi, 21px)', letterSpacing:'0.18em',
+          fontSize: hover ? '14.5px' : 'clamp(11px, 5cqi, 21px)', letterSpacing:'0.18em',
           color:'var(--white)', textTransform:'uppercase',
           textShadow: hover ? `0 0 24px ${acGlow}` : 'none',
-          transition:'text-shadow 0.3s',
-          marginBottom:8, position:'relative', zIndex:1,
           whiteSpace:'nowrap',
+          transition:`top 0.45s ${EASE}, left 0.45s ${EASE}, transform 0.45s ${EASE}, font-size 0.45s ${EASE}, text-shadow 0.3s`,
         }}>{p.label}</h3>
 
-        {/* tagline — one short line */}
+        {/* tagline — follows below the title */}
         <div style={{
+          position:'absolute', zIndex:2,
+          top: hover ? 44 : 182,
+          left: hover ? '80px' : '50%',
+          transform: hover ? 'translateX(0)' : 'translateX(-50%)',
           fontFamily:'var(--font-body)', fontWeight:300,
-          fontSize:'12px', letterSpacing:'0.04em',
-          color:'rgba(var(--text-rgb),calc(0.62*var(--kt) + var(--tb)))',
-          position:'relative', zIndex:1,
-          maxWidth:'85%',
-          marginBottom:'auto',
+          fontSize: hover ? '12px' : '13px', letterSpacing:'0.04em',
+          color:'rgba(var(--accent-rgb),calc(0.62*var(--ka)))',
+          whiteSpace:'nowrap',
+          transition:`top 0.45s ${EASE}, left 0.45s ${EASE}, transform 0.45s ${EASE}, font-size 0.45s ${EASE}`,
         }}>{p.tag}</div>
 
-        {/* Hover-revealed peek bar */}
+        {/* footer (default state) */}
         <div style={{
-          position:'relative', zIndex:1,
-          width:'100%', marginTop:18,
+          position:'absolute', zIndex:1, left:22, right:22, bottom:18,
           paddingTop:14,
-          borderTop:`1px solid oklch(0.68 0.18 ${p.hue} / ${hover?0.35:0.12})`,
-          transition:'border-color 0.3s',
+          borderTop:`1px solid oklch(0.68 0.18 ${p.hue} / 0.12)`,
           display:'flex', alignItems:'center', justifyContent:'center', gap:10,
+          opacity: hover ? 0 : 1,
+          transition:'opacity 0.3s',
+          pointerEvents:'none',
         }}>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'8.5px',
-            letterSpacing:'0.28em', color: hover ? acSoft : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',
+            fontFamily:'var(--font-mono)', fontSize:'11px',
+            letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',
             textTransform:'uppercase',
-            transition:'color 0.3s',
           }}>
             {p.peek.length} Unterseiten
           </span>
           <span style={{
             fontFamily:'var(--font-display)', fontSize:'14px', fontWeight:300,
-            color: hover ? '#ffffff' : acSoft,
-            opacity: hover ? 1 : 0.55,
-            transition:'all 0.3s',
-            transform: hover ? 'translateX(4px)' : 'translateX(0)',
-            display:'inline-block',
+            color: acSoft, opacity: 0.55,
           }}>→</span>
+        </div>
+
+        {/* Unterseiten-Tabelle (hover state) */}
+        <div style={{
+          position:'absolute', zIndex:3, left:22, right:22, top:84, bottom:14,
+          borderTop:`1px solid oklch(0.68 0.18 ${p.hue} / 0.3)`,
+          paddingTop:6,
+          opacity: hover ? 1 : 0,
+          transform: hover ? 'translateY(0)' : 'translateY(10px)',
+          transition:`opacity 0.35s ease 0.12s, transform 0.45s ${EASE} 0.12s`,
+          pointerEvents: hover ? 'auto' : 'none',
+          overflow:'hidden',
+        }}>
+          {p.peek.map(s => (
+            <span key={s.l}
+              onClick={e => { e.preventDefault(); e.stopPropagation(); if (s.href) window.location.href = s.href; }}
+              onMouseEnter={s.href ? (e => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.background = `oklch(0.68 0.18 ${p.hue} / 0.12)`; }) : undefined}
+              onMouseLeave={s.href ? (e => { e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))'; e.currentTarget.style.background = 'transparent'; }) : undefined}
+              style={{
+                display:'flex', alignItems:'center', justifyContent:'space-between',
+                padding:'3px 6px',
+                borderBottom:`1px solid oklch(0.68 0.18 ${p.hue} / 0.1)`,
+                fontFamily:'var(--font-mono)', fontSize:'11px',
+                letterSpacing:'0.1em', textTransform:'uppercase',
+                color: s.href ? 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))' : 'rgba(var(--accent-rgb),calc(0.28*var(--ka)))',
+                cursor: s.href ? 'pointer' : 'default',
+                transition:'color 0.2s, background 0.2s',
+              }}
+            >
+              <span>{s.l}</span>
+              <span style={{ color: s.href ? acSoft : 'rgba(var(--accent-rgb),calc(0.2*var(--ka)))' }}>{s.href ? '→' : '—'}</span>
+            </span>
+          ))}
         </div>
       </div>
     </a>
   );
 }
-
 Object.assign(window, { PortalCard });
 
 
@@ -336,13 +371,13 @@ function SectionEyebrow({ left, right }) {
   return (
     <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
       <span style={{
-        fontFamily:'var(--font-mono)', fontSize:'10px',
+        fontFamily:'var(--font-mono)', fontSize:'12px',
         letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
         textTransform:'uppercase',
       }}>◈ {left}</span>
       <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
       {right && <span style={{
-        fontFamily:'var(--font-mono)', fontSize:'9px',
+        fontFamily:'var(--font-mono)', fontSize:'11.5px',
         letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
         textTransform:'uppercase',
       }}>{right}</span>}
@@ -491,7 +526,7 @@ function HeuteStrip() {
             letterSpacing:'0.18em', color:'#d9b06b', textTransform:'uppercase',
           }}>{today.month}</div>
           <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
             letterSpacing:'0.25em', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
             textTransform:'uppercase', marginTop:3,
           }}>{today.weekday} · {today.year}</div>
@@ -501,7 +536,7 @@ function HeuteStrip() {
       {/* Sign + vibe */}
       <div style={{ minWidth:0 }}>
         <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'9px',
+          fontFamily:'var(--font-mono)', fontSize:'11.5px',
           letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
           textTransform:'uppercase', marginBottom:4,
         }}>Im Zeichen</div>
@@ -512,7 +547,7 @@ function HeuteStrip() {
         }}>{today.sign}</div>
         <div style={{
           fontFamily:'var(--font-body)', fontWeight:300,
-          fontSize:'11px', letterSpacing:'0.06em',
+          fontSize:'12.5px', letterSpacing:'0.06em',
           color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:3,
         }}>{today.vibe}</div>
       </div>
@@ -521,18 +556,18 @@ function HeuteStrip() {
       <div style={{ display:'flex', alignItems:'center', gap:18, flexShrink:0, padding:'0 16px', borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', borderRight:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}>
         <div style={{ textAlign:'center' }}>
           <MoonIcon phaseDay={today.goldDay} cycleLen={28} vollmondDay={16} color="#d9b06b" size={30}/>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(217,176,107,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Goldmond</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(217,176,107,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Goldmond</div>
         </div>
         <div style={{ textAlign:'center' }}>
           <MoonIcon phaseDay={today.ashDay} cycleLen={17} vollmondDay={12} color="#a8b6d4" size={26}/>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(168,182,212,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Aschmond</div>
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(168,182,212,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Aschmond</div>
         </div>
       </div>
 
       {/* Next holiday */}
       <div style={{ textAlign:'right', flexShrink:0 }}>
         <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'9px',
+          fontFamily:'var(--font-mono)', fontSize:'11.5px',
           letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
           textTransform:'uppercase', marginBottom:4,
         }}>Nächstes Fest · in {today.daysUntil} {today.daysUntil === 1 ? 'Tag' : 'Tagen'}</div>
@@ -548,7 +583,7 @@ function HeuteStrip() {
         flexShrink:0, paddingLeft:18, borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
       }}>
         <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'7.5px',
+          fontFamily:'var(--font-mono)', fontSize:'11px',
           letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
           textTransform:'uppercase',
         }}>Tag steuern</div>
@@ -568,7 +603,7 @@ function HeuteStrip() {
             style={{
               ...btnBase,
               width:'auto', padding:'0 12px', fontFamily:'var(--font-display)',
-              fontSize:10, letterSpacing:'0.22em', textTransform:'uppercase',
+              fontSize:12, letterSpacing:'0.22em', textTransform:'uppercase',
               opacity: isToday ? 0.45 : 1,
               cursor: isToday ? 'default' : 'pointer',
             }}
@@ -585,7 +620,7 @@ function HeuteStrip() {
           >▶</button>
         </div>
         <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'8px',
+          fontFamily:'var(--font-mono)', fontSize:'11px',
           letterSpacing:'0.2em', color: isToday ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' : '#d9b06b',
           textTransform:'uppercase', minHeight:10,
         }}>{isToday ? '— Heute —' : (offset > 0 ? `+${offset} Tag${offset===1?'':'e'}` : `${offset} Tag${offset===-1?'':'e'}`)}</div>
@@ -628,11 +663,11 @@ function MTKatTag({ k }) {
   const meta = MT_KAT[k];
   return (
     <span style={{
-      fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+      fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em',
       color: meta.color, textTransform:'uppercase',
       display:'inline-flex', alignItems:'center', gap:'5px'
     }}>
-      <span style={{ fontSize:'10px', lineHeight:1 }}>{meta.glyph}</span>
+      <span style={{ fontSize:'12px', lineHeight:1 }}>{meta.glyph}</span>
       {meta.label}
     </span>
   );
@@ -659,7 +694,7 @@ function MTQuestRow({ q, active, onClick }) {
       <div style={{ minWidth:0, display:'flex', alignItems:'center', gap:'10px' }}>
         {q.status === 'neu' && (
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.15em',
+            fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.15em',
             padding:'2px 6px', background:'rgba(127,184,255,0.18)',
             border:'1px solid rgba(127,184,255,0.45)', borderRadius:'2px',
             color:'#a3c8ff', textTransform:'uppercase', flexShrink:0
@@ -667,7 +702,7 @@ function MTQuestRow({ q, active, onClick }) {
         )}
         {q.status === 'empfohlen' && (
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'7.5px', letterSpacing:'0.15em',
+            fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.15em',
             padding:'2px 6px', background:'rgba(255,141,181,0.18)',
             border:'1px solid rgba(255,141,181,0.45)', borderRadius:'2px',
             color:'#ffb3ce', textTransform:'uppercase', flexShrink:0
@@ -688,7 +723,7 @@ function MTQuestRow({ q, active, onClick }) {
 function MTFilterChip({ label, count, active, onClick, color }) {
   return (
     <button onClick={onClick} style={{
-      fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em',
+      fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em',
       padding:'5px 11px', height:'24px',
       background: active ? 'rgba(var(--purple-rgb),calc(0.22*var(--kp)))' : 'transparent',
       border: `1px solid ${active ? 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
@@ -701,7 +736,7 @@ function MTFilterChip({ label, count, active, onClick, color }) {
       onMouseLeave={e=>{ if (!active) { e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'; e.currentTarget.style.color = color || 'rgba(var(--text-rgb),calc(0.55*var(--kt)))'; } }}
     >
       {label}
-      <span style={{ opacity:0.55, fontSize:'9px' }}>{count}</span>
+      <span style={{ opacity:0.55, fontSize:'11.5px' }}>{count}</span>
     </button>
   );
 }
@@ -777,7 +812,7 @@ function MTRewardRow({ icon, label, value, accent }) {
         }}>{icon}</div>
         <span style={{
           fontFamily:'var(--font-body)', fontWeight:300,
-          fontSize:'12.5px', color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
+          fontSize:'13px', color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
           letterSpacing:'0.04em'
         }}>{label}</span>
       </div>
@@ -802,7 +837,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
         <MTCategoryIcon k={q.kategorie}/>
         <div style={{ flex:1, minWidth:0 }}>
           <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
             color: MT_KAT[q.kategorie].color, letterSpacing:'0.25em',
             textTransform:'uppercase', marginBottom:'4px', opacity:0.85
           }}>{MT_KAT[q.kategorie].label} · STUFE {q.lv}</div>
@@ -815,7 +850,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
         </div>
         <div style={{ textAlign:'right' }}>
           <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'8px', color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',
+            fontFamily:'var(--font-mono)', fontSize:'11px', color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',
             letterSpacing:'0.2em', textTransform:'uppercase', marginBottom:'4px'
           }}>SCHWIERIGKEIT</div>
           <MTSchwierigkeit level={q.sw}/>
@@ -839,7 +874,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
               <MTSigil name={q.auftraggeber}/>
               <div>
                 <div style={{
-                  fontFamily:'var(--font-mono)', fontSize:'9px', color:'var(--lav2)',
+                  fontFamily:'var(--font-mono)', fontSize:'11.5px', color:'var(--lav2)',
                   letterSpacing:'0.22em', textTransform:'uppercase', marginBottom:'3px'
                 }}>Auftraggeber</div>
                 <div style={{
@@ -848,7 +883,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
                 }}>{q.auftraggeber}</div>
                 <div style={{
                   fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-                  fontSize:'11px', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:'2px'
+                  fontSize:'12.5px', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:'2px'
                 }}>{q.region}</div>
               </div>
             </div>
@@ -861,7 +896,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
             }}>{q.desc}</div>
 
             <div style={{
-              fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:500,
+              fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:500,
               letterSpacing:'0.28em', color:'var(--lav2)',
               textTransform:'uppercase', marginBottom:'8px',
               paddingBottom:'4px', borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))'
@@ -890,7 +925,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
         {view === 'anweisungen' && (
           <div style={{ animation:'fadeInUp 0.25s ease' }}>
             <div style={{
-              fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:500,
+              fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:500,
               letterSpacing:'0.28em', color:'var(--lav2)',
               textTransform:'uppercase', marginBottom:'14px',
               paddingBottom:'4px', borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))'
@@ -958,7 +993,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
                           }}/>
                         </div>
                         <span style={{
-                          fontFamily:'var(--font-mono)', fontSize:'11px',
+                          fontFamily:'var(--font-mono)', fontSize:'12.5px',
                           color: done ? 'var(--lav2)' : 'var(--white)',
                           letterSpacing:'0.1em'
                         }}>{n} / {step.max}</span>
@@ -980,7 +1015,7 @@ function MTDetailCard({ q, view, onAccept, accepted, progress, onStepClick }) {
         display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px'
       }}>
         <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'8.5px',
+          fontFamily:'var(--font-mono)', fontSize:'11px',
           color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))', letterSpacing:'0.2em', textTransform:'uppercase'
         }}>
           ID · {q.id.toUpperCase()}
@@ -1092,14 +1127,14 @@ function MissionsterminalSection() {
       {/* Eyebrow row */}
       <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:'10px',
+          fontFamily:'var(--font-mono)', fontSize:'12px',
           letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◈ Missionsterminal</span>
         <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
         <div style={{
           display:'flex', alignItems:'center', gap:'12px',
-          fontFamily:'var(--font-mono)', fontSize:'9px',
+          fontFamily:'var(--font-mono)', fontSize:'11.5px',
           color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', letterSpacing:'0.22em',
           textTransform:'uppercase',
         }}>
@@ -1155,7 +1190,7 @@ function MissionsterminalSection() {
                 placeholder="suchen…"
                 style={{
                   background:'transparent', border:'none', outline:'none',
-                  fontFamily:'var(--font-mono)', fontSize:'10px',
+                  fontFamily:'var(--font-mono)', fontSize:'12px',
                   color:'var(--white)', letterSpacing:'0.08em', width:'100px'
                 }}
               />
@@ -1168,7 +1203,7 @@ function MissionsterminalSection() {
             gap:'12px', padding:'9px 18px',
             borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
             background:'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
-            fontFamily:'var(--font-mono)', fontSize:'8.5px',
+            fontFamily:'var(--font-mono)', fontSize:'11px',
             color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase'
           }}>
             <div>Auftrag</div>
@@ -1179,7 +1214,7 @@ function MissionsterminalSection() {
           {/* List */}
           <div style={{ flex:1, minHeight:0, overflowY:'auto' }}>
             {loading && (
-              <div style={{ padding:'40px 20px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>
+              <div style={{ padding:'40px 20px', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:'11.5px', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>
                 ◈ Lade Aufträge…
               </div>
             )}
@@ -1187,7 +1222,7 @@ function MissionsterminalSection() {
               <div style={{
                 padding:'40px 20px', textAlign:'center',
                 fontFamily:'var(--font-body)', fontStyle:'italic',
-                fontSize:'12px', color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))'
+                fontSize:'13px', color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))'
               }}>
                 Keine Aufträge im Filter.
               </div>
@@ -1207,7 +1242,7 @@ function MissionsterminalSection() {
             padding:'9px 18px',
             borderTop:'1px solid rgba(var(--accent-rgb),calc(0.12*var(--ka)))',
             display:'flex', alignItems:'center', justifyContent:'space-between',
-            fontFamily:'var(--font-mono)', fontSize:'8.5px',
+            fontFamily:'var(--font-mono)', fontSize:'11px',
             color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))', letterSpacing:'0.2em', textTransform:'uppercase',
             background:'rgba(var(--bg-rgb),0.5)'
           }}>
@@ -1222,7 +1257,7 @@ function MissionsterminalSection() {
             right={
               <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
                 <button onClick={()=>setView('details')} style={{
-                  fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+                  fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em',
                   padding:'4px 10px', height:'24px',
                   background: view==='details' ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
                   border:`1px solid ${view==='details' ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
@@ -1231,7 +1266,7 @@ function MissionsterminalSection() {
                   transition:'all 0.15s'
                 }}>Details</button>
                 <button onClick={()=>setView('anweisungen')} style={{
-                  fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.18em',
+                  fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em',
                   padding:'4px 10px', height:'24px',
                   background: view==='anweisungen' ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'transparent',
                   border:`1px solid ${view==='anweisungen' ? 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.15*var(--ka)))'}`,
@@ -1267,7 +1302,7 @@ function MissionsterminalSection() {
               onStepClick={(stepIdx, max) => stepClick(selected.id, stepIdx, max)}
             />
           ) : (
-            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:'9px', color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>
+            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:'11.5px', color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>
               {loading ? '◈ Verbinde…' : '— keine Aufträge —'}
             </div>
           )}
@@ -1344,7 +1379,7 @@ function RecentCard({ item, idx, total, gold }) {
         padding:'2px 6px',
         background: gold ? goldA(0.15) : cA(0.12),
         border: `1px solid ${gold ? goldA(0.55) : cA(0.45)}`,
-        fontFamily:'var(--font-mono)', fontSize:6.5,
+        fontFamily:'var(--font-mono)', fontSize:11,
         color: gold ? 'oklch(0.85 0.13 75)' : c,
         letterSpacing:'0.2em', textTransform:'uppercase',
         zIndex:2, whiteSpace:'nowrap',
@@ -1356,13 +1391,13 @@ function RecentCard({ item, idx, total, gold }) {
         <svg viewBox="0 0 100 100" width="52" height="52" stroke={c} fill="none" style={{ color:c, filter:`drop-shadow(0 0 10px ${cA(0.6)})` }}>
           {item.icon}
         </svg>
-        <div style={{ marginTop:10, fontFamily:'var(--font-display)', fontSize:10.5, letterSpacing:'0.1em', color:'var(--white)', textTransform:'uppercase', lineHeight:1.2, overflowWrap:'anywhere' }}>
+        <div style={{ marginTop:10, fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.1em', color:'var(--white)', textTransform:'uppercase', lineHeight:1.2, overflowWrap:'anywhere' }}>
           {item.name}
         </div>
-        <div style={{ marginTop:6, fontFamily:'var(--font-mono)', fontSize:7, color:cA(0.85), letterSpacing:'0.18em', textTransform:'uppercase' }}>
+        <div style={{ marginTop:6, fontFamily:'var(--font-mono)', fontSize:11, color:cA(0.85), letterSpacing:'0.18em', textTransform:'uppercase' }}>
           {item.cat}
         </div>
-        <div style={{ position:'absolute', bottom:9, left:0, right:0, fontFamily:'var(--font-mono)', fontSize:7, color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', letterSpacing:'0.16em', textTransform:'uppercase' }}>
+        <div style={{ position:'absolute', bottom:9, left:0, right:0, fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', letterSpacing:'0.16em', textTransform:'uppercase' }}>
           {item.date}
         </div>
       </div>
@@ -1375,12 +1410,12 @@ function RecentRow({ items, kind, title }) {
     <div>
       <div style={{ display:'flex', alignItems:'baseline', gap:14, marginBottom:8 }}>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:9,
+          fontFamily:'var(--font-mono)', fontSize:11.5,
           letterSpacing:'0.3em', color: kind === 'komplett' ? 'oklch(0.82 0.14 80)' : 'rgba(var(--purple-rgb),calc(0.65*var(--kp)))',
           textTransform:'uppercase',
         }}>{kind === 'komplett' ? '✓' : '◈'} {title}</span>
         <div style={{ flex:1, height:1, background:`linear-gradient(to right, ${kind === 'komplett' ? 'oklch(0.82 0.14 80 / 0.5)' : 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))'}, rgba(var(--purple-rgb),calc(0.04*var(--kp))))` }}/>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.25em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
           Letzte {items.length}
         </span>
       </div>
@@ -1431,13 +1466,13 @@ function KollektikonSection() {
     <div>
       <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:'10px',
+          fontFamily:'var(--font-mono)', fontSize:'12px',
           letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◈ Kollektikon</span>
         <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:'9px',
+          fontFamily:'var(--font-mono)', fontSize:'11.5px',
           letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
           textTransform:'uppercase',
         }}>Forschungsstatus · Planet Meruria</span>
@@ -1465,7 +1500,7 @@ function KollektikonSection() {
           background:'rgba(var(--panel-rgb),0.5)',
         }}>
           <div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:6 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:6 }}>
               Sammlung der Ressourcen
             </div>
             <div style={{ fontFamily:'var(--font-display)', fontSize:'17px', fontWeight:400, letterSpacing:'0.22em', color:'var(--white)', textTransform:'uppercase' }}>
@@ -1483,7 +1518,7 @@ function KollektikonSection() {
             <div style={{ fontFamily:'var(--font-display)', fontSize:'30px', fontWeight:300, color:'var(--white)', lineHeight:1 }}>
               {totalFound}<span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontSize:'18px' }}> / {totalAll}</span>
             </div>
-            <div style={{ marginTop:5, display:'flex', justifyContent:'flex-end', gap:10, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em', textTransform:'uppercase' }}>
+            <div style={{ marginTop:5, display:'flex', justifyContent:'flex-end', gap:10, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', textTransform:'uppercase' }}>
               <span style={{ color:'rgba(var(--text-hi-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>
                 <span style={{ display:'inline-block', width:7, height:7, background:'rgba(var(--text-hi-rgb),calc(0.85*var(--kt)))', marginRight:4, verticalAlign:'middle' }}/>
                 {Math.round(overallPct*100)} % Gesichtet
@@ -1510,7 +1545,91 @@ function KollektikonSection() {
 /* ─────────────────────────────────────────────────
    VORGESCHICHTE (stub — not rendered)
    ───────────────────────────────────────────────── */
-function VorgeschichteTeaser() { return null; }
+function VorgeschichteTeaser() {
+  return (
+    <a href="/spielerhandbuch/vorgeschichte.html" style={{ display:'block', textDecoration:'none', color:'inherit' }}>
+      <div style={{
+        position:'relative',
+        display:'grid', gridTemplateColumns:'1.15fr 1fr',
+        gap:0,
+        background:'rgba(var(--panel-rgb),0.55)',
+        border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
+        borderRadius:'4px', overflow:'hidden',
+        boxShadow:'0 16px 48px rgba(var(--shadow-rgb),calc(0.5*var(--shadow-k)))',
+        transition:'border-color 0.4s, box-shadow 0.4s',
+      }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.5*var(--kp)))'; e.currentTarget.style.boxShadow='0 18px 60px rgba(var(--shadow-rgb),calc(0.55*var(--shadow-k))), 0 0 80px rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.boxShadow='0 16px 48px rgba(var(--shadow-rgb),calc(0.5*var(--shadow-k)))'; }}
+      >
+        {/* Image slot (left) */}
+        <div style={{ position:'relative', display:'flex', alignItems:'center' }}>
+          <div style={{ position:'relative', width:'100%', aspectRatio:'16 / 9', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <div style={{
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
+            color:'rgba(var(--accent-rgb),calc(0.3*var(--ka)))', letterSpacing:'0.3em',
+            textTransform:'uppercase', position:'relative', zIndex:1,
+          }}>Artwork hier ablegen</div>
+          <div style={{
+            position:'absolute', inset:0, pointerEvents:'none',
+            background:'linear-gradient(90deg, rgba(var(--bg-rgb),0) 50%, rgba(var(--panel-rgb),0.85) 100%)',
+          }}/>
+          {/* corner brackets */}
+          <span style={{position:'absolute',top:10,left:10,width:18,height:18,borderTop:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',borderLeft:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',pointerEvents:'none'}}/>
+          <span style={{position:'absolute',top:10,right:10,width:18,height:18,borderTop:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',borderRight:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',pointerEvents:'none'}}/>
+          <span style={{position:'absolute',bottom:10,left:10,width:18,height:18,borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',borderLeft:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',pointerEvents:'none'}}/>
+          </div>
+        </div>
+
+        {/* Text panel (right) */}
+        <div style={{ position:'relative', padding:'36px 36px 32px', display:'flex', flexDirection:'column', justifyContent:'center', background:'linear-gradient(90deg, rgba(var(--panel-rgb),0.5) 0%, rgba(var(--panel-rgb),0.85) 100%)' }}>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'12px',
+            letterSpacing:'0.4em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp)))',
+            textTransform:'uppercase', marginBottom:14,
+            position:'relative', zIndex:1,
+          }}>Vorgeschichte</span>
+
+          <h2 style={{
+            fontFamily:'var(--font-display)', fontWeight:400,
+            fontSize:'30px', letterSpacing:'0.06em',
+            color:'var(--white)', textTransform:'uppercase',
+            lineHeight:1.05, marginBottom:14,
+            textShadow:'0 0 36px rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
+            position:'relative', zIndex:1,
+          }}>Der Weiße&nbsp;Wal</h2>
+
+          <div style={{
+            width:48, height:1, background:'rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
+            marginBottom:18,
+          }}/>
+
+          <p style={{
+            fontFamily:'var(--font-body)', fontWeight:300,
+            fontSize:'13px', lineHeight:1.8,
+            color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))', letterSpacing:'0.02em',
+            textWrap:'pretty', marginBottom:24,
+            position:'relative', zIndex:1,
+          }}>
+            Es gab ein Schiff, das eine ganze Stadt trug — ein Stadtschiff, groß
+            genug für Straßen, Häuser, hunderttausend Seelen. Er flog nicht ans Ziel.
+            Irgendwo zwischen dem Verlassen des Sonnensystems und dem Unbekannten
+            versagten die Systeme.
+          </p>
+
+          <div style={{
+            display:'flex', alignItems:'center', gap:10,
+            fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:400,
+            letterSpacing:'0.28em', color:'var(--lav2)',
+            textTransform:'uppercase', position:'relative', zIndex:1,
+          }}>
+            <span>Die ganze Geschichte lesen</span>
+            <span style={{fontSize:14}}>→</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+}
 function _vg_unused() {
   return (
     <a href="#" style={{ display:'block', textDecoration:'none', color:'inherit' }}>
@@ -1550,7 +1669,7 @@ function _vg_unused() {
           }}>I</div>
 
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'10px',
+            fontFamily:'var(--font-mono)', fontSize:'12px',
             letterSpacing:'0.4em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))',
             textTransform:'uppercase', marginBottom:14,
             position:'relative', zIndex:1,
@@ -1585,7 +1704,7 @@ function _vg_unused() {
 
           <div style={{
             display:'flex', alignItems:'center', gap:10,
-            fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
+            fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:400,
             letterSpacing:'0.28em', color:'var(--lav)',
             textTransform:'uppercase', position:'relative', zIndex:1,
           }}>
@@ -1641,16 +1760,42 @@ function NeuerCharakterButton() {
       style={{ textDecoration:'none', display:'block', position:'relative', height:'100%' }}>
       <div style={{
         position:'relative',
-        background:'linear-gradient(135deg, rgba(40,20,90,0.55) 0%, rgba(var(--panel-rgb),0.92) 50%, rgba(var(--bg-rgb),0.98) 100%)',
-        border:`1px solid ${hov ? 'rgba(var(--accent-rgb),calc(0.65*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))'}`,
-        borderRadius:'4px', overflow:'hidden',
-        padding:'34px 40px 32px',
+        background: hov
+          ? 'linear-gradient(95deg, rgba(var(--panel-rgb),0.72) 0%, rgba(28,14,68,0.6) 45%, rgba(var(--panel-rgb),0.55) 100%)'
+          : 'linear-gradient(95deg, rgba(var(--purple-rgb),calc(0.22*var(--kp))) 0%, rgba(var(--panel-rgb),0.6) 45%, rgba(var(--panel-rgb),0.5) 100%)',
+        border:`1px solid ${hov ? '#c5b3ff' : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))'}`,
+        borderRadius:'3px', overflow:'hidden',
+        padding:'58px 40px 32px',
         minHeight:'180px', height:'100%',
-        transition:'border-color 0.3s, box-shadow 0.3s',
+        transition:'background 0.3s, border-color 0.3s, box-shadow 0.3s',
         boxShadow: hov
-          ? '0 0 56px rgba(var(--purple-rgb),calc(0.22*var(--kp))), inset 0 0 64px rgba(var(--purple-rgb),calc(0.08*var(--kp))), 0 12px 40px rgba(var(--shadow-rgb),calc(0.6 * var(--shadow-k)))'
-          : '0 0 24px rgba(var(--purple-rgb),calc(0.08*var(--kp))), inset 0 0 40px rgba(var(--purple-rgb),calc(0.04*var(--kp))), 0 6px 24px rgba(0,0,0,0.45)',
+          ? '0 0 44px rgba(var(--purple-rgb),calc(0.19*var(--kp))), 0 0 0 1px rgba(var(--purple-rgb),calc(0.33*var(--kp))) inset, 0 8px 28px rgba(var(--shadow-rgb),calc(0.5*var(--shadow-k)))'
+          : '0 0 32px rgba(var(--purple-rgb),calc(0.13*var(--kp))), 0 0 0 1px rgba(var(--purple-rgb),calc(0.22*var(--kp))) inset, 0 6px 22px rgba(var(--shadow-rgb),calc(0.45*var(--shadow-k)))',
       }}>
+        <div aria-hidden="true" style={{ position:'absolute', inset:'-1px', pointerEvents:'none',
+          background:'radial-gradient(ellipse at 12% 50%, rgba(var(--purple-rgb),calc(0.15*var(--kp))) 0%, transparent 55%)',
+          animation:'feature-halo 4.4s ease-in-out infinite' }}/>
+        <div aria-hidden="true" style={{ position:'absolute', left:0, top:0, bottom:0, width:'3px',
+          background:'linear-gradient(180deg, transparent 0%, #b59dff 25%, #7c4dff 75%, transparent 100%)',
+          boxShadow:'0 0 14px rgba(var(--purple-rgb),calc(0.67*var(--kp)))', animation:'feature-bar 3.4s ease-in-out infinite',
+          pointerEvents:'none', zIndex:3 }}/>
+        <div aria-hidden="true" style={{ position:'absolute', top:0, bottom:0, width:'80px', left:'-80px',
+          background:'linear-gradient(90deg, transparent 0%, rgba(var(--accent-rgb),calc(0.13*var(--ka))) 45%, rgba(var(--accent-rgb),calc(0.33*var(--ka))) 50%, rgba(var(--accent-rgb),calc(0.13*var(--ka))) 55%, transparent 100%)',
+          animation:'feature-shimmer 7.5s ease-in-out infinite', pointerEvents:'none', mixBlendMode:'screen' }}/>
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" style={{ position:'absolute', top:'6px', left:'6px', pointerEvents:'none', zIndex:3 }}>
+          <path d="M 1 8 L 1 1 L 8 1" fill="none" stroke="#b59dff" strokeWidth="1"/>
+        </svg>
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" style={{ position:'absolute', bottom:'6px', right:'6px', pointerEvents:'none', zIndex:3 }}>
+          <path d="M 15 8 L 15 15 L 8 15" fill="none" stroke="#b59dff" strokeWidth="1"/>
+        </svg>
+        <div aria-hidden="true" style={{ position:'absolute', top:'10px', left:'28px', display:'flex', alignItems:'center', gap:'6px', pointerEvents:'none', zIndex:3 }}>
+          <span style={{ width:'6px', height:'6px', borderRadius:'50%', background:'#b59dff', animation:'feature-pin 1.8s ease-in-out infinite' }}/>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.32em', color:'#b59dff', textTransform:'uppercase', textShadow:'0 0 8px rgba(var(--purple-rgb),calc(0.6*var(--kp)))' }}>◈ Geführter Prozess</span>
+        </div>
+        <div aria-hidden="true" style={{ position:'absolute', top:'10px', right:'28px', display:'flex', alignItems:'center', gap:'6px', pointerEvents:'none', zIndex:3 }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.8*var(--ka)))', textTransform:'uppercase', animation:'feature-tick 2.6s ease-in-out infinite' }}>Primär</span>
+          <span style={{ width:'4px', height:'4px', background:'#b59dff', transform:'rotate(45deg)' }}/>
+        </div>
         <div style={{ position:'absolute', inset:0, pointerEvents:'none',
           backgroundImage:`repeating-linear-gradient(135deg, transparent, transparent 22px, rgba(var(--accent-rgb),calc(0.04*var(--ka))) 22px, rgba(var(--accent-rgb),calc(0.04*var(--ka))) 23px)` }} />
         {/* Sweep on hover (like portal cards) */}
@@ -1680,28 +1825,19 @@ function NeuerCharakterButton() {
           </svg>
         </div>
         <div style={{ position:'relative', zIndex:2, maxWidth:'88%' }}>
-          <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'8.5px',
-            letterSpacing:'0.32em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
-            textTransform:'uppercase', marginBottom:'14px',
-            display:'flex', alignItems:'center', gap:'10px',
-          }}>
-            <span style={{ width:'24px', height:'1px', background:'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' }}/>
-            Geführter Prozess
-          </div>
           <div style={{ position:'relative', display:'inline-block', marginBottom:'14px' }}>
             {glitchActive && <h2 key={`ha-${glitchKey}`} aria-hidden="true" style={{
-              position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(20px,3vw,36px)', fontWeight:400,
-              letterSpacing:'0.16em', color:'var(--lav2)', textTransform:'uppercase', lineHeight:1.1,
+              position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(26px,3vw,36px)', fontWeight:400,
+              letterSpacing:'0.16em', color:'#a78bff', textTransform:'uppercase', lineHeight:1.1,
               pointerEvents:'none', zIndex:1, animation:`nc-glitch-a ${dur} ease forwards`,
             }}>Neuer Charakter</h2>}
             {glitchActive && <h2 key={`hb-${glitchKey}`} aria-hidden="true" style={{
-              position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(20px,3vw,36px)', fontWeight:400,
+              position:'absolute', inset:0, fontFamily:'var(--font-display)', fontSize:'clamp(26px,3vw,36px)', fontWeight:400,
               letterSpacing:'0.16em', color:'#7c4dff', textTransform:'uppercase', lineHeight:1.1,
               pointerEvents:'none', zIndex:1, animation:`nc-glitch-b ${dur} ease forwards`,
             }}>Neuer Charakter</h2>}
             <h2 key={`hmain-${glitchKey}`} style={{
-              fontFamily:'var(--font-display)', fontSize:'clamp(20px,3vw,36px)', fontWeight:400,
+              fontFamily:'var(--font-display)', fontSize:'clamp(26px,3vw,36px)', fontWeight:400,
               letterSpacing:'0.16em', color: hov ? 'var(--white)' : 'var(--white)', textTransform:'uppercase', lineHeight:1.1,
               textShadow: hov ? '0 0 24px rgba(var(--purple-rgb),calc(0.7*var(--kp))), 0 0 40px rgba(var(--purple-rgb),calc(0.3*var(--kp)))' : '0 0 14px rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
               transition: glitchActive ? 'none' : 'color 0.3s, text-shadow 0.3s',
@@ -1711,35 +1847,35 @@ function NeuerCharakterButton() {
           </div>
           <p style={{
             fontFamily:'var(--font-body)', fontWeight:300,
-            fontSize:'12.5px', lineHeight:1.85,
+            fontSize:'13px', lineHeight:1.85,
             color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing:'0.03em',
             maxWidth:'500px', marginBottom:'20px', textWrap:'pretty',
           }}>
-            Tag-Auswahl, Quiz und am Ende ein vollständiger Charakterbogen — alles in einem geführten Prozess.
+            Markiere, was du schon weißt — Quizfragen grenzen den Rest ein, und am Ende steht ein vollständiger Charakterbogen, druckbereit.
           </p>
           <div style={{ display:'flex', alignItems:'center', gap:'14px', marginBottom:'18px', flexWrap:'wrap' }}>
             {[{n:'01',l:'Tag-Auswahl'},{n:'02',l:'Quiz'},{n:'03',l:'Charakterbogen'}].map((s,i,arr) => (
               <React.Fragment key={s.n}>
                 <div style={{ display:'flex', alignItems:'center', gap:'7px' }}>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.15em', color:'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))', padding:'3px 7px', border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))', borderRadius:'2px', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>{s.n}</span>
-                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'9.5px', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>{s.l}</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.15em', color:'rgba(var(--purple-rgb),calc(0.85*var(--kp)))', padding:'3px 7px', border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))', borderRadius:'2px', background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>{s.n}</span>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.18em', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>{s.l}</span>
                 </div>
-                {i < arr.length-1 && <span style={{ fontFamily:'var(--font-mono)', fontSize:'10px', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))' }}>→</span>}
+                {i < arr.length-1 && <span style={{ fontFamily:'var(--font-mono)', fontSize:'12px', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' }}>→</span>}
               </React.Fragment>
             ))}
           </div>
           <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
             <span style={{
-              fontFamily:'var(--font-display)', fontSize:'10px',
+              fontFamily:'var(--font-display)', fontSize:'12px',
               letterSpacing:'0.28em',
-              color: hov ? 'var(--white)' : 'var(--lav)',
+              color: hov ? 'var(--white)' : 'var(--lav2)',
               textTransform:'uppercase',
               textShadow: hov ? '0 0 12px rgba(var(--purple-rgb),calc(0.6*var(--kp)))' : 'none',
               transition:'color 0.25s, text-shadow 0.25s',
             }}>Erstellung starten</span>
             <span style={{
               fontFamily:'var(--font-mono)', fontSize:'14px',
-              color: hov ? 'var(--white)' : 'var(--lav)',
+              color: hov ? 'var(--white)' : 'var(--lav2)',
               transform: hov ? 'translateX(4px)' : 'translateX(0)',
               transition:'transform 0.25s, color 0.25s',
             }}>→</span>
@@ -1812,7 +1948,7 @@ function RecentCharCard({ c }) {
       <div style={{ flex:1, minWidth:0, display:'flex', flexDirection:'column', justifyContent:'center' }}>
         <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:4 }}>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
+            fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em',
             padding:'2px 6px', borderRadius:2,
             background: isSC ? 'rgba(127,184,255,0.16)' : 'rgba(255,141,181,0.16)',
             border:`1px solid ${isSC ? 'rgba(127,184,255,0.45)' : 'rgba(255,141,181,0.45)'}`,
@@ -1820,7 +1956,7 @@ function RecentCharCard({ c }) {
             textTransform:'uppercase', flexShrink:0,
           }}>{c.kind}</span>
           <span style={{
-            fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.22em',
+            fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em',
             color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', textTransform:'uppercase',
             whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
           }}>vor {c.days} {c.days === 1 ? 'Tag' : 'Tagen'}</span>
@@ -1833,13 +1969,13 @@ function RecentCharCard({ c }) {
           transition:'color 0.2s',
         }}>{c.name}</div>
         <div style={{
-          fontFamily:'var(--font-body)', fontWeight:300, fontSize:11,
+          fontFamily:'var(--font-body)', fontWeight:300, fontSize:12.5,
           color: accent, letterSpacing:'0.04em', marginTop:2,
           whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
         }}>{c.rasse} · {c.klasse}{c.div ? ` · ${c.div.replace(/^Die\s+/, '')}` : ''}</div>
         {c.tagline && <div style={{
           fontFamily:'var(--font-body)', fontWeight:300, fontStyle:'italic',
-          fontSize:10.5, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
+          fontSize:12, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
           letterSpacing:'0.02em', marginTop:4, lineHeight:1.4,
           whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
         }}>„{c.tagline}"</div>}
@@ -1903,7 +2039,7 @@ function RecentCharacters() {
     <div style={{ display:'flex', flexDirection:'column', height:'100%' }}>
       <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:14 }}>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:9,
+          fontFamily:'var(--font-mono)', fontSize:11.5,
           letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◇ Zuletzt hinzugefügt</span>
@@ -1915,7 +2051,7 @@ function RecentCharacters() {
         gap:10,
       }}>
         {chars.length === 0
-          ? <div style={{ gridColumn:'1/-1', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>◈ Lade…</div>
+          ? <div style={{ gridColumn:'1/-1', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))', letterSpacing:'0.22em', textTransform:'uppercase' }}>◈ Lade…</div>
           : chars.map(c => <RecentCharCard key={c.name + c.kind} c={c}/>)
         }
       </div>
@@ -2110,13 +2246,13 @@ function Tageskarte() {
     <div>
       <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:24 }}>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:'10px',
+          fontFamily:'var(--font-mono)', fontSize:'12px',
           letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
           textTransform:'uppercase',
         }}>◈ Tageskarte</span>
         <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
         <span style={{
-          fontFamily:'var(--font-mono)', fontSize:'9px',
+          fontFamily:'var(--font-mono)', fontSize:'11.5px',
           letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
           textTransform:'uppercase',
         }}>Große Arkana · 22 Karten</span>
@@ -2139,7 +2275,7 @@ function Tageskarte() {
           <div style={{ width:42, height:1, background:'rgba(var(--purple-rgb),calc(0.6*var(--kp)))', marginLeft:'auto', marginBottom:18 }}/>
           <p style={{
             fontFamily:'var(--font-body)', fontWeight:300,
-            fontSize:'12.5px', lineHeight:1.85,
+            fontSize:'13px', lineHeight:1.85,
             color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
             maxWidth:'280px', marginLeft:'auto',
             textWrap:'pretty',
@@ -2171,7 +2307,7 @@ function Tageskarte() {
         {/* Right meta + buttons */}
         <div style={{ textAlign:'left' }}>
           <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
             letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
             textTransform:'uppercase', marginBottom:14,
           }}>{flipped ? 'Gezogen · ' + card[0] : 'Verdeckt'}</div>
@@ -2185,7 +2321,7 @@ function Tageskarte() {
             }}>{card[1]}</div>
           )}
           <button onClick={draw} style={{
-            fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
+            fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:400,
             letterSpacing:'0.22em', padding:'12px 22px',
             background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
             border:'1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))',
@@ -2199,7 +2335,7 @@ function Tageskarte() {
             {flipped ? 'Neue Karte ziehen' : 'Karte aufdecken'}
           </button>
           <button onClick={clear} disabled={!flipped} style={{
-            fontFamily:'var(--font-display)', fontSize:'10px', fontWeight:400,
+            fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:400,
             letterSpacing:'0.22em', padding:'10px 20px',
             background:'transparent',
             border:'1px solid rgba(var(--accent-rgb),calc(0.22*var(--ka)))',
@@ -2227,7 +2363,7 @@ function CTAButton({ href, label, glyph='◈' }) {
     <div style={{ display:'flex', justifyContent:'center' }}>
       <a href={href} style={{
         display:'inline-flex', alignItems:'center', gap:10,
-        fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:400,
+        fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:400,
         letterSpacing:'0.28em', padding:'9px 24px',
         background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
         border:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))',
@@ -2243,7 +2379,7 @@ function CTAButton({ href, label, glyph='◈' }) {
           width:16, height:16, borderRadius:'50%',
           border:'1px solid currentColor',
           display:'inline-flex', alignItems:'center', justifyContent:'center',
-          fontSize:9,
+          fontSize:11.5,
         }}>{glyph}</span>
         <span>{label}</span>
         <span style={{ fontSize:13 }}>→</span>
@@ -2259,6 +2395,306 @@ var { useState:uS5, useEffect:uE5, useCallback:uC5, useRef:uR5 } = React;
 var { ParticleField, PortalCard, Carousel, PORTALS:PRTS, HeuteStrip, VorgeschichteTeaser, Tageskarte, MissionsterminalSection, KollektikonSection, NeuerCharakterButton, RecentCharacters, CTAButton } = window;
 var IMGS = [...(window.GALERIE_ALL_IMAGES || [])].sort(() => Math.random() - 0.5).slice(0, 80);
 var { SiteNav, SiteFooter } = window;
+
+/* ── Abschnittsüberschrift: Sechseck + Titel + Linie ── */
+function SectionHead({ label, mb = 24, baseline, grow }) {
+  return (
+    <div style={{ display:'flex', alignItems: baseline ? 'baseline' : 'center', gap:18, marginBottom:mb }}>
+      <span style={{
+        fontFamily:'var(--font-mono)', fontSize:'12px',
+        letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
+        textTransform:'uppercase',
+        display:'inline-flex', alignItems:'center' }}>
+        <svg width="8" height="8" viewBox="0 0 8 8" style={{ flexShrink:0, marginRight:10 }}><polygon points="4,0.5 7.03,2.25 7.03,5.75 4,7.5 0.97,5.75 0.97,2.25" fill="rgba(var(--purple-rgb),calc(0.35*var(--kp)))" stroke="rgba(var(--accent-rgb),calc(0.6*var(--ka)))" strokeWidth="0.8"/></svg>
+        {label}
+      </span>
+      <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))', ...(grow ? { transformOrigin:'left', animation:'line-grow 1.4s ease-out' } : {}) }}/>
+    </div>
+  );
+}
+
+/* ── Die Acht Divisionen: Daten aus divisions-data.js ── */
+function divStripData() {
+  return (window.DIVISIONS_DATA || []).map(d => {
+    const sub = d.subtitle || '';
+    // Aufgabenbereiche aus dem Untertitel; Aufzählungen mit Bindestrich-Kurzform bleiben zusammen
+    const tasks = /-,/.test(sub) ? [sub] : sub.split(/\s*(?:&|,)\s*/).filter(Boolean);
+    return {
+      id:d.id, n:d.nummer, name:d.name, acc:d.accent, href:'/divisionen/' + d.id + '.html', sub,
+      tasks, be:d.beschreibung || d.leitspruch || '',
+    };
+  });
+}
+
+function DivisionSigil({ d, onEnter, onMove, onLeave }) {
+  const [hov, setHov] = uS5(false);
+  return (
+    <a href={d.href}
+      onMouseEnter={e => { setHov(true); onEnter(d, e.currentTarget.getBoundingClientRect()); }}
+      onMouseMove={e => { const r = e.currentTarget.getBoundingClientRect(); onMove({ x: ((e.clientX - r.left) / r.width) * 2 - 1, y: ((e.clientY - r.top) / r.height) * 2 - 1 }); }}
+      onMouseLeave={() => { setHov(false); onLeave(); }}
+      style={{
+      textDecoration:'none', display:'flex', flexDirection:'column', alignItems:'center', gap:10,
+      padding:'18px 6px 14px',
+      background: hov ? `linear-gradient(160deg, ${d.acc}14 0%, rgba(8,5,22,0.9) 100%)` : 'linear-gradient(160deg, rgba(var(--panel-rgb),0.5) 0%, rgba(var(--panel-rgb),0.5) 100%)',
+      border:`1px solid ${hov ? d.acc+'66' : 'rgba(var(--purple-rgb),calc(0.14*var(--kp)))'}`,
+      borderRadius:'3px',
+      transform: hov ? 'translateY(-2px)' : 'translateY(0)',
+      boxShadow: hov ? `0 0 24px ${d.acc}22, 0 8px 20px rgba(var(--shadow-rgb),calc(0.4*var(--shadow-k)))` : 'none',
+      transition:'background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s',
+    }}>
+      <svg width="46" height="46" viewBox="0 0 100 100" style={{ filter: hov ? `drop-shadow(0 0 8px ${d.acc}aa)` : 'none', transition:'filter 0.3s' }}>
+        <polygon points="50,3 92,27 92,73 50,97 8,73 8,27" fill={hov ? d.acc+'22' : d.acc+'10'} stroke={d.acc} strokeWidth="1.5" opacity="0.9"/>
+        <text x="50" y="59" textAnchor="middle" fontFamily="var(--font-display)" fontSize="26" fill={d.acc}>{d.n}</text>
+      </svg>
+      <span style={{
+        fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.08em', textTransform:'uppercase',
+        color: hov ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', transition:'color 0.3s',
+        textAlign:'center', whiteSpace:'normal', lineHeight:1.3,
+      }}>{d.name}</span>
+    </a>
+  );
+}
+/* ── Divisions-Hologramm — neben der Karte, über der Leiste ── */
+function DivisionHolo({ d, rect, off, tilt, instant }) {
+  const z = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+  const vw = window.innerWidth / z, vh = window.innerHeight / z;
+  const toRight = (rect.left + rect.width / 2) < vw / 2;
+  const W = 700, H = 360, GAP = 24;
+  let x = toRight ? rect.right + GAP : rect.left - GAP - W;
+  x = Math.max(16, Math.min(x, vw - W - 16));
+  let y = rect.top - 16 - H;
+  if (y < 60) y = 60;
+  // fromRight=true: Element gleitet von rechts zur Achse hin ein (Porträt); false: von links (Textpanels)
+  const el = (i, fromRight, extra) => (instant ? extra : {
+    animation: `${fromRight ? 'holo-el-l' : 'holo-el-r'} 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both`,
+    animationDelay: `${0.06 + i * 0.08}s`,
+    ...extra,
+  });
+  const panelBg = `linear-gradient(160deg, ${d.acc}24 0%, rgba(0,0,0,0) 60%), rgba(8,11,18,0.86)`;
+  const glass = { backdropFilter:'blur(6px)', WebkitBackdropFilter:'blur(6px)' };
+  const scan = { position:'absolute', inset:0, pointerEvents:'none',
+    backgroundImage:`repeating-linear-gradient(0deg, transparent, transparent 3px, ${d.acc}08 3px, ${d.acc}08 4px)` };
+  const corners = c => [
+    <span key="a" style={{position:'absolute',top:4,left:4,width:12,height:12,borderTop:`1px solid ${c}`,borderLeft:`1px solid ${c}`,opacity:0.8}}/>,
+    <span key="b" style={{position:'absolute',top:4,right:4,width:12,height:12,borderTop:`1px solid ${c}`,borderRight:`1px solid ${c}`,opacity:0.8}}/>,
+    <span key="c" style={{position:'absolute',bottom:4,left:4,width:12,height:12,borderBottom:`1px solid ${c}`,borderLeft:`1px solid ${c}`,opacity:0.8}}/>,
+    <span key="d" style={{position:'absolute',bottom:4,right:4,width:12,height:12,borderBottom:`1px solid ${c}`,borderRight:`1px solid ${c}`,opacity:0.8}}/>,
+  ];
+  const beamX = rect.left + rect.width / 2;
+  const targetX = x + (toRight ? 110 : W - 110);
+  const beamLen = Math.round(Math.hypot(targetX - beamX, (y + H - 4) - (rect.top - 4)));
+  const tx = tilt ? tilt.x : 0, ty = tilt ? tilt.y : 0;
+  return ReactDOM.createPortal(
+    <div style={{ position:'fixed', inset:0, zIndex:5000, pointerEvents:'none' }}>
+      <div style={{ opacity: off ? 0 : 1, transition:'opacity 0.15s' }}>
+        <svg width={vw} height={vh} style={{ position:'absolute', inset:0 }}>
+          <line x1={beamX} y1={rect.top - 4} x2={targetX} y2={y + H - 4}
+            stroke={d.acc} strokeWidth="1.5" opacity="0.7"
+            strokeDasharray={beamLen} strokeDashoffset={instant ? 0 : beamLen}
+            style={{ filter:`drop-shadow(0 0 6px ${d.acc})`, '--len':beamLen, animation: instant ? 'none' : 'holo-beam-draw 0.4s ease-out 0.05s both' }}/>
+        </svg>
+        <div style={{
+          position:'absolute', top:rect.top - 8, left:beamX - 4,
+          width:8, height:8, borderRadius:'50%',
+          background:d.acc, boxShadow:`0 0 16px ${d.acc}`,
+          animation: instant ? 'holo-pin-pulse 1.4s ease-in-out infinite' : 'holo-pin-in 0.3s ease-out both, holo-pin-pulse 1.4s ease-in-out 0.3s infinite',
+        }}/>
+      </div>
+      <div style={{
+        position:'absolute', left:x, top:y, width:W, height:H,
+        transformOrigin:'center',
+        transform:`perspective(1400px) rotateY(${(toRight ? -3 : 3) + tx * 7}deg) rotateX(${-ty * 6}deg)`,
+        transition:'transform 0.18s ease-out',
+        animation: off === 'tv' ? 'holo-tv-off 0.4s cubic-bezier(0.4, 0, 0.9, 0.4) both' : off === 'switch' ? 'holo-dissolve 0.28s ease-out both' : 'holo-flicker 5s linear infinite',
+      }}>
+        {/* Element 1 — bekannte Personen der Division (zufällig oder von der SL festgelegt) */}
+        <div style={el(0, true, {
+          position:'absolute', left:0, top:0, bottom:0, width:240,
+          border:`1px solid ${d.acc}66`, borderRadius:3,
+          background:panelBg, overflow:'hidden', ...glass,
+          boxShadow:`0 0 34px ${d.acc}22`,
+        })}>
+          {(d.people && d.people.length) ? (
+            <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column' }}>
+              {d.people.map((p, i) => (
+                <div key={p.key} style={{ position:'relative', flex:1, minHeight:0, overflow:'hidden', borderTop: i ? `1px solid ${d.acc}44` : 'none' }}>
+                  {p.bild
+                    ? <img src={p.bild} alt={p.name} style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'top', filter:'saturate(0.8) brightness(1.02)', opacity:0.95 }}/>
+                    : <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                        <span style={{ fontFamily:'var(--font-display)', fontSize:34, color:d.acc, textShadow:`0 0 16px ${d.acc}` }}>{p.name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase()}</span>
+                      </div>}
+                  <div style={{ position:'absolute', inset:0, pointerEvents:'none', background:'linear-gradient(180deg, transparent 40%, rgba(4,7,12,0.88) 100%)' }}/>
+                  <div style={{ position:'absolute', left:0, right:0, bottom:0, padding:'14px 12px 7px' }}>
+                    <div style={{ fontFamily:'var(--font-display)', fontSize:13.5, letterSpacing:'0.08em', color:'#f0eeff', textShadow:`0 0 10px ${d.acc}aa`, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{p.name}</div>
+                    <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', color:`${d.acc}dd`, textTransform:'uppercase', marginTop:2, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{[p.rankTitle, p.sub].filter(Boolean).join(' · ')}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:8, padding:16, textAlign:'center' }}>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:40, color:d.acc, textShadow:`0 0 16px ${d.acc}` }}>{d.n}</span>
+              <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:`${d.acc}aa`, textTransform:'uppercase' }}>Noch niemand bekannt</span>
+            </div>
+          )}
+          <div style={scan}/>
+          {corners(d.acc)}
+        </div>
+        {/* Element 2 — Name, Aufgabenbereich & Beschreibung */}
+        <div style={el(1, false, {
+          position:'absolute', left:258, right:0, top:0, bottom:70,
+          border:`1px solid ${d.acc}55`, borderRadius:3,
+          background:panelBg, padding:'22px 24px 16px', overflow:'hidden', ...glass,
+          boxShadow:`0 0 34px ${d.acc}1c`,
+        })}>
+          <div style={scan}/>
+          <div style={{ position:'absolute', left:0, right:0, height:'26%', top:'-26%', background:`linear-gradient(180deg, transparent, ${d.acc}12, transparent)`, animation:'holo-scan 3.2s linear infinite', pointerEvents:'none' }}/>
+          <h3 style={{ position:'relative', margin:'0 0 6px', fontFamily:'var(--font-display)', fontWeight:400, fontSize:31, letterSpacing:'0.14em', lineHeight:1.1, color:'#f3eefe', textTransform:'uppercase', textShadow:`0 0 28px ${d.acc}aa` }}>{d.name}</h3>
+          <div style={{ position:'relative', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.26em', color:`${d.acc}aa`, textTransform:'uppercase', marginBottom:14 }}>{d.sub}</div>
+          <div style={{ position:'relative', height:1, background:`linear-gradient(90deg, ${d.acc}88, transparent)`, marginBottom:14 }}/>
+          <p style={{ position:'relative', margin:0, fontFamily:'var(--font-body)', fontWeight:300, fontSize:13, lineHeight:1.8, letterSpacing:'0.02em', color:'rgba(230,238,250,0.75)', textWrap:'pretty' }}>{d.be}</p>
+          {corners(`${d.acc}cc`)}
+        </div>
+        {/* Element 3 — Aufgaben */}
+        <div style={el(2, false, {
+          position:'absolute', left:258, right:0, bottom:0, minHeight:56,
+          border:`1px solid ${d.acc}55`, borderRadius:3,
+          background:panelBg, overflow:'hidden', ...glass,
+          display:'flex', alignItems:'center', flexWrap:'wrap', gap:7, padding:'9px 16px',
+          boxShadow:`0 0 26px ${d.acc}18`,
+        })}>
+          <div style={scan}/>
+          <span style={{ position:'relative', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.26em', color:`${d.acc}88`, textTransform:'uppercase', marginRight:2 }}>Aufgaben</span>
+          {d.tasks.map(t => (
+            <span key={t} style={{
+              position:'relative', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.12em', textTransform:'uppercase',
+              color:`${d.acc}dd`, padding:'4px 9px', border:`1px solid ${d.acc}44`, borderRadius:2,
+              background:`${d.acc}0d`, whiteSpace:'nowrap',
+            }}>{t}</span>
+          ))}
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+function DivisionStrip() {
+  const narrow = window.innerWidth < 900;
+  const isDM = !!(window.SITE_USER && window.SITE_USER.role === 'dm');
+  const people = useDivisionPeople();
+  const [holo, setHolo] = uS5(null);   // { d, rect, off, tilt, seq }
+  const [edit, setEdit] = uS5(null);   // Division, deren Personen die SL gerade bearbeitet
+  const offTimer = uR5(null);
+  const seqRef = uR5(0);
+  const enter = (d, rect) => {
+    clearTimeout(offTimer.current);
+    const switching = !!(holo && !holo.off && holo.d.n !== d.n);
+    seqRef.current += 1;
+    setHolo({ d:{ ...d, people:people.peopleOf(d).slice(0, 3) }, rect, off:false, tilt:{ x:0, y:0 }, seq:seqRef.current, instant:switching });
+  };
+  const move = t => setHolo(h => (h && !h.off) ? { ...h, tilt:t } : h);
+  const leave = () => {
+    setHolo(h => h ? { ...h, off:'tv' } : h);
+    clearTimeout(offTimer.current);
+    offTimer.current = setTimeout(() => setHolo(null), 450);
+  };
+  return (
+    <div style={{ position:'relative' }}>
+      <div className="div-strip-grid">
+        {divStripData().map(d => (
+          <div key={d.n} style={{ position:'relative', display:'flex', flexDirection:'column' }}>
+            <DivisionSigil d={d} onEnter={enter} onMove={move} onLeave={leave}/>
+            {isDM && (
+              <button title="Bekannte Personen dieser Division festlegen"
+                onClick={e => { e.preventDefault(); e.stopPropagation(); leave(); setEdit(d); }}
+                style={{ position:'absolute', top:6, right:6, width:26, height:26, borderRadius:3, cursor:'pointer', zIndex:2,
+                  background:'rgba(var(--panel-rgb),0.85)', border:`1px solid ${d.acc}88`, color:'var(--white)', fontSize:14, lineHeight:1 }}>✎</button>
+            )}
+          </div>
+        ))}
+      </div>
+      {holo && !narrow && <DivisionHolo key={holo.d.n + '-' + holo.seq} d={holo.d} rect={holo.rect} off={holo.off} tilt={holo.tilt} instant={holo.instant}/>}
+      {edit && <DivisionPeopleEditor d={edit} slots={people.slotsOf(edit)} scAll={people.sc} onClose={() => setEdit(null)} onSaved={people.reload}/>}
+    </div>
+  );
+}
+/* ── Karte-Teaser — „Die Welt erkunden“ ── */
+function KarteTeaser() {
+  return (
+    <a href="/spiel/karte.html" style={{ display:'block', textDecoration:'none', color:'inherit' }}>
+      <div style={{
+        position:'relative',
+        display:'grid', gridTemplateColumns:'1fr 1.15fr',
+        gap:0,
+        background:'rgba(var(--panel-rgb),0.55)',
+        border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
+        borderRadius:'4px', overflow:'hidden',
+        boxShadow:'0 16px 48px rgba(var(--shadow-rgb),calc(0.5*var(--shadow-k)))',
+        transition:'border-color 0.4s, box-shadow 0.4s',
+      }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.5*var(--kp)))'; e.currentTarget.style.boxShadow='0 18px 60px rgba(var(--shadow-rgb),calc(0.55*var(--shadow-k))), 0 0 80px rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; e.currentTarget.style.boxShadow='0 16px 48px rgba(var(--shadow-rgb),calc(0.5*var(--shadow-k)))'; }}
+      >
+        {/* Text panel (left) */}
+        <div style={{ position:'relative', padding:'36px 36px 32px', display:'flex', flexDirection:'column', justifyContent:'center', background:'linear-gradient(270deg, rgba(var(--panel-rgb),0.5) 0%, rgba(var(--panel-rgb),0.85) 100%)' }}>
+          <span style={{
+            fontFamily:'var(--font-mono)', fontSize:'12px',
+            letterSpacing:'0.4em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp)))',
+            textTransform:'uppercase', marginBottom:14,
+            position:'relative', zIndex:1,
+          }}>Orte · Routen · Markierungen</span>
+          <h2 style={{
+            fontFamily:'var(--font-display)', fontWeight:400,
+            fontSize:'30px', letterSpacing:'0.06em',
+            color:'var(--white)', textTransform:'uppercase',
+            lineHeight:1.05, marginBottom:14,
+            textShadow:'0 0 36px rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
+            position:'relative', zIndex:1,
+          }}>Die Karte Merurias</h2>
+          <div style={{ width:48, height:1, background:'rgba(var(--purple-rgb),calc(0.5*var(--kp)))', marginBottom:18 }}/>
+          <p style={{
+            fontFamily:'var(--font-body)', fontWeight:300,
+            fontSize:'13px', lineHeight:1.8,
+            color:'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))', letterSpacing:'0.02em',
+            textWrap:'pretty', marginBottom:24,
+            position:'relative', zIndex:1,
+          }}>
+            Velundra, die Außenposten und das Unkartierte dazwischen —
+            mit Orten, Routen und eigenen Markierungen.
+          </p>
+          <div style={{
+            display:'flex', alignItems:'center', gap:10,
+            fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:400,
+            letterSpacing:'0.28em', color:'var(--lav2)',
+            textTransform:'uppercase', position:'relative', zIndex:1,
+          }}>
+            <span>Karte öffnen</span>
+            <span style={{fontSize:14}}>→</span>
+          </div>
+        </div>
+
+        {/* Image slot (right, 16:9) */}
+        <div style={{ position:'relative', display:'flex', alignItems:'center' }}>
+          <div style={{ position:'relative', width:'100%', aspectRatio:'16 / 9', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <div style={{
+            fontFamily:'var(--font-mono)', fontSize:'11.5px',
+            color:'rgba(var(--accent-rgb),calc(0.3*var(--ka)))', letterSpacing:'0.3em',
+            textTransform:'uppercase', position:'relative', zIndex:1,
+          }}>Kartenausschnitt hier ablegen</div>
+          <div style={{
+            position:'absolute', inset:0, pointerEvents:'none',
+            background:'linear-gradient(270deg, rgba(var(--bg-rgb),0) 50%, rgba(var(--panel-rgb),0.85) 100%)',
+          }}/>
+          <span style={{position:'absolute',top:10,right:10,width:18,height:18,borderTop:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',borderRight:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',pointerEvents:'none'}}/>
+          <span style={{position:'absolute',top:10,left:10,width:18,height:18,borderTop:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',borderLeft:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',pointerEvents:'none'}}/>
+          <span style={{position:'absolute',bottom:10,right:10,width:18,height:18,borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',borderRight:'1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))',pointerEvents:'none'}}/>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+}
 
 function App() {
   const [mouse, setMouse] = uS5({x:0.5, y:0.5});
@@ -2348,7 +2784,7 @@ function App() {
         }}>
           <div style={{ width:60, height:1, background:'linear-gradient(to right, transparent, rgba(var(--purple-rgb),calc(0.6*var(--kp))))' }}/>
           <div style={{
-            fontFamily:'var(--font-display)', fontSize:'12px', fontWeight:400,
+            fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:400,
             letterSpacing:'0.5em', color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
             textTransform:'uppercase',
           }}>
@@ -2366,19 +2802,7 @@ function App() {
         maxWidth:'1440px', margin:'0 auto',
       }}>
         {/* Section header */}
-        <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:36 }}>
-          <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'10px',
-            letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
-            textTransform:'uppercase',
-          }}>◈ Bereiche</span>
-          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))', transformOrigin:'left', animation:'line-grow 1.4s ease-out' }}/>
-          <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
-            textTransform:'uppercase',
-          }}>06 / Übersichtsseiten</span>
-        </div>
+        <SectionHead label="Bereiche" mb={36} baseline grow/>
 
         <div className="portal-grid" style={{
           display:'grid', gridTemplateColumns:'repeat(3, minmax(0, 1fr))',
@@ -2388,25 +2812,33 @@ function App() {
         </div>
       </section>
 
+      {/* ── WIE ALLES BEGANN ── */}
+      <section style={{
+        position:'relative', zIndex:5,
+        padding:'20px 48px 24px',
+        maxWidth:'1440px', margin:'0 auto',
+      }}>
+        <SectionHead label="Wie alles begann" mb={24}/>
+        <VorgeschichteTeaser/>
+      </section>
+
+      {/* ── DIE ACHT DIVISIONEN ── */}
+      <section style={{
+        position:'relative', zIndex:5,
+        padding:'20px 48px 24px',
+        maxWidth:'1440px', margin:'0 auto',
+      }}>
+        <SectionHead label="Die Acht Divisionen" mb={24}/>
+        <DivisionStrip/>
+      </section>
+
       {/* ── NEUER CHARAKTER + RECENT CHARS (1×2) ── */}
       <section style={{
         position:'relative', zIndex:5,
         padding:'40px 48px 16px',
         maxWidth:'1440px', margin:'0 auto',
       }}>
-        <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:18 }}>
-          <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'10px',
-            letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
-            textTransform:'uppercase',
-          }}>◈ Charaktere</span>
-          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
-          <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
-            textTransform:'uppercase',
-          }}>Spielercharaktere &amp; NSC</span>
-        </div>
+        <SectionHead label="Charaktere" mb={18} baseline/>
         <div style={{
           display:'grid', gridTemplateColumns:'0.85fr 1.15fr', gap:20,
           alignItems:'stretch',
@@ -2426,23 +2858,21 @@ function App() {
         padding:'48px 48px 16px',
         maxWidth:'1440px', margin:'0 auto',
       }}>
-        <div style={{ display:'flex', alignItems:'baseline', gap:18, marginBottom:18 }}>
-          <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'10px',
-            letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
-            textTransform:'uppercase',
-          }}>◈ Heute in Meruria</span>
-          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.5*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
-          <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
-            textTransform:'uppercase',
-          }}>Zum Kalender</span>
-        </div>
+        <SectionHead label="Heute in Meruria" mb={18} baseline/>
         <HeuteStrip/>
         <div style={{ marginTop:24 }}>
           <CTAButton href="/spiel/kalender.html" label="Zum Kalender"/>
         </div>
+      </section>
+
+      {/* ── DIE WELT ERKUNDEN ── */}
+      <section style={{
+        position:'relative', zIndex:5,
+        padding:'20px 48px 24px',
+        maxWidth:'1440px', margin:'0 auto',
+      }}>
+        <SectionHead label="Die Welt erkunden" mb={24}/>
+        <KarteTeaser/>
       </section>
 
       {/* ── MISSIONSTERMINAL ── */}
@@ -2478,17 +2908,7 @@ function App() {
       {/* ── CAROUSEL ── */}
       <section style={{ position:'relative', zIndex:5, marginTop:24, borderTop:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }}>
         <div style={{ display:'flex', alignItems:'center', gap:16, padding:'18px 48px 8px', maxWidth:'1440px', margin:'0 auto' }}>
-          <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'10px',
-            letterSpacing:'0.35em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))',
-            textTransform:'uppercase',
-          }}>◈ Aus der Galerie</span>
-          <div style={{ flex:1, height:1, background:'linear-gradient(to right, rgba(var(--purple-rgb),calc(0.4*var(--kp))), rgba(var(--purple-rgb),calc(0.05*var(--kp))))' }}/>
-          <span style={{
-            fontFamily:'var(--font-mono)', fontSize:'9px',
-            letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
-            textTransform:'uppercase',
-          }}>Klicken &amp; Ziehen zum Drehen</span>
+          <div style={{ flex:1 }}><SectionHead label="Aus der Galerie" mb={0}/></div>
         </div>
         <div style={{ padding:'4px 0 32px' }}>
           <Carousel images={IMGS}/>

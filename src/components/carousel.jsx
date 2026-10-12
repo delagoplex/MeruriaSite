@@ -132,11 +132,11 @@ function Carousel({ images, reverse }) {
                       <circle cx="12" cy="11" r="4" stroke={`oklch(0.65 0.18 ${im.hue||270})`} strokeWidth="1" opacity="0.8"/>
                       <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={`oklch(0.65 0.18 ${im.hue||270})`} strokeWidth="1.1" opacity="0.8"/>
                     </svg>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:7, letterSpacing:'0.18em', color:`oklch(0.65 0.18 ${im.hue||270} / 0.52)`, textTransform:'uppercase', zIndex:1, textAlign:'center', padding:'0 6px', lineHeight:1.3 }}>artwork</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', color:`oklch(0.65 0.18 ${im.hue||270} / 0.52)`, textTransform:'uppercase', zIndex:1, textAlign:'center', padding:'0 6px', lineHeight:1.3 }}>artwork</span>
                   </div>
                 )}
                 <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'5px 7px', background:'rgba(var(--bg-rgb),0.83)', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))' }}>
-                  <div style={{ fontFamily:'var(--font-mono)', fontSize:9, color:'rgba(var(--text-hi-rgb),calc(0.6*var(--kt) + var(--tb)))', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{im.title}</div>
+                  <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--text-hi-rgb),calc(0.6*var(--kt) + var(--tb)))', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{im.title}</div>
                 </div>
               </div>
             );
@@ -158,7 +158,7 @@ function Carousel({ images, reverse }) {
             borderRadius:5, boxShadow:'0 0 80px rgba(var(--purple-rgb),calc(0.3*var(--kp))), 0 0 0 1px rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
           }}/>
           {lightbox.title && (
-            <div style={{ marginTop:16, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>
+            <div style={{ marginTop:16, fontFamily:'var(--font-mono)', fontSize:12.5, letterSpacing:'0.2em', color:'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))', textTransform:'uppercase' }}>
               {lightbox.title}
             </div>
           )}

@@ -14,6 +14,8 @@
 }
 
 .div-col { flex: 1; min-width: 0; }
+/* Spalte "Bekannte Mitglieder": füllt den Rest der Zeile neben dem Text, unabhängig von der Zahl der Einträge */
+.div-side-col { flex: 1 1 0; min-width: 0; }
 
 .div-content { padding: 48px 40px 80px; max-width: 760px; position: relative; }
 
@@ -37,7 +39,7 @@
 
   /* Main text and the "Bekannte" side column stack instead of sitting side by side */
   .div-body-row { flex-direction: column !important; align-items: stretch !important; }
-  .div-side-col { border-left: none !important; border-top: 1px solid rgba(var(--accent-rgb),calc(0.14*var(--ka))); width: 100%; }
+  .div-side-col { flex: none; border-left: none !important; border-top: 1px solid rgba(var(--accent-rgb),calc(0.14*var(--ka))); width: 100%; }
 
   /* Hero: logo above the title instead of overlapping it */
   .div-hero-logo { left: 50% !important; top: 22% !important; transform: translate(-50%, 0) !important; }

@@ -916,7 +916,7 @@ function AccessDenied() {
       top: 24,
       left: 24,
       fontFamily: 'var(--font-mono)',
-      fontSize: 10,
+      fontSize: 12,
       letterSpacing: '0.22em',
       color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       textDecoration: 'none',
@@ -927,7 +927,7 @@ function AccessDenied() {
   }, "\u2190 Zur\xFCck"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.42em',
       color: 'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',
       textTransform: 'uppercase'

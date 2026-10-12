@@ -809,7 +809,7 @@ function CardTag({
   return /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 7.5,
+      fontSize: 11,
       padding: '2px 6px',
       border: `1px solid oklch(0.72 0.16 ${hue} / 0.45)`,
       background: `oklch(0.72 0.16 ${hue} / 0.1)`,
@@ -879,7 +879,7 @@ function RewardRow({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 10,
+      fontSize: 12,
       color: accent,
       letterSpacing: '0.04em',
       fontWeight: 600
@@ -892,7 +892,7 @@ function RewardRow({
     style: {
       fontFamily: 'var(--font-display)',
       fontWeight: 400,
-      fontSize: 11.5,
+      fontSize: 12.5,
       letterSpacing: '0.12em',
       textTransform: 'uppercase',
       color: unlocked ? 'var(--white)' : 'color-mix(in srgb, rgba(180,170,220,0.45), rgb(var(--ink-rgb)) var(--cm))',
@@ -900,14 +900,14 @@ function RewardRow({
     }
   }, reward.title),
   reward.info && /*#__PURE__*/React.createElement("div", {
-    style: { fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 11, color: unlocked ? 'var(--silver)' : 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))', lineHeight: 1.5, marginTop: 2 }
+    style: { fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 12.5, color: unlocked ? 'var(--silver)' : 'rgba(var(--accent-rgb),calc(0.35*var(--ka)))', lineHeight: 1.5, marginTop: 2 }
   }, '◈ ', reward.info),
   reward.bonus && /*#__PURE__*/React.createElement("div", {
-    style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: unlocked ? (isMaxStage ? GD : accentA(0.9)) : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))', marginTop: 3, letterSpacing: '0.04em' }
+    style: { fontFamily: 'var(--font-mono)', fontSize: 12, color: unlocked ? (isMaxStage ? GD : accentA(0.9)) : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))', marginTop: 3, letterSpacing: '0.04em' }
   }, '◆ ', reward.bonus)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 7.5,
+      fontSize: 11,
       padding: '3px 7px',
       whiteSpace: 'nowrap',
       border: `1px solid ${unlocked ? isMaxStage ? goldA(0.55) : cA(0.4) : 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))'}`,
@@ -949,7 +949,7 @@ function RewardList({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.3em',
       color: isMax ? GD : cMain,
       textTransform: 'uppercase'
@@ -957,7 +957,7 @@ function RewardList({
   }, "\u25C8 Forschungsboni"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 8.5,
+      fontSize: 11,
       letterSpacing: '0.22em',
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
@@ -1073,7 +1073,7 @@ function StageProgress({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 8.5,
+      fontSize: 11,
       letterSpacing: '0.3em',
       color: accentA(0.7),
       textTransform: 'uppercase'
@@ -1081,7 +1081,7 @@ function StageProgress({
   }, isMax ? '✓ Forschung abgeschlossen' : '◈ Forschungsfortschritt'), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 8.5,
+      fontSize: 11,
       letterSpacing: '0.22em',
       color: accentMain,
       textTransform: 'uppercase'
@@ -1115,7 +1115,7 @@ function StageProgress({
         marginTop: 4,
         textAlign: 'center',
         fontFamily: 'var(--font-mono)',
-        fontSize: 6.5,
+        fontSize: 11,
         color: filled ? accentA(0.85) : 'rgba(var(--accent-rgb),calc(0.32*var(--ka)))',
         letterSpacing: '0.12em',
         textTransform: 'uppercase',
@@ -1138,12 +1138,12 @@ function MilestoneSection({ overallPct }) {
   },
     /*#__PURE__*/React.createElement("div", {
       onClick: () => setCollapsed(c => !c),
-      style: { padding: '10px 14px', borderBottom: collapsed ? 'none' : '1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))', fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', userSelect: 'none' }
+      style: { padding: '10px 14px', borderBottom: collapsed ? 'none' : '1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', userSelect: 'none' }
     },
       /*#__PURE__*/React.createElement("span", null, '◈ Kollektikon-Meilensteine'),
       /*#__PURE__*/React.createElement("span", { style: { display: 'flex', alignItems: 'center', gap: 10 } },
-        /*#__PURE__*/React.createElement("span", { style: { color: reachedCount > 0 ? 'color-mix(in srgb, rgba(80,220,120,0.6), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))', fontSize: 8 } }, reachedCount, ' / ', MILESTONES.length, ' erreicht'),
-        /*#__PURE__*/React.createElement("span", { style: { fontSize: 10, opacity: 0.45, display: 'inline-block', transition: 'transform 0.2s', transform: collapsed ? 'rotate(-90deg)' : 'rotate(0deg)' } }, '▾')
+        /*#__PURE__*/React.createElement("span", { style: { color: reachedCount > 0 ? 'color-mix(in srgb, rgba(80,220,120,0.6), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))', fontSize: 11 } }, reachedCount, ' / ', MILESTONES.length, ' erreicht'),
+        /*#__PURE__*/React.createElement("span", { style: { fontSize: 12, opacity: 0.45, display: 'inline-block', transition: 'transform 0.2s', transform: collapsed ? 'rotate(-90deg)' : 'rotate(0deg)' } }, '▾')
       )
     ),
     !collapsed && /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexDirection: 'column' } },
@@ -1158,21 +1158,21 @@ function MilestoneSection({ overallPct }) {
             style: { display: 'grid', gridTemplateColumns: '36px 1fr auto', alignItems: 'center', gap: 10, padding: '8px 14px', cursor: m.boni.length > 0 ? 'pointer' : 'default', background: isOpen ? 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))' : 'transparent', transition: 'background 0.15s' }
           },
             /*#__PURE__*/React.createElement("div", {
-              style: { fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, color: reached ? GDA(0.9) : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))', textAlign: 'center', letterSpacing: '0.04em' }
+              style: { fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600, color: reached ? GDA(0.9) : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))', textAlign: 'center', letterSpacing: '0.04em' }
             }, m.pct + ' %'),
             /*#__PURE__*/React.createElement("div", {
               style: { fontFamily: reached ? 'var(--font-body)' : 'var(--font-mono)', fontSize: reached ? 12 : 10, color: accent, letterSpacing: reached ? 'normal' : '0.1em', opacity: reached ? 1 : 0.7 }
             }, m.title),
             reached
-              ? /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'color-mix(in srgb, rgba(80,220,120,0.75), rgb(var(--ink-rgb)) var(--cm))', letterSpacing: '0.14em' } }, '✓ AKTIV')
+              ? /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'color-mix(in srgb, rgba(80,220,120,0.75), rgb(var(--ink-rgb)) var(--cm))', letterSpacing: '0.14em' } }, '✓ AKTIV')
               : isNext
-              ? /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.12em' } }, 'NÄCHSTES')
-              : /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: 'rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))', letterSpacing: '0.12em' } }, 'GESPERRT')
+              ? /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', letterSpacing: '0.12em' } }, 'NÄCHSTES')
+              : /*#__PURE__*/React.createElement("span", { style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))', letterSpacing: '0.12em' } }, 'GESPERRT')
           ),
           isOpen && m.boni.length > 0 && /*#__PURE__*/React.createElement("div", {
             style: { padding: '6px 14px 10px 60px', display: 'flex', flexDirection: 'column', gap: 4 }
           }, m.boni.map((b, j) => /*#__PURE__*/React.createElement("div", {
-            key: j, style: { fontFamily: 'var(--font-body)', fontSize: 11, color: 'color-mix(in srgb, rgba(180,170,220,0.65), rgb(var(--ink-rgb)) var(--cm))', lineHeight: 1.4 }
+            key: j, style: { fontFamily: 'var(--font-body)', fontSize: 12.5, color: 'color-mix(in srgb, rgba(180,170,220,0.65), rgb(var(--ink-rgb)) var(--cm))', lineHeight: 1.4 }
           }, '· ', b)))
         );
       })
@@ -1385,7 +1385,7 @@ function EntryCard({
       top: 6,
       left: 7,
       fontFamily: 'var(--font-mono)',
-      fontSize: 6.5,
+      fontSize: 11,
       color: found ? cA(0.85) : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
       letterSpacing: '0.16em',
       textTransform: 'uppercase'
@@ -1409,7 +1409,7 @@ function EntryCard({
       padding: '2px 6px',
       border: '1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',
       fontFamily: 'var(--font-mono)',
-      fontSize: 6.5,
+      fontSize: 11,
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em',
       textTransform: 'uppercase'
@@ -1422,7 +1422,7 @@ function EntryCard({
       padding: '2px 6px',
       border: `1px solid ${cA(0.25)}`,
       fontFamily: 'var(--font-mono)',
-      fontSize: 7,
+      fontSize: 11,
       color: cA(0.5),
       letterSpacing: '0.12em'
     }
@@ -1438,7 +1438,7 @@ function EntryCard({
     style: {
       fontFamily: 'var(--font-display)',
       fontWeight: 400,
-      fontSize: 11,
+      fontSize: 12.5,
       letterSpacing: '0.1em',
       textTransform: 'uppercase',
       color: found ? 'var(--white)' : 'color-mix(in srgb, rgba(180,170,220,0.45), rgb(var(--ink-rgb)) var(--cm))',
@@ -1449,7 +1449,7 @@ function EntryCard({
   }, entry.name) : /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 10,
+      fontSize: 12,
       letterSpacing: '0.14em',
       color: cA(0.65),
       textShadow: `0 0 8px ${cA(0.4)}, 0 0 18px ${cA(0.2)}`,
@@ -1478,7 +1478,7 @@ function EntryCard({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 7.5,
+      fontSize: 11,
       letterSpacing: '0.1em',
       color: found ? `oklch(0.72 0.16 ${rarHue} / 0.95)` : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))',
       textTransform: 'uppercase',
@@ -1487,7 +1487,7 @@ function EntryCard({
   }, rarObj.label)), showPrice && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9.5,
+      fontSize: 11.5,
       fontWeight: 600,
       color: isMax ? GD : 'oklch(0.82 0.14 80)',
       letterSpacing: '0.02em',
@@ -1496,7 +1496,7 @@ function EntryCard({
     }
   }, entry.price, /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: 7,
+      fontSize: 11,
       opacity: 0.65,
       marginLeft: 2,
       letterSpacing: '0.08em'
@@ -1515,7 +1515,7 @@ function EntryCard({
   }))), found && stage < FU.tagsOnCard && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 6.5,
+      fontSize: 11,
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '0.16em',
       textTransform: 'uppercase',
@@ -1582,7 +1582,7 @@ function DetailPanel({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 8,
+      fontSize: 11,
       letterSpacing: '0.3em',
       color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -1596,7 +1596,7 @@ function DetailPanel({
       cursor: 'pointer',
       padding: '4px 10px',
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.2em',
       textTransform: 'uppercase',
       borderRadius: 2
@@ -1733,7 +1733,7 @@ function DetailPanel({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.2em',
       color: `oklch(0.72 0.16 ${RAR[entry.rarity].hue})`,
       textTransform: 'uppercase'
@@ -1742,7 +1742,7 @@ function DetailPanel({
     style: {
       marginBottom: 8,
       fontFamily: 'var(--font-mono)',
-      fontSize: 8,
+      fontSize: 11,
       letterSpacing: '0.28em',
       color: cA(0.5),
       textTransform: 'uppercase'
@@ -1797,14 +1797,14 @@ function DetailPanel({
       fontFamily: 'var(--font-body)',
       fontStyle: 'italic',
       fontWeight: 300,
-      fontSize: 12.5,
+      fontSize: 13,
       color: 'color-mix(in srgb, rgba(180,170,220,0.5), rgb(var(--ink-rgb)) var(--cm))',
       lineHeight: 1.7
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.22em',
       color: cA(0.6),
       textTransform: 'uppercase',
@@ -1855,7 +1855,7 @@ function DetailPanel({
       border: `1px dashed ${entry.stage >= MS ? 'oklch(0.82 0.14 80 / 0.55)' : cA(0.33)}`,
       background: entry.stage >= MS ? 'oklch(0.82 0.14 80 / 0.06)' : `${cA(0.04)}`,
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       color: entry.stage >= MS ? GD : cMain,
       letterSpacing: '0.16em',
       textTransform: 'uppercase',
@@ -1908,7 +1908,7 @@ function DetailPanel({
       border: '1px dashed rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
       background: 'rgba(var(--purple-rgb),calc(0.04*var(--kp)))',
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       letterSpacing: '0.16em',
       textTransform: 'uppercase',
@@ -1930,7 +1930,7 @@ function Field({
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.22em',
       color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1947,7 +1947,7 @@ function Field({
   }, value) : /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 10,
+      fontSize: 12,
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       letterSpacing: '0.18em',
       textTransform: 'uppercase',
@@ -2024,7 +2024,7 @@ function CatTab({
   }, CIC[cat.id]), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: 11,
+      fontSize: 12.5,
       letterSpacing: '0.2em',
       fontWeight: 400,
       color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.78*var(--kt)))',
@@ -2092,7 +2092,7 @@ function CatTab({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.1em',
       whiteSpace: 'nowrap'
@@ -2112,14 +2112,14 @@ function CatTab({
     }
   }, "\xB7 ", kompletteCount, " ", /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: 7,
+      fontSize: 11,
       opacity: 0.75,
       letterSpacing: '0.16em'
     }
   }, "KOMP"))), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 8,
+      fontSize: 11,
       color: cMain,
       letterSpacing: '0.18em'
     }
@@ -2165,7 +2165,7 @@ function FilterButton({
     onClick: onClick,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.22em',
       padding: '7px 12px',
       textTransform: 'uppercase',
@@ -2212,7 +2212,7 @@ function FilterButton({
       background: c,
       color: 'rgb(var(--panel-rgb))',
       fontFamily: 'var(--font-mono)',
-      fontSize: 8,
+      fontSize: 11,
       lineHeight: 1.2,
       fontWeight: 600,
       letterSpacing: 0,
@@ -2269,7 +2269,7 @@ function FilterPanel({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 8,
+      fontSize: 11,
       letterSpacing: '0.3em',
       color: 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
       textTransform: 'uppercase'
@@ -2285,7 +2285,7 @@ function FilterPanel({
       padding: '2px 9px',
       borderRadius: 2,
       fontFamily: 'var(--font-mono)',
-      fontSize: 8,
+      fontSize: 11,
       letterSpacing: '0.2em',
       textTransform: 'uppercase',
       transition: 'all 0.15s'
@@ -2874,7 +2874,7 @@ function KollektikonPage() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.28em',
       color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -2949,7 +2949,7 @@ function KollektikonPage() {
       justifyContent: 'flex-end',
       gap: 14,
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.18em',
       textTransform: 'uppercase'
     }
@@ -3039,7 +3039,7 @@ function KollektikonPage() {
   }, catObj.label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 8.5,
+      fontSize: 11,
       letterSpacing: '0.22em',
       color: cMain,
       textTransform: 'uppercase',
@@ -3099,7 +3099,7 @@ function KollektikonPage() {
       border: search ? `1px solid ${cA(0.7)}` : '1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
       color: 'var(--white)',
       fontFamily: 'var(--font-mono)',
-      fontSize: 10,
+      fontSize: 12,
       letterSpacing: '0.12em',
       borderRadius: 2,
       outline: 'none',
@@ -3145,7 +3145,7 @@ function KollektikonPage() {
       top: '50%',
       transform: 'translateY(-50%)',
       fontFamily: 'var(--font-mono)',
-      fontSize: 8,
+      fontSize: 11,
       letterSpacing: '0.12em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -3204,7 +3204,7 @@ function KollektikonPage() {
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.22em',
       color: cMain,
       textTransform: 'uppercase'
@@ -3216,7 +3216,7 @@ function KollektikonPage() {
       gap: 8,
       flexWrap: 'wrap',
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.18em',
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -3236,7 +3236,7 @@ function KollektikonPage() {
         padding: '3px 9px',
         borderRadius: 2,
         fontFamily: 'var(--font-mono)',
-        fontSize: 8.5,
+        fontSize: 11,
         letterSpacing: '0.18em',
         textTransform: 'uppercase'
       }
@@ -3253,7 +3253,7 @@ function KollektikonPage() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 10,
+      fontSize: 12,
       letterSpacing: '0.22em',
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -3262,7 +3262,7 @@ function KollektikonPage() {
   }, search.trim() ? `Keine Treffer für „${search.trim()}" in dieser Kategorie.` : 'Keine Einträge in dieser Auswahl.'), search.trim() && otherHits.length > 0 && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.18em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -3284,7 +3284,7 @@ function KollektikonPage() {
       marginTop: 20,
       textAlign: 'center',
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       letterSpacing: '0.2em',
       color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -3300,7 +3300,7 @@ function KollektikonPage() {
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 9,
+      fontSize: 11.5,
       color: 'rgba(var(--purple-rgb),calc(0.32*var(--kp) + var(--tb)))',
       letterSpacing: '0.18em',
       textTransform: 'uppercase'
@@ -3308,7 +3308,7 @@ function KollektikonPage() {
   }, "Meruria \xB7 Kollektikon \xB7 Gef\xFChrt durch die Bergungsgarde"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: 8,
+      fontSize: 11,
       color: 'rgba(var(--purple-rgb),calc(0.28*var(--kp) + var(--tb)))',
       letterSpacing: '0.15em'
     }

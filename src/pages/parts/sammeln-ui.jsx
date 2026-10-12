@@ -31,7 +31,7 @@ function Oct({ size = 8, color = 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + va
 function SH({ mono, title, anchorId }) {
   return (
     <div id={anchorId} style={{ marginBottom: '24px', paddingBottom: '14px', borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', scrollMarginTop: '70px' }}>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.3em', color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform: 'uppercase', marginBottom: '6px' }}>{mono}</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.3em', color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform: 'uppercase', marginBottom: '6px' }}>{mono}</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <Oct size={9} />
         <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '22px', fontWeight: 300, letterSpacing: '0.22em', color: 'rgba(var(--text-hi-rgb),calc(0.94*var(--kt) + var(--tb)))', textTransform: 'uppercase' }}>{title}</h2>
@@ -81,9 +81,9 @@ function Callout({ tone = 'info', title, children }) {
       margin: '14px 0',
     }}>
       {title && (
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase', color: t.tag, marginBottom: '6px' }}>{title}</div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11.5px', letterSpacing: '0.18em', textTransform: 'uppercase', color: t.tag, marginBottom: '6px' }}>{title}</div>
       )}
-      <div style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: '12.5px', lineHeight: 1.75, color: 'color-mix(in srgb, rgba(210,200,240,0.78), rgb(var(--ink-rgb)) var(--cm))', textWrap: 'pretty' }}>
+      <div style={{ fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: '13px', lineHeight: 1.75, color: 'color-mix(in srgb, rgba(210,200,240,0.78), rgb(var(--ink-rgb)) var(--cm))', textWrap: 'pretty' }}>
         {children}
       </div>
     </div>
@@ -103,7 +103,7 @@ function Table({ cols, rows, dense = false, accent = 'rgba(var(--purple-rgb),cal
             {cols.map((c, i) => (
               <th key={i} style={{
                 background: accent, color: 'rgba(var(--text-hi-rgb),calc(0.92*var(--kt) + var(--tb)))',
-                fontFamily: 'var(--font-display)', fontSize: '10.5px', fontWeight: 400,
+                fontFamily: 'var(--font-display)', fontSize: '12px', fontWeight: 400,
                 letterSpacing: '0.14em', textTransform: 'uppercase',
                 padding: dense ? '7px 10px' : '10px 14px', textAlign: c.align || 'left',
                 borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
@@ -120,7 +120,7 @@ function Table({ cols, rows, dense = false, accent = 'rgba(var(--purple-rgb),cal
                 return (
                   <td key={j} data-label={c.label} style={{
                     padding: dense ? '7px 10px' : '10px 14px',
-                    fontSize: '12.5px', fontWeight: 300,
+                    fontSize: '13px', fontWeight: 300,
                     color: j === 0 ? 'color-mix(in srgb, rgba(190,175,255,0.88), rgb(var(--ink-rgb)) var(--cm))' : 'color-mix(in srgb, rgba(204,194,240,0.72), rgb(var(--ink-rgb)) var(--cm))',
                     lineHeight: 1.6, verticalAlign: 'top',
                     textAlign: c.align || 'left',
@@ -260,12 +260,12 @@ function DiceButton({ spec = '1W20', label, onResult, modifier = 0, children, si
         }}>
           <span style={{ fontSize: '14px', fontWeight: 600, color: toneColor }}>{state.total}</span>
           {state.rolls && state.rolls.length > 1 && (
-            <span style={{ opacity: 0.5, fontSize: '9px' }}>
+            <span style={{ opacity: 0.5, fontSize: '11.5px' }}>
               [{state.rolls.join('+')}{state.bonus ? (state.bonus > 0 ? `+${state.bonus}` : state.bonus) : ''}{modifier ? (modifier > 0 ? ` +${modifier}` : ` ${modifier}`) : ''}]
             </span>
           )}
           {state.rolls && state.rolls.length === 1 && state.bonus !== 0 && (
-            <span style={{ opacity: 0.5, fontSize: '9px' }}>
+            <span style={{ opacity: 0.5, fontSize: '11.5px' }}>
               [{state.rolls[0]}{state.bonus > 0 ? `+${state.bonus}` : state.bonus}]
             </span>
           )}
@@ -289,7 +289,7 @@ function CraftSidebar({ chapters, activeId, onSelect }) {
       zIndex: 50, overflowY: 'auto', alignSelf: 'flex-start',
     }}>
       <div style={{
-        fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em',
+        fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.25em',
         color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform: 'uppercase',
         padding: '0 22px', marginBottom: '16px',
       }}>Handwerkerhandbuch</div>
@@ -306,7 +306,7 @@ function CraftSidebar({ chapters, activeId, onSelect }) {
               borderLeft: on ? '2px solid #7c4dff' : '2px solid transparent',
               cursor: 'pointer',
               fontFamily: 'var(--font-body)',
-              fontWeight: on ? 500 : 300, fontSize: '12.5px',
+              fontWeight: on ? 500 : 300, fontSize: '13px',
               letterSpacing: '0.06em',
               color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
               transition: 'all 0.15s',
@@ -319,7 +319,7 @@ function CraftSidebar({ chapters, activeId, onSelect }) {
                  fill={on ? 'rgba(var(--purple-rgb),calc(0.44*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))'} />
             <span style={{ flex: 1 }}>{ch.label}</span>
             <span style={{
-              fontFamily: 'var(--font-mono)', fontSize: '8px', opacity: 0.45, letterSpacing: '0.15em',
+              fontFamily: 'var(--font-mono)', fontSize: '11px', opacity: 0.45, letterSpacing: '0.15em',
             }}>{ch.roman}</span>
           </button>
         );
@@ -327,7 +327,7 @@ function CraftSidebar({ chapters, activeId, onSelect }) {
 
       <div style={{ height: '1px', background: 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))', margin: '22px 22px 18px' }} />
       <div style={{
-        fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em',
+        fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.25em',
         color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', textTransform: 'uppercase',
         padding: '0 22px', marginBottom: '12px',
       }}>Werkbank</div>
@@ -346,7 +346,7 @@ function CraftSidebar({ chapters, activeId, onSelect }) {
             borderLeft: activeId === t.id ? '2px solid #7c4dff' : '2px solid transparent',
             cursor: 'pointer',
             fontFamily: 'var(--font-body)',
-            fontWeight: activeId === t.id ? 500 : 300, fontSize: '12.5px',
+            fontWeight: activeId === t.id ? 500 : 300, fontSize: '13px',
             letterSpacing: '0.06em',
             color: activeId === t.id ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
             transition: 'all 0.15s',

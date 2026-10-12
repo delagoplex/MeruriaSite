@@ -24,7 +24,7 @@ html, body { overflow: hidden; }
 
 .tag {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   padding: 2px 8px;
   border-radius: 2px;

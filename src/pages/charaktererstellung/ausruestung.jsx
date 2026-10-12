@@ -117,7 +117,7 @@ function SectionHeader({
   }, mono && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.3em',
       color: `${accent}55`,
       textTransform: 'uppercase',
@@ -185,7 +185,7 @@ function ItemRow({
       textAlign: 'center',
       borderRadius: '50%',
       border: `1px solid ${accent}44`,
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: `${accent}88`,
       flexShrink: 0,
       fontFamily: 'var(--font-mono)',
@@ -195,7 +195,7 @@ function ItemRow({
   }, "+"), item.name, item.sublink && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: `${accent}55`,
       letterSpacing: '0.15em',
       marginLeft: '4px'
@@ -214,7 +214,7 @@ function ItemRow({
   }, /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       lineHeight: '1.8',
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -296,7 +296,7 @@ function WaffenTable({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: `${accent}55`,
       textTransform: 'uppercase',
@@ -339,14 +339,14 @@ function WaffenTable({
     style: {
       color: `${accent}99`,
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, r.schaden), /*#__PURE__*/React.createElement("td", {
     className: "weight"
   }, r.pfund), /*#__PURE__*/React.createElement("td", {
     style: {
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, r.eigenschaften)))))));
 }
@@ -365,7 +365,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -377,7 +377,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -422,7 +422,7 @@ function WaffenContent({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.3em',
       color: `${accent}55`,
       textTransform: 'uppercase',
@@ -461,7 +461,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -482,7 +482,7 @@ function WaffenContent({
     style: {
       padding: '5px 14px',
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '400',
       letterSpacing: '0.08em',
       background: openProp === prop ? `${accent}28` : 'transparent',
@@ -504,7 +504,7 @@ function WaffenContent({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '12px',
+      fontSize: '13px',
       letterSpacing: '0.12em',
       color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
       marginBottom: '6px',
@@ -514,7 +514,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.8',
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'
     }
@@ -560,7 +560,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -572,7 +572,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -620,7 +620,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -686,7 +686,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '500',
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       marginBottom: '5px'
     }
@@ -694,7 +694,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
@@ -706,7 +706,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '500',
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       marginBottom: '5px'
     }
@@ -714,7 +714,7 @@ function WaffenContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
@@ -803,7 +803,7 @@ function RuestungTable({
         textAlign: 'center',
         borderRadius: '50%',
         border: `1px solid ${accent}44`,
-        fontSize: '9px',
+        fontSize: '11.5px',
         color: `${accent}88`,
         flexShrink: 0,
         fontFamily: 'var(--font-mono)',
@@ -816,17 +816,17 @@ function RuestungTable({
       style: {
         color: `${accent}99`,
         fontFamily: 'var(--font-mono)',
-        fontSize: '11px'
+        fontSize: '12.5px'
       }
     }, r.rk), /*#__PURE__*/React.createElement("td", {
       style: {
         color: r.staerke !== '—' ? 'color-mix(in srgb, rgba(255,180,100,0.8), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.35*var(--kt)))',
-        fontSize: '11px'
+        fontSize: '12.5px'
       }
     }, r.staerke), /*#__PURE__*/React.createElement("td", {
       style: {
         color: r.heimlichkeit === 'Nachteil' ? 'color-mix(in srgb, rgba(255,100,100,0.7), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.35*var(--kt)))',
-        fontSize: '11px'
+        fontSize: '12.5px'
       }
     }, r.heimlichkeit), /*#__PURE__*/React.createElement("td", {
       className: "weight"
@@ -840,7 +840,7 @@ function RuestungTable({
     }, /*#__PURE__*/React.createElement("p", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         fontWeight: '300',
         lineHeight: '1.8',
         color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -864,7 +864,7 @@ function RuestungContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -876,7 +876,7 @@ function RuestungContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -916,7 +916,7 @@ function RuestungContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: '14px',
@@ -965,7 +965,7 @@ function RuestungContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: '14px',
@@ -1014,7 +1014,7 @@ function RuestungContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: '14px',
@@ -1063,7 +1063,7 @@ function RuestungContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: '14px',
@@ -1187,7 +1187,7 @@ function RuestungContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: '20px',
@@ -1237,13 +1237,13 @@ function RuestungContent({
     style: {
       color: `${accent}99`,
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, r.anlegen), /*#__PURE__*/React.createElement("td", {
     style: {
       color: `${accent}77`,
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, r.ablegen)))))));
 }
@@ -1294,7 +1294,7 @@ function ToolAccordion({
       border: `1px solid ${accent}44`,
       borderRadius: '2px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: `${accent}99`,
       transition: 'transform 0.2s, color 0.15s',
       transform: open ? 'rotate(45deg)' : 'none'
@@ -1302,7 +1302,7 @@ function ToolAccordion({
   }, "+"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: open ? '500' : '300',
       color: open ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.8*var(--kt)))',
       letterSpacing: '0.04em',
@@ -1312,7 +1312,7 @@ function ToolAccordion({
   }, name), data.placeholder && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.15em',
       color: `${accent}44`,
       textTransform: 'uppercase'
@@ -1320,7 +1320,7 @@ function ToolAccordion({
   }, "bald verf\xFCgbar"), isShared && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.15em',
       color: `${accent}55`,
       textTransform: 'uppercase'
@@ -1333,7 +1333,7 @@ function ToolAccordion({
   }, isShared && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       color: `${accent}55`,
       textTransform: 'uppercase',
@@ -1342,7 +1342,7 @@ function ToolAccordion({
   }, "Alle ", raw.shared === 'musikinstrument' ? 'Musikinstrumente' : 'Spielsets', " teilen diese Beschreibung"), data.intro && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       lineHeight: '1.8',
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
@@ -1353,7 +1353,7 @@ function ToolAccordion({
     key: i,
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       lineHeight: '1.8',
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
@@ -1381,25 +1381,25 @@ function ToolAccordion({
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
     style: {
       background: `${accent}28`,
-      fontSize: '10px'
+      fontSize: '12px'
     }
   }, "Aktivit\xE4t"), /*#__PURE__*/React.createElement("th", {
     style: {
       background: `${accent}28`,
       width: '80px',
-      fontSize: '10px'
+      fontSize: '12px'
     }
   }, "SG"))), /*#__PURE__*/React.createElement("tbody", null, data.sg.map((row, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     style: {
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'
     }
   }, row.aktivitaet), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: `${accent}99`,
       textAlign: 'center'
     }
@@ -1410,7 +1410,7 @@ function ToolAccordion({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.2em',
       color: `${accent}33`,
       textTransform: 'uppercase'
@@ -2564,7 +2564,7 @@ function WerkzeugPopup({
       padding: '6px 14px',
       color: `${accent}cc`,
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.1em',
       cursor: 'pointer',
       transition: 'all 0.15s'
@@ -2597,7 +2597,7 @@ function WerkzeugPopup({
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.2em',
       color: `${accent}44`,
       textTransform: 'uppercase'
@@ -2632,7 +2632,7 @@ function WerkzeugPopup({
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.28em',
       color: `${accent}55`,
       textTransform: 'uppercase',
@@ -2663,14 +2663,14 @@ function WerkzeugPopup({
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
+        fontSize: '12px',
         color: `${accent}77`,
         letterSpacing: '0.1em'
       }
     }, item.kosten), item.pfund !== '—' && /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
+        fontSize: '12px',
         color: `${accent}55`,
         letterSpacing: '0.1em'
       }
@@ -2684,7 +2684,7 @@ function WerkzeugPopup({
   }), displayData && !displayData.placeholder && /*#__PURE__*/React.createElement(React.Fragment, null, isShared && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.2em',
       color: `${accent}55`,
       textTransform: 'uppercase',
@@ -2705,7 +2705,7 @@ function WerkzeugPopup({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'color-mix(in srgb, rgba(185,175,235,0.6), rgb(var(--ink-rgb)) var(--cm))',
       marginBottom: '12px',
@@ -2723,7 +2723,7 @@ function WerkzeugPopup({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: `${accent}55`,
       textTransform: 'uppercase',
@@ -2743,25 +2743,25 @@ function WerkzeugPopup({
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
     style: {
       background: `${accent}28`,
-      fontSize: '10px'
+      fontSize: '12px'
     }
   }, "Aktivit\xE4t"), /*#__PURE__*/React.createElement("th", {
     style: {
       background: `${accent}28`,
       width: '90px',
-      fontSize: '10px'
+      fontSize: '12px'
     }
   }, "SG"))), /*#__PURE__*/React.createElement("tbody", null, displayData.sg.map((row, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     style: {
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'
     }
   }, row.aktivitaet), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '12px',
+      fontSize: '13px',
       color: `${accent}99`,
       textAlign: 'center'
     }
@@ -2775,7 +2775,7 @@ function WerkzeugPopup({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.25em',
       color: `${accent}33`,
       textTransform: 'uppercase'
@@ -2790,7 +2790,7 @@ function WerkzeugPopup({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.25em',
       color: `${accent}33`,
       textTransform: 'uppercase'
@@ -2837,7 +2837,7 @@ function WerkzeugButton({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '10px',
+      fontSize: '12px',
       fontWeight: hovered ? '500' : '300',
       letterSpacing: '0.06em',
       color: hovered ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))',
@@ -2873,7 +2873,7 @@ function WerkzeugGrid({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: `${accent}55`,
       textTransform: 'uppercase'
@@ -2966,7 +2966,7 @@ function RollTable({
       borderRadius: '2px',
       color: rolling ? `${accent}77` : `${accent}cc`,
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.2em',
       cursor: rolling ? 'not-allowed' : 'pointer',
       transition: 'all 0.15s',
@@ -3098,7 +3098,7 @@ function WerkzeugeContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -3110,7 +3110,7 @@ function WerkzeugeContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -3127,7 +3127,7 @@ function WerkzeugeContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -3144,7 +3144,7 @@ function WerkzeugeContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -3161,7 +3161,7 @@ function WerkzeugeContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -3245,7 +3245,7 @@ function ReittiereContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -3257,7 +3257,7 @@ function ReittiereContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -3338,13 +3338,13 @@ function ReittiereContent({
     style: {
       color: `${accent}99`,
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, r.bewegung), /*#__PURE__*/React.createElement("td", {
     style: {
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, r.traglast)))))), /*#__PURE__*/React.createElement("div", {
     className: "reveal-up",
@@ -3373,14 +3373,14 @@ function ReittiereContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '500',
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'
     }
   }, info.titel, ". "), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.8',
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
@@ -3518,7 +3518,7 @@ function ReittiereContent({
     style: {
       color: `${accent}99`,
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, r.geschwindigkeit)))))), /*#__PURE__*/React.createElement("div", {
     id: "sec-fahrzeuge",
@@ -3561,7 +3561,7 @@ function ReittiereContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -3604,14 +3604,14 @@ function ReittiereContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '500',
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'
     }
   }, info.titel, ". "), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.8',
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
@@ -3652,12 +3652,12 @@ function ReittiereContent({
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
-      fontSize: '12px'
+      fontSize: '13px'
     }
   }, r.aktivitaet), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '12px',
+      fontSize: '13px',
       color: `${accent}99`,
       textAlign: 'center'
     }
@@ -3745,7 +3745,7 @@ function TandRollTable({
       border: `1px solid ${accent}44`,
       borderRadius: '2px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       color: `${accent}99`,
       transition: 'transform 0.2s',
       transform: open ? 'rotate(45deg)' : 'none'
@@ -3775,7 +3775,7 @@ function TandRollTable({
       borderRadius: '2px',
       color: rolling ? `${accent}77` : `${accent}cc`,
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.2em',
       cursor: rolling ? 'not-allowed' : 'pointer',
       transition: 'all 0.15s',
@@ -3866,7 +3866,7 @@ function TandRollTable({
     }, /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         color: isHit ? `${accent}cc` : `${accent}55`,
         textAlign: 'center',
         width: '60px'
@@ -3875,7 +3875,7 @@ function TandRollTable({
       style: {
         color: isHit ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.75*var(--kt)))',
         fontWeight: isHit ? '500' : '300',
-        fontSize: '12px',
+        fontSize: '13px',
         transition: 'color 0.08s'
       }
     }, item));
@@ -3926,7 +3926,7 @@ function TandContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -3955,7 +3955,7 @@ function TandContent({
       borderRadius: '2px',
       color: rolling ? `${accent}77` : `${accent}cc`,
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.2em',
       cursor: rolling ? 'not-allowed' : 'pointer',
       transition: 'all 0.15s',
@@ -4057,7 +4057,7 @@ function TandContent({
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: selectedTable === r.key ? `${accent}cc` : `${accent}55`,
       textAlign: 'center'
     }
@@ -4122,7 +4122,7 @@ function PlaceholderSection({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.25em',
       color: `${accent}44`,
       textTransform: 'uppercase'
@@ -4143,7 +4143,7 @@ function AbenteuerContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -4222,7 +4222,7 @@ function AbenteuerContent({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.3em',
       color: `${accent}55`,
       textTransform: 'uppercase',
@@ -4261,7 +4261,7 @@ function AbenteuerContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em',
@@ -4294,14 +4294,14 @@ function AbenteuerContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '500',
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       letterSpacing: '0.04em'
     }
   }, p.name), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: `${accent}77`,
       letterSpacing: '0.12em'
     }
@@ -4309,7 +4309,7 @@ function AbenteuerContent({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))'
     }
@@ -4455,7 +4455,7 @@ function Sidebar({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -4482,7 +4482,7 @@ function Sidebar({
         cursor: 'pointer',
         fontFamily: 'var(--font-body)',
         fontWeight: isActive ? '500' : '400',
-        fontSize: '12px',
+        fontSize: '13px',
         letterSpacing: '0.06em',
         color: isActive ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
         transition: 'all 0.15s'
@@ -4524,7 +4524,7 @@ function Sidebar({
         borderLeft: '2px solid transparent',
         cursor: 'pointer',
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         letterSpacing: '0.04em',
         color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
         transition: 'all 0.15s'
@@ -4542,7 +4542,7 @@ function Sidebar({
     }, /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '9px',
+        fontSize: '11.5px',
         color: `${accent}44`,
         flexShrink: 0
       }
@@ -4637,7 +4637,7 @@ function App() {
       style: {
         padding: '5px 14px',
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         fontWeight: isActive ? '500' : '300',
         letterSpacing: '0.08em',
         background: isActive ? `${accent}22` : 'transparent',

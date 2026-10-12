@@ -26,6 +26,34 @@
   0%,100% { opacity:0.35; transform:scale(1); }
   50%     { opacity:0.7;  transform:scale(1.04); }
 }
+/* Featured-card effects (matches Charaktere.html "Meine Charaktere") */
+@keyframes feature-halo { 0%,100%{opacity:0.30; transform:scale(1)} 50%{opacity:0.65; transform:scale(1.015)} }
+@keyframes feature-shimmer { 0%{transform:translateX(-140%) skewX(-18deg); opacity:0} 12%{opacity:0.9} 60%{opacity:0.6} 100%{transform:translateX(1000%) skewX(-18deg); opacity:0} }
+@keyframes feature-pin { 0%,100%{opacity:0.7; box-shadow:0 0 6px rgba(180,140,255,0.35)} 50%{opacity:1; box-shadow:0 0 14px rgba(180,140,255,0.9)} }
+@keyframes feature-bar { 0%,100%{opacity:0.55} 50%{opacity:1} }
+@keyframes feature-tick { 0%,100%{opacity:0.55} 50%{opacity:1} }
+/* Divisions-Hologramm */
+@keyframes holo-el-r { 0%{opacity:0; transform:translateX(-46px) scaleX(0.7); filter:blur(6px)} 60%{opacity:1} 100%{opacity:1; transform:translateX(0) scaleX(1); filter:blur(0)} }
+@keyframes holo-el-l { 0%{opacity:0; transform:translateX(46px) scaleX(0.7); filter:blur(6px)} 60%{opacity:1} 100%{opacity:1; transform:translateX(0) scaleX(1); filter:blur(0)} }
+@keyframes holo-beam { 0%{transform:scaleX(0); opacity:0} 35%{opacity:1} 100%{transform:scaleX(1); opacity:0.85} }
+@keyframes holo-flicker { 0%,100%{opacity:1} 90%{opacity:1} 91%{opacity:0.72} 92%{opacity:1} 96%{opacity:0.85} 97%{opacity:1} }
+@keyframes holo-scan { 0%{top:-22%} 100%{top:122%} }
+@keyframes holo-pin-pulse { 0%,100%{transform:scale(1); opacity:0.8} 50%{transform:scale(1.5); opacity:1} }
+@keyframes holo-beam-draw { from { stroke-dashoffset: var(--len) } to { stroke-dashoffset: 0 } }
+@keyframes holo-pin-in { from { transform:scale(0); opacity:0 } to { transform:scale(1); opacity:0.8 } }
+@keyframes holo-dissolve { 0% { opacity:1; filter:blur(0) } 100% { opacity:0; filter:blur(10px); transform:scale(0.985) } }
+@keyframes holo-tv-off {
+  0%   { transform:scale(1,1); opacity:1; filter:brightness(1) }
+  45%  { transform:scale(1.04,0.015); opacity:1; filter:brightness(2.6) }
+  70%  { transform:scale(0.4,0.006); opacity:1; filter:brightness(3.2) }
+  100% { transform:scale(0.002,0.003); opacity:0; filter:brightness(4) }
+}
+
+/* Divisions-Leiste: 8 Sigel, auf schmalen Bildschirmen 4 pro Zeile */
+.div-strip-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .div-strip-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .div-strip-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 @keyframes line-grow { from{transform:scaleX(0)} to{transform:scaleX(1)} }
 @keyframes sweep {
   0%   { transform:translateX(-110%) skewX(-18deg); }
@@ -96,7 +124,7 @@
 }
 .tarot-cf-rank {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11.5px;
   letter-spacing: 0.3em;
   text-align: center;
   text-transform: uppercase;
@@ -126,7 +154,7 @@
 .tarot-cf-keywords {
   text-align:center;
   font-family: var(--font-body);
-  font-weight:300; font-size:10px;
+  font-weight:300; font-size:12px;
   letter-spacing:0.06em; color:rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)));
   line-height:1.4;
 }

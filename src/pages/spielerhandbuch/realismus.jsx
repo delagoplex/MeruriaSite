@@ -307,7 +307,7 @@ function Sidebar({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: `${accent}66`,
       textTransform: 'uppercase',
@@ -334,7 +334,7 @@ function Sidebar({
         cursor: 'pointer',
         fontFamily: 'var(--font-body)',
         fontWeight: on ? '500' : '300',
-        fontSize: '12px',
+        fontSize: '13px',
         letterSpacing: '0.06em',
         color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
         transition: 'all 0.15s'
@@ -371,7 +371,7 @@ function Sidebar({
         cursor: 'pointer',
         fontFamily: 'var(--font-body)',
         fontWeight: '300',
-        fontSize: '11px',
+        fontSize: '12.5px',
         letterSpacing: '0.04em',
         color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))',
         transition: 'all 0.12s'
@@ -403,7 +403,7 @@ function SH({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.3em',
       color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -477,7 +477,7 @@ function Txt({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.03em',
@@ -553,14 +553,14 @@ function HungerCalc() {
     borderRadius: '3px',
     color: 'var(--white)',
     fontFamily: 'var(--font-mono)',
-    fontSize: '10px',
+    fontSize: '12px',
     padding: '5px 8px',
     outline: 'none',
     cursor: 'pointer'
   };
   const lbl = {
     fontFamily: 'var(--font-mono)',
-    fontSize: '8px',
+    fontSize: '11px',
     letterSpacing: '0.18em',
     color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
     textTransform: 'uppercase',
@@ -578,7 +578,7 @@ function HungerCalc() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.26em',
       color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -656,7 +656,7 @@ function HungerCalc() {
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -674,7 +674,7 @@ function HungerCalc() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'rgba(var(--text-rgb),calc(0.3*var(--kt) + var(--tb)))',
       fontStyle: 'italic'
     }
@@ -686,7 +686,7 @@ function HungerCalc() {
       borderRadius: '3px',
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'color-mix(in srgb, rgba(255,150,150,0.7), rgb(var(--ink-rgb)) var(--cm))'
     }
   }, "Vergiftet/krank \u2014 kann nicht ges\xE4ttigt werden")));
@@ -752,7 +752,7 @@ function CoinFace({ side }) {
         <circle cx="45.6" cy="103.4" r="1.4" fill={gold} stroke="none" />
         <circle cx="82.4" cy="103.4" r="1.4" fill={gold} stroke="none" />
       </g>
-      <text fill={gold} filter={glow} style={{ fontFamily: 'Cinzel, serif', fontSize: 9, letterSpacing: 3 }}>
+      <text fill={gold} filter={glow} style={{ fontFamily: 'Cinzel, serif', fontSize: 11.5, letterSpacing: 3 }}>
         <textPath href={'#arc-' + side} startOffset="50%" textAnchor="middle">✦ HADE ✦</textPath>
       </text>
       {emblem}
@@ -800,7 +800,7 @@ function CoinFlip() {
       borderRadius: '8px', padding: '18px 16px 16px', marginBottom: '24px', textAlign: 'center' }
   },
     React.createElement('div', {
-      style: { fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.3em',
+      style: { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.3em',
         color: 'color-mix(in srgb, rgba(210,160,40,0.5), rgb(var(--ink-rgb)) var(--cm))', textTransform: 'uppercase', marginBottom: 14 }
     }, 'Wirf eine Münze'),
 
@@ -820,18 +820,18 @@ function CoinFlip() {
     }, flipping ? 'Wird geworfen…' : result === 'kopf' ? 'Kopf' : result === 'zahl' ? 'Zahl' : '—'),
 
     React.createElement('div', {
-      style: { fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 12,
+      style: { fontFamily: 'var(--font-body)', fontWeight: 300, fontSize: 13,
         color: 'color-mix(in srgb, rgba(210,170,60,0.75), rgb(var(--ink-rgb)) var(--cm))', minHeight: 18, marginBottom: 14 }
     },
       !flipping && result === 'kopf' && '— Zwei Samen der Furcht',
       !flipping && result === 'zahl' && '— Ein Samen der Furcht',
-      !flipping && !result && React.createElement('span', { style: { color: 'rgba(var(--text-rgb),calc(0.28*var(--kt) + var(--tb)))', fontStyle: 'italic', fontSize: 11 } }, 'Noch kein Wurf')
+      !flipping && !result && React.createElement('span', { style: { color: 'rgba(var(--text-rgb),calc(0.28*var(--kt) + var(--tb)))', fontStyle: 'italic', fontSize: 12.5 } }, 'Noch kein Wurf')
     ),
 
     React.createElement('button', {
       onClick: flip, disabled: flipping,
       style: { background: 'transparent', border: '1px solid rgba(210,160,20,0.4)', borderRadius: 3,
-        color: 'color-mix(in srgb, rgba(210,170,50,0.85), rgb(var(--ink-rgb)) var(--cm))', fontFamily: 'var(--font-display)', fontSize: 10,
+        color: 'color-mix(in srgb, rgba(210,170,50,0.85), rgb(var(--ink-rgb)) var(--cm))', fontFamily: 'var(--font-display)', fontSize: 12,
         letterSpacing: '0.2em', textTransform: 'uppercase', padding: '8px 22px',
         cursor: flipping ? 'wait' : 'pointer', transition: 'all 0.2s', opacity: flipping ? 0.4 : 1 },
       onMouseEnter: e => { if (!flipping) { e.currentTarget.style.background = 'rgba(210,160,20,0.14)'; e.currentTarget.style.color = '#f8d860'; } },
@@ -963,7 +963,7 @@ function MunitionRoller() {
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.16em',
       color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
@@ -971,7 +971,7 @@ function MunitionRoller() {
   }, "Munitionsr\xFCckgewinnung"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.14em',
       color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       marginTop: '3px'
@@ -996,7 +996,7 @@ function MunitionRoller() {
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       letterSpacing: '0.2em'
     }
@@ -1020,7 +1020,7 @@ function MunitionRoller() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'
     }
@@ -1035,7 +1035,7 @@ function MunitionRoller() {
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: active && active.min === row.min ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))'
     }
   }, row.range), /*#__PURE__*/React.createElement("td", {
@@ -1176,7 +1176,7 @@ function LangRow({
       height: '14px',
       borderRadius: '50%',
       border: '1px solid rgba(var(--purple-rgb),calc(0.44*var(--kp)))',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))',
       flexShrink: 0,
       fontFamily: 'var(--font-mono)',
@@ -1190,7 +1190,7 @@ function LangRow({
   }, lang.typ), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       color: 'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))'
     }
   }, lang.schrift)), isOpen && /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", {
@@ -1219,7 +1219,7 @@ function LangRow({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.8',
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       marginBottom: lang.dialekte ? '14px' : '0'
@@ -1241,7 +1241,7 @@ function LangRow({
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.1em',
       color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       fontWeight: '400',
@@ -1256,7 +1256,7 @@ function LangRow({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
       lineHeight: '1.65'
     }
@@ -1290,7 +1290,7 @@ function KommunikationContent() {
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1306,7 +1306,7 @@ function KommunikationContent() {
   })))))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1384,7 +1384,7 @@ function ZeitContent() {
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '7px',
+        fontSize: '11px',
         letterSpacing: '0.2em',
         color: active ? 'rgba(var(--purple-rgb),calc(0.9*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))',
         textTransform: 'uppercase',
@@ -1402,7 +1402,7 @@ function ZeitContent() {
       style: {
         fontFamily: 'var(--font-body)',
         fontWeight: '300',
-        fontSize: '11px',
+        fontSize: '12.5px',
         lineHeight: '1.5',
         color: 'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))'
       }
@@ -1446,7 +1446,7 @@ function ZeitContent() {
   /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1482,12 +1482,12 @@ function ZeitContent() {
         }
       },
         /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'22px',fontWeight:'300',color:'var(--white)',marginBottom:'2px'}}, n),
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'8px',letterSpacing:'0.15em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))'}}, l),
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'10px',color:'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',marginTop:'2px'}}, s)
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.15em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))'}}, l),
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'12px',color:'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',marginTop:'2px'}}, s)
       )
     )
   ),
-  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'8px'}}, "Die zwölf Monate"),
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'8px'}}, "Die zwölf Monate"),
   /*#__PURE__*/React.createElement(TW, null,
     /*#__PURE__*/React.createElement("table", {className:"eq-table"},
       /*#__PURE__*/React.createElement("thead", null,
@@ -1501,7 +1501,7 @@ function ZeitContent() {
       /*#__PURE__*/React.createElement("tbody", null,
         [['I','Janvar','19','Die Arche'],['II','Fevorn','18','Die B\xF6e'],['III','Mareth','19','Die Wurzel'],['IV','Aprel','19','Die Linse'],['V','Mairen','18','Die Stille'],['VI','Junvar','19','Das Irrlicht'],['VII','Juval','19','Die Klinge'],['VIII','Auvar','19','Die Glut'],['IX','Septhar','19','Die Br\xFCcke'],['X','Oktar','18','Der Schleier'],['XI','Novren','18','Das Labyrinth'],['XII','Derath','19','Der Spalt']].map(([nr,name,tage,zeichen]) =>
           /*#__PURE__*/React.createElement("tr", {key:name},
-            /*#__PURE__*/React.createElement("td", {style:{opacity:'0.5',fontFamily:'var(--font-mono)',fontSize:'10px'}}, nr),
+            /*#__PURE__*/React.createElement("td", {style:{opacity:'0.5',fontFamily:'var(--font-mono)',fontSize:'12px'}}, nr),
             /*#__PURE__*/React.createElement("td", null, name),
             /*#__PURE__*/React.createElement("td", null, tage),
             /*#__PURE__*/React.createElement("td", {style:{opacity:'0.65'}}, zeichen)
@@ -1510,7 +1510,7 @@ function ZeitContent() {
       )
     )
   ),
-  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'8px',marginTop:'16px'}}, "Die sieben Wochentage"),
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'8px',marginTop:'16px'}}, "Die sieben Wochentage"),
   /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
@@ -1530,26 +1530,26 @@ function ZeitContent() {
           textAlign: 'center'
         }
       },
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',marginBottom:'3px'}}, 'T'+nr),
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'12px',color:'var(--white)',marginBottom:'2px'}}, name),
-        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'9px',color:'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))'}}, rolle)
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'11px',color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',marginBottom:'3px'}}, 'T'+nr),
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'13px',color:'var(--white)',marginBottom:'2px'}}, name),
+        /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'11.5px',color:'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))'}}, rolle)
       )
     )
   ),
-  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'7px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'8px'}}, "Die zwei Monde"),
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',marginBottom:'8px'}}, "Die zwei Monde"),
   /*#__PURE__*/React.createElement("div", {style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px'}},
     /*#__PURE__*/React.createElement("div", {style:{padding:'14px 16px',background:'rgba(217,176,107,0.06)',border:'1px solid rgba(217,176,107,0.2)',borderLeft:'3px solid rgba(217,176,107,0.7)',borderRadius:'0 3px 3px 0'}},
       /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'14px',color:'#d9b06b',marginBottom:'6px'}}, "Goldmond"),
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'9px',color:'color-mix(in srgb, rgba(217,176,107,0.6), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'0.1em',marginBottom:'4px'}}, "Zyklus: 28 Tage"),
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',lineHeight:'1.5'}}, "Vollmond: Mondsegen (Tag 16) — Der gr\xF6\xDFere, hellere Mond.")
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'11.5px',color:'color-mix(in srgb, rgba(217,176,107,0.6), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'0.1em',marginBottom:'4px'}}, "Zyklus: 28 Tage"),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'12.5px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',lineHeight:'1.5'}}, "Vollmond: Mondsegen (Tag 16) — Der gr\xF6\xDFere, hellere Mond.")
     ),
     /*#__PURE__*/React.createElement("div", {style:{padding:'14px 16px',background:'rgba(168,182,212,0.06)',border:'1px solid rgba(168,182,212,0.2)',borderLeft:'3px solid rgba(168,182,212,0.7)',borderRadius:'0 3px 3px 0'}},
       /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-display)',fontSize:'14px',color:'#a8b6d4',marginBottom:'6px'}}, "Aschmond"),
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'9px',color:'color-mix(in srgb, rgba(168,182,212,0.6), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'0.1em',marginBottom:'4px'}}, "Zyklus: 17 Tage"),
-      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'11px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',lineHeight:'1.5'}}, "Vollmond: Aschenhauch (Tag 12) — Kleiner, blasser, schneller.")
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-mono)',fontSize:'11.5px',color:'color-mix(in srgb, rgba(168,182,212,0.6), rgb(var(--ink-rgb)) var(--cm))',letterSpacing:'0.1em',marginBottom:'4px'}}, "Zyklus: 17 Tage"),
+      /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'12.5px',color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',lineHeight:'1.5'}}, "Vollmond: Aschenhauch (Tag 12) — Kleiner, blasser, schneller.")
     )
   ),
-  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'10px',color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',marginTop:'12px',fontStyle:'italic'}},
+  /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-body)',fontSize:'12px',color:'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',marginTop:'12px',fontStyle:'italic'}},
     "Doppelte Segensnacht (beide Vollmond): alle ∼2 Jahre · Gro\xDFer Gleichlauf (beide Neumond): alle 476 Tage"
   )
 ));
@@ -1699,14 +1699,14 @@ function TraglastCalc() {
     borderRadius: '3px',
     color: 'var(--white)',
     fontFamily: 'var(--font-mono)',
-    fontSize: '10px',
+    fontSize: '12px',
     padding: '5px 8px',
     outline: 'none',
     cursor: 'pointer'
   };
   const lbl = {
     fontFamily: 'var(--font-mono)',
-    fontSize: '8px',
+    fontSize: '11px',
     letterSpacing: '0.18em',
     color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',
     textTransform: 'uppercase',
@@ -1730,7 +1730,7 @@ function TraglastCalc() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.26em',
       color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1802,7 +1802,7 @@ function TraglastCalc() {
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '7px',
+        fontSize: '11px',
         letterSpacing: '0.18em',
         color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
         textTransform: 'uppercase',
@@ -1817,7 +1817,7 @@ function TraglastCalc() {
       }
     }, val, " ", /*#__PURE__*/React.createElement("span", {
       style: {
-        fontSize: '10px',
+        fontSize: '12px',
         color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
         fontFamily: 'var(--font-mono)'
       }
@@ -1834,7 +1834,7 @@ function TraglastCalc() {
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1843,7 +1843,7 @@ function TraglastCalc() {
   }, "Aktueller Zustand"), /*#__PURE__*/React.createElement("span", {
     className: `tag-${tag}`,
     style: {
-      fontSize: '10px',
+      fontSize: '12px',
       padding: '3px 10px'
     }
   }, status)), /*#__PURE__*/React.createElement("div", {
@@ -1871,7 +1871,7 @@ function TraglastCalc() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '10px',
+      fontSize: '12px',
       color: 'rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)))',
       fontStyle: 'italic'
     }
@@ -1892,7 +1892,7 @@ function TraglastContent() {
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, sw), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: `tag-${t}`
@@ -1929,38 +1929,38 @@ function ReisenContent() {
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Tempo"), /*#__PURE__*/React.createElement("th", null, "Minute"), /*#__PURE__*/React.createElement("th", null, "Stunde"), /*#__PURE__*/React.createElement("th", null, "Tag"), /*#__PURE__*/React.createElement("th", null, "Effekt"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Schnell"), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "120 m"), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "6 km"), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "45 km"), /*#__PURE__*/React.createElement("td", {
     style: {
       color: 'color-mix(in srgb, rgba(255,160,100,0.7), rgb(var(--ink-rgb)) var(--cm))',
       fontStyle: 'italic',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "\u22125 auf passive Wahrnehmung")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Normal"), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "90 m"), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "4,5 km"), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "36 km"), /*#__PURE__*/React.createElement("td", {
     style: {
@@ -1969,23 +1969,23 @@ function ReisenContent() {
   }, "\u2014")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "Langsam"), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "60 m"), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "3 km"), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "27 km"), /*#__PURE__*/React.createElement("td", {
     style: {
       color: 'color-mix(in srgb, rgba(94,232,208,0.65), rgb(var(--ink-rgb)) var(--cm))',
       fontStyle: 'italic',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, "Heimlichkeit m\xF6glich")))))), [{
     t: 'Gewaltmarsch',
@@ -2058,7 +2058,7 @@ function ErschoepfungContent() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: i === 5 ? '500' : '300',
-      fontSize: '12px',
+      fontSize: '13px',
       color: i === 5 ? 'color-mix(in srgb, rgba(255,100,100,0.9), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))'
     }
   }, eff)))), /*#__PURE__*/React.createElement("div", {
@@ -2222,7 +2222,7 @@ function VerletzungsRoller() {
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       letterSpacing: '0.2em'
     }
@@ -2238,7 +2238,7 @@ function VerletzungsRoller() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))'
     }
   }, active.name))), active && !rolling && /*#__PURE__*/React.createElement("div", {
@@ -2254,7 +2254,7 @@ function VerletzungsRoller() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.16em',
       color: 'rgba(var(--accent-rgb),calc(0.95*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -2264,7 +2264,7 @@ function VerletzungsRoller() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
@@ -2279,7 +2279,7 @@ function VerletzungsRoller() {
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: active && active.min === row.min ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))',
       whiteSpace: 'nowrap'
     }
@@ -2287,7 +2287,7 @@ function VerletzungsRoller() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '400',
-      fontSize: '12px',
+      fontSize: '13px',
       color: active && active.min === row.min ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       whiteSpace: 'nowrap'
     }
@@ -2379,7 +2379,7 @@ function VerletzungenContent() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.16em',
       color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -2389,7 +2389,7 @@ function VerletzungenContent() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       lineHeight: '1.6',
       marginBottom: '12px'
@@ -2412,7 +2412,7 @@ function VerletzungenContent() {
     placeholder: "Passwort",
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.1em',
       padding: '6px 10px',
       background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
@@ -2433,7 +2433,7 @@ function VerletzungenContent() {
     type: "submit",
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       padding: '6px 14px',
       background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
@@ -2456,7 +2456,7 @@ function VerletzungenContent() {
     style: {
       marginTop: '6px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.2em',
       color: 'rgba(220,80,80,0.75)',
       textTransform: 'uppercase'
@@ -2709,7 +2709,7 @@ function WahnsinnRoller({
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.16em',
       color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
@@ -2725,7 +2725,7 @@ function WahnsinnRoller({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.14em',
       color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))'
     }
@@ -2742,7 +2742,7 @@ function WahnsinnRoller({
       borderRadius: '3px',
       color: 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.14em',
       textTransform: 'uppercase',
       cursor: durRolling ? 'wait' : 'pointer',
@@ -2822,7 +2822,7 @@ function WahnsinnRoller({
   }, durVal)), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.14em',
       color: 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
       textTransform: 'uppercase'
@@ -2847,7 +2847,7 @@ function WahnsinnRoller({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
       letterSpacing: '0.2em'
     }
@@ -2871,7 +2871,7 @@ function WahnsinnRoller({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.75',
       color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))'
     }
@@ -2886,7 +2886,7 @@ function WahnsinnRoller({
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: active && active.min === row.min ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))',
       whiteSpace: 'nowrap'
     }
@@ -2965,7 +2965,7 @@ function FurchtContent() {
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: 'rgba(var(--purple-rgb),calc(0.42*var(--kp) + var(--tb)))',
       minWidth: '17px',
       paddingTop: '2px',
@@ -2975,7 +2975,7 @@ function FurchtContent() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontStyle: 'italic',
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',
       lineHeight: '1.5'
@@ -3041,14 +3041,14 @@ function FurchtContent() {
   }, /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'color-mix(in srgb, rgba(94,232,208,0.85), rgb(var(--ink-rgb)) var(--cm))',
       fontWeight: '500'
     }
   }, row.s), /*#__PURE__*/React.createElement("td", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.06em',
       color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
       fontWeight: '400'
@@ -3057,7 +3057,7 @@ function FurchtContent() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
       lineHeight: '1.6'
     }
@@ -3188,7 +3188,7 @@ function FurchtContent() {
     }, /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-display)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         letterSpacing: '0.06em',
         color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
         fontWeight: '400'
@@ -3196,14 +3196,14 @@ function FurchtContent() {
     }, row.a), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
+        fontSize: '12px',
         color: 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',
         whiteSpace: 'nowrap'
       }
     }, row.d), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
+        fontSize: '12px',
         color: 'color-mix(in srgb, rgba(94,232,208,0.85), rgb(var(--ink-rgb)) var(--cm))',
         whiteSpace: 'nowrap',
         fontWeight: '500'
@@ -3211,14 +3211,14 @@ function FurchtContent() {
     }, row.r), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         color: 'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))'
       }
     }, row.v), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-body)',
         fontWeight: '300',
-        fontSize: '11px',
+        fontSize: '12.5px',
         color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
         lineHeight: '1.6'
       }
@@ -3295,7 +3295,7 @@ function FurchtContent() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.16em',
       color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -3305,7 +3305,7 @@ function FurchtContent() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       lineHeight: '1.6',
       marginBottom: '12px'
@@ -3328,7 +3328,7 @@ function FurchtContent() {
     placeholder: "Passwort",
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.1em',
       padding: '6px 10px',
       background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
@@ -3349,7 +3349,7 @@ function FurchtContent() {
     type: "submit",
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       padding: '6px 14px',
       background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
@@ -3372,7 +3372,7 @@ function FurchtContent() {
     style: {
       marginTop: '6px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.2em',
       color: 'rgba(220,80,80,0.75)',
       textTransform: 'uppercase'
@@ -3414,7 +3414,7 @@ function AbenteuerContent() {
       textAlign: 'center',
       borderRadius: '50%',
       border: '1px solid rgba(var(--purple-rgb),calc(0.44*var(--kp)))',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))',
       flexShrink: 0,
       fontFamily: 'var(--font-mono)',
@@ -3425,7 +3425,7 @@ function AbenteuerContent() {
     style: {
       color: ls.kosten === '—' ? 'rgba(var(--text-rgb),calc(0.35*var(--kt)))' : 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))',
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, ls.kosten)), expanded === i && /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", {
     colSpan: 2,
@@ -3437,7 +3437,7 @@ function AbenteuerContent() {
   }, /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: '1.8',
       color: 'color-mix(in srgb, rgba(190,180,240,0.65), rgb(var(--ink-rgb)) var(--cm))',
@@ -3604,7 +3604,7 @@ function AbenteuerContent() {
         style: {
           display: 'inline-block',
           fontFamily: 'var(--font-mono)',
-          fontSize: '7px',
+          fontSize: '11px',
           letterSpacing: '0.1em',
           padding: '1px 6px',
           borderRadius: '2px',
@@ -3742,7 +3742,7 @@ function AbenteuerContent() {
     }, /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-display)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         letterSpacing: '0.06em',
         color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
         fontWeight: '400'
@@ -3757,14 +3757,14 @@ function AbenteuerContent() {
     }))), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
+        fontSize: '12px',
         color: 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',
         whiteSpace: 'nowrap'
       }
     }, row.d), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
+        fontSize: '12px',
         color: 'color-mix(in srgb, rgba(94,232,208,0.75), rgb(var(--ink-rgb)) var(--cm))',
         whiteSpace: 'nowrap'
       }
@@ -3772,7 +3772,7 @@ function AbenteuerContent() {
       style: {
         fontFamily: 'var(--font-body)',
         fontWeight: '300',
-        fontSize: '11px',
+        fontSize: '12.5px',
         color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
         lineHeight: '1.6'
       }
@@ -3866,7 +3866,7 @@ function UnterwasserContent() {
             /*#__PURE__*/React.createElement("div", {
               style: {
                 fontFamily: 'var(--font-body)',
-                fontSize: '11px',
+                fontSize: '12.5px',
                 color: r.colorDim
               }
             }, r.summary)
@@ -3875,7 +3875,7 @@ function UnterwasserContent() {
             style: {
               fontFamily: 'var(--font-body)',
               fontWeight: '300',
-              fontSize: '12px',
+              fontSize: '13px',
               lineHeight: '1.75',
               color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
               marginBottom: r.ausnahmen ? '12px' : '0'
@@ -3885,7 +3885,7 @@ function UnterwasserContent() {
             /*#__PURE__*/React.createElement("div", {
               style: {
                 fontFamily: 'var(--font-mono)',
-                fontSize: '7px',
+                fontSize: '11px',
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
                 color: r.colorDim,
@@ -3900,7 +3900,7 @@ function UnterwasserContent() {
                   key: w,
                   style: {
                     fontFamily: 'var(--font-body)',
-                    fontSize: '11px',
+                    fontSize: '12.5px',
                     padding: '2px 9px',
                     background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
                     border: '1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
@@ -4095,7 +4095,7 @@ function SichtContent() {
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.13em',
       color: 'color-mix(in srgb, rgba(210,200,255,0.88), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase',
@@ -4105,7 +4105,7 @@ function SichtContent() {
   }, et.label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       color: et.color.replace('1)', '0.85)'),
       textAlign: 'center',
       letterSpacing: '0.05em'
@@ -4120,7 +4120,7 @@ function SichtContent() {
   }, et.dunkel && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: 'color-mix(in srgb, rgba(100,140,255,0.6), rgb(var(--ink-rgb)) var(--cm))',
       textAlign: 'center',
       letterSpacing: '0.08em'
@@ -4129,7 +4129,7 @@ function SichtContent() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--text-rgb),calc(0.3*var(--kt) + var(--tb)))',
       textAlign: 'center',
       lineHeight: '1.4',
@@ -4154,7 +4154,7 @@ function SichtContent() {
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.1em',
       padding: '4px 11px',
       borderRadius: '2px',
@@ -4193,7 +4193,7 @@ function SichtContent() {
     }, /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-display)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         letterSpacing: '0.06em',
         color: 'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
         fontWeight: '400'
@@ -4202,7 +4202,7 @@ function SichtContent() {
       style: {
         marginLeft: '5px',
         fontFamily: 'var(--font-mono)',
-        fontSize: '6.5px',
+        fontSize: '11px',
         letterSpacing: '0.1em',
         color: 'rgba(180,130,90,0.65)',
         textTransform: 'uppercase',
@@ -4211,26 +4211,26 @@ function SichtContent() {
     }, "Wandel")), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
+        fontSize: '12px',
         color: s.wandelform ? 'rgba(180,130,90,0.55)' : 'color-mix(in srgb, rgba(94,232,208,0.75), rgb(var(--ink-rgb)) var(--cm))'
       }
     }, s.wandelform ? '?' : s.weite != null ? `${s.weite} m` : '—'), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
+        fontSize: '12px',
         color: s.wandelform ? 'rgba(180,130,90,0.55)' : 'rgba(var(--accent-rgb),calc(0.8*var(--ka)))'
       }
     }, s.wandelform ? '?' : s.radius != null ? `${s.radius}°` : '—'), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
+        fontSize: '12px',
         color: s.dunkel > 0 ? 'color-mix(in srgb, rgba(110,150,255,0.8), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.25*var(--kt)))'
       }
     }, s.dunkel > 0 ? `${s.dunkel} m` : '—'), /*#__PURE__*/React.createElement("td", {
       style: {
         fontFamily: 'var(--font-body)',
         fontWeight: '300',
-        fontSize: '11px',
+        fontSize: '12.5px',
         color: 'rgba(var(--text-rgb),calc(0.42*var(--kt) + var(--tb)))',
         lineHeight: '1.5'
       }
@@ -4343,7 +4343,7 @@ function App() {
       style: {
         padding: '5px 14px',
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         fontWeight: isActive ? '500' : '300',
         letterSpacing: '0.08em',
         background: isActive ? `${accent}22` : 'transparent',

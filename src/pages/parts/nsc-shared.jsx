@@ -588,7 +588,7 @@ function NavItem({ tab }) {
   return (
     <div onMouseEnter={show} onMouseLeave={hide} style={{ position:'relative' }}>
       <button
-        style={{ fontFamily:'var(--font-display)', fontSize:'11px', fontWeight:'400', letterSpacing:'0.18em', padding:'10px 20px', background: isActive ? 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))' : 'transparent', border: isActive ? '1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))' : '1px solid rgba(var(--accent-rgb),calc(0.15*var(--ka)))', color: isActive ? 'var(--lav)' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))', cursor:'pointer', borderRadius:'3px', transition:'all 0.2s', textTransform:'uppercase', whiteSpace:'nowrap' }}
+        style={{ fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:'400', letterSpacing:'0.18em', padding:'10px 20px', background: isActive ? 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))' : 'transparent', border: isActive ? '1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))' : '1px solid rgba(var(--accent-rgb),calc(0.15*var(--ka)))', color: isActive ? 'var(--lav)' : 'rgba(var(--text-rgb),calc(0.7*var(--kt)))', cursor:'pointer', borderRadius:'3px', transition:'all 0.2s', textTransform:'uppercase', whiteSpace:'nowrap' }}
         onMouseEnter={e=>{e.currentTarget.style.color='var(--white)';e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.45*var(--ka)))';e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.1*var(--kp)))';}}
         onMouseLeave={e=>{e.currentTarget.style.color=isActive?'var(--lav)':'rgba(var(--text-rgb),calc(0.7*var(--kt)))';e.currentTarget.style.borderColor=isActive?'rgba(var(--accent-rgb),calc(0.45*var(--ka)))':'rgba(var(--accent-rgb),calc(0.15*var(--ka)))';e.currentTarget.style.background=isActive?'rgba(var(--purple-rgb),calc(0.1*var(--kp)))':'transparent';}}>
         {tab.label}
@@ -597,7 +597,7 @@ function NavItem({ tab }) {
         <div onMouseEnter={show} onMouseLeave={hide} style={{ position:'absolute', top:'calc(100% + 6px)', left:0, minWidth:'210px', background:'rgba(var(--panel-rgb),0.96)', border:'1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))', borderRadius:'4px', boxShadow:'0 8px 32px rgba(var(--shadow-rgb),calc(0.6 * var(--shadow-k)))', animation:'slideDown 0.18s ease forwards', zIndex:200, backdropFilter:'blur(12px)', overflow:'hidden' }}>
           {tab.items.map((item, i) => (
             <React.Fragment key={i}>
-              <a href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:item.dividerAfter?'500':'300', fontSize:'12px', letterSpacing:'0.1em', color: item.dividerAfter ? 'var(--lav)' : (item.label === 'NSC' ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.65*var(--kt)))'), background: item.dividerAfter ? 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : (item.label === 'NSC' ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent'), textDecoration:'none', borderBottom: !item.dividerAfter && i < tab.items.length-1 ? '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))' : 'none', transition:'all 0.15s' }}
+              <a href={item.href} style={{ display:'block', padding:'10px 18px', fontFamily:'var(--font-body)', fontWeight:item.dividerAfter?'500':'300', fontSize:'13px', letterSpacing:'0.1em', color: item.dividerAfter ? 'var(--lav)' : (item.label === 'NSC' ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.65*var(--kt)))'), background: item.dividerAfter ? 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))' : (item.label === 'NSC' ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent'), textDecoration:'none', borderBottom: !item.dividerAfter && i < tab.items.length-1 ? '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))' : 'none', transition:'all 0.15s' }}
                 onMouseEnter={e=>{e.currentTarget.style.color='var(--white)';e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.22*var(--kp)))';e.currentTarget.style.paddingLeft='24px';}}
                 onMouseLeave={e=>{e.currentTarget.style.color=item.dividerAfter?'var(--lav)':(item.label==='NSC'?'var(--white)':'rgba(var(--text-rgb),calc(0.65*var(--kt)))');e.currentTarget.style.background=item.dividerAfter?'rgba(var(--purple-rgb),calc(0.08*var(--kp)))':(item.label==='NSC'?'rgba(var(--purple-rgb),calc(0.18*var(--kp)))':'transparent');e.currentTarget.style.paddingLeft='18px';}}>
                 {item.label}
@@ -796,10 +796,10 @@ function StageProgress({ stage, acc }) {
       boxShadow: isMax ? `0 0 26px ${GOLD_GLOW}` : 'none',
     }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:10, gap:10 }}>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.3em', color: aFn(0.85), textTransform:'uppercase' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.3em', color: aFn(0.85), textTransform:'uppercase' }}>
           {isMax ? '✓ Eingeweiht' : '◈ Vertrautheit'}
         </span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', color: mainAcc, textTransform:'uppercase' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color: mainAcc, textTransform:'uppercase' }}>
           {stage} / {MAX_STAGE} · {STAGE_LABELS[stage] || 'Unbekannt'}
         </span>
       </div>
@@ -817,7 +817,7 @@ function StageProgress({ stage, acc }) {
               }}/>
               <div style={{
                 marginTop:4, textAlign:'center',
-                fontFamily:'var(--font-mono)', fontSize:7,
+                fontFamily:'var(--font-mono)', fontSize:11,
                 color: filled ? aFn(0.85) : 'rgba(var(--accent-rgb),calc(0.32*var(--ka)))',
                 letterSpacing:'0.10em', textTransform:'uppercase',
                 whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis',
@@ -846,7 +846,7 @@ function StatusPills({ status }) {
             background:`${def.color}15`,
             border:`1px solid ${def.color}55`,
             borderRadius:2,
-            fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.22em', textTransform:'uppercase',
+            fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', textTransform:'uppercase',
             color: def.color,
           }}>
             <span style={{ width:5, height:5, borderRadius:'50%', background: def.color,
@@ -882,7 +882,7 @@ function LockedSlot({ requiredStage, acc, compact, hint }) {
 function Field({ label, value, unlocked = true, requiredStage, acc='#7c4dff' }) {
   return (
     <React.Fragment>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', whiteSpace:'nowrap', paddingTop:2 }}>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase', whiteSpace:'nowrap', paddingTop:2 }}>
         {label}
       </span>
       {unlocked ? (
@@ -890,7 +890,7 @@ function Field({ label, value, unlocked = true, requiredStage, acc='#7c4dff' }) 
           {value || <span style={{ color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', fontStyle:'italic' }}>—</span>}
         </span>
       ) : (
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:hexA(acc, 0.55), letterSpacing:'0.18em', textTransform:'uppercase', display:'inline-flex', alignItems:'center', gap:6 }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:12, color:hexA(acc, 0.55), letterSpacing:'0.18em', textTransform:'uppercase', display:'inline-flex', alignItems:'center', gap:6 }}>
           <span style={{ width:6, height:6, border:`1px solid ${hexA(acc, 0.45)}`, display:'inline-block' }}/>
           Stufe {requiredStage} nötig
         </span>

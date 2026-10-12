@@ -123,7 +123,7 @@ function Chip({
     onClick: onClick,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.15em',
       padding: '0 10px',
       height: '16px',
@@ -216,7 +216,7 @@ function FilterSidebar({
     placeholder: "Monster suchen\u2026",
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       fontWeight: '300',
       padding: '6px 10px 6px 28px',
       background: 'rgba(var(--accent-rgb),calc(0.06*var(--ka)))',
@@ -266,7 +266,7 @@ function FilterSidebar({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.25em',
       color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
@@ -292,7 +292,7 @@ function FilterSidebar({
     onClick: () => toggle('cr', cr),
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.12em',
       padding: '0 8px',
       height: '16px',
@@ -348,7 +348,7 @@ function FilterSidebar({
     }), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         fontWeight: '300',
         color: filters.art.includes(t) ? 'var(--white)' : 'var(--silver)',
         letterSpacing: '0.03em'
@@ -403,14 +403,14 @@ function FilterSidebar({
         alignItems: 'center',
         justifyContent: 'center',
         transition: 'all 0.18s',
-        fontSize: '9px',
+        fontSize: '11.5px',
         color: isOn ? 'rgba(80,220,110,0.9)' : isOff ? 'rgba(230,90,90,0.9)' : 'transparent',
         fontFamily: 'var(--font-mono)'
       }
     }, isOn ? '✓' : isOff ? '✕' : ''), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         fontWeight: '300',
         color: isOn || isOff ? 'var(--white)' : 'var(--silver)',
         letterSpacing: '0.03em',
@@ -436,7 +436,7 @@ function FilterSidebar({
     onClick: () => toggle('groesse', s),
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '10px',
+      fontSize: '12px',
       fontWeight: '300',
       letterSpacing: '0.05em',
       padding: '0 8px',
@@ -467,7 +467,7 @@ function FilterSidebar({
     onClick: () => toggle('moral', m),
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '10px',
+      fontSize: '12px',
       fontWeight: '300',
       letterSpacing: '0.05em',
       padding: '0 8px',
@@ -511,7 +511,7 @@ function FilterSidebar({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: filters.umgebung.includes(e) ? 'var(--white)' : 'var(--silver)',
       letterSpacing: '0.03em'
@@ -548,7 +548,7 @@ function FilterSidebar({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: filters.source.includes(s) ? 'var(--white)' : 'var(--silver)',
       letterSpacing: '0.03em'
@@ -607,14 +607,14 @@ function FilterSidebar({
         alignItems: 'center',
         justifyContent: 'center',
         transition: 'all 0.18s',
-        fontSize: '9px',
+        fontSize: '11.5px',
         color: iconColor,
         fontFamily: 'var(--font-mono)'
       }
     }, icon), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         fontWeight: '300',
         color: val !== null ? 'var(--white)' : 'var(--silver)',
         letterSpacing: '0.03em',
@@ -623,7 +623,7 @@ function FilterSidebar({
     }, label), /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '7.5px',
+        fontSize: '11px',
         letterSpacing: '0.1em',
         color: isTrue ? 'color-mix(in srgb, rgba(80,220,110,0.6), rgb(var(--ink-rgb)) var(--cm))' : isFalse ? 'rgba(230,90,90,0.6)' : 'rgba(var(--accent-rgb),calc(0.25*var(--ka)))',
         transition: 'color 0.18s'
@@ -666,7 +666,7 @@ function FilterSidebar({
       borderRadius: '2px',
       color: 'rgba(230,90,90,0.65)',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       cursor: 'pointer',
       transition: 'all 0.15s',
@@ -735,7 +735,7 @@ function MonsterRow({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: active ? 'var(--white)' : 'var(--silver)',
       fontWeight: '400',
       letterSpacing: '0.05em'
@@ -749,7 +749,7 @@ function MonsterRow({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: active ? '400' : '300',
       color: active ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.85*var(--kt)))',
       letterSpacing: '0.03em',
@@ -760,7 +760,7 @@ function MonsterRow({
   }, monster.name), !compact && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: tc,
       letterSpacing: '0.15em',
       marginTop: '1px',
@@ -770,7 +770,7 @@ function MonsterRow({
     onClick: () => onClick(monster),
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.1em',
       padding: '2px 5px',
       background: 'rgba(var(--accent-rgb),calc(0.1*var(--ka)))',
@@ -798,7 +798,7 @@ function MonsterRow({
       alignItems: 'center',
       justifyContent: 'center',
       color: kolC,
-      fontSize: 9,
+      fontSize: 11.5,
       transition: 'all 0.15s',
       lineHeight: 1
     },
@@ -829,7 +829,7 @@ function MetaRow({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.26em',
       color: lc,
       textTransform: 'uppercase'
@@ -837,7 +837,7 @@ function MetaRow({
   }, label), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: accent || 'rgba(var(--text-rgb),calc(0.8*var(--kt)))',
       letterSpacing: '0.02em',
@@ -867,7 +867,7 @@ function HPRow({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.26em',
       color: lc,
       textTransform: 'uppercase'
@@ -881,7 +881,7 @@ function HPRow({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11.5px',
+      fontSize: '12.5px',
       fontWeight: '300',
       letterSpacing: '0.02em',
       lineHeight: 1.5,
@@ -900,7 +900,7 @@ function HPRow({
       alignItems: 'center',
       gap: '4px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.1em',
       padding: '0 7px',
       height: '18px',
@@ -967,7 +967,7 @@ function AbilityScore({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       color: lc,
       textTransform: 'uppercase'
@@ -982,7 +982,7 @@ function AbilityScore({
   }, score), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))'
     }
   }, mod(score)));
@@ -1037,7 +1037,7 @@ function SectionLabel({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.28em',
       color: alpha(c, 0.6),
       textTransform: 'uppercase',
@@ -1115,7 +1115,7 @@ function EffectBlock({
   }), intro && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -1140,14 +1140,14 @@ function EffectBlock({
       color: alpha(c, 0.45),
       flexShrink: 0,
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       marginTop: '4px',
       lineHeight: 1
     }
   }, "\u25C6"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
@@ -1207,7 +1207,7 @@ function MonsterRollTable({
       borderRadius: '4px',
       color: ac,
       fontFamily: 'var(--font-display)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.14em',
       textTransform: 'uppercase',
       cursor: 'pointer',
@@ -1268,7 +1268,7 @@ function MonsterRollTable({
       width: '100%',
       borderCollapse: 'collapse',
       fontFamily: 'var(--font-body)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, tabelle.header.map((h, j) => /*#__PURE__*/React.createElement("th", {
     key: j,
@@ -1279,7 +1279,7 @@ function MonsterRollTable({
       color: ac,
       fontFamily: 'var(--font-display)',
       fontWeight: '400',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.14em',
       textTransform: 'uppercase',
       borderBottom: `1px solid ${a(0.3)}`
@@ -1317,7 +1317,7 @@ function MonsterRollTable({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       color: a(0.8),
       letterSpacing: '0.1em',
       marginRight: '10px'
@@ -1325,7 +1325,7 @@ function MonsterRollTable({
   }, rows[highlight][0]), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       color: 'var(--white)',
       fontWeight: '300',
       lineHeight: '1.6'
@@ -1357,7 +1357,7 @@ function ActionBlock({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '500',
       color: accentColor || 'color-mix(in srgb, rgba(180,160,255,0.9), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '0.04em'
@@ -1365,7 +1365,7 @@ function ActionBlock({
   }, a.name, ". "), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
@@ -1393,7 +1393,7 @@ function TagList({
     key: i,
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '10.5px',
+      fontSize: '12px',
       fontWeight: '300',
       padding: '2px 8px',
       background: bg,
@@ -1518,7 +1518,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: a(0.6),
       textTransform: 'uppercase',
@@ -1535,7 +1535,7 @@ function MonsterDetail({
   }, formatCR(monster.cr)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: a(0.5),
       letterSpacing: '0.05em',
       marginTop: '3px'
@@ -1558,7 +1558,7 @@ function MonsterDetail({
   }, monster.name), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       color: 'color-mix(in srgb, rgba(200,185,255,0.55), rgb(var(--ink-rgb)) var(--cm))',
       letterSpacing: '0.04em',
@@ -1582,7 +1582,7 @@ function MonsterDetail({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.2em',
       color: tc,
       textTransform: 'uppercase',
@@ -1685,7 +1685,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: a(0.5),
       textTransform: 'uppercase',
@@ -1695,7 +1695,7 @@ function MonsterDetail({
     key: attr,
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em'
@@ -1715,7 +1715,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: a(0.5),
       textTransform: 'uppercase',
@@ -1725,7 +1725,7 @@ function MonsterDetail({
     key: sk,
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em'
@@ -1745,7 +1745,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: a(0.5),
       textTransform: 'uppercase'
@@ -1753,7 +1753,7 @@ function MonsterDetail({
   }, "Verwundbarkeiten"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: 'rgba(200,180,255,calc(0.8*var(--ka) + var(--tb)))'
     }
@@ -1767,7 +1767,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: a(0.5),
       textTransform: 'uppercase'
@@ -1775,7 +1775,7 @@ function MonsterDetail({
   }, "Resistenzen"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
@@ -1789,7 +1789,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: a(0.5),
       textTransform: 'uppercase'
@@ -1797,7 +1797,7 @@ function MonsterDetail({
   }, "Immunit\xE4ten"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
@@ -1811,7 +1811,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: a(0.5),
       textTransform: 'uppercase'
@@ -1819,7 +1819,7 @@ function MonsterDetail({
   }, "Zustandsimmunit\xE4ten"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
@@ -1833,7 +1833,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: a(0.5),
       textTransform: 'uppercase'
@@ -1841,7 +1841,7 @@ function MonsterDetail({
   }, "Sinne"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
@@ -1855,7 +1855,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: a(0.5),
       textTransform: 'uppercase'
@@ -1863,7 +1863,7 @@ function MonsterDetail({
   }, "Sprachen"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'
     }
@@ -1877,7 +1877,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: a(0.5),
       textTransform: 'uppercase',
@@ -1925,7 +1925,7 @@ function MonsterDetail({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       color: alpha(tc, 0.55),
       textTransform: 'uppercase'
@@ -1990,7 +1990,7 @@ function MonsterDetail({
   }), monster.pleurossa_netzwerk.beschreibung && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -2007,7 +2007,7 @@ function MonsterDetail({
     key: i,
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
@@ -2028,7 +2028,7 @@ function MonsterDetail({
   }), monster.korruption.beschreibung && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -2038,7 +2038,7 @@ function MonsterDetail({
   }, monster.korruption.beschreibung), monster.korruption.progression && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -2053,7 +2053,7 @@ function MonsterDetail({
   }, "Progression. "), monster.korruption.progression), monster.korruption.tod_effekt && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -2068,7 +2068,7 @@ function MonsterDetail({
   }, "Tod. "), monster.korruption.tod_effekt), monster.korruption.heilung && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -2092,7 +2092,7 @@ function MonsterDetail({
       width: '100%',
       borderCollapse: 'collapse',
       fontFamily: 'var(--font-body)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, ['Stufe', 'Name', 'Effekt'].map((h, j) => /*#__PURE__*/React.createElement("th", {
     key: j,
@@ -2103,7 +2103,7 @@ function MonsterDetail({
       color: tc,
       fontFamily: 'var(--font-display)',
       fontWeight: '400',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.14em',
       textTransform: 'uppercase',
       borderBottom: `1px solid ${a(0.3)}`
@@ -2115,7 +2115,7 @@ function MonsterDetail({
       padding: '5px 10px',
       color: a(0.75),
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.08em',
       borderBottom: '1px solid rgba(255,255,255,0.04)',
       verticalAlign: 'top',
@@ -2126,7 +2126,7 @@ function MonsterDetail({
       padding: '5px 10px',
       color: a(0.85),
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       borderBottom: '1px solid rgba(255,255,255,0.04)',
       verticalAlign: 'top',
       whiteSpace: 'nowrap'
@@ -2136,7 +2136,7 @@ function MonsterDetail({
       padding: '5px 10px',
       color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       borderBottom: '1px solid rgba(255,255,255,0.04)',
       verticalAlign: 'top',
       lineHeight: 1.65
@@ -2148,7 +2148,7 @@ function MonsterDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.2em',
       color: a(0.6),
       textTransform: 'uppercase',
@@ -2166,7 +2166,7 @@ function MonsterDetail({
       width: '100%',
       borderCollapse: 'collapse',
       fontFamily: 'var(--font-body)',
-      fontSize: '11px'
+      fontSize: '12.5px'
     }
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, monster.korruption.pilz_praesenz_tabelle.header.map((h, j) => /*#__PURE__*/React.createElement("th", {
     key: j,
@@ -2177,7 +2177,7 @@ function MonsterDetail({
       color: tc,
       fontFamily: 'var(--font-display)',
       fontWeight: '400',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.14em',
       textTransform: 'uppercase',
       borderBottom: `1px solid ${a(0.3)}`
@@ -2206,7 +2206,7 @@ function MonsterDetail({
   }), monster.korrupte_floraldrachen_vorlage.beschreibung && /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -2223,7 +2223,7 @@ function MonsterDetail({
     key: i,
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
@@ -2251,7 +2251,7 @@ function MonsterDetail({
     key: i,
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: '300',
       lineHeight: 1.85,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -2272,7 +2272,7 @@ function MonsterDetail({
     }), lore.einleitung && /*#__PURE__*/React.createElement("p", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '12px',
+        fontSize: '13px',
         fontWeight: '300',
         lineHeight: 1.85,
         color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -2290,7 +2290,7 @@ function MonsterDetail({
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: 'var(--font-display)',
-        fontSize: '10px',
+        fontSize: '12px',
         letterSpacing: '0.22em',
         color: tc,
         textTransform: 'uppercase',
@@ -2303,7 +2303,7 @@ function MonsterDetail({
         borderCollapse: 'collapse',
         marginBottom: '8px',
         fontFamily: 'var(--font-body)',
-        fontSize: '11px'
+        fontSize: '12.5px'
       }
     }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, s.tabelle.kopf.map((h, hi) => /*#__PURE__*/React.createElement("th", {
       key: hi,
@@ -2316,7 +2316,7 @@ function MonsterDetail({
         opacity: 0.7,
         borderBottom: `1px solid ${a(0.2)}`,
         fontFamily: 'var(--font-mono)',
-        fontSize: '8px',
+        fontSize: '11px',
         textTransform: 'uppercase'
       }
     }, h)))), /*#__PURE__*/React.createElement("tbody", null, s.tabelle.zeilen.map((row, ri) => /*#__PURE__*/React.createElement("tr", {
@@ -2335,7 +2335,7 @@ function MonsterDetail({
     }, cell)))))), /*#__PURE__*/React.createElement("p", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '12px',
+        fontSize: '13px',
         fontWeight: '300',
         lineHeight: 1.85,
         color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
@@ -2357,7 +2357,7 @@ function MonsterDetail({
     }), lore.einleitung && /*#__PURE__*/React.createElement("p", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '12px',
+        fontSize: '13px',
         fontWeight: '300',
         lineHeight: 1.85,
         color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
@@ -2375,7 +2375,7 @@ function MonsterDetail({
     }, /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: 'var(--font-display)',
-        fontSize: '10px',
+        fontSize: '12px',
         letterSpacing: '0.22em',
         color: tc,
         textTransform: 'uppercase',
@@ -2388,7 +2388,7 @@ function MonsterDetail({
         borderCollapse: 'collapse',
         marginBottom: '8px',
         fontFamily: 'var(--font-body)',
-        fontSize: '11px'
+        fontSize: '12.5px'
       }
     }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, s.tabelle.kopf.map((h, hi) => /*#__PURE__*/React.createElement("th", {
       key: hi,
@@ -2401,7 +2401,7 @@ function MonsterDetail({
         opacity: 0.7,
         borderBottom: `1px solid ${a(0.2)}`,
         fontFamily: 'var(--font-mono)',
-        fontSize: '8px',
+        fontSize: '11px',
         textTransform: 'uppercase'
       }
     }, h)))), /*#__PURE__*/React.createElement("tbody", null, s.tabelle.zeilen.map((row, ri) => /*#__PURE__*/React.createElement("tr", {
@@ -2420,7 +2420,7 @@ function MonsterDetail({
     }, cell)))))), /*#__PURE__*/React.createElement("p", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '12px',
+        fontSize: '13px',
         fontWeight: '300',
         lineHeight: 1.85,
         color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
@@ -2496,7 +2496,7 @@ function EmptyState({
   })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.2em',
       color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -2524,7 +2524,7 @@ function AccessDenied() {
       top: '18px',
       left: '22px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       color: 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))',
       textDecoration: 'none',
@@ -2543,7 +2543,7 @@ function AccessDenied() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.42em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -2780,7 +2780,7 @@ function App() {
   }, "Monster"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '0.15em'
     }
@@ -2850,7 +2850,7 @@ function App() {
     style: {
       padding: '8px 12px 4px',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',

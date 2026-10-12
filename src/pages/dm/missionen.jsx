@@ -227,7 +227,7 @@ function MissionRow({
     }
   }, mono(m.auftraggeber || '—', '8px', 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))'), m.status === 'neu' && /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: '7px',
+      fontSize: '11px',
       padding: '1px 5px',
       background: 'rgba(127,184,255,0.15)',
       border: '1px solid rgba(127,184,255,0.4)',
@@ -239,7 +239,7 @@ function MissionRow({
     }
   }, "NEU"), m.status === 'archiviert' && /*#__PURE__*/React.createElement("span", {
     style: {
-      fontSize: '7px',
+      fontSize: '11px',
       padding: '1px 5px',
       background: 'rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       border: '1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)))',
@@ -252,7 +252,7 @@ function MissionRow({
   }, "ARCHIV"))), appCount > 0 && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       background: 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
       border: '1px solid rgba(var(--accent-rgb),calc(0.5*var(--ka)))',
       borderRadius: '10px',
@@ -432,7 +432,7 @@ function CreateForm({
             type: "button",
             onClick: () => setRequirements(rs => active ? rs.filter(r => r.label !== div) : [...rs, { label: div, count: 1 }]),
             style: {
-              padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '9px',
+              padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '11.5px',
               letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer',
               border: `1px solid ${active ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`,
               borderRadius: '2px',
@@ -445,7 +445,7 @@ function CreateForm({
             type: "number", min: "1", max: "9", value: req.count,
             onChange: e => setRequirements(rs => rs.map(r => r.label === div ? { ...r, count: Number(e.target.value) || 1 } : r)),
             title: "Anzahl",
-            style: { width: '42px', padding: '4px 6px', textAlign: 'center', fontSize: '11px' }
+            style: { width: '42px', padding: '4px 6px', textAlign: 'center', fontSize: '12.5px' }
           })
         );
       })
@@ -470,7 +470,7 @@ function CreateForm({
     onClick: addStep,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '.15em',
       padding: '3px 9px',
       background: 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
@@ -607,7 +607,7 @@ function AppRow({
   }, profile?.display_name || profile?.email?.split('@')[0] || '—'), char && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       fontWeight: 300,
       color: 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))'
     }
@@ -619,7 +619,7 @@ function AppRow({
   }, [char.race, char.class, char.division, `Stufe ${char.char_data?.level ?? 1}`].filter(Boolean).join(' · '))), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '.15em',
       color: st.color,
       marginTop: '4px',
@@ -725,9 +725,9 @@ function EditForm({ mission, onSaved, onCancel, nscOptions }) {
             /*#__PURE__*/React.createElement("button", {
               type: "button",
               onClick: () => setRequirements(rs => active ? rs.filter(r => r.label !== div) : [...rs, { label: div, count: 1 }]),
-              style: { padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer', border: `1px solid ${active ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`, borderRadius: '2px', background: active ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))', color: active ? 'rgba(200,180,255,calc(0.95*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', transition: 'all .15s' }
+              style: { padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: '11.5px', letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer', border: `1px solid ${active ? 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))'}`, borderRadius: '2px', background: active ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))', color: active ? 'rgba(200,180,255,calc(0.95*var(--ka)))' : 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))', transition: 'all .15s' }
             }, active ? `✓ ${div}` : div),
-            active && /*#__PURE__*/React.createElement("input", { type: "number", min: "1", max: "9", value: req.count, onChange: e => setRequirements(rs => rs.map(r => r.label === div ? { ...r, count: Number(e.target.value) || 1 } : r)), title: "Anzahl", style: { width: '42px', padding: '4px 6px', textAlign: 'center', fontSize: '11px' } })
+            active && /*#__PURE__*/React.createElement("input", { type: "number", min: "1", max: "9", value: req.count, onChange: e => setRequirements(rs => rs.map(r => r.label === div ? { ...r, count: Number(e.target.value) || 1 } : r)), title: "Anzahl", style: { width: '42px', padding: '4px 6px', textAlign: 'center', fontSize: '12.5px' } })
           );
         })
       )
@@ -735,7 +735,7 @@ function EditForm({ mission, onSaved, onCancel, nscOptions }) {
     /*#__PURE__*/React.createElement("div", { style: { marginBottom: '14px' } },
       /*#__PURE__*/React.createElement("div", { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' } },
         /*#__PURE__*/React.createElement("label", { style: { margin: 0 } }, "Anweisungen"),
-        /*#__PURE__*/React.createElement("button", { onClick: addStep, style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '.15em', padding: '3px 9px', background: 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))', border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius: '2px', color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', cursor: 'pointer' } }, "+ Schritt")
+        /*#__PURE__*/React.createElement("button", { onClick: addStep, style: { fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '.15em', padding: '3px 9px', background: 'rgba(var(--purple-rgb),calc(0.12*var(--kp)))', border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius: '2px', color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', cursor: 'pointer' } }, "+ Schritt")
       ),
       steps.map((step, i) => /*#__PURE__*/React.createElement("div", { key: i, style: { display: 'grid', gridTemplateColumns: '1fr 70px 28px', gap: '8px', marginBottom: '8px', alignItems: 'center' } },
         /*#__PURE__*/React.createElement("input", { value: step.txt, onChange: e => setStep(i, 'txt', e.target.value), placeholder: `Schritt ${i + 1}…` }),
@@ -833,7 +833,7 @@ function MissionDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: kat.color,
       letterSpacing: '.25em',
       textTransform: 'uppercase',
@@ -852,7 +852,7 @@ function MissionDetail({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: 300,
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))'
     }
   }, mission.auftraggeber, mission.region ? ` · ${mission.region}` : ''), /*#__PURE__*/React.createElement("div", {
@@ -923,7 +923,7 @@ function MissionDetail({
       padding: '30px',
       textAlign: 'center',
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '.2em'
     }
@@ -935,7 +935,7 @@ function MissionDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.22em',
       color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -944,7 +944,7 @@ function MissionDetail({
   }, "Keine Bewerbungen"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: 300,
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       fontStyle: 'italic'
@@ -1071,7 +1071,7 @@ function TokensTab() {
       onClick: copy,
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '7.5px',
+        fontSize: '11px',
         letterSpacing: '.12em',
         padding: '2px 8px',
         background: copied ? 'rgba(100,220,140,0.12)' : 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
@@ -1092,7 +1092,7 @@ function TokensTab() {
     }, t.note && /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-body)',
-        fontSize: '11px',
+        fontSize: '12.5px',
         fontWeight: 300,
         color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
         fontStyle: 'italic'
@@ -1100,7 +1100,7 @@ function TokensTab() {
     }, t.note), t.used_by ? /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '7.5px',
+        fontSize: '11px',
         letterSpacing: '.12em',
         color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
         textTransform: 'uppercase'
@@ -1108,7 +1108,7 @@ function TokensTab() {
     }, "eingel\xF6st von ", usedName) : /*#__PURE__*/React.createElement("span", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '7.5px',
+        fontSize: '11px',
         letterSpacing: '.12em',
         color: 'color-mix(in srgb, rgba(100,220,140,0.6), rgb(var(--ink-rgb)) var(--cm))',
         textTransform: 'uppercase'
@@ -1122,7 +1122,7 @@ function TokensTab() {
         color: 'color-mix(in srgb, rgba(255,120,120,0.5), rgb(var(--ink-rgb)) var(--cm))',
         cursor: 'pointer',
         fontFamily: 'var(--font-mono)',
-        fontSize: '9px',
+        fontSize: '11.5px',
         padding: '4px 9px',
         letterSpacing: '.1em',
         textTransform: 'uppercase',
@@ -1155,7 +1155,7 @@ function TokensTab() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: 300,
       color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       lineHeight: 1.7,
@@ -1184,7 +1184,7 @@ function TokensTab() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '.2em',
       color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1204,7 +1204,7 @@ function TokensTab() {
   }, unused.length), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '.15em',
       color: 'color-mix(in srgb, rgba(100,220,140,0.5), rgb(var(--ink-rgb)) var(--cm))',
       textTransform: 'uppercase'
@@ -1218,7 +1218,7 @@ function TokensTab() {
   }, used.length), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '.15em',
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -1233,7 +1233,7 @@ function TokensTab() {
       padding: '30px',
       textAlign: 'center',
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '.2em'
     }
@@ -1242,7 +1242,7 @@ function TokensTab() {
       padding: '40px',
       textAlign: 'center',
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: 300,
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       fontStyle: 'italic'
@@ -1255,7 +1255,7 @@ function TokensTab() {
       padding: '6px 18px',
       borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '.2em',
       color: 'rgba(var(--accent-rgb),calc(0.25*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1304,7 +1304,7 @@ function App() {
       href: "/spiel/missionsterminal.html",
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '9px',
+        fontSize: '11.5px',
         color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
         letterSpacing: '.2em',
         textDecoration: 'none'
@@ -1389,7 +1389,7 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))',
       letterSpacing: '.3em',
       textTransform: 'uppercase',
@@ -1407,7 +1407,7 @@ function App() {
   }, activeTab === 'missions' ? 'Missionsverwaltung' : 'Würfelerlaubnis')), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '.18em'
     }
@@ -1421,7 +1421,7 @@ function App() {
     onClick: () => setActiveTab(id),
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.18em',
       textTransform: 'uppercase',
       padding: '8px 18px',
@@ -1449,7 +1449,7 @@ function App() {
       },
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '8px',
+        fontSize: '11px',
         letterSpacing: '.15em',
         padding: '4px 10px',
         background: 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
@@ -1470,7 +1470,7 @@ function App() {
       padding: '30px',
       textAlign: 'center',
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       letterSpacing: '.2em'
     }
@@ -1479,7 +1479,7 @@ function App() {
       padding: '30px',
       textAlign: 'center',
       fontFamily: 'var(--font-body)',
-      fontSize: '12px',
+      fontSize: '13px',
       fontWeight: 300,
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       fontStyle: 'italic'
@@ -1505,7 +1505,7 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '.22em',
       color: 'rgba(var(--accent-rgb),calc(0.3*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'

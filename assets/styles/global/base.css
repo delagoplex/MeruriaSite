@@ -200,7 +200,7 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
 .float-nav-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(var(--panel-rgb),0.88); border: 1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp))); color: rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb))); cursor: pointer; transition: all 0.2s; backdrop-filter: blur(8px); }
 .float-nav-btn:hover { background: rgba(var(--purple-rgb),calc(0.18*var(--kp))); border-color: rgba(var(--purple-rgb),calc(0.55*var(--kp))); color: var(--white); box-shadow: 0 0 14px rgba(var(--purple-rgb),calc(0.25*var(--kp))); }
 
-.sort-btn { width: 100%; text-align: left; padding: 5px 8px; background: transparent; border: 1px solid transparent; border-radius: 2px; color: rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb))); font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; cursor: pointer; transition: all 0.15s; }
+.sort-btn { width: 100%; text-align: left; padding: 5px 8px; background: transparent; border: 1px solid transparent; border-radius: 2px; color: rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb))); font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.12em; cursor: pointer; transition: all 0.15s; }
 .sort-btn.active { background: rgba(var(--accent-rgb),calc(0.1*var(--ka))); border-color: rgba(var(--accent-rgb),calc(0.35*var(--ka))); color: var(--white); }
 .sort-btn:hover:not(.active) { color: rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb))); background: rgba(var(--accent-rgb),calc(0.04*var(--ka))); }
 
@@ -244,8 +244,8 @@ img, video, canvas, svg { max-width: 100%; }
      a bare `display:block` table would shrink to its content and not fill the container */
   table.rt-scroll { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   /* compact cells so 3-4 column tables fit a phone; header cells may wrap (inline nowrap needs !important) */
-  table th { white-space: normal !important; letter-spacing: 0.04em !important; font-size: 9.5px !important; }
-  table td { font-size: 12px !important; }
+  table th { white-space: normal !important; letter-spacing: 0.04em !important; font-size: 11.5px !important; }
+  table td { font-size: 13px !important; }
   table th, table td { padding-left: 6px !important; padding-right: 6px !important; }
   /* Wide tables (5+ columns, class set by the Table component): each row becomes a card, the
      column label (data-label) is shown in front of every value. */
@@ -255,7 +255,7 @@ img, video, canvas, svg { max-width: 100%; }
   table.rt-stack td { display: grid !important; grid-template-columns: minmax(70px, 34%) minmax(0, 1fr); gap: 10px;
     width: 100%; text-align: left !important; padding: 4px 12px !important; }
   table.rt-stack td::before {
-    content: attr(data-label); font-family: var(--font-mono); font-size: 9px;
+    content: attr(data-label); font-family: var(--font-mono); font-size: 11.5px;
     letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb))); padding-top: 3px;
   }
   table.rt-stack td > * { justify-self: start; min-width: 0; } /* e.g. rarity pills keep their own width */
@@ -359,7 +359,7 @@ img, video, canvas, svg { max-width: 100%; }
   .meruria-pane-back {
     display: flex; align-items: center; position: fixed; left: 72px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 200;
     height: 48px; padding: 0 18px; border-radius: 24px; cursor: pointer;
-    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase;
     background: var(--nav-dropdown-bg); color: var(--nav-text); border: 1px solid var(--nav-btn-border);
     backdrop-filter: blur(12px); box-shadow: 0 4px 18px rgba(0,0,0,0.35);
   }
@@ -400,21 +400,12 @@ img, video, canvas, svg { max-width: 100%; }
   .detail-content.detail-content { padding-right: 52px !important; }
 }
 
-/* Charakterbogen (SteckbriefView): the inline sizes are 6-12px, too small to read on a phone */
+/* Charakterbogen (SteckbriefView): the inline sizes are 11-13px, still small on a phone */
 @media (max-width: 768px) {
-  .steckbrief-root [style*="font-size: 6px"],
-  .steckbrief-root [style*="font-size: 6.5px"],
-  .steckbrief-root [style*="font-size: 7px"],
-  .steckbrief-root [style*="font-size: 7.5px"] { font-size: 11px !important; }
-  .steckbrief-root [style*="font-size: 8px"],
-  .steckbrief-root [style*="font-size: 8.5px"],
-  .steckbrief-root [style*="font-size: 9px"] { font-size: 12px !important; }
-  .steckbrief-root [style*="font-size: 10px"],
-  .steckbrief-root [style*="font-size: 10.5px"],
-  .steckbrief-root [style*="font-size: 11px"] { font-size: 14px !important; }
-  .steckbrief-root [style*="font-size: 11.5px"],
+  .steckbrief-root [style*="font-size: 11px"],
+  .steckbrief-root [style*="font-size: 11.5px"] { font-size: 12px !important; }
   .steckbrief-root [style*="font-size: 12px"],
-  .steckbrief-root [style*="font-size: 12.5px"],
+  .steckbrief-root [style*="font-size: 12.5px"] { font-size: 14px !important; }
   .steckbrief-root [style*="font-size: 13px"] { font-size: 15px !important; line-height: 1.6; }
 }
 @media (max-width: 768px) {
@@ -439,16 +430,14 @@ img, video, canvas, svg { max-width: 100%; }
 @media (max-width: 768px) {
   .nsc-panel[style] { width: 100% !important; border-left: 0 !important; box-shadow: none !important; animation: fadeIn 0.2s ease !important; }
   .nsc-panel-head[style] { padding: 12px 16px !important; gap: 12px; }
-  .nsc-panel-head button { padding: 10px 14px !important; font-size: 12px !important; }
+  .nsc-panel-head button { padding: 10px 14px !important; font-size: 13px !important; }
   .nsc-panel-hero[style] { padding: 20px 18px 12px !important; gap: 16px !important; }
   .nsc-progress[style] { text-align: left !important; min-width: 0 !important; width: 100%; }
-  .nsc-progress-legend[style] { justify-content: flex-start !important; flex-wrap: wrap; gap: 8px 16px !important; font-size: 11px !important; }
+  .nsc-progress-legend[style] { justify-content: flex-start !important; flex-wrap: wrap; gap: 8px 16px !important; font-size: 12.5px !important; }
 }
 
 /* Spielercharakter cards: player chip sits in the flow above the portrait instead of overlapping the name */
 @media (max-width: 768px) {
   .sc-card .sc-chip[style] { position: relative !important; top: auto !important; right: auto !important; align-self: flex-start; width: fit-content; max-width: 100%; margin: 0 0 14px; }
   .sc-card .sc-headtext[style] { padding-right: 0 !important; }
-  .sc-card [style*="font-size: 7px"], .sc-card [style*="font-size: 7.5px"] { font-size: 10px !important; }
-  .sc-card [style*="font-size: 8px"], .sc-card [style*="font-size: 8.5px"], .sc-card [style*="font-size: 9px"] { font-size: 11px !important; }
 }

@@ -300,8 +300,8 @@ function FancyBar({ b }) {
     <div style={{ marginBottom:12 }}>
       <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:5 }}>
         <svg viewBox={b.viewBox || '0 0 100 100'} width="16" height="16" fill="none" style={{ color: b.c, stroke: b.c, opacity:0.9, flexShrink:0 }}>{b.icon}</svg>
-        <span style={{ fontFamily:'var(--font-display)', fontSize:10, letterSpacing:'0.18em', fontWeight:400, color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', textTransform:'uppercase', minWidth:0, flex:1, lineHeight:1.2 }}>{b.label}</span>
-        <span style={{ fontFamily:'var(--font-mono)', fontSize:8, color: b.c, letterSpacing:'0.18em', flexShrink:0 }}>{b.pct}</span>
+        <span style={{ fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.18em', fontWeight:400, color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', textTransform:'uppercase', minWidth:0, flex:1, lineHeight:1.2 }}>{b.label}</span>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:11, color: b.c, letterSpacing:'0.18em', flexShrink:0 }}>{b.pct}</span>
       </div>
       <div style={{ position:'relative', height:4 }}>
         <div style={{ position:'absolute', left:0, top:0, bottom:0, width: b.wB, boxShadow: b.glow, borderRadius:2, pointerEvents:'none' }}/>
@@ -379,7 +379,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
       onClick={() => setTab(id)}
       style={{
         flex:1, padding:'11px 0', background:'transparent', border:'none', cursor:'pointer',
-        fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.24em', textTransform:'uppercase',
+        fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.24em', textTransform:'uppercase',
         color: tab === id ? (accent || 'var(--white)') : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))',
         borderBottom: `2px solid ${tab === id ? (accent || 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))') : 'transparent'}`,
         transition:'all 0.15s',
@@ -402,7 +402,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
 
   const FactRow = ({ k, v }) => (
     <div style={{ display:'flex', gap:8, alignItems:'baseline', marginBottom:8 }}>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', width:96, flexShrink:0 }}>{k}</span>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', width:96, flexShrink:0 }}>{k}</span>
       <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))', lineHeight:1.5 }}>{v}</span>
     </div>
   );
@@ -435,13 +435,13 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
 
         <header style={{ padding: topBild ? '14px 22px 16px' : '18px 22px 16px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'flex-start', justifyContent:'space-between', position:'relative', zIndex:2, flexShrink:0 }}>
           <div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
               {isArea ? (hex.typ === 'eingang' ? 'Betretbarer Ort' : 'Point of Interest') : 'Hexfeld · Info'}
             </div>
             <div style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:22, letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase', marginTop:6, textShadow:'0 0 18px rgba(var(--purple-rgb),calc(0.35*var(--kp)))' }}>
               {hex.name || 'Unbekannte Region'}
             </div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', color: tcolor, marginTop:6 }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', color: tcolor, marginTop:6 }}>
               ◈ {isArea ? (hex.typ === 'eingang' ? 'Betretbar' : 'POI') : (hex.terrain || 'Unbekannt')}
             </div>
           </div>
@@ -460,7 +460,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           {tags.length > 0 && (
             <div style={{ display:'flex', flexWrap:'wrap', gap:5, marginBottom:14, pointerEvents:'none' }}>
               {tags.map(t => (
-                <span key={t} style={{ padding:'3px 9px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{t}</span>
+                <span key={t} style={{ padding:'3px 9px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{t}</span>
               ))}
             </div>
           )}
@@ -468,7 +468,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           {/* Beschreibung */}
           {hex.beschreibung && (
             <div style={{ marginBottom:16 }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)))', marginBottom:6 }}>Beschreibung</div>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)))', marginBottom:6 }}>Beschreibung</div>
               <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.65 }}>{hex.beschreibung}</div>
             </div>
           )}
@@ -479,7 +479,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           {/* Kolonien: Name + Rassen-Chips */}
           {!isArea && kolonien.length > 0 && (
             <React.Fragment>
-              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'8px 0 8px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'8px 0 8px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
                 <span>Kolonien</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
               </div>
               {kolonien.map((k, i) => (
@@ -488,7 +488,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
                   {(k.rassen || []).length > 0 && (
                     <div style={{ display:'flex', flexWrap:'wrap', gap:4 }}>
                       {k.rassen.map(r => (
-                        <span key={r} style={{ padding:'2px 8px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{r}</span>
+                        <span key={r} style={{ padding:'2px 8px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{r}</span>
                       ))}
                     </div>
                   )}
@@ -500,11 +500,11 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           {/* Erkundungsfortschritt — automatisch berechnet (Ziele-Tags, Pool-Fangquoten, Legacy-Erkundung) */}
           {(bars.length > 0 || statsLoading) && (
             <React.Fragment>
-              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
                 <span>Erkundungsfortschritt</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
               </div>
               {statsLoading && bars.length === 0 && (
-                <div style={{ padding:'10px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>◈ berechne …</div>
+                <div style={{ padding:'10px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>◈ berechne …</div>
               )}
               {bars.map((b, i) => <FancyBar key={`${b.label}-${i}`} b={b}/>)}
             </React.Fragment>
@@ -512,17 +512,17 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
 
           {/* Fallback empty */}
           {!hex.beschreibung && tags.length === 0 && facts.length === 0 && kolonien.length === 0 && bars.length === 0 && !statsLoading && (
-            <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Informationen —</div>
+            <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Informationen —</div>
           )}
           </React.Fragment>)}
 
           {/* ── Tab: Ziele ── */}
           {tab === 'ziele' && (<React.Fragment>
-            <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
               <span>Ziele</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
             </div>
             {objList.length === 0 && !hex.has_submap && (
-              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
+              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
                 — keine Ziele bekannt —
               </div>
             )}
@@ -535,27 +535,27 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
               return (
                 <div key={o.id} style={{ border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3, padding:'11px 13px', marginBottom:9, background:'rgba(var(--panel-rgb),0.5)' }}>
                   <div style={{ display:'flex', alignItems:'center', gap:9 }}>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color: st.c, flexShrink:0 }}>{st.m}</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:12, color: st.c, flexShrink:0 }}>{st.m}</span>
                     <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:400, color:'var(--white)', minWidth:0, flex:1, overflowWrap:'anywhere' }}>{o.titel || 'Unbekanntes Ziel'}</span>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', color: st.c, textTransform:'uppercase', flexShrink:0 }}>{st.l}</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', color: st.c, textTransform:'uppercase', flexShrink:0 }}>{st.l}</span>
                   </div>
-                  {o.beschreibung && <div style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', lineHeight:1.5, marginTop:6 }}>{o.beschreibung}</div>}
+                  {o.beschreibung && <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))', lineHeight:1.5, marginTop:6 }}>{o.beschreibung}</div>}
                   {o.bedingung && (
                     <div style={{ display:'flex', gap:8, alignItems:'baseline', marginTop:7 }}>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(217,176,107,0.75), rgb(var(--ink-rgb)) var(--cm))', width:74, flexShrink:0 }}>Bedingung</span>
-                      <span style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.45 }}>{o.bedingung}</span>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(217,176,107,0.75), rgb(var(--ink-rgb)) var(--cm))', width:74, flexShrink:0 }}>Bedingung</span>
+                      <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.45 }}>{o.bedingung}</span>
                     </div>
                   )}
                   {o.belohnung && (
                     <div style={{ display:'flex', gap:8, alignItems:'baseline', marginTop:5 }}>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:7.5, letterSpacing:'0.18em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(120,220,160,0.75), rgb(var(--ink-rgb)) var(--cm))', width:74, flexShrink:0 }}>Belohnung</span>
-                      <span style={{ fontFamily:'var(--font-body)', fontSize:12, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.45 }}>{o.belohnung}</span>
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', textTransform:'uppercase', color:'color-mix(in srgb, rgba(120,220,160,0.75), rgb(var(--ink-rgb)) var(--cm))', width:74, flexShrink:0 }}>Belohnung</span>
+                      <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.45 }}>{o.belohnung}</span>
                     </div>
                   )}
                   {(o.tags || []).length > 0 && (
                     <div style={{ display:'flex', flexWrap:'wrap', gap:4, marginTop:7 }}>
                       {o.tags.map(t => (
-                        <span key={t} style={{ padding:'2px 8px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{t}</span>
+                        <span key={t} style={{ padding:'2px 8px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{t}</span>
                       ))}
                     </div>
                   )}
@@ -573,10 +573,10 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
               const RAR = window.KARTE_RARITY_META;
               return (
                 <React.Fragment key={pt.key}>
-                  <div style={{ display:'flex', alignItems:'center', gap:8, margin:'12px 0 6px', fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.22em', textTransform:'uppercase' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:8, margin:'12px 0 6px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase' }}>
                     <span style={{ color:`oklch(0.78 0.13 ${pt.hue})` }}>{pt.label}</span>
                     <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
-                    <span style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', fontSize:8 }}>{items.length} Arten</span>
+                    <span style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', fontSize:11 }}>{items.length} Arten</span>
                   </div>
                   {items.map(r => {
                     const it = window.karteKatalogItem(pt.key, r.resource_id);
@@ -592,7 +592,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
                           {caught && it ? it.name : '???'}
                         </span>
                         {caught && it && (
-                          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', textTransform:'uppercase', flexShrink:0 }}>Stufe {stage}/8</span>
+                          <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', textTransform:'uppercase', flexShrink:0 }}>Stufe {stage}/8</span>
                         )}
                       </div>
                     );
@@ -601,7 +601,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
               );
             })}
             {nodePools.length === 0 && (
-              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Ressourcendaten —</div>
+              <div style={{ padding:'18px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Ressourcendaten —</div>
             )}
           </React.Fragment>)}
         </div>
@@ -616,7 +616,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
               onMouseLeave={e => { e.currentTarget.style.background='linear-gradient(135deg, rgba(var(--purple-rgb),calc(0.16*var(--kp))) 0%, rgba(var(--purple-rgb),calc(0.06*var(--kp))) 100%)'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.45*var(--ka)))'; e.currentTarget.style.boxShadow='none'; }}
             >
               <span style={{ fontFamily:'var(--font-display)', fontSize:16, color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', lineHeight:1 }}>⬡</span>
-              <span style={{ fontFamily:'var(--font-display)', fontSize:12, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--white)' }}>
+              <span style={{ fontFamily:'var(--font-display)', fontSize:13, letterSpacing:'0.18em', textTransform:'uppercase', color:'var(--white)' }}>
                 {childEbene === 'Ort'
                   ? `${hex.name || 'Ort'} betreten`
                   : `${childEbene || 'Region'} ${hex.name ? `„${hex.name}"` : ''} erkunden`}
@@ -635,7 +635,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           <img src={topBild} loading="lazy" style={{ maxWidth:'88vw', maxHeight:'calc(var(--vh, 1vh) * 82)', display:'block', border:'1px solid rgba(var(--accent-rgb),calc(0.4*var(--ka)))', boxShadow:'0 0 80px rgba(var(--purple-rgb),calc(0.3*var(--kp))), 0 30px 90px rgba(var(--shadow-rgb),calc(0.8 * var(--shadow-k)))' }} alt=""/>
           <div style={{ display:'flex', alignItems:'center', gap:14 }}>
             <span style={{ fontFamily:'var(--font-display)', fontSize:15, letterSpacing:'0.22em', textTransform:'uppercase', color:'var(--white)' }}>{hex.name || ''}</span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Klick zum Schließen</span>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Klick zum Schließen</span>
           </div>
         </div>
       )}
@@ -967,7 +967,7 @@ function MerMapPlayer() {
     return (
       <div style={{
         position:'fixed', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
-        background:'var(--bg)', fontFamily:'var(--font-mono)', fontSize:10,
+        background:'var(--bg)', fontFamily:'var(--font-mono)', fontSize:12,
         letterSpacing:'0.28em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', textTransform:'uppercase',
       }}>◈ Lade Karte …</div>
     );
@@ -980,8 +980,8 @@ function MerMapPlayer() {
         flexDirection:'column', gap:12, background:'var(--bg)',
         fontFamily:'var(--font-mono)', letterSpacing:'0.18em', textTransform:'uppercase',
       }}>
-        <div style={{ fontSize:10, color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))' }}>◈ Keine Karte verfügbar</div>
-        <div style={{ fontSize:8, color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))' }}>Der DM hat noch keine Karte angelegt</div>
+        <div style={{ fontSize:12, color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))' }}>◈ Keine Karte verfügbar</div>
+        <div style={{ fontSize:11, color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))' }}>Der DM hat noch keine Karte angelegt</div>
       </div>
     );
   }
@@ -997,7 +997,7 @@ function MerMapPlayer() {
           marginLeft:10, padding:'3px 9px', borderRadius:3,
           background: isImageMap ? 'rgba(217,176,107,0.08)' : 'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',
           border: `1px solid ${isImageMap ? 'rgba(217,176,107,0.35)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`,
-          fontFamily:'var(--font-mono)', fontSize:8.5, letterSpacing:'0.18em', textTransform:'uppercase',
+          fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', textTransform:'uppercase',
           color: isImageMap ? 'color-mix(in srgb, rgba(240,220,170,0.85), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.8*var(--ka)))',
         }}>
           {isImageMap ? '▦' : '⬡'} {depthEbene(mapStack.length)}
@@ -1006,7 +1006,7 @@ function MerMapPlayer() {
         {mapStack.length > 0 && (
           <div style={{
             display:'flex', alignItems:'center', gap:6, marginLeft:14,
-            fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em',
+            fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em',
             textTransform:'uppercase',
           }}>
             {mapStack.map((m, i) => (
@@ -1015,7 +1015,7 @@ function MerMapPlayer() {
                   onClick={() => navigateUp(i)}
                   style={{
                     background:'transparent', border:'none', cursor:'pointer',
-                    fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.18em',
+                    fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em',
                     color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', textTransform:'uppercase', padding:'2px 4px',
                     transition:'color 0.15s',
                   }}
@@ -1030,7 +1030,7 @@ function MerMapPlayer() {
         )}
         <div style={{ flex: 1 }}/>
         {isLoading && (
-          <span style={{ fontFamily:'var(--font-mono)', fontSize:8, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
+          <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
             ◈ lade …
           </span>
         )}
@@ -1150,7 +1150,7 @@ function MerMapPlayer() {
             borderRadius:4, padding:'6px 10px',
           }}>
             <button className="mk-tool-btn" style={{ width:26, height:26, opacity: floorIdx >= floors.length - 1 ? 0.35 : 1 }} disabled={floorIdx >= floors.length - 1} onClick={() => switchFloor(1)} title="Etage höher">▲</button>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:9, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>
               Ebene {floorIdx + 1}/{floors.length} · {floor?.label || ''}
             </span>
             <button className="mk-tool-btn" style={{ width:26, height:26, opacity: floorIdx <= 0 ? 0.35 : 1 }} disabled={floorIdx <= 0} onClick={() => switchFloor(-1)} title="Etage tiefer">▼</button>

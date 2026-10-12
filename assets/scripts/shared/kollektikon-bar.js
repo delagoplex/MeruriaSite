@@ -92,7 +92,7 @@
           d.icon
         ),
         h('span', { style: {
-          fontFamily: 'var(--font-display)', fontSize: 11, letterSpacing: '0.2em', fontWeight: 400,
+          fontFamily: 'var(--font-display)', fontSize: 12.5, letterSpacing: '0.2em', fontWeight: 400,
           color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', textTransform: 'uppercase',
           minWidth: 0, flex: 1, overflowWrap: 'anywhere', lineHeight: 1.2,
         }}, d.label)
@@ -126,15 +126,15 @@
         )
       ),
       h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 6 } },
-        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', letterSpacing: '0.1em', whiteSpace: 'nowrap' } },
+        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', letterSpacing: '0.1em', whiteSpace: 'nowrap' } },
           h('span', { style: { color: 'var(--white)' } }, d.found),
           h('span', { style: { opacity: 0.5 } }, ` / ${d.total || '—'}`),
           d.komplett > 0 && h('span', { style: { color: c, marginLeft: 4 } },
             `· ${d.komplett} `,
-            h('span', { style: { fontSize: 7, opacity: 0.75, letterSpacing: '0.16em' } }, 'KOMP')
+            h('span', { style: { fontSize: 11, opacity: 0.75, letterSpacing: '0.16em' } }, 'KOMP')
           )
         ),
-        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 8, color: c, letterSpacing: '0.18em' } },
+        h('span', { style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: c, letterSpacing: '0.18em' } },
           d.total ? `${Math.round(pctFound * 100)} %` : '—'
         )
       )

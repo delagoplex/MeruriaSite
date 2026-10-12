@@ -341,7 +341,7 @@ function EntityCard({
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: accent + '99',
       textTransform: 'uppercase',
@@ -351,7 +351,7 @@ function EntityCard({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '10px',
+      fontSize: '12px',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       letterSpacing: '0.03em',
@@ -411,7 +411,7 @@ function EntityCard({
     key: i,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       padding: '4px 10px',
       borderRadius: '2px',
@@ -528,7 +528,7 @@ function EntityDetail({
       border: `1px solid ${pal[2]}44`,
       color: pal[3],
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.2em',
       padding: '7px 16px',
       cursor: 'pointer',
@@ -546,14 +546,14 @@ function EntityDetail({
   }, "\u2190 ZUR\xDCCK"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: pal[2] + '77',
       letterSpacing: '0.25em'
     }
   }, "MERURIA / ", (typeLabel || 'GOTTHEIT').toUpperCase(), " / ", entity.id.toUpperCase()), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: pal[2] + '44',
       letterSpacing: '0.2em'
     }
@@ -612,7 +612,7 @@ function EntityDetail({
   }) : /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: pal[2] + '44',
       letterSpacing: '0.1em',
       textAlign: 'center'
@@ -656,7 +656,7 @@ function EntityDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.3em',
       color: pal[2] + '88',
       textTransform: 'uppercase',
@@ -687,7 +687,7 @@ function EntityDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: pal[2] + '77',
       marginBottom: '10px',
@@ -697,7 +697,7 @@ function EntityDetail({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: 1.85,
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
@@ -710,7 +710,7 @@ function EntityDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: pal[2] + '77',
       marginBottom: '9px',
@@ -726,7 +726,7 @@ function EntityDetail({
     key: i,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       padding: '4px 12px',
       border: `1px solid ${pal[2]}44`,
       color: pal[3],
@@ -739,7 +739,7 @@ function EntityDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: pal[2] + '77',
       marginBottom: '10px',
@@ -772,7 +772,7 @@ function EntityDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: pal[2] + '66',
       letterSpacing: '0.25em',
       textTransform: 'uppercase',
@@ -782,7 +782,7 @@ function EntityDetail({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '400',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: pal[3] + 'bb',
       letterSpacing: '0.04em'
     }
@@ -794,7 +794,7 @@ function EntityDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: pal[2] + '66',
       letterSpacing: '0.25em',
       textTransform: 'uppercase',
@@ -828,7 +828,7 @@ function EntityDetail({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '6px',
+      fontSize: '11px',
       color: copiedIndex === i ? hex : pal[2] + '88',
       letterSpacing: '0.05em',
       transition: 'color 0.2s',
@@ -928,7 +928,7 @@ function SectionHeading({
   }, subtitle && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: col + '77',
       textTransform: 'uppercase',
@@ -1080,7 +1080,7 @@ function TOCSidebar({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1102,7 +1102,7 @@ function TOCSidebar({
       cursor: 'pointer',
       fontFamily: 'var(--font-body)',
       fontWeight: '400',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.1em',
       fontVariant: 'small-caps',
       color: entry.isSection ? 'rgba(var(--text-rgb),calc(0.75*var(--kt)))' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',
@@ -1307,7 +1307,7 @@ function App() {
     }), /*#__PURE__*/React.createElement("div", {
       style: {
         fontFamily: 'var(--font-mono)',
-        fontSize: '8px',
+        fontSize: '11px',
         letterSpacing: '0.28em',
         color: color + 'bb',
         textTransform: 'uppercase'

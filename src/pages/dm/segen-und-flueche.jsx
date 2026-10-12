@@ -510,12 +510,12 @@ function AccessDenied() {
       flexDirection:'column', alignItems:'center', justifyContent:'center', gap:16, zIndex:999 }
   },
     React.createElement("a", { href:"/index.html", style:{ position:'absolute', top:24, left:24,
-      fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.22em',
+      fontFamily:'var(--font-mono)', fontSize:12, letterSpacing:'0.22em',
       color:'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))', textDecoration:'none', textTransform:'uppercase' },
       onMouseEnter: e => e.currentTarget.style.color='var(--white)',
       onMouseLeave: e => e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))'
     }, "← Zurück"),
-    React.createElement("div", { style:{ fontFamily:'var(--font-mono)', fontSize:9,
+    React.createElement("div", { style:{ fontFamily:'var(--font-mono)', fontSize:11.5,
       letterSpacing:'0.42em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase' } }, "Kein Zugriff"),
     React.createElement("div", { style:{ fontFamily:'var(--font-display)', fontSize:14,
       letterSpacing:'0.3em', color:'rgba(var(--text-rgb),calc(0.25*var(--kt) + var(--tb)))', textTransform:'uppercase' } },

@@ -36,7 +36,7 @@ function App() {
               const on = tab === k;
               return (
                 <button key={k} onClick={() => wechsle(k)} style={{ padding:'11px 22px', cursor:'pointer', marginBottom:-1,
-                  fontFamily:'var(--font-mono)', fontSize:12, letterSpacing:'0.16em', textTransform:'uppercase',
+                  fontFamily:'var(--font-mono)', fontSize:13, letterSpacing:'0.16em', textTransform:'uppercase',
                   background:on ? 'rgba(var(--purple-rgb),calc(0.16*var(--kp)))' : 'transparent',
                   border:'1px solid ' + (on ? 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))' : 'transparent'),
                   borderBottom:on ? '1px solid var(--bg)' : '1px solid transparent', borderRadius:'4px 4px 0 0',

@@ -83,10 +83,10 @@ function displayZutat(zutat, knownNames) {
 function ZutatDisplay({ zutat, knownNames }) {
   const d = displayZutat(zutat, knownNames);
   const label = typeof d === 'string' ? d
-    : <span className="rez-zutat-encrypted" title="Unbekannte Zutat">{d.glyph} <span style={{ opacity: 0.6, fontSize: '9px' }}>[{d.cat}]</span></span>;
+    : <span className="rez-zutat-encrypted" title="Unbekannte Zutat">{d.glyph} <span style={{ opacity: 0.6, fontSize: '11.5px' }}>[{d.cat}]</span></span>;
   return (
     <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
-      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', minWidth: '90px', flexShrink: 0 }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', minWidth: '90px', flexShrink: 0 }}>
         {zutat.menge || '–'}
       </span>
       <span>{label}</span>
@@ -212,7 +212,7 @@ function RecipeDetailModal({ recipe, knownNames, playerRevealed, onReveal, myIng
                 )}
                 {confirmDelete && (
                   <>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'8px', color:'color-mix(in srgb, rgba(240,120,120,0.8), rgb(var(--ink-rgb)) var(--cm))', letterSpacing:'0.14em' }}>Wirklich löschen?</span>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:'11px', color:'color-mix(in srgb, rgba(240,120,120,0.8), rgb(var(--ink-rgb)) var(--cm))', letterSpacing:'0.14em' }}>Wirklich löschen?</span>
                     <button className="rez-btn rez-btn-sm rez-btn-reject" onClick={() => { onDelete(recipe.id); onClose(); }}>Ja</button>
                     <button className="rez-btn rez-btn-sm" onClick={() => setConfirmDelete(false)}>Nein</button>
                   </>
@@ -508,7 +508,7 @@ function RejectModal({ recipe, onConfirm, onCancel }) {
       <div className="rez-modal" style={{ maxWidth: '420px' }} onClick={e => e.stopPropagation()}>
         <button className="rez-modal-close" onClick={onCancel}>✕</button>
         <div className="rez-modal-title" style={{ fontSize: '14px' }}>Rezept ablehnen</div>
-        <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>
+        <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>
           „{recipe.name}" ablehnen?
         </div>
         <div className="rez-form-group">
@@ -670,13 +670,13 @@ function CreatorModal({ onClose, onSubmit, editRecipe }) {
                 <div key={i} className="rez-zutat-row">
                   <span className="rez-zutat-name">
                     {!z.kollektikon_id && (
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', marginRight: '5px' }}>?</span>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', marginRight: '5px' }}>?</span>
                     )}
                     {z.name}
                   </span>
                   <input
                     className="rez-input rez-zutat-menge-input"
-                    style={{ padding: '5px 8px', fontSize: '11px' }}
+                    style={{ padding: '5px 8px', fontSize: '12.5px' }}
                     value={z.menge}
                     onChange={e => updateMenge(i, e.target.value)}
                     placeholder="Menge…"
@@ -713,7 +713,7 @@ function CreatorModal({ onClose, onSubmit, editRecipe }) {
         </div>
 
         {error && (
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: '11px', color: 'color-mix(in srgb, rgba(240,120,120,0.85), rgb(var(--ink-rgb)) var(--cm))' }}>{error}</div>
+          <div style={{ fontFamily: 'var(--font-body)', fontSize: '12.5px', color: 'color-mix(in srgb, rgba(240,120,120,0.85), rgb(var(--ink-rgb)) var(--cm))' }}>{error}</div>
         )}
 
         <div className="rez-form-actions">

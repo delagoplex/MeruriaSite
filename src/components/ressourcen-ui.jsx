@@ -10,7 +10,7 @@ const BODY = 'var(--font-body)';
 const K = () => window.RessourcenKatalog;
 
 const chipBase = {
-  fontFamily: MONO, fontSize: 8.5, letterSpacing: '0.1em', textTransform: 'uppercase',
+  fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase',
   padding: '3px 9px', borderRadius: 20, cursor: 'pointer', transition: 'all .15s',
 };
 
@@ -19,7 +19,7 @@ function RarityPill({ rarity }) {
   if (!m) return null;
   return (
     <span style={{ display: 'inline-block', padding: '2px 9px', border: `1px solid ${m.color}`, borderRadius: 20,
-      fontFamily: MONO, fontSize: 7.5, letterSpacing: '0.1em', color: m.color, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+      fontFamily: MONO, fontSize: 11, letterSpacing: '0.1em', color: m.color, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
       {m.label}
     </span>
   );
@@ -73,8 +73,8 @@ function ResDetail({ entry }) {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '8px 16px' }}>
           {entry.facts.map(([l, v]) => (
             <div key={l}>
-              <div style={{ fontFamily: MONO, fontSize: 7.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))' }}>{l}</div>
-              <div style={{ fontFamily: BODY, fontSize: 12.5, color: 'var(--white)', fontWeight: 300 }}>{String(v)}</div>
+              <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))' }}>{l}</div>
+              <div style={{ fontFamily: BODY, fontSize: 13, color: 'var(--white)', fontWeight: 300 }}>{String(v)}</div>
             </div>
           ))}
         </div>
@@ -94,7 +94,7 @@ function TagFilters({ cat, sel, onChange }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       {Object.entries(opts).map(([g, list]) => (
         <div key={g} style={{ display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center' }}>
-          <span style={{ fontFamily: MONO, fontSize: 7.5, letterSpacing: '0.2em', textTransform: 'uppercase', width: 82, flexShrink: 0,
+          <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', width: 82, flexShrink: 0,
             color: 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))' }}>{g}</span>
           {list.map(([v, n]) => {
             const on = (sel[g] || []).includes(v);
@@ -126,7 +126,7 @@ function NumStepper({ value, onChange, color }) {
         onMouseLeave={e => e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))'}>−</button>
       <input type="text" inputMode="numeric" value={value} placeholder="0"
         onChange={e => onChange(e.target.value.replace(/[^0-9]/g, ''))}
-        style={{ width: 40, border: 'none', outline: 'none', background: 'transparent', textAlign: 'center', fontFamily: MONO, fontSize: 12, color: color || 'var(--white)', padding: 0 }} />
+        style={{ width: 40, border: 'none', outline: 'none', background: 'transparent', textAlign: 'center', fontFamily: MONO, fontSize: 13, color: color || 'var(--white)', padding: 0 }} />
       <button type="button" style={{ ...btn, borderLeft: `1px solid ${line}` }} onClick={() => onChange(String(n + 1))}
         onMouseEnter={e => e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))'}
         onMouseLeave={e => e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))'}>+</button>
@@ -180,7 +180,7 @@ function ResRandomizer({ cat, excludeIds, onAdd, addLabel = 'Hinzufügen', disab
     const [n] = Kat.weightedPick(cand, 1, p => mode === 'seltenheit' ? 1 : Kat.RARITY_WEIGHT[p.rarity]);
     if (n) setResults(rs => rs.map(r => r.id === e.id ? n : r));
   }
-  const sectionLabel = { fontFamily: MONO, fontSize: 8, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))' };
+  const sectionLabel = { fontFamily: MONO, fontSize: 11, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))' };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -203,19 +203,19 @@ function ResRandomizer({ cat, excludeIds, onAdd, addLabel = 'Hinzufügen', disab
         </div>
         {mode === 'gesamt' ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-            <span style={{ ...sectionLabel, fontSize: 7 }}>Anzahl</span>
+            <span style={{ ...sectionLabel, fontSize: 11 }}>Anzahl</span>
             <NumStepper value={total} onChange={setTotal} />
           </div>
         ) : Kat.RARITY_ORDER.map(r => (
           <div key={r} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-            <span style={{ fontFamily: MONO, fontSize: 7, letterSpacing: '0.12em', textTransform: 'uppercase', textAlign: 'center', color: Kat.RARITY_META[r].color }}>
+            <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', textAlign: 'center', color: Kat.RARITY_META[r].color }}>
               {Kat.RARITY_META[r].label} ({byRarity[r] || 0})
             </span>
             <NumStepper value={counts[r] || ''} onChange={v => setCounts(c => ({ ...c, [r]: v }))} color={Kat.RARITY_META[r].color} />
           </div>
         ))}
         <button onClick={roll} disabled={!pool.length}
-          style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '9px 16px', borderRadius: 2,
+          style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: '0.2em', textTransform: 'uppercase', padding: '9px 16px', borderRadius: 2,
             cursor: pool.length ? 'pointer' : 'default', opacity: pool.length ? 1 : 0.4,
             border: '1px solid rgba(217,176,107,0.55)', background: 'rgba(217,176,107,0.12)',
             color: 'color-mix(in srgb, rgba(240,220,170,0.95), rgb(var(--ink-rgb)) var(--cm))' }}>
@@ -223,7 +223,7 @@ function ResRandomizer({ cat, excludeIds, onAdd, addLabel = 'Hinzufügen', disab
         </button>
       </div>
 
-      <div style={{ fontFamily: MONO, fontSize: 8, letterSpacing: '0.12em', color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform: 'uppercase' }}>
+      <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.12em', color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform: 'uppercase' }}>
         {pool.length} passende Einträge im Pool
         {Kat.RARITY_ORDER.filter(r => byRarity[r]).map(r => ` · ${byRarity[r]} ${Kat.RARITY_META[r].label.toLowerCase()}`).join('')}
         {mode === 'gesamt' && ' · seltene werden automatisch seltener gezogen'}
@@ -238,7 +238,7 @@ function ResRandomizer({ cat, excludeIds, onAdd, addLabel = 'Hinzufügen', disab
                 <button onClick={() => setOpen(open === e.id ? null : e.id)} title="Details ein-/ausklappen"
                   style={{ flex: 1, minWidth: 0, textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--white)', fontFamily: BODY, fontSize: 14 }}>
                   {e.name}
-                  <span style={{ marginLeft: 8, fontFamily: MONO, fontSize: 8, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))' }}>
+                  <span style={{ marginLeft: 8, fontFamily: MONO, fontSize: 11, color: 'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))' }}>
                     {Object.values(e.tags).flat().slice(0, 3).join(' · ')}
                   </span>
                 </button>
@@ -256,12 +256,12 @@ function ResRandomizer({ cat, excludeIds, onAdd, addLabel = 'Hinzufügen', disab
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
           <button onClick={() => { onAdd(results); setResults([]); }} disabled={!!disabledReason}
             title={disabledReason || ''}
-            style={{ fontFamily: MONO, fontSize: 9, letterSpacing: '0.24em', textTransform: 'uppercase', padding: '9px 18px', borderRadius: 2,
+            style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: '0.24em', textTransform: 'uppercase', padding: '9px 18px', borderRadius: 2,
               cursor: disabledReason ? 'default' : 'pointer', opacity: disabledReason ? 0.4 : 1,
               border: '1px solid rgba(var(--accent-rgb),calc(0.6*var(--ka)))', background: 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))', color: 'var(--white)' }}>
             {addLabel} ({results.length})
           </button>
-          {disabledReason && <span style={{ fontFamily: MONO, fontSize: 8, color: 'rgba(220,100,80,0.85)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{disabledReason}</span>}
+          {disabledReason && <span style={{ fontFamily: MONO, fontSize: 11, color: 'rgba(220,100,80,0.85)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{disabledReason}</span>}
         </div>
       )}
     </div>

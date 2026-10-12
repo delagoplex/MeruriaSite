@@ -50,7 +50,7 @@ function DivisionTab(props) {
     h('span', {
       style: {
         fontFamily:    'var(--font-mono)',
-        fontSize:      9,
+        fontSize:      11.5,
         letterSpacing: '0.18em',
         textTransform: 'uppercase',
         color:         active ? div.accent : 'color-mix(in srgb, rgba(180,170,220,0.5), rgb(var(--ink-rgb)) var(--cm))',
@@ -110,7 +110,7 @@ function App() {
         h('div', {
           style: {
             fontFamily:    'var(--font-mono)',
-            fontSize:      8.5,
+            fontSize:      11,
             letterSpacing: '0.22em',
             textTransform: 'uppercase',
             color:         'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
@@ -150,7 +150,7 @@ function App() {
             h('div', {
               style: {
                 fontFamily:    'var(--font-mono)',
-                fontSize:      8.5,
+                fontSize:      11,
                 letterSpacing: '0.22em',
                 textTransform: 'uppercase',
                 color:         'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',

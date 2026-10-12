@@ -646,7 +646,7 @@ function RibbonCard({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.32em',
       color: accBright,
       textTransform: 'uppercase',
@@ -668,7 +668,7 @@ function RibbonCard({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.28em',
       color: `${accBright}cc`,
       textTransform: 'uppercase',
@@ -811,7 +811,7 @@ function RibbonCard({
   }, sec.name), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8.5px',
+      fontSize: '11px',
       letterSpacing: '0.28em',
       color: hov ? `${acc}cc` : `${acc}77`,
       textTransform: 'uppercase',
@@ -850,7 +850,7 @@ function RibbonCard({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12.5px',
+      fontSize: '13px',
       lineHeight: 1.85,
       color: hov ? 'rgba(var(--text-rgb),calc(0.75*var(--kt)))' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))',
       letterSpacing: '0.02em',
@@ -870,7 +870,7 @@ function RibbonCard({
     key: i,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8.5px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       textTransform: 'uppercase',
       color: hov ? `${acc}dd` : `${acc}88`,
@@ -895,7 +895,7 @@ function RibbonCard({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '9.5px',
+      fontSize: '11.5px',
       letterSpacing: '0.32em',
       textTransform: 'uppercase',
       color: hov ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))',
@@ -983,7 +983,7 @@ function SectionDivider({
     className: "divider-label",
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8.5px',
+      fontSize: '11px',
       letterSpacing: '0.32em',
       color: `${acc}aa`,
       textTransform: 'uppercase',
@@ -1104,7 +1104,7 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.32em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1213,7 +1213,7 @@ function App() {
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.28em',
       color: 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -1221,14 +1221,14 @@ function App() {
   }, "Bereiche"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'
     }
   }, "\xB7"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))'
     }
@@ -1241,7 +1241,7 @@ function App() {
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.3em',
       color: 'rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -1308,14 +1308,14 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em'
     }
   }, "\u25C8 REGISTER-STATUS: NOMINAL \u25C8 EPOCHE: UNBEKANNT"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em'
     }

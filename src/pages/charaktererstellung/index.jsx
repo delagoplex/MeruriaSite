@@ -641,7 +641,7 @@ function NeuerCharakterCard() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8.5px',
+      fontSize: '11px',
       letterSpacing: '0.32em',
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -759,7 +759,7 @@ function NeuerCharakterCard() {
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.15em',
       color: 'rgba(var(--purple-rgb),calc(0.85*var(--kp) + var(--tb)))',
       padding: '3px 7px',
@@ -770,7 +770,7 @@ function NeuerCharakterCard() {
   }, s.n), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9.5px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       color: 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
       textTransform: 'uppercase'
@@ -778,7 +778,7 @@ function NeuerCharakterCard() {
   }, s.l)), i < arr.length - 1 && /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       color: 'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))'
     }
   }, "\u2192")))), /*#__PURE__*/React.createElement("div", {
@@ -791,7 +791,7 @@ function NeuerCharakterCard() {
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.28em',
       color: hov ? 'var(--white)' : 'var(--lav)',
       textTransform: 'uppercase',
@@ -917,7 +917,7 @@ function SectionCard({
   }, sec.name), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7.5px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: `${acc}88`,
       textTransform: 'uppercase'
@@ -926,7 +926,7 @@ function SectionCard({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12.5px',
+      fontSize: '13px',
       lineHeight: 1.8,
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.02em',
@@ -949,7 +949,7 @@ function SectionCard({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.2em',
       color: `${acc}66`,
       textTransform: 'uppercase'
@@ -957,7 +957,7 @@ function SectionCard({
   }, "\u2B21 ", sec.count), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: hov ? acc : `${acc}55`,
       textTransform: 'uppercase',
@@ -1011,7 +1011,7 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.32em',
       color: 'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1118,7 +1118,7 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.28em',
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       textTransform: 'uppercase'
@@ -1153,14 +1153,14 @@ function App() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em'
     }
   }, "\u25C8 ARCHIV-STATUS: NOMINAL \u25C8 EPOCHE: UNBEKANNT"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))',
       letterSpacing: '0.2em'
     }

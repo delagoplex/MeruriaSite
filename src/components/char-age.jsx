@@ -199,7 +199,7 @@ function BirthDatePicker({ doy, jahr, onChange, buttonStyle }) {
   const M = PICKER_MONTHS[mo];
   const selDay = sel && sel.monthIdx === mo ? sel.day : null;
   const text = birthDateText(doy, j);
-  const small = { fontFamily: 'var(--font-mono, monospace)', fontSize: 8, letterSpacing: '.1em' };
+  const small = { fontFamily: 'var(--font-mono, monospace)', fontSize: 11, letterSpacing: '.1em' };
   const chip = on => ({
     ...small, padding: '3px 6px', cursor: 'pointer', borderRadius: 2,
     background: on ? 'rgba(var(--purple-rgb),calc(.28*var(--kp)))' : 'transparent',
@@ -207,12 +207,12 @@ function BirthDatePicker({ doy, jahr, onChange, buttonStyle }) {
     color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(.45*var(--kt) + var(--tb)))'
   });
   const stepBtn = {
-    ...small, fontSize: 11, width: 24, height: 24, cursor: 'pointer', borderRadius: 2, padding: 0, appearance: 'none', outline: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center',
+    ...small, fontSize: 12.5, width: 24, height: 24, cursor: 'pointer', borderRadius: 2, padding: 0, appearance: 'none', outline: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center',
     background: 'rgba(var(--purple-rgb),calc(.08*var(--kp)))', border: '1px solid rgba(var(--purple-rgb),calc(.25*var(--kp)))',
     color: 'var(--white)'
   };
   const yearInput = {
-    fontFamily: 'var(--font-body)', fontSize: 12, textAlign: 'center', width: 64, padding: '3px 4px', outline: 'none',
+    fontFamily: 'var(--font-body)', fontSize: 13, textAlign: 'center', width: 64, padding: '3px 4px', outline: 'none',
     background: 'rgba(var(--bg-rgb),.5)', border: '1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))', borderRadius: 3, color: 'var(--white)'
   };
 
@@ -221,7 +221,7 @@ function BirthDatePicker({ doy, jahr, onChange, buttonStyle }) {
       <button type="button" onClick={() => (open ? setOpen(false) : openPicker())}
         style={{ cursor: 'pointer', textAlign: 'left', width: '100%', ...buttonStyle,
           color: text ? (buttonStyle && buttonStyle.color) || 'var(--white)' : 'rgba(var(--text-rgb),calc(.3*var(--kt)))' }}>
-        {text || 'Kein Datum'} <span style={{ opacity: .4, fontSize: 10 }}>▾</span>
+        {text || 'Kein Datum'} <span style={{ opacity: .4, fontSize: 12 }}>▾</span>
       </button>
       {open && (
         <div style={{ position: 'absolute', top: 'calc(100% + 4px)', left: 0, zIndex: 1500, width: 'min(330px,92vw)', overflow: 'hidden',
@@ -251,7 +251,7 @@ function BirthDatePicker({ doy, jahr, onChange, buttonStyle }) {
               const on = selDay === d;
               return (
                 <button key={d} type="button" onClick={() => { onChange({ doy: PICKER_STARTS[mo] + d - 1, jahr: j }); setOpen(false); }}
-                  style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: 11, padding: '6px 2px', cursor: 'pointer', textAlign: 'center', borderRadius: 2,
+                  style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: 12.5, padding: '6px 2px', cursor: 'pointer', textAlign: 'center', borderRadius: 2,
                     background: on ? 'rgba(var(--purple-rgb),calc(.42*var(--kp)))' : 'rgba(var(--purple-rgb),calc(.05*var(--kp)))',
                     border: `1px solid ${on ? 'rgba(var(--purple-rgb),calc(.75*var(--kp)))' : 'rgba(var(--purple-rgb),calc(.12*var(--kp)))'}`,
                     color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(.8*var(--kt) + var(--tb)))' }}>{d}</button>

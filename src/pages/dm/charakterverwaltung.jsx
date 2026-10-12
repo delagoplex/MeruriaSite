@@ -33,7 +33,7 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
   if (src) return (
     <div style={base} {...ev}>
       <img src={src} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} alt={label} />
-      <div style={{position:'absolute',bottom:5,right:7,fontFamily:'var(--font-mono)',fontSize:6.5,color:'color-mix(in srgb, rgba(255,255,255,0.3), rgb(var(--ink-rgb)) var(--cm))',background:'rgba(0,0,0,0.6)',padding:'1px 5px',borderRadius:2,letterSpacing:'.12em'}}>ersetzen</div>
+      <div style={{position:'absolute',bottom:5,right:7,fontFamily:'var(--font-mono)',fontSize:11,color:'color-mix(in srgb, rgba(255,255,255,0.3), rgb(var(--ink-rgb)) var(--cm))',background:'rgba(0,0,0,0.6)',padding:'1px 5px',borderRadius:2,letterSpacing:'.12em'}}>ersetzen</div>
       <input ref={inp} type="file" accept="image/*" style={{display:'none'}} onChange={e=>load(e.target.files[0])} />
     </div>
   );
@@ -51,8 +51,8 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
             <circle cx="12" cy="11" r="4" stroke={ac} strokeWidth="1" opacity="0.8"/>
             <path d="M1 22 L10 15 L18 20 L26 13 L39 22" stroke={ac} strokeWidth="1.1" opacity="0.8"/>
           </svg>}
-      <span style={{fontFamily:'var(--font-mono)',fontSize:7.5,letterSpacing:'.22em',zIndex:1,color:`oklch(0.65 0.18 ${h} / 0.58)`,textTransform:'uppercase',textAlign:'center',padding:'0 10px'}}>{(label||'artwork').toLowerCase()}</span>
-      <span style={{fontFamily:'var(--font-mono)',fontSize:6.5,letterSpacing:'.1em',zIndex:1,color:`oklch(0.65 0.18 ${h} / ${drag?0.9:0.28})`,transition:'color .2s'}}>{drag ? '▼ loslassen' : 'klicken · ziehen'}</span>
+      <span style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.22em',zIndex:1,color:`oklch(0.65 0.18 ${h} / 0.58)`,textTransform:'uppercase',textAlign:'center',padding:'0 10px'}}>{(label||'artwork').toLowerCase()}</span>
+      <span style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.1em',zIndex:1,color:`oklch(0.65 0.18 ${h} / ${drag?0.9:0.28})`,transition:'color .2s'}}>{drag ? '▼ loslassen' : 'klicken · ziehen'}</span>
       <input ref={inp} type="file" accept="image/*" style={{display:'none'}} onChange={e=>load(e.target.files[0])} />
     </div>
   );
@@ -60,7 +60,7 @@ function ImageSlot({ slotId, label, height, hue, portrait }) {
 function SecTitle({ label }) {
   return (
     <div style={{marginBottom:10}}>
-      <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.28em',color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',textTransform:'uppercase'}}>{label}</span>
+      <span style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.28em',color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',textTransform:'uppercase'}}>{label}</span>
       <div style={{width:24,height:1,background:'linear-gradient(90deg,rgba(var(--purple-rgb),calc(0.65*var(--kp))),transparent)',marginTop:4}} />
     </div>
   );
@@ -80,8 +80,8 @@ function Corners({ op=0.4, sz=14 }) {
 function IRow({ label, value, bright }) {
   return (
     <div style={{display:'flex',alignItems:'baseline',gap:6,padding:'3.5px 0',borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))'}}>
-      <span style={{fontFamily:'var(--font-mono)',fontSize:7.5,letterSpacing:'.12em',color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',textTransform:'uppercase',flex:'0 0 80px'}}>{label}</span>
-      <span style={{fontFamily:'var(--font-body)',fontSize:11.5,fontWeight:bright?400:300,color:bright?'var(--white)':'var(--silver)',flex:1}}>{value}</span>
+      <span style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.12em',color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',textTransform:'uppercase',flex:'0 0 80px'}}>{label}</span>
+      <span style={{fontFamily:'var(--font-body)',fontSize:12.5,fontWeight:bright?400:300,color:bright?'var(--white)':'var(--silver)',flex:1}}>{value}</span>
     </div>
   );
 }
@@ -131,15 +131,15 @@ function CharCardDM({ row, playerName, onSelect }) {
               <span style={{fontFamily:'var(--font-display)',fontSize:52,color:'rgba(var(--purple-rgb),calc(0.14*var(--kp) + var(--tb)))'}}>{(char.name||row.name||'?')[0]}</span>
             </div>}
         <div style={{position:'absolute',bottom:0,left:0,right:0,height:'55%',background:'linear-gradient(to top,rgba(var(--bg-rgb),0.98),transparent)',pointerEvents:'none'}} />
-        <div style={{position:'absolute',top:8,left:8,fontFamily:'var(--font-mono)',fontSize:7,letterSpacing:'.12em',
+        <div style={{position:'absolute',top:8,left:8,fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.12em',
           background:'rgba(var(--bg-rgb),0.85)',border:`1px solid ${sc}55`,borderRadius:3,padding:'2px 7px',color:sc}}>
           {status}
         </div>
-        {level && <div style={{position:'absolute',top:8,right:8,fontFamily:'var(--font-mono)',fontSize:7.5,
+        {level && <div style={{position:'absolute',top:8,right:8,fontFamily:'var(--font-mono)',fontSize:11,
           background:'rgba(var(--bg-rgb),0.82)',border:'1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',borderRadius:3,padding:'2px 7px',color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))'}}>
           Stufe {level}
         </div>}
-        {hidden && <div style={{position:'absolute',bottom:8,right:8,fontFamily:'var(--font-mono)',fontSize:7,color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',letterSpacing:'.1em'}}>○ versteckt</div>}
+        {hidden && <div style={{position:'absolute',bottom:8,right:8,fontFamily:'var(--font-mono)',fontSize:11,color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',letterSpacing:'.1em'}}>○ versteckt</div>}
       </div>
 
       <div style={{padding:'10px 12px 13px'}}>
@@ -147,12 +147,12 @@ function CharCardDM({ row, playerName, onSelect }) {
           textTransform:'uppercase',marginBottom:3,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>
           {char.name || row.name || 'Unbenannt'}
         </div>
-        <div style={{fontFamily:'var(--font-mono)',fontSize:7.5,color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',letterSpacing:'.1em',marginBottom:6}}>
+        <div style={{fontFamily:'var(--font-mono)',fontSize:11,color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',letterSpacing:'.1em',marginBottom:6}}>
           {playerName}
         </div>
         <div style={{display:'flex',gap:4,flexWrap:'wrap'}}>
           {[row.race, row.class, row.division].filter(Boolean).map((t,i) => (
-            <span key={i} style={{fontFamily:'var(--font-mono)',fontSize:7,padding:'1px 6px',
+            <span key={i} style={{fontFamily:'var(--font-mono)',fontSize:11,padding:'1px 6px',
               background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',borderRadius:2,
               color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',letterSpacing:'.05em',whiteSpace:'nowrap'}}>{t}</span>
           ))}
@@ -179,7 +179,7 @@ function SummaryBar({ rows }) {
       {items.map(({ val, lbl, col }) => (
         <div key={lbl} style={{display:'flex',flexDirection:'column',gap:2}}>
           <div style={{fontFamily:'var(--font-display)',fontSize:18,color:col||'var(--white)'}}>{val}</div>
-          <div style={{fontFamily:'var(--font-mono)',fontSize:7.5,letterSpacing:'.22em',textTransform:'uppercase',color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'}}>{lbl}</div>
+          <div style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.22em',textTransform:'uppercase',color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))'}}>{lbl}</div>
         </div>
       ))}
     </div>
@@ -217,7 +217,7 @@ function DMGrid({ rows, profiles, onSelect }) {
 
   const hasFilter = q || playerF || raceF || classF || divF;
   const selSt = {
-    fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',textTransform:'uppercase',
+    fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.12em',textTransform:'uppercase',
     padding:'5px 10px',background:'rgb(var(--panel-rgb))',border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
     borderRadius:3,cursor:'pointer',color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',outline:'none',colorScheme:'dark'
   };
@@ -230,7 +230,7 @@ function DMGrid({ rows, profiles, onSelect }) {
           color:'var(--white)',textTransform:'uppercase',textShadow:'0 0 28px rgba(var(--purple-rgb),calc(0.18*var(--kp)))'}}>
           Charakterverwaltung
         </h1>
-        <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.28em',color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',textTransform:'uppercase'}}>
+        <span style={{fontFamily:'var(--font-mono)',fontSize:11.5,letterSpacing:'.28em',color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',textTransform:'uppercase'}}>
           DM-Bereich
         </span>
       </div>
@@ -245,14 +245,14 @@ function DMGrid({ rows, profiles, onSelect }) {
           const count  = oid ? rows.filter(r => r.owner_id === oid).length : rows.length;
           return (
             <button key={oid||'alle'} onClick={() => setPlayerF(oid)}
-              style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.14em',textTransform:'uppercase',
+              style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.14em',textTransform:'uppercase',
                 padding:'5px 12px',cursor:'pointer',borderRadius:3,transition:'all .15s',outline:'none',
                 display:'flex',alignItems:'center',gap:7,
                 background: active ? 'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' : 'transparent',
                 border: `1px solid rgba(var(--purple-rgb),${active ? 0.5 : 0.2})`,
                 color: active ? 'rgba(var(--text-rgb),calc(0.92*var(--kt)))' : 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))'}}>
               {label}
-              <span style={{fontFamily:'var(--font-mono)',fontSize:7,
+              <span style={{fontFamily:'var(--font-mono)',fontSize:11,
                 background: active ? 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
                 border: `1px solid rgba(var(--purple-rgb),${active ? 0.4 : 0.18})`,
                 borderRadius:10,padding:'0 5px',color: active ? 'rgba(var(--text-rgb),calc(0.8*var(--kt)))' : 'rgba(var(--purple-rgb),calc(0.55*var(--kp)))',
@@ -267,7 +267,7 @@ function DMGrid({ rows, profiles, onSelect }) {
       {/* Weitere Filter */}
       <div style={{display:'flex',gap:8,alignItems:'center',marginBottom:20,flexWrap:'wrap'}}>
         <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Suchen …"
-          style={{fontFamily:'var(--font-body)',fontSize:12,color:'var(--white)',
+          style={{fontFamily:'var(--font-body)',fontSize:13,color:'var(--white)',
             background:'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
             borderRadius:4,padding:'5px 11px',outline:'none',width:180}} />
 
@@ -285,19 +285,19 @@ function DMGrid({ rows, profiles, onSelect }) {
         </select>}
 
         {hasFilter && <button onClick={()=>{setQ('');setPlayerF('');setRaceF('');setClassF('');setDivF('');}}
-          style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',padding:'5px 10px',
+          style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.12em',padding:'5px 10px',
             background:'transparent',border:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))',borderRadius:3,
             cursor:'pointer',color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))'}}>
           × Filter löschen
         </button>}
 
-        <span style={{fontFamily:'var(--font-mono)',fontSize:8,color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))',marginLeft:'auto',letterSpacing:'.12em'}}>
+        <span style={{fontFamily:'var(--font-mono)',fontSize:11,color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))',marginLeft:'auto',letterSpacing:'.12em'}}>
           {filtered.length} Charakter{filtered.length !== 1 ? 'e' : ''}
         </span>
       </div>
 
       {filtered.length === 0
-        ? <div style={{textAlign:'center',padding:'60px 0',fontFamily:'var(--font-mono)',fontSize:9,
+        ? <div style={{textAlign:'center',padding:'60px 0',fontFamily:'var(--font-mono)',fontSize:11.5,
             letterSpacing:'.2em',color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))',textTransform:'uppercase'}}>
             Keine Charaktere gefunden
           </div>
@@ -311,8 +311,10 @@ function DMGrid({ rows, profiles, onSelect }) {
 }
 
 /* ── DM-Kontrollleiste (Detailansicht) ───────── */
-function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onVisibilityToggle, onLevelSet, onUprank }) {
+function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onVisibilityToggle, onLevelSet, onUprank, onDelete }) {
   const char      = entry._char || {};
+  const [delOpen, setDelOpen] = useState(false);
+  const [delBusy, setDelBusy] = useState(false);
   const level     = char.level || 1;
   const [lvlInput, setLvlInput] = useState(level);
   React.useEffect(() => setLvlInput(level), [level]);
@@ -321,14 +323,14 @@ function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onV
     if (n >= 1 && n <= 30 && n !== level) onLevelSet(n);
     else setLvlInput(level);
   }
-  const div       = (window.DIVISIONS_DATA?.divisionen || []).find(d => d.name === char.division);
+  const div       = (window.DIVISIONS_DATA || []).find(d => d.name === char.division);
   const rankLvl   = char.rankLevel || 1;
   const canUp     = div && rankLvl < div.raenge.length;
   const nextRang  = div ? div.raenge.length - (rankLvl + 1) + 1 : null;
   const nextRankObj = div?.raenge.find(r => r.rang === nextRang);
 
   const btn = (col, bg='transparent', border='rgba(var(--purple-rgb),calc(0.25*var(--kp)))') => ({
-    fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.14em',textTransform:'uppercase',
+    fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.14em',textTransform:'uppercase',
     padding:'5px 13px',background:bg,border:`1px solid ${border}`,borderRadius:3,
     cursor:'pointer',color:col,transition:'all .15s',whiteSpace:'nowrap',outline:'none',flexShrink:0
   });
@@ -346,7 +348,7 @@ function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onV
 
       <div style={{width:1,height:20,background:'rgba(var(--purple-rgb),calc(0.2*var(--kp)))',flexShrink:0}} />
 
-      <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.14em',
+      <span style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.14em',
         color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',whiteSpace:'nowrap',flexShrink:0}}>
         Spieler: <span style={{color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))'}}>{playerName}</span>
       </span>
@@ -355,7 +357,7 @@ function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onV
 
       {/* Status */}
       <select value={status} onChange={e => onStatusChange(e.target.value)}
-        style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.12em',textTransform:'uppercase',
+        style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.12em',textTransform:'uppercase',
           padding:'5px 10px',background:'rgb(var(--panel-rgb))',border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))',
           borderRadius:3,color:STATUS_COLOR[status]||'var(--white)',outline:'none',cursor:'pointer',colorScheme:'dark',flexShrink:0}}>
         {STATUS_OPTIONS.map(s => <option key={s} value={s} style={{color:STATUS_COLOR[s]}}>{s}</option>)}
@@ -371,14 +373,14 @@ function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onV
 
       {/* Level direkt editierbar */}
       <div style={{display:'flex',alignItems:'center',gap:5,border:'1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',borderRadius:3,padding:'3px 9px',background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))'}}>
-        <span style={{fontFamily:'var(--font-mono)',fontSize:8,letterSpacing:'.14em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',whiteSpace:'nowrap'}}>Stufe</span>
+        <span style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.14em',textTransform:'uppercase',color:'rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))',whiteSpace:'nowrap'}}>Stufe</span>
         <input
           type="number" min="1" max="30"
           value={lvlInput}
           onChange={e => setLvlInput(e.target.value)}
           onBlur={commitLevel}
           onKeyDown={e => e.key === 'Enter' && commitLevel()}
-          style={{fontFamily:'var(--font-mono)',fontSize:11,fontWeight:600,color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
+          style={{fontFamily:'var(--font-mono)',fontSize:12.5,fontWeight:600,color:'rgba(var(--text-rgb),calc(0.9*var(--kt) + var(--tb)))',
             background:'transparent',border:'none',outline:'none',width:36,textAlign:'center',colorScheme:'dark'}}
         />
       </div>
@@ -391,6 +393,35 @@ function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onV
           onMouseLeave={e=>{e.currentTarget.style.background='rgba(213,180,90,0.08)';}}>
           Aufstieg → {nextRankObj.titel}
         </button>
+      )}
+
+      {/* Löschen (mit Rückfrage) */}
+      <button style={btn('rgba(227,103,96,0.85)','transparent','rgba(227,103,96,0.35)')}
+        onClick={() => setDelOpen(true)}
+        onMouseEnter={e=>{e.currentTarget.style.background='rgba(227,103,96,0.12)';}}
+        onMouseLeave={e=>{e.currentTarget.style.background='transparent';}}>
+        ✕ Löschen
+      </button>
+
+      {delOpen && (
+        <div onClick={e => { if (e.target === e.currentTarget && !delBusy) setDelOpen(false); }}
+          style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(var(--bg-rgb),0.85)',display:'flex',alignItems:'center',justifyContent:'center',padding:20}}>
+          <div role="alertdialog" aria-label="Charakter löschen"
+            style={{width:'100%',maxWidth:440,background:'rgba(var(--panel-rgb),0.99)',border:'1px solid rgba(227,103,96,0.5)',borderRadius:6,padding:'26px 28px'}}>
+            <div style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.24em',textTransform:'uppercase',color:'rgba(227,103,96,0.9)',marginBottom:10}}>Charakter löschen</div>
+            <div style={{fontFamily:'var(--font-display)',fontSize:18,letterSpacing:'.12em',color:'var(--white)',textTransform:'uppercase',marginBottom:12}}>{entry.name}</div>
+            <p style={{fontFamily:'var(--font-body)',fontSize:14,lineHeight:1.65,color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',margin:'0 0 20px'}}>
+              Soll dieser Charakter von {playerName} wirklich endgültig gelöscht werden? Das kann nicht rückgängig gemacht werden.
+            </p>
+            <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
+              <button style={btn('var(--white)')} disabled={delBusy} onClick={() => setDelOpen(false)}>Abbrechen</button>
+              <button style={btn('#fff','rgba(227,103,96,0.35)','rgba(227,103,96,0.7)')} disabled={delBusy}
+                onClick={async () => { setDelBusy(true); const ok = await onDelete(); setDelBusy(false); if (!ok) return; setDelOpen(false); }}>
+                {delBusy ? 'Lösche …' : 'Endgültig löschen'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
@@ -472,10 +503,19 @@ function App() {
     await patchChar(entry.id, { ...entry._char, level: n });
   }
 
+  async function handleDelete() {
+    if (!entry) return false;
+    const { error } = await window._sb.from('characters').delete().eq('id', entry.id);
+    if (error) { window.alert('Löschen fehlgeschlagen: ' + error.message); return false; }
+    setRows(rs => rs.filter(r => r.id !== entry.id));
+    setEntry(null);
+    return true;
+  }
+
   async function handleUprank() {
     if (!entry) return;
     const char   = entry._char || {};
-    const div    = (window.DIVISIONS_DATA?.divisionen || []).find(d => d.name === char.division);
+    const div    = (window.DIVISIONS_DATA || []).find(d => d.name === char.division);
     if (!div) return;
     const newLvl = (char.rankLevel || 1) + 1;
     if (newLvl > div.raenge.length) return;
@@ -489,7 +529,7 @@ function App() {
       <div className="page-root">
         <SiteNav active="dm-bereich" />
         <div style={{minHeight:'calc(var(--vh, 1vh) * 100)',display:'flex',alignItems:'center',justifyContent:'center'}}>
-          <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.3em',color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',textTransform:'uppercase'}}>◈ Lade …</span>
+          <span style={{fontFamily:'var(--font-mono)',fontSize:11.5,letterSpacing:'.3em',color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',textTransform:'uppercase'}}>◈ Lade …</span>
         </div>
       </div>
     </SiteGate>
@@ -500,7 +540,7 @@ function App() {
       <div className="page-root">
         <SiteNav active="dm-bereich" />
         <div style={{minHeight:'calc(var(--vh, 1vh) * 100)',display:'flex',alignItems:'center',justifyContent:'center'}}>
-          <span style={{fontFamily:'var(--font-mono)',fontSize:9,letterSpacing:'.28em',color:'rgba(200,80,80,0.6)',textTransform:'uppercase'}}>◈ Kein Zugriff — DM-Konto erforderlich</span>
+          <span style={{fontFamily:'var(--font-mono)',fontSize:11.5,letterSpacing:'.28em',color:'rgba(200,80,80,0.6)',textTransform:'uppercase'}}>◈ Kein Zugriff — DM-Konto erforderlich</span>
         </div>
       </div>
     </SiteGate>
@@ -522,6 +562,7 @@ function App() {
               onVisibilityToggle={handleVisibilityToggle}
               onLevelSet={handleLevelSet}
               onUprank={handleUprank}
+              onDelete={handleDelete}
             />
             <SV key={verKey} entry={entry} onBack={() => setEntry(null)} hasMultiple={rows.length > 1} hideNav={true} />
           </div>

@@ -8,7 +8,6 @@
   background: var(--bg);
   color: var(--white);
   font-family: var(--font-body);
-  padding-top: var(--nav-h);
 }
 
 .sim-hero {
@@ -706,7 +705,8 @@
   border: 1px solid rgba(var(--accent-rgb),calc(0.1*var(--ka)));
   border-radius: 4px;
 }
-.sim-saved-char-row-dimmed { opacity: 0.38; }
+/* bereits in der Gruppe: Name und Werte abgedunkelt, der Entfernen-Button bleibt gut sichtbar */
+.sim-saved-char-row-dimmed > :not(button) { opacity: 0.45; }
 .sim-saved-char-name { flex: 1; font-size: 0.82rem; font-weight: 500; }
 .sim-saved-char-meta { font-size: 0.68rem; color: var(--silver); opacity: 0.55; font-family: var(--font-mono); }
 

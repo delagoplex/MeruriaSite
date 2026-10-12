@@ -39,7 +39,7 @@ html, body { overflow: hidden; }
 }
 .res-tabbar-count {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11.5px;
   color: color-mix(in srgb, rgba(38,198,218,0.38), rgb(var(--ink-rgb)) var(--cm));
   letter-spacing: 0.16em;
 }
@@ -56,7 +56,7 @@ html, body { overflow: hidden; }
   border: none;
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11.5px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)));
@@ -115,7 +115,7 @@ html, body { overflow: hidden; }
   border-radius: 3px;
   color: var(--white);
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 300;
   padding: 6px 28px 6px 10px;
   letter-spacing: 0.04em;
@@ -212,7 +212,7 @@ html, body { overflow: hidden; }
 
 .fish-name {
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 12.5px;
   letter-spacing: 0.07em;
   color: var(--white);
   line-height: 1.3;
@@ -223,7 +223,7 @@ html, body { overflow: hidden; }
 }
 .fish-level {
   font-family: var(--font-mono);
-  font-size: 7.5px;
+  font-size: 11px;
   color: color-mix(in srgb, rgba(38,198,218,0.5), rgb(var(--ink-rgb)) var(--cm));
   letter-spacing: 0.18em;
   margin-top: 2px;
@@ -235,7 +235,7 @@ html, body { overflow: hidden; }
 }
 .fish-size-badge {
   font-family: var(--font-mono);
-  font-size: 7.5px;
+  font-size: 11px;
   letter-spacing: 0.12em;
   padding: 2px 6px;
   border: 1px solid rgba(38,198,218,0.3);
@@ -252,7 +252,7 @@ html, body { overflow: hidden; }
 .fish-klima { display: flex; gap: 3px; flex-wrap: wrap; margin: 6px 0; }
 .fish-klima-chip {
   font-family: var(--font-mono);
-  font-size: 6.5px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   padding: 1px 5px;
   border-radius: 2px;
@@ -265,11 +265,11 @@ html, body { overflow: hidden; }
   justify-content: space-between;
   gap: 4px;
 }
-.fish-weight { font-family: var(--font-mono); font-size: 8px; color: rgba(var(--text-rgb),calc(0.38*var(--kt) + var(--tb))); letter-spacing: 0.06em; }
-.fish-price  { font-family: var(--font-mono); font-size: 9px; color: color-mix(in srgb, rgba(255,214,0,0.72), rgb(var(--ink-rgb)) var(--cm)); letter-spacing: 0.08em; white-space: nowrap; }
+.fish-weight { font-family: var(--font-mono); font-size: 11px; color: rgba(var(--text-rgb),calc(0.38*var(--kt) + var(--tb))); letter-spacing: 0.06em; }
+.fish-price  { font-family: var(--font-mono); font-size: 11.5px; color: color-mix(in srgb, rgba(255,214,0,0.72), rgb(var(--ink-rgb)) var(--cm)); letter-spacing: 0.08em; white-space: nowrap; }
 .fish-desc   {
   font-family: var(--font-body);
-  font-size: 9.5px;
+  font-size: 11.5px;
   font-weight: 300;
   line-height: 1.6;
   color: rgba(var(--text-rgb),calc(0.35*var(--kt) + var(--tb)));
@@ -284,7 +284,7 @@ html, body { overflow: hidden; }
 /* ── Filter chips ────────────────────────────────────────── */
 .filter-chip {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.14em;
   padding: 3px 8px;
   border: 1px solid rgba(var(--accent-rgb),calc(0.2*var(--ka)));
@@ -309,7 +309,7 @@ html, body { overflow: hidden; }
   border-radius: 2px;
   color: var(--muted-r);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 11.5px;
   letter-spacing: 0.12em;
   cursor: pointer;
   transition: all 0.15s;
@@ -317,8 +317,8 @@ html, body { overflow: hidden; }
 .sort-btn.active { background: rgba(38,198,218,0.1); border-color: rgba(38,198,218,0.35); color: var(--white); }
 .sort-btn:hover:not(.active) { color: rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb))); background: rgba(38,198,218,0.04); }
 
-.res-count { font-family: var(--font-mono); font-size: 9px; color: color-mix(in srgb, rgba(38,198,218,0.38), rgb(var(--ink-rgb)) var(--cm)); letter-spacing: 0.16em; margin-bottom: 10px; }
-.res-empty { text-align: center; padding: 80px 20px; color: color-mix(in srgb, rgba(38,198,218,0.22), rgb(var(--ink-rgb)) var(--cm)); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+.res-count { font-family: var(--font-mono); font-size: 11.5px; color: color-mix(in srgb, rgba(38,198,218,0.38), rgb(var(--ink-rgb)) var(--cm)); letter-spacing: 0.16em; margin-bottom: 10px; }
+.res-empty { text-align: center; padding: 80px 20px; color: color-mix(in srgb, rgba(38,198,218,0.22), rgb(var(--ink-rgb)) var(--cm)); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.22em; text-transform: uppercase; }
 
 /* ── Fish Detail Modal ───────────────────────────────────── */
 .fish-modal-overlay {
@@ -414,7 +414,7 @@ html, body { overflow: hidden; }
 }
 .fish-modal-label {
   font-family: var(--font-mono);
-  font-size: 7.5px;
+  font-size: 11px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: color-mix(in srgb, rgba(38,198,218,0.42), rgb(var(--ink-rgb)) var(--cm));
@@ -505,7 +505,7 @@ html, body { overflow: hidden; }
     margin-bottom: 14px;
     padding: 7px 16px;
     font-family: var(--font-mono);
-    font-size: 9px;
+    font-size: 11.5px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--ac-res);
@@ -554,6 +554,6 @@ html, body { overflow: hidden; }
 @media (max-width: 768px) {
   .res-tabbar { height: 46px; }
   .res-tabbar-tabs { flex: 1; min-width: 0; padding: 0 4px; gap: 0; overflow-x: auto; }
-  .res-tab { flex: 1 0 auto; justify-content: center; padding: 0 8px; gap: 5px; letter-spacing: 0.08em; font-size: 10px; }
+  .res-tab { flex: 1 0 auto; justify-content: center; padding: 0 8px; gap: 5px; letter-spacing: 0.08em; font-size: 12px; }
   .res-tab-dot { display: none; }
 }

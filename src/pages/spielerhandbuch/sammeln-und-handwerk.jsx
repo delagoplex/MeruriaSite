@@ -106,7 +106,7 @@ const navBtnStyle = {
   display:'flex', flexDirection:'column', gap:'4px',
 };
 const navBtnLabelStyle = {
-  fontFamily:'var(--font-mono)', fontSize:'9px', letterSpacing:'0.2em',
+  fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.2em',
   color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase',
 };
 const navBtnTitleStyle = {

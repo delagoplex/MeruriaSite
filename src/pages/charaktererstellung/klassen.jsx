@@ -313,7 +313,7 @@ function KlasseCard({
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: accent + 'bb',
       textTransform: 'uppercase',
@@ -324,7 +324,7 @@ function KlasseCard({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '10px',
+      fontSize: '12px',
       lineHeight: 1.75,
       color: 'rgba(var(--text-rgb),calc(0.78*var(--kt) + var(--tb)))',
       letterSpacing: '0.03em',
@@ -385,7 +385,7 @@ function KlasseCard({
   }, klasse.name), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.18em',
       color: accent + 'bb',
       marginTop: '3px',
@@ -466,7 +466,7 @@ function KlasseDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: accent + '66',
       letterSpacing: '0.25em',
       textTransform: 'uppercase'
@@ -475,7 +475,7 @@ function KlasseDetail({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
       letterSpacing: '0.03em',
       lineHeight: 1.5
@@ -518,7 +518,7 @@ function KlasseDetail({
       border: `1px solid ${accent}44`,
       color: pal[3],
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.2em',
       padding: '7px 16px',
       cursor: 'pointer',
@@ -536,14 +536,14 @@ function KlasseDetail({
   }, "\u2190 ZUR\xDCCK"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: accent + '77',
       letterSpacing: '0.25em'
     }
   }, "MERURIA / KLASSE / ", klasse.id.toUpperCase()), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       color: accent + '44',
       letterSpacing: '0.2em'
     }
@@ -608,7 +608,7 @@ function KlasseDetail({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: accent + '44',
       letterSpacing: '0.1em',
       textAlign: 'center'
@@ -644,7 +644,7 @@ function KlasseDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.3em',
       color: accent + '88',
       textTransform: 'uppercase',
@@ -675,7 +675,7 @@ function KlasseDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: accent + '77',
       marginBottom: '9px',
@@ -691,7 +691,7 @@ function KlasseDetail({
     key: i,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '10px',
+      fontSize: '12px',
       padding: '4px 12px',
       border: `1px solid ${accent}44`,
       color: pal[3],
@@ -704,7 +704,7 @@ function KlasseDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: accent + '77',
       marginBottom: '10px',
@@ -724,7 +724,7 @@ function KlasseDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: accent + '77',
       marginBottom: '10px',
@@ -734,7 +734,7 @@ function KlasseDetail({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: 1.85,
       color: 'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
       letterSpacing: '0.015em',
@@ -760,7 +760,7 @@ function KlasseDetail({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '7px',
+      fontSize: '11px',
       color: accent + '66',
       letterSpacing: '0.25em',
       textTransform: 'uppercase',
@@ -777,7 +777,7 @@ function KlasseDetail({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '400',
-      fontSize: '11px',
+      fontSize: '12.5px',
       padding: '4px 12px',
       border: `1px solid ${accent}55`,
       color: pal[3] + 'cc',
@@ -792,7 +792,7 @@ function KlasseDetail({
     style: { borderTop: `1px solid ${accent}18`, paddingTop: '22px', ...s(0.42) }
   },
     React.createElement("div", {
-      style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase', marginBottom: '10px' }
+      style: { fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase', marginBottom: '10px' }
     }, "Startausr\xFCstung"),
     React.createElement("div", {
       style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 24px' }
@@ -807,7 +807,7 @@ function KlasseDetail({
     style: { borderTop: `1px solid ${accent}18`, paddingTop: '22px', ...s(0.46) }
   },
     React.createElement("div", {
-      style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase', marginBottom: '12px' }
+      style: { fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase', marginBottom: '12px' }
     }, "Stufentabelle"),
     React.createElement("div", { style: { overflowX: 'auto' } },
       React.createElement("div", {
@@ -819,11 +819,11 @@ function KlasseDetail({
           marginBottom: '2px'
         }
       },
-        React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "Stufe"),
-        React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "\xDCB"),
-        React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "Merkmale"),
+        React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "Stufe"),
+        React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "\xDCB"),
+        React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '88', letterSpacing: '0.15em', textTransform: 'uppercase' } }, "Merkmale"),
         (detail.stufentabelle.extraSpalten || []).map((col, ci) =>
-          React.createElement("div", { key: ci, style: { fontFamily: 'var(--font-mono)', fontSize: '7px', color: accent + '88', letterSpacing: '0.1em', textTransform: 'uppercase', textAlign: 'right' } }, col)
+          React.createElement("div", { key: ci, style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '88', letterSpacing: '0.1em', textTransform: 'uppercase', textAlign: 'right' } }, col)
         )
       ),
       detail.stufentabelle.zeilen.map((row, ri) => {
@@ -842,11 +842,11 @@ function KlasseDetail({
             background: ri % 2 === 0 ? accent + '08' : 'transparent'
           }
         },
-          React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: pal[3], letterSpacing: '0.1em' } }, row.stufe),
-          React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '99' } }, '+' + row.uebungsbonus),
-          React.createElement("div", { style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '10px', color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight: 1.3 } }, nameStr || '—'),
+          React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '12.5px', color: pal[3], letterSpacing: '0.1em' } }, row.stufe),
+          React.createElement("div", { style: { fontFamily: 'var(--font-mono)', fontSize: '12.5px', color: accent + '99' } }, '+' + row.uebungsbonus),
+          React.createElement("div", { style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight: 1.3 } }, nameStr || '—'),
           (row.extra || []).map((val, ei) =>
-            React.createElement("div", { key: ei, style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + 'bb', textAlign: 'right' } }, val)
+            React.createElement("div", { key: ei, style: { fontFamily: 'var(--font-mono)', fontSize: '12.5px', color: accent + 'bb', textAlign: 'right' } }, val)
           )
         );
       })
@@ -857,7 +857,7 @@ function KlasseDetail({
     style: { borderTop: `1px solid ${accent}18`, paddingTop: '22px', display: 'flex', flexDirection: 'column', gap: '20px', ...s(0.50) }
   },
     React.createElement("div", {
-      style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase' }
+      style: { fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase' }
     }, "Klassenmerkmale"),
     (() => {
       const invocationIds = (detail.merkmaleIds || []).filter(id => id.startsWith('hexenmeister_anrufung_'));
@@ -874,16 +874,16 @@ function KlasseDetail({
               style: { fontFamily: 'var(--font-display)', fontSize: '14px', color: pal[3], letterSpacing: '0.08em' }
             }, m.name),
             m.optional ? React.createElement("span", {
-              style: { fontFamily: 'var(--font-mono)', fontSize: '8px', color: accent + '77', border: `1px solid ${accent}44`, padding: '1px 6px', borderRadius: '2px', letterSpacing: '0.1em' }
+              style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '77', border: `1px solid ${accent}44`, padding: '1px 6px', borderRadius: '2px', letterSpacing: '0.1em' }
             }, "Optional") : null,
             React.createElement("div", {
-              style: { fontFamily: 'var(--font-mono)', fontSize: '8px', color: accent + '55', letterSpacing: '0.1em' }
+              style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '55', letterSpacing: '0.1em' }
             }, "Stufe " + m.stufe)
           ),
           (m.beschreibung || []).map((p, pi) =>
             React.createElement("p", {
               key: pi,
-              style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing: '0.01em', margin: '0 0 6px' }
+              style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing: '0.01em', margin: '0 0 6px' }
             }, p)
           ),
           isAnrufungSystem && invocationIds.length > 0 ? React.createElement("div", { style: { marginTop: '10px' } },
@@ -893,13 +893,13 @@ function KlasseDetail({
                 display: 'flex', alignItems: 'center', gap: '8px',
                 background: accent + '0d', border: `1px solid ${accent}33`,
                 padding: '8px 14px', borderRadius: '3px', cursor: 'pointer',
-                fontFamily: 'var(--font-mono)', fontSize: '9px', color: accent + 'bb',
+                fontFamily: 'var(--font-mono)', fontSize: '11.5px', color: accent + 'bb',
                 letterSpacing: '0.15em', textTransform: 'uppercase', width: '100%',
                 textAlign: 'left', outline: 'none', transition: 'background 0.15s'
               }
             },
               React.createElement("span", {
-                style: { display: 'inline-block', transition: 'transform 0.2s', transform: anrufungenOpen ? 'rotate(90deg)' : 'none', flexShrink: 0, fontSize: '8px' }
+                style: { display: 'inline-block', transition: 'transform 0.2s', transform: anrufungenOpen ? 'rotate(90deg)' : 'none', flexShrink: 0, fontSize: '11px' }
               }, '▶'),
               'Alle Anrufungen (' + invocationIds.length + ')'
             ),
@@ -917,17 +917,17 @@ function KlasseDetail({
                       display: 'flex', alignItems: 'center', gap: '8px', width: '100%',
                       background: isOpen ? accent + '18' : accent + '07',
                       padding: '6px 12px', cursor: 'pointer', border: 'none', outline: 'none',
-                      fontFamily: 'var(--font-body)', fontSize: '12px',
+                      fontFamily: 'var(--font-body)', fontSize: '13px',
                       color: isOpen ? pal[3] : 'rgba(var(--text-rgb),calc(0.68*var(--kt)))',
                       textAlign: 'left', transition: 'all 0.12s', letterSpacing: '0.01em'
                     }
                   },
                     React.createElement("span", {
-                      style: { display: 'inline-block', transition: 'transform 0.2s', transform: isOpen ? 'rotate(90deg)' : 'none', flexShrink: 0, fontSize: '7px', color: accent + '88', marginRight: '2px' }
+                      style: { display: 'inline-block', transition: 'transform 0.2s', transform: isOpen ? 'rotate(90deg)' : 'none', flexShrink: 0, fontSize: '11px', color: accent + '88', marginRight: '2px' }
                     }, '▶'),
                     aM.name,
                     aM.stufe ? React.createElement("span", {
-                      style: { marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: '8px', color: accent + '44', flexShrink: 0, paddingLeft: '12px' }
+                      style: { marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '44', flexShrink: 0, paddingLeft: '12px' }
                     }, 'Stufe ' + aM.stufe) : null
                   ),
                   isOpen ? React.createElement("div", {
@@ -935,7 +935,7 @@ function KlasseDetail({
                   },
                     (aM.beschreibung || []).map((p, pi) =>
                       React.createElement("p", {
-                        key: pi, style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing: '0.01em', margin: '0 0 6px' }
+                        key: pi, style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing: '0.01em', margin: '0 0 6px' }
                       }, p)
                     )
                   ) : null
@@ -952,7 +952,7 @@ function KlasseDetail({
     style: { borderTop: `1px solid ${accent}18`, paddingTop: '22px', ...s(0.56) }
   },
     React.createElement("div", {
-      style: { fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase', marginBottom: '12px' }
+      style: { fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase', marginBottom: '12px' }
     }, "Unterklassen"),
     /* Tab-Leiste */
     React.createElement("div", {
@@ -965,7 +965,7 @@ function KlasseDetail({
           onClick: () => setSelectedSubklasse(active ? null : uk.id),
           style: {
             fontFamily: 'var(--font-mono)',
-            fontSize: '9px',
+            fontSize: '11.5px',
             letterSpacing: '0.12em',
             padding: '5px 13px',
             border: `1px solid ${active ? accent : accent + '40'}`,
@@ -984,7 +984,7 @@ function KlasseDetail({
       style: { borderTop: `1px solid ${accent}18`, paddingTop: '18px' }
     },
       selectedUk.beschreibung ? React.createElement("p", {
-        style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.8, color: 'rgba(var(--text-rgb),calc(0.62*var(--kt) + var(--tb)))', letterSpacing: '0.01em', marginBottom: '20px', fontStyle: 'italic', paddingLeft: '12px', borderLeft: `2px solid ${accent}33` }
+        style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: 1.8, color: 'rgba(var(--text-rgb),calc(0.62*var(--kt) + var(--tb)))', letterSpacing: '0.01em', marginBottom: '20px', fontStyle: 'italic', paddingLeft: '12px', borderLeft: `2px solid ${accent}33` }
       }, selectedUk.beschreibung) : null,
       (selectedUk.merkmaleIds && selectedUk.merkmaleIds.length > 0)
         ? selectedUk.merkmaleIds.map((id, fi) => {
@@ -998,19 +998,19 @@ function KlasseDetail({
                   style: { fontFamily: 'var(--font-display)', fontSize: '13px', color: pal[3], letterSpacing: '0.08em' }
                 }, m.name),
                 React.createElement("div", {
-                  style: { fontFamily: 'var(--font-mono)', fontSize: '8px', color: accent + '55', letterSpacing: '0.1em' }
+                  style: { fontFamily: 'var(--font-mono)', fontSize: '11px', color: accent + '55', letterSpacing: '0.1em' }
                 }, 'Stufe ' + m.stufe)
               ),
               (m.beschreibung || []).map((p, pi) =>
                 React.createElement("p", {
                   key: pi,
-                  style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '12px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing: '0.01em', margin: '0 0 6px' }
+                  style: { fontFamily: 'var(--font-body)', fontWeight: '300', fontSize: '13px', lineHeight: 1.75, color: 'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', letterSpacing: '0.01em', margin: '0 0 6px' }
                 }, p)
               )
             );
           }).filter(Boolean)
         : React.createElement("div", {
-            style: { fontFamily: 'var(--font-mono)', fontSize: '9px', color: accent + '44', letterSpacing: '0.15em', fontStyle: 'italic' }
+            style: { fontFamily: 'var(--font-mono)', fontSize: '11.5px', color: accent + '44', letterSpacing: '0.15em', fontStyle: 'italic' }
           }, "Pfadmerkmale folgen.")
     ) : null
   ) : null,
@@ -1019,7 +1019,7 @@ function KlasseDetail({
     style: { borderTop: `1px solid ${accent}10`, paddingTop: '16px', ...s(0.42) }
   },
     React.createElement("div", {
-      style: { fontFamily: 'var(--font-mono)', fontSize: '9px', color: accent + '44', letterSpacing: '0.2em', fontStyle: 'italic' }
+      style: { fontFamily: 'var(--font-mono)', fontSize: '11.5px', color: accent + '44', letterSpacing: '0.2em', fontStyle: 'italic' }
     }, "Vollst\xE4ndige Klassendetails folgen.")
   ) : null
   ), /*#__PURE__*/React.createElement("style", null, `
@@ -1070,7 +1070,7 @@ function SectionBanner({
   }), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: col + '44',
       textTransform: 'uppercase'
@@ -1097,7 +1097,7 @@ function SectionHeading({
   }, subtitle && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: col + '77',
       textTransform: 'uppercase',
@@ -1190,7 +1190,7 @@ function TOCSidebar({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1212,7 +1212,7 @@ function TOCSidebar({
       cursor: 'pointer',
       fontFamily: 'var(--font-body)',
       fontWeight: '400',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.1em',
       fontVariant: 'small-caps',
       color: entry.isSection ? 'rgba(var(--text-rgb),calc(0.75*var(--kt)))' : 'rgba(var(--text-rgb),calc(0.6*var(--kt)))',

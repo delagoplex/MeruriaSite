@@ -309,7 +309,7 @@ function RaceImagePlaceholder({
   })), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.22em',
       color: `${accent}44`,
       textTransform: 'uppercase',
@@ -473,7 +473,7 @@ function CardInner({
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
       fontStyle: 'normal',
-      fontSize: '10px',
+      fontSize: '12px',
       color: 'rgba(var(--text-rgb),calc(0.48*var(--kt) + var(--tb)))',
       letterSpacing: '0.05em',
       lineHeight: 1.55,
@@ -490,7 +490,7 @@ function CardInner({
     key: tag,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.12em',
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       background: 'rgba(var(--purple-rgb),calc(0.07*var(--kp)))',
@@ -550,7 +550,7 @@ function CardInner({
     key: tag,
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.18em',
       padding: '4px 10px',
       borderRadius: '2px',
@@ -717,7 +717,7 @@ function GroupSection({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.3em',
       color: `${accent}66`,
       textTransform: 'uppercase',
@@ -789,7 +789,7 @@ function EntityDetailPlaceholder({
     gap: '8px',
     fontFamily: 'var(--font-body)',
     fontWeight: '300',
-    fontSize: '11px',
+    fontSize: '12.5px',
     letterSpacing: '0.12em',
     color: 'rgba(var(--text2-rgb),calc(0.55*var(--kt) + var(--tb)))',
     background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))',
@@ -842,7 +842,7 @@ function EntityDetailPlaceholder({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '9px',
+      fontSize: '11.5px',
       letterSpacing: '0.35em',
       color: `${acc}66`,
       textTransform: 'uppercase',
@@ -873,7 +873,7 @@ function EntityDetailPlaceholder({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-display)',
-      fontSize: '10px',
+      fontSize: '12px',
       fontWeight: '400',
       letterSpacing: '0.22em',
       color: `${acc}88`,
@@ -892,7 +892,7 @@ function EntityDetailPlaceholder({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '10px',
+      fontSize: '12px',
       letterSpacing: '0.1em',
       padding: '5px 12px',
       borderRadius: '3px',
@@ -920,7 +920,7 @@ function EntityDetailPlaceholder({
     style: {
       textAlign: 'center',
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       color: `${acc}44`,
       marginTop: '7px',
       letterSpacing: '0.1em'
@@ -944,7 +944,7 @@ function EntityDetailPlaceholder({
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.16em',
       color: `${acc}55`,
       textTransform: 'uppercase'
@@ -952,7 +952,7 @@ function EntityDetailPlaceholder({
   }, label), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '11px',
+      fontSize: '12.5px',
       color: `${acc}cc`
     }
   }, value))), (activeSicht?.notiz || sicht.notiz) && /*#__PURE__*/React.createElement("div", {
@@ -967,7 +967,7 @@ function EntityDetailPlaceholder({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '10px',
+      fontSize: '12px',
       lineHeight: '1.65',
       color: 'rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))',
       margin: 0
@@ -1002,7 +1002,7 @@ function EntityDetailPlaceholder({
     style: {
       fontFamily: 'var(--font-body)',
       fontWeight: '300',
-      fontSize: '12px',
+      fontSize: '13px',
       lineHeight: '1.9',
       color: 'rgba(var(--text2-rgb),calc(0.3*var(--kt) + var(--tb)))',
       maxWidth: '400px',
@@ -1040,7 +1040,7 @@ function DetailOverlay({
     gap: '8px',
     fontFamily: 'var(--font-body)',
     fontWeight: '300',
-    fontSize: '11px',
+    fontSize: '12.5px',
     letterSpacing: '0.12em',
     color: 'rgba(var(--text2-rgb),calc(0.55*var(--kt) + var(--tb)))',
     background: 'rgba(var(--bg-rgb),0.85)',
@@ -1171,7 +1171,7 @@ function TOCSidebar({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: '8px',
+      fontSize: '11px',
       letterSpacing: '0.25em',
       color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
       textTransform: 'uppercase',
@@ -1193,7 +1193,7 @@ function TOCSidebar({
       cursor: 'pointer',
       fontFamily: 'var(--font-body)',
       fontWeight: '400',
-      fontSize: '11px',
+      fontSize: '12.5px',
       letterSpacing: '0.1em',
       fontVariant: 'small-caps',
       color: 'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))',

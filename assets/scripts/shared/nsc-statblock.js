@@ -165,7 +165,7 @@
 
   function SBLabel(text, accent) {
     return h('div', { style: {
-      fontFamily: 'var(--font-mono)', fontSize: 8.5, letterSpacing: '0.22em',
+      fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.22em',
       textTransform: 'uppercase', color: accent, marginBottom: 4, marginTop: 10,
     }}, text);
   }
@@ -194,7 +194,7 @@
     var bewegungText = Object.keys(shown.bewegung).map(function(k) { return k === 'Gehen' ? shown.bewegung[k] : k + ' ' + shown.bewegung[k]; }).join(', ');
     function Row(label, text) {
       return h('div', { key: label, style: {
-        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
+        fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, label),
@@ -217,7 +217,7 @@
             border: '1px solid ' + (active ? accent : cA(0.25)),
             background: active ? cA(0.22) : 'rgba(var(--panel-rgb),0.6)',
             color: active ? accent : 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))',
-            fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: active ? 600 : 400,
+            fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: active ? 600 : 400,
             borderRadius: 3, cursor: 'pointer',
             boxShadow: active ? '0 0 10px ' + cA(0.35) : 'none',
             transition: 'all 0.15s',
@@ -228,7 +228,7 @@
 
     // Selected rank label
     var rankLabel = h('div', { style: {
-      fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.2em',
+      fontFamily: 'var(--font-mono)', fontSize: 11.5, letterSpacing: '0.2em',
       color: cA(0.7), textTransform: 'uppercase', marginBottom: 14,
     }}, 'Rang ' + selectedRang + ' · ' + stats.titel);
 
@@ -247,7 +247,7 @@
           textTransform: 'uppercase', color: 'var(--white)', fontWeight: 400,
         }}, stats.titel),
         h('div', { style: {
-          fontFamily: 'var(--font-mono)', fontSize: 9, color: 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))',
+          fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'color-mix(in srgb, rgba(180,170,220,0.55), rgb(var(--ink-rgb)) var(--cm))',
           letterSpacing: '0.12em', marginTop: 2,
         }}, (ADJ[shown.groesse] || shown.groesse) + ' Humanoid · ' + division.name.replace(/^Die\s+/, '') + (rasseLabel ? ' · ' + rasseLabel : ''))
       ),
@@ -266,8 +266,8 @@
             background: 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))', border: '1px solid ' + cA(0.15),
             borderRadius: 3, padding: '6px 8px',
           }},
-            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 7.5, letterSpacing: '0.18em', color: cA(0.65), textTransform: 'uppercase', marginBottom: 2 }}, item.label),
-            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--white)', fontWeight: 500 }}, item.value)
+            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.18em', color: cA(0.65), textTransform: 'uppercase', marginBottom: 2 }}, item.label),
+            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--white)', fontWeight: 500 }}, item.value)
           );
         })
       ),
@@ -284,9 +284,9 @@
             background: 'rgba(var(--purple-rgb),calc(0.05*var(--kp)))', borderRadius: 3,
             border: '1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
           }},
-            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 7, letterSpacing: '0.14em', color: cA(0.55), textTransform: 'uppercase', marginBottom: 2 }}, ATTR_DE[s]),
+            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', color: cA(0.55), textTransform: 'uppercase', marginBottom: 2 }}, ATTR_DE[s]),
             h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 14, color: 'var(--white)', fontWeight: 600, lineHeight: 1.1 }}, score),
-            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 10, color: cA(0.8) }}, stats.fmtMod(m))
+            h('div', { style: { fontFamily: 'var(--font-mono)', fontSize: 12, color: cA(0.8) }}, stats.fmtMod(m))
           );
         })
       ),
@@ -295,7 +295,7 @@
 
       // Saves, Skills, Passive
       (Object.keys(shown.rettungswuerfe).length > 0) && h('div', { style: {
-        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
+        fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Rettungswürfe'),
@@ -303,7 +303,7 @@
       ),
 
       (Object.keys(shown.fertigkeiten).length > 0) && h('div', { style: {
-        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
+        fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Fertigkeiten'),
@@ -311,7 +311,7 @@
       ),
 
       h('div', { style: {
-        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
+        fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Passive Wahrnehmung'),
@@ -322,7 +322,7 @@
       (shown.schadensresistenzen && shown.schadensresistenzen.length > 0) && Row('Schadensresistenzen', shown.schadensresistenzen.join(', ')),
 
       h('div', { style: {
-        fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
+        fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))',
         letterSpacing: '0.06em', marginBottom: 4,
       }},
         h('span', { style: { color: cA(0.7), marginRight: 6 }}, 'Sprachen'),
@@ -341,11 +341,11 @@
           list.map(function(b, i) {
             return h('div', { key: i, style: { marginBottom: 8 } },
               h('span', { style: {
-                fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600,
+                fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 600,
                 color: 'var(--white)', marginRight: 4,
               }}, b.name + '.'),
               h('span', { style: {
-                fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 300,
+                fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 300,
                 color: 'color-mix(in srgb, rgba(210,200,240,0.8), rgb(var(--ink-rgb)) var(--cm))', lineHeight: 1.55,
               }}, b.beschreibung)
             );
