@@ -2,7 +2,17 @@
 // Exposes: window.BekannteSection
 // Props: division (object with accent, name, bekannte[]), sidebar (bool)
 
+import './division-people.jsx';
+
 const { useState: _bk_useState } = React;
+
+// Bild einer Person (Spielercharakter / NSC) oder Platzhalter, wenn keines vorhanden ist
+function _PersonImg({ p, width, height, accent, style={} }) {
+  if (p && p.bild) {
+    return <img src={p.bild} alt={p.name} style={{ width, height, objectFit:'cover', objectPosition:'top', display:'block', ...style }} />;
+  }
+  return <_BekannteImg label="Bild folgt" width={width} height={height} accent={accent} style={style} />;
+}
 
 function _BekannteImg({ label, width, height, accent, style={} }) {
   return (
@@ -40,11 +50,11 @@ function _BekanntePopup({ bekannte, divisionName, accent, onClose }) {
               <div key={i} style={{ display:'flex', gap:'16px', padding:'14px 16px', border:`1px solid ${accent}18`, borderRadius:'4px', background:`${accent}07`, alignItems:'flex-start', transition:'border-color 0.2s' }}
                 onMouseEnter={e=>e.currentTarget.style.borderColor=`${accent}44`}
                 onMouseLeave={e=>e.currentTarget.style.borderColor=`${accent}18`}>
-                <_BekannteImg label={b.name} width="56px" height="56px" accent={accent} style={{ borderRadius:'50%', flexShrink:0 }} />
+                <_PersonImg p={b} width="56px" height="56px" accent={accent} style={{ borderRadius:'50%', flexShrink:0 }} />
                 <div>
                   <div style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'2px' }}>{b.name}</div>
                   <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.14em', color:`${accent}88`, marginBottom:'6px' }}>{b.rolle}</div>
-                  <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12.5px', lineHeight:'1.65', color:'var(--muted)' }}>{b.beschreibung}</p>
+                  {b.beschreibung && <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12.5px', lineHeight:'1.65', color:'var(--muted)' }}>{b.beschreibung}</p>}
                 </div>
               </div>
             ))}
@@ -57,21 +67,40 @@ function _BekanntePopup({ bekannte, divisionName, accent, onClose }) {
 
 function BekannteSection({ division, sidebar = false }) {
   const [showPopup, _bk_setShowPopup] = _bk_useState(false);
-  const { accent, name: divisionName, bekannte } = division;
+  const { accent, name: divisionName } = division;
+  const dp = window.useDivisionPeople();
+  const [editing, _bk_setEditing] = _bk_useState(false);
+  const isDM = !!(window.SITE_USER && window.SITE_USER.role === 'dm');
+  const toEntry = p => ({ key:p.key, name:p.name, rolle:p.sub, beschreibung:'', bild:p.bild });
+  const picked = dp.peopleOf(division).map(toEntry);
+  const loreList = division.bekannte || [];
+  const bekannte = picked.length ? picked : loreList;      // ohne SC/NSC bleibt die Lore-Liste
+  const allList = dp.allOf(division).map(toEntry);
   const featured = bekannte[0];
-  const popup = showPopup && <_BekanntePopup bekannte={bekannte} divisionName={divisionName} accent={accent} onClose={()=>_bk_setShowPopup(false)} />;
+  const popup = showPopup && <_BekanntePopup bekannte={allList.length ? allList : loreList} divisionName={divisionName} accent={accent} onClose={()=>_bk_setShowPopup(false)} />;
+  const editBtn = isDM && (
+    <button onClick={()=>_bk_setEditing(true)} title="Bekannte Personen dieser Division festlegen"
+      style={{ alignSelf:'flex-start', fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', padding:'6px 12px', cursor:'pointer', borderRadius:'3px',
+        background:'transparent', color:'var(--white)', border:`1px solid ${accent}66` }}>✎ Personen festlegen</button>
+  );
+  const editor = editing && (
+    <window.DivisionPeopleEditor d={{ id:division.id, name:divisionName, acc:accent }} slots={dp.slotsOf(division)} scAll={dp.sc}
+      onClose={()=>_bk_setEditing(false)} onSaved={dp.reload} />
+  );
 
   if (sidebar) {
     const m = division.mitglieder || {};
     return (
       <div style={{ flex:1, minWidth:0, padding:'48px 32px 80px', display:'flex', flexDirection:'column', gap:'20px' }}>
         {popup}
+        {editor}
+        {editBtn}
 
         {/* Featured member */}
         <div style={{ border:`1px solid ${accent}28`, borderRadius:'6px', background:`linear-gradient(135deg,${accent}09 0%,rgba(var(--panel-rgb),0.9) 100%)`, overflow:'hidden', transition:'border-color 0.2s' }}
           onMouseEnter={e=>e.currentTarget.style.borderColor=`${accent}55`}
           onMouseLeave={e=>e.currentTarget.style.borderColor=`${accent}28`}>
-          <_BekannteImg label="Porträt" width="100%" height="520px" accent={accent} style={{ borderRadius:'5px 5px 0 0', border:'none', borderBottom:`1px solid ${accent}22` }} />
+          <_PersonImg p={featured} width="100%" height="520px" accent={accent} style={{ borderRadius:'5px 5px 0 0', border:'none', borderBottom:`1px solid ${accent}22` }} />
 
           <div style={{ padding:'20px 22px' }}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.22em', color:`${accent}66`, textTransform:'uppercase', marginBottom:'8px' }}>Führendes Mitglied</div>
@@ -100,10 +129,10 @@ function BekannteSection({ division, sidebar = false }) {
             <div key={i} style={{ padding:'16px', border:`1px solid ${accent}18`, borderRadius:'4px', background:'rgba(var(--panel-rgb),0.7)', transition:'border-color 0.2s, transform 0.2s' }}
               onMouseEnter={e=>{e.currentTarget.style.borderColor=`${accent}40`;e.currentTarget.style.transform='translateY(-2px)';}}
               onMouseLeave={e=>{e.currentTarget.style.borderColor=`${accent}18`;e.currentTarget.style.transform='translateY(0)';}}>
-              <_BekannteImg label={b.name} width="100%" height="100px" accent={accent} style={{ borderRadius:'3px', marginBottom:'12px' }} />
+              <_PersonImg p={b} width="100%" height="100px" accent={accent} style={{ borderRadius:'3px', marginBottom:'12px' }} />
               <div style={{ fontFamily:'var(--font-display)', fontSize:'12.5px', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'3px' }}>{b.name}</div>
               <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.14em', color:`${accent}88`, marginBottom:'8px' }}>{b.rolle}</div>
-              <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12.5px', lineHeight:'1.65', color:'var(--muted)' }}>{b.beschreibung}</p>
+              {b.beschreibung && <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12.5px', lineHeight:'1.65', color:'var(--muted)' }}>{b.beschreibung}</p>}
             </div>
           ))}
         </div>
@@ -115,7 +144,9 @@ function BekannteSection({ division, sidebar = false }) {
   return (
     <section id="bekannte" className="div-section">
       {popup}
+      {editor}
       <SectionBanner label="Bekannte Mitglieder" accent={accent} />
+      {editBtn && <div style={{ marginBottom:'16px' }}>{editBtn}</div>}
 
       <div className="reveal" style={{ marginBottom:'36px' }}>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.28em', color:`${accent}55`, textTransform:'uppercase', marginBottom:'16px' }}>Bekanntestes Mitglied</div>
@@ -123,7 +154,7 @@ function BekannteSection({ division, sidebar = false }) {
           onMouseEnter={e=>e.currentTarget.style.borderColor=`${accent}55`}
           onMouseLeave={e=>e.currentTarget.style.borderColor=`${accent}28`}>
           <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'10px' }}>
-            <_BekannteImg label="Porträt" width="140px" height="160px" accent={accent} style={{ borderRadius:'4px', border:`1px solid ${accent}30` }} />
+            <_PersonImg p={featured} width="140px" height="160px" accent={accent} style={{ borderRadius:'4px', border:`1px solid ${accent}30` }} />
           </div>
           <div style={{ display:'flex', flexDirection:'column', justifyContent:'center' }}>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.22em', color:`${accent}66`, textTransform:'uppercase', marginBottom:'8px' }}>Führendes Mitglied</div>
@@ -156,10 +187,10 @@ function BekannteSection({ division, sidebar = false }) {
           <div key={i} className="reveal" style={{ padding:'18px', border:`1px solid ${accent}18`, borderRadius:'4px', background:'rgba(var(--panel-rgb),0.7)', transition:'border-color 0.2s, transform 0.2s' }}
             onMouseEnter={e=>{e.currentTarget.style.borderColor=`${accent}40`;e.currentTarget.style.transform='translateY(-2px)';}}
             onMouseLeave={e=>{e.currentTarget.style.borderColor=`${accent}18`;e.currentTarget.style.transform='translateY(0)';}}>
-            <_BekannteImg label={b.name} width="100%" height="120px" accent={accent} style={{ borderRadius:'3px', marginBottom:'14px' }} />
+            <_PersonImg p={b} width="100%" height="120px" accent={accent} style={{ borderRadius:'3px', marginBottom:'14px' }} />
             <div style={{ fontFamily:'var(--font-display)', fontSize:'13px', fontWeight:'400', letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginBottom:'3px' }}>{b.name}</div>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.14em', color:`${accent}88`, marginBottom:'10px' }}>{b.rolle}</div>
-            <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12.5px', lineHeight:'1.65', color:'var(--muted)' }}>{b.beschreibung}</p>
+            {b.beschreibung && <p style={{ fontFamily:'var(--font-body)', fontWeight:'300', fontSize:'12.5px', lineHeight:'1.65', color:'var(--muted)' }}>{b.beschreibung}</p>}
           </div>
         ))}
       </div>
