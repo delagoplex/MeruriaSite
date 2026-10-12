@@ -680,7 +680,7 @@ function SbBasisPanel({ b, rasse, rang, statsReady, noLabel }) {
 }
 
 function QuickCreate({ onCreate, canCancel, onCancel, allStats, statsReady }) {
-  const [q, setQ] = useState({ name:'', rasse:'', unterrasse:'', geschlecht:'', alter:'', division:'Keine', rang:5 });
+  const [q, setQ] = useState({ name:'', rasse:'', unterrasse:'', geschlecht:'', alter:'', division:'Keine', rang:10 });
   const set = (k, v) => setQ(p => ({ ...p, [k]:v }));
   // Statblock-Grundlage (optional): { src, art } aus der Statblock-Datenbank
   const sbHook = useSbBasis({ rasse:q.rasse, unterrasse:q.unterrasse, division:q.division, rang:q.rang, allStats,
@@ -1644,10 +1644,11 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   eckRow('werdegang', 'hintergrund', 'Hintergrund', sel.hintergrund);
   eckRow('werdegang', 'beruf', 'Beruf', sel.beruf);
   eckRow('werdegang', 'gottheit', 'Gottheit', sel.gottheit);
-  const rangNum = parseInt(sel.rang) || null;
+  // Keine Division ohne Rang: ohne Angabe gilt Rang 10 (niedrigster)
+  const rangNum = parseInt(sel.rang) || (sel.division && sel.division !== 'Keine' ? 10 : null);
   const rangTitel = rangNum ? ((((T().raenge || {})[sel.division]) || []).find(r => r.rang === rangNum) || {}).titel : null;
   eckRow('zug', 'division', 'Division', sel.division !== 'Keine' ? divOf(sel.division).roman + ' · ' + sel.division : '');
-  eckRow('zug', 'division', 'Rang', sel.division !== 'Keine' && sel.rang ? (rangNum ? 'Rang ' + rangNum + (rangTitel ? ' · ' + rangTitel : '') : sel.rang) : '');
+  eckRow('zug', 'division', 'Rang', sel.division !== 'Keine' && (sel.rang || rangNum) ? (rangNum ? 'Rang ' + rangNum + (rangTitel ? ' · ' + rangTitel : '') : sel.rang) : '');
   eckRow('zug', 'organisation', 'Organisation', sel.organisation);
   eckRow('zug', 'kapsel', 'Kapsel', sel.kapsel);
   eckRow('zug', 'wohnort', 'Wohnort', sel.wohnort);
@@ -1872,7 +1873,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
             ]],
             ['Zugehörigkeit', [
               { key:'division', label:'Division', text:hasDiv ? divOf(sel.division).roman + ' · ' + sel.division : '', editor:close => (
-                <select autoFocus value={sel.division || 'Keine'} onChange={e => { const v = e.target.value; updSel('division', v); if (v === 'Keine') updSel('rang', null); close(); }} style={smallSel}>
+                <select autoFocus value={sel.division || 'Keine'} onChange={e => { const v = e.target.value; updSel('division', v); if (v === 'Keine') updSel('rang', null); else if (!(parseInt(sel.rang) >= 1)) updSel('rang', 10); close(); }} style={smallSel}>
                   {T().divisions.map(d => <option key={d.name} value={d.name}>{d.roman !== '—' ? d.roman + ' · ' + d.name : d.name}</option>)}
                 </select>) },
               ...(hasDiv ? [{ key:null, label:'Rang', text:rangNum ? 'Rang ' + rangNum + (rangTitel ? ' · ' + rangTitel : '') : '', editor:close0 => (

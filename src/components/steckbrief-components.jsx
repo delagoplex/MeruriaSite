@@ -89,7 +89,7 @@ function buildChar(d) {
 
     // ── Festwerte / Stufe 1 ────────────────────────────────────
     subclass: d.subclass || '—', level:1, xp:0, profBonus:2,
-    rank:'Neuankömmling', rankLevel:1, rankMax:5,
+    rank:(() => { const dv = (window.DIVISIONS_DATA || []).find(x => (d.divisionId && x.id === d.divisionId) || x.name === d.division); return dv ? dv.raenge.reduce((lo, x) => (!lo || x.rang > lo.rang) ? x : lo, null).titel : '—'; })(), rankLevel:1, rankMax:10,
     hp:10, ac:10, initiative:0, speed:9,
 
     lebensstil: d.lebensstil || '',
@@ -128,9 +128,24 @@ function buildChar(d) {
   };
 }
 
+/* Rang des Charakters aus den echten Rängen seiner Division (Rang 10 = Stufe 1 … Rang 1 = Stufe 10).
+   null, wenn keine Division gewählt ist oder der Rangtitel nicht zur Division gehört. */
+function rankInfo(char) {
+  const div = (window.DIVISIONS_DATA || []).find(d => d.id === char.divisionId) || null;
+  if (!div) return null;
+  // Keine Division ohne Rang: fehlt ein gültiger Rangtitel, gilt der niedrigste Rang (Rang 10)
+  const r = div.raenge.find(x => x.titel === char.rank)
+    || div.raenge.reduce((lo, x) => (!lo || x.rang > lo.rang) ? x : lo, null);
+  if (!r) return null;
+  const max = div.raenge.length;
+  return { div, rang: r, max, level: max - r.rang + 1 };
+}
+const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+
 /* ── Division & Rang ──────────────────────── */
 function DivisionRank({ char }) {
   const div = (window.DIVISIONS_DATA || []).find(d => d.id === char.divisionId) || null;
+  const info = rankInfo(char);
   const acc = div?.accent || 'rgba(var(--purple-rgb),calc(0.7*var(--kp)))';
   return (
     <Card style={{marginBottom:11}}>
@@ -145,17 +160,19 @@ function DivisionRank({ char }) {
           color:"color-mix(in srgb, rgba(210,202,245,0.9), rgb(var(--ink-rgb)) var(--cm))",textTransform:"uppercase"}}>{char.division}</div>
       </div>
       <div style={{display:"flex",alignItems:"center",gap:10}}>
-        <div style={{display:"flex",gap:4}}>
-          {Array.from({length:char.rankMax||5},(_,i)=>{
-            const filled = i < char.rankLevel;
-            return <span key={i} style={{display:"inline-block",width:9,height:9,
-              transform:"rotate(45deg)",flexShrink:0,
-              background:filled?`${acc}aa`:"transparent",
-              border:`1px solid ${filled?acc:"rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}`}} />;
-          })}
-        </div>
+        {info && (
+          <div style={{display:"flex",gap:4}} title={`Rang ${info.rang.rang} von ${info.max} (Stufe ${info.level})`}>
+            {Array.from({length:info.max},(_,i)=>{
+              const filled = i < info.level;
+              return <span key={i} style={{display:"inline-block",width:9,height:9,
+                transform:"rotate(45deg)",flexShrink:0,
+                background:filled?`${acc}aa`:"transparent",
+                border:`1px solid ${filled?acc:"rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}`}} />;
+            })}
+          </div>
+        )}
         <span style={{fontFamily:"var(--font-mono)",fontSize:12,color:"var(--white)"}}>
-          {char.rank}
+          {info ? info.rang.titel : "—"}
         </span>
       </div>
     </Card>
@@ -1946,8 +1963,8 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
             }
             <div className="sb-tags" style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
               {[(char.subclass && char.subclass !== '—' ? `${char.class} · ${char.subclass}` : char.class),`Stufe ${char.level}`,char.race,char.background,
-                `${char.division} · ${char.rank} ${["I","II","III","IV","V"][(char.rankLevel||1)-1]}`]
-                .map((t,i)=>(
+                (rankInfo(char) ? `${char.division} · ${rankInfo(char).rang.titel} ${ROMAN[rankInfo(char).level-1]}` : (char.division && char.division !== '—' ? char.division : null))]
+                .filter(Boolean).map((t,i)=>(
                   <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"2px 9px",
                     background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))",borderRadius:2,
                     color:"rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))",letterSpacing:".1em"}}>{t}</span>
