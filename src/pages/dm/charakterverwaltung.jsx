@@ -311,8 +311,10 @@ function DMGrid({ rows, profiles, onSelect }) {
 }
 
 /* ── DM-Kontrollleiste (Detailansicht) ───────── */
-function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onVisibilityToggle, onLevelSet, onUprank }) {
+function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onVisibilityToggle, onLevelSet, onUprank, onDelete }) {
   const char      = entry._char || {};
+  const [delOpen, setDelOpen] = useState(false);
+  const [delBusy, setDelBusy] = useState(false);
   const level     = char.level || 1;
   const [lvlInput, setLvlInput] = useState(level);
   React.useEffect(() => setLvlInput(level), [level]);
@@ -321,7 +323,7 @@ function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onV
     if (n >= 1 && n <= 30 && n !== level) onLevelSet(n);
     else setLvlInput(level);
   }
-  const div       = (window.DIVISIONS_DATA?.divisionen || []).find(d => d.name === char.division);
+  const div       = (window.DIVISIONS_DATA || []).find(d => d.name === char.division);
   const rankLvl   = char.rankLevel || 1;
   const canUp     = div && rankLvl < div.raenge.length;
   const nextRang  = div ? div.raenge.length - (rankLvl + 1) + 1 : null;
@@ -391,6 +393,35 @@ function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onV
           onMouseLeave={e=>{e.currentTarget.style.background='rgba(213,180,90,0.08)';}}>
           Aufstieg → {nextRankObj.titel}
         </button>
+      )}
+
+      {/* Löschen (mit Rückfrage) */}
+      <button style={btn('rgba(227,103,96,0.85)','transparent','rgba(227,103,96,0.35)')}
+        onClick={() => setDelOpen(true)}
+        onMouseEnter={e=>{e.currentTarget.style.background='rgba(227,103,96,0.12)';}}
+        onMouseLeave={e=>{e.currentTarget.style.background='transparent';}}>
+        ✕ Löschen
+      </button>
+
+      {delOpen && (
+        <div onClick={e => { if (e.target === e.currentTarget && !delBusy) setDelOpen(false); }}
+          style={{position:'fixed',inset:0,zIndex:9000,background:'rgba(var(--bg-rgb),0.85)',display:'flex',alignItems:'center',justifyContent:'center',padding:20}}>
+          <div role="alertdialog" aria-label="Charakter löschen"
+            style={{width:'100%',maxWidth:440,background:'rgba(var(--panel-rgb),0.99)',border:'1px solid rgba(227,103,96,0.5)',borderRadius:6,padding:'26px 28px'}}>
+            <div style={{fontFamily:'var(--font-mono)',fontSize:11,letterSpacing:'.24em',textTransform:'uppercase',color:'rgba(227,103,96,0.9)',marginBottom:10}}>Charakter löschen</div>
+            <div style={{fontFamily:'var(--font-display)',fontSize:18,letterSpacing:'.12em',color:'var(--white)',textTransform:'uppercase',marginBottom:12}}>{entry.name}</div>
+            <p style={{fontFamily:'var(--font-body)',fontSize:14,lineHeight:1.65,color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))',margin:'0 0 20px'}}>
+              Soll dieser Charakter von {playerName} wirklich endgültig gelöscht werden? Das kann nicht rückgängig gemacht werden.
+            </p>
+            <div style={{display:'flex',gap:10,justifyContent:'flex-end'}}>
+              <button style={btn('var(--white)')} disabled={delBusy} onClick={() => setDelOpen(false)}>Abbrechen</button>
+              <button style={btn('#fff','rgba(227,103,96,0.35)','rgba(227,103,96,0.7)')} disabled={delBusy}
+                onClick={async () => { setDelBusy(true); const ok = await onDelete(); setDelBusy(false); if (!ok) return; setDelOpen(false); }}>
+                {delBusy ? 'Lösche …' : 'Endgültig löschen'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
@@ -472,10 +503,19 @@ function App() {
     await patchChar(entry.id, { ...entry._char, level: n });
   }
 
+  async function handleDelete() {
+    if (!entry) return false;
+    const { error } = await window._sb.from('characters').delete().eq('id', entry.id);
+    if (error) { window.alert('Löschen fehlgeschlagen: ' + error.message); return false; }
+    setRows(rs => rs.filter(r => r.id !== entry.id));
+    setEntry(null);
+    return true;
+  }
+
   async function handleUprank() {
     if (!entry) return;
     const char   = entry._char || {};
-    const div    = (window.DIVISIONS_DATA?.divisionen || []).find(d => d.name === char.division);
+    const div    = (window.DIVISIONS_DATA || []).find(d => d.name === char.division);
     if (!div) return;
     const newLvl = (char.rankLevel || 1) + 1;
     if (newLvl > div.raenge.length) return;
@@ -522,6 +562,7 @@ function App() {
               onVisibilityToggle={handleVisibilityToggle}
               onLevelSet={handleLevelSet}
               onUprank={handleUprank}
+              onDelete={handleDelete}
             />
             <SV key={verKey} entry={entry} onBack={() => setEntry(null)} hasMultiple={rows.length > 1} hideNav={true} />
           </div>
