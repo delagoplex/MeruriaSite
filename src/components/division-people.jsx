@@ -38,6 +38,13 @@ function useDivisionPeople() {
       const retry = await window._sb.from('nsc_public_directory').select('id,name,bild,division');
       nscs = retry.data;
     }
+    // Die SL sieht alle sichtbaren NSC mit echtem Namen (das Verzeichnis zeigt "Unbekannt", solange der Name nicht freigegeben ist)
+    if (window.SITE_USER && window.SITE_USER.role === 'dm') {
+      const adm = await window._sb.rpc('get_nsc_admin_data');
+      if (!adm.error && adm.data) {
+        nscs = adm.data.filter(n => n.visible).map(n => ({ id:n.id, name:n.name, bild:n.bild, division:n.division, rang:n.rang }));
+      }
+    }
     const slots = {};
     (sets || []).forEach(r => { slots[r.key.replace('division_slots_', '')] = parseSlots(r.value); });
     const sc = (scs || []).map(scToPerson), nsc = (nscs || []).map(nscToPerson);
@@ -58,7 +65,7 @@ function useDivisionPeople() {
     // freie Plätze: die höchsten Ränge der Division; bei gleichem Rang entscheidet der Zufall
     const rk = rankFn(div);
     const pool = [...data.sc, ...data.nsc]
-      .filter(p => p.division === div.name && !used.has(p.key) && !(p.k === 'NSC' && p.name === 'Unbekannt'))
+      .filter(p => p.division === div.name && !used.has(p.key))
       .sort((a, b) => rk(a).no - rk(b).no || (data.rand[a.key] || 0) - (data.rand[b.key] || 0));
     let next = 0;
     return fixed.map(f => f || pool[next++] || null).filter(Boolean)
@@ -83,7 +90,7 @@ function useDivisionPeople() {
   const allOf = div => {
     const rk = rankFn(div);
     return [...data.sc, ...data.nsc]
-      .filter(p => p.division === div.name && !(p.k === 'NSC' && p.name === 'Unbekannt'))
+      .filter(p => p.division === div.name)
       .map(p => ({ ...p, rankNo:rk(p).no, rankTitle:rk(p).title }))
       .sort(byRank(div));
   };
