@@ -215,6 +215,7 @@ function NavItem({ tab }) {
     }
   };
   const hide = () => {
+    clearTimeout(t.current);
     t.current = setTimeout(() => {
       setOpen(false);
       setGlitchActive(false);
@@ -250,6 +251,8 @@ function NavItem({ tab }) {
       }
       {open &&
         <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', width: 'max-content', background: 'var(--nav-dropdown-bg)', border: '1px solid var(--nav-dropdown-border)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(var(--shadow-rgb),calc(0.35 * var(--shadow-k)))', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
+          {/* unsichtbare Brücke über die Lücke zum Reiter, damit das Menü beim Hinuntergehen nicht schließt */}
+          <div aria-hidden="true" style={{ position: 'absolute', left: -8, right: -8, top: -12, height: 12 }} />
           {tab.items.map((item, i) =>
             <React.Fragment key={i}>
               {item.highlight ? (
@@ -361,12 +364,12 @@ function AccountModal({ onClose }) {
   const inputStyle = {
     fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 300,
     color: 'var(--white)', background: 'transparent',
-    border: 'none', borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
+    border: 'none', borderBottom: '1px solid rgba(var(--purple-rgb),calc(0.6*var(--kp)))',
     outline: 'none', padding: '4px 0', width: '100%',
   };
   const labelStyle = {
     fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '.22em',
-    color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform: 'uppercase', display: 'block', marginBottom: 6,
+    color: 'rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb)))', textTransform: 'uppercase', display: 'block', marginBottom: 6,
   };
 
   return (
@@ -391,12 +394,12 @@ function AccountModal({ onClose }) {
         <button onClick={onClose}
           style={{ position:'absolute', top:12, right:14, background:'transparent', border:'none',
             cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:18, lineHeight:1,
-            color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', padding:'2px 6px', transition:'color .15s' }}
+            color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))', padding:'2px 6px', transition:'color .15s' }}
           onMouseEnter={e => e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))'}
-          onMouseLeave={e => e.currentTarget.style.color='rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))'}>×</button>
+          onMouseLeave={e => e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))'}>×</button>
 
         <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'.32em',
-          color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', textTransform:'uppercase', marginBottom:6 }}>
+          color:'rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb)))', textTransform:'uppercase', marginBottom:6 }}>
           Konto · Meruria
         </div>
         <h2 style={{ fontFamily:'var(--font-display)', fontSize:18, fontWeight:300,
@@ -407,7 +410,7 @@ function AccountModal({ onClose }) {
         <div style={{ marginBottom:20 }}>
           <label style={labelStyle}>E-Mail-Adresse</label>
           <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300,
-            color:'rgba(var(--text-rgb),calc(0.45*var(--kt) + var(--tb)))' }}>{user?.email || '—'}</div>
+            color:'rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))' }}>{user?.email || '—'}</div>
         </div>
 
         {/* Display name */}
@@ -421,7 +424,7 @@ function AccountModal({ onClose }) {
             placeholder="Name eingeben …"
             style={inputStyle}
           />
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))',
+          <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
             letterSpacing:'.1em', marginTop:6 }}>
             Wird auf der Spielercharaktere-Seite als Gruppenüberschrift angezeigt.
           </div>
@@ -433,7 +436,7 @@ function AccountModal({ onClose }) {
             style={{ display:'flex', alignItems:'center', gap:8, background:'transparent', border:'none',
               cursor:'pointer', padding:0, width:'100%', textAlign:'left' }}>
             <span style={{ ...labelStyle, marginBottom:0, flex:1 }}>Passwort ändern</span>
-            <span style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))',
+            <span style={{ fontFamily:'var(--font-mono)', fontSize:12, color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',
               transition:'transform .2s', display:'inline-block',
               transform: pwOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
           </button>
@@ -490,9 +493,9 @@ function AccountModal({ onClose }) {
             style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'.18em',
               textTransform:'uppercase', padding:'10px 18px', cursor:'pointer',
               background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
-              borderRadius:3, color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', transition:'all .2s' }}
+              borderRadius:3, color:'rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb)))', transition:'all .2s' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.45*var(--kp)))'; e.currentTarget.style.color='rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.2*var(--kp)))'; e.currentTarget.style.color='rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))'; }}>
+            onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.2*var(--kp)))'; e.currentTarget.style.color='rgba(var(--text-rgb),calc(0.72*var(--kt) + var(--tb)))'; }}>
             Abbrechen
           </button>
         </div>

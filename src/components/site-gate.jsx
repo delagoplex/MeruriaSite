@@ -43,8 +43,21 @@ function LoginForm({ onAuth }) {
       <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'28px', animation:'fadeInUp 0.4s ease' }}>
         <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'14px' }}>
           <svg width="40" height="40" viewBox="0 0 40 40">
-            <polygon points={hexPts} fill="rgba(80,160,220,0.08)" stroke="rgba(80,160,220,0.35)" strokeWidth="1.2"/>
-            <text x="20" y="25" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="14" fill="rgba(80,160,220,0.8)">⚔</text>
+            <defs>
+              <linearGradient id="gateMStroke" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#ffffff"/>
+                <stop offset="100%" stopColor="#d8ccff"/>
+              </linearGradient>
+            </defs>
+            <polygon points={hexPts} fill="rgba(124,77,255,0.12)" stroke="rgba(160,140,255,0.5)" strokeWidth="1.2"/>
+            {/* das M aus dem Tab-Symbol (favicon-m.svg), auf das Sechseck skaliert */}
+            <g transform="translate(20 20.4) scale(0.44) translate(-32 -33)">
+              <g stroke="#c8c0e8" strokeWidth="2.4" strokeLinecap="round" opacity="0.9">
+                <line x1="14.5" y1="46.8" x2="21.5" y2="46.8"/>
+                <line x1="42.5" y1="46.8" x2="49.5" y2="46.8"/>
+              </g>
+              <path d="M18 46 V20 L32 37 L46 20 V46" fill="none" stroke="url(#gateMStroke)" strokeWidth="5.2" strokeLinecap="round" strokeLinejoin="round"/>
+            </g>
           </svg>
           <div style={{ fontFamily:'var(--font-display)', fontSize:'12.5px', letterSpacing:'0.45em', color:'color-mix(in srgb, rgba(150,190,230,0.45), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase' }}>Meruria</div>
         </div>
