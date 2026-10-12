@@ -2179,14 +2179,14 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
             )}
           </div>
           {EDIT && (
-            <div style={{ display:'flex', alignItems:'center', gap:4, width:125, alignSelf:'center' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:4, width:150 }}>
               <button onClick={() => setPickBild(true)} title={sel.bild ? 'Anderes Bild auswählen' : 'Bild aus den Projektordnern auswählen'}
-                style={{ flex:1, minWidth:0, height:30, padding:'0 6px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))', borderRadius:3, color:'var(--white)', fontFamily:MONO, fontSize:11, letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer', whiteSpace:'nowrap' }}>{sel.bild ? 'Bild ändern' : 'Bild einfügen'}</button>
+                style={{ flex:1, minWidth:0, height:30, padding:'0 6px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))', borderRadius:3, color:'var(--white)', fontFamily:MONO, fontSize:11, letterSpacing:'0.04em', textTransform:'uppercase', cursor:'pointer', whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{sel.bild ? 'Bild ändern' : 'Bild einfügen'}</button>
               {eyeFor('bild')}
             </div>
           )}
           </div>
-          <div style={{ flex:1, minWidth:0, paddingTop:6 }}>
+          <div style={{ flex:1, minWidth:0, paddingTop:6, paddingRight:EDIT ? 76 : 0 }}>
             {EDIT ? (
               <React.Fragment>
                 <LiveInput value={sel.titel} onChange={v => updSel('titel', v)} placeholder="Titel oder Beiname (optional)"
