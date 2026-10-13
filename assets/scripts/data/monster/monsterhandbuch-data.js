@@ -6496,7 +6496,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 8 m"], passiveWahrnehmung: 8,
     sprachen: ["Drakonisch", "Gemeinsprache"],
     umgebung: ["Höhle", "Unterirdisch"],
-    bild: "assets/images/monster/monsterhandbuch/gefluegelter_kobold.png",
+    bild: "assets/images/monster/monsterhandbuch/geflügelter_kobold.png",
     beschreibung: [
       "Einige wenige Kobolde werden mit ledrigen Schwingen geboren und können fliegen. Sie sind als Urds bekannt und mögen es, auf hohen Felssimsen zu lauern und Felsen auf alle fallen zu lassen, die vorbeikommen. Auch wenn die Schwingen der Urds als Geschenk von Tiamat betrachtet werden, beneiden flügellose Kobolde sie um ihre Gaben."
     ],
@@ -8793,7 +8793,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     sinne: ["Dunkelsicht 36 m"], passiveWahrnehmung: 12,
     sprachen: [],
     umgebung: ["Unterirdisch"],
-    bild: "assets/images/monster/monsterhandbuch/myconid_souveraen.png",
+    bild: "assets/images/monster/monsterhandbuch/myconiden_souveraen.png",
     beschreibung: ["Der größte Myconid einer Kolonie, der als Anführer über einen oder mehrere Zirkel gebietet. Der Souverän leitet Verschmelzungen – gemeinsame Meditationen, in denen das kollektive Bewusstsein der Kolonie durch Halluzinationssporen geteilt wird."],
     besonderheiten: [
       { name: "Notrufsporen", beschreibung: "Wenn der Myconid Schaden erleidet, können alle anderen Myconiden innerhalb von 72 m seine Schmerzen spüren." },
@@ -12079,7 +12079,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     passiveWahrnehmung: 11,
     sprachen: [],
     umgebung: ["Unterirdisch"],
-    bild: "assets/images/monster/monsterhandbuch/schwarm_von_fledermaeuse.png",
+    bild: "assets/images/monster/monsterhandbuch/schwarm_von_fledermausen.png",
     beschreibung: ["Wenn Fledermäuse aufgeschreckt werden, können sie einen dichten Schwarm bilden. In unterirdischen Höhlen und verlassenen Ruinen sind solche Schwärme eine häufige Gefahr für Eindringlinge."],
     besonderheiten: [
       { name: "Echolot", beschreibung: "Der Schwarm kann sein Blindsicht nicht nutzen, solange er taub ist." },
@@ -13795,7 +13795,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     passiveWahrnehmung: 13,
     sprachen: ["Thri-kreen"],
     umgebung: ["Wüste", "Grasland"],
-    bild: "assets/images/monster/monsterhandbuch/thri-kreen.png",
+    bild: "assets/images/monster/monsterhandbuch/thri_kreen.png",
     beschreibung: [
       "Thri-kreen streifen durch die Wüsten und Savannen der Welt und gehen allen anderen Völkern aus dem Weg. Diese insektoiden Humanoiden kommunizieren durch Klacken ihrer Fresswerkzeuge und Wedeln ihrer Fühler – eine Sprache, die andere Kreaturen kaum deuten oder nachahmen können.",
       "Thri-kreen betrachten alle anderen Lebewesen als potentielle Nahrung und haben eine besondere Vorliebe für Elfenfleisch. Wenn eine Kreatur in anderer Hinsicht nützlich sein könnte, greifen die Thri-kreen sie nicht sofort an. Sie töten, um zu überleben, niemals zum Vergnügen.",
@@ -15472,7 +15472,7 @@ window.MONSTER_DATA_MONSTERHANDBUCH = [
     passiveWahrnehmung: 13,
     sprachen: ["Elfisch", "Sylvanisch"],
     umgebung: ["Grasland", "Wald"],
-    bild: "assets/images/monster/monsterhandbuch/zentaur.png",
+    bild: "assets/images/monster/monsterhandbuch/zentauren.png",
     beschreibung: [
       "Zentauren sind zurückgezogene Wanderer und Omendeuter der Wildnis. Sie gehen Konflikten aus dem Weg, sind aber erbitterte Kämpfer, wenn sie bedrängt werden. Sie streifen durch die unermessliche Wildnis, halten sich Grenzen und Gesetzen fern und meiden die Gesellschaft anderer Wesen.",
       "Zentaurenstämme streifen im milden bis heißen Klima durch das Land, denn dort benötigt ein Zentaur nur leichte Felle oder geölte Häute, um mit unfreundlichem Wetter zurechtzukommen. Sie sind Jäger und Sammler und bauen selten Unterschlüpfe oder errichten auch nur Zelte. Die Wanderung der Zentauren geht über Kontinente, und es dauert Jahrzehnte, bis sie sich wiederholt, sodass ein Zentaurenstamm oft für Generationen nicht den gleichen Pfad beschreitet.",

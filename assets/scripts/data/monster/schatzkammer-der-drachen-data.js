@@ -2540,7 +2540,7 @@ window.MONSTER_DATA_SCHATZKAMMER_DER_DRACHEN = [
     passiveWahrnehmung: 9,
     sprachen: [],
     umgebung: ["Höhle", "Ruinen", "Unterirdisch"],
-    bild: "assets/images/monster/schatzkammer/schatzskarabaeenschwarm.png",
+    bild: "assets/images/monster/schatzkammer/schatzskarabaenschwarm.png",
     beschreibung: [],
     besonderheiten: [
       { name: "Falsches Erscheinungsbild", beschreibung: "Wenn der Schwarm am Anfang des Kampfs bewegungslos ist, so ist er beim Initiativewurf im Vorteil. Wenn eine Kreatur außerdem nicht gesehen hat, dass sich der Schwarm bewegt oder handelt, muss diese Kreatur einen SG-18-Intelligenzwurf (Nachforschungen) bestehen, um zu erkennen, dass der Schwarm kein Gegenstand ist." },

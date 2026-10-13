@@ -60,7 +60,7 @@ window.MONSTER_DATA_AVERNUS = [
     passiveWahrnehmung: 10,
     sprachen: ["versteht Abyssal, kann es aber nicht sprechen"],
     umgebung: ["Andere Ebenen"],
-    bild: "assets/images/monster/avernus/crokek_toeck.png",
+    bild: "assets/images/monster/avernus/crokektoeck.png",
     beschreibung: [
       "Crokek'toeck ist Yeenoghu's dämonisches Haustier. Das einzigartige Wesen ähnelt einem riesigen Schlammspringer mit den Zähnen, dem Fell, den Ohren und dem Lachen einer Hyäne. Dieser einzigartige Dämon kann kleinere Dämonen in seinem Schlund halten und sie überall dort ausspeien, wo Yeenoghu es wünscht. Immun gegen die geistbrechenden Wirkungen des Styx-Flusses wird Crokek'toeck oft dazu benutzt, kleinere Dämonen (und manchmal Yeenoghu selbst) durch die schrecklichen Gewässer des Styx zu transportieren."
     ],

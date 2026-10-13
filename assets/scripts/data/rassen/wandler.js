@@ -23,7 +23,7 @@
     beschreibung: 'Elf Ahnen-Linien — elf Arten, das Tier zu tragen. Wähle deine Abstammung.',
     varianten: [
       {
-        farbe: 'Werbären', name: 'Werbären', schadensart: 'Defensiv', farbeHex: '#8b4513', bild: 'assets/images/races/wandler/werbären.png',
+        farbe: 'Werbären', name: 'Werbären', schadensart: 'Defensiv', farbeHex: '#8b4513', bild: 'assets/images/races/wandler/werbaeren.png',
         augenfarbe: 'braun', hautfarbe: 'braunes oder schwarzes Fell', haarfarbe: 'braun oder schwarz',
         odemwaffe: 'KON+2, STR+1 · Tierfell: 1W6 temporäre TP beim Wandeln + +1 RK im gewandelten Zustand',
         resistenz: 'Zäheste defensive Linie. Ideal für Tanks und Frontlinie-Kämpfer.',
