@@ -1459,19 +1459,23 @@ function charFromEntry(entry) {
   return buildChar(d || entry);
 }
 
-let _sbSaveTimer = null;
+const _sbSaveTimers = {};   // pro Charakter, damit ein Wechsel den Save des vorherigen nicht verwirft
 function saveCharToDB(id, char) {
-  clearTimeout(_sbSaveTimer);
-  _sbSaveTimer = setTimeout(async () => {
+  clearTimeout(_sbSaveTimers[id]);
+  _sbSaveTimers[id] = setTimeout(async () => {
     try {
-      await window._sb.from('characters').update({
+      const { error } = await window._sb.from('characters').update({
         name: char.name || 'Unbenannt',
         race: char.race || null,
         class: char.class || null,
         division: char.division || null,
         char_data: char,
       }).eq('id', id);
-    } catch(e) { console.error('saveCharToDB failed:', e); }
+      if (error) throw error;
+    } catch(e) {
+      console.error('saveCharToDB failed:', e);
+      alert('Der Charakter konnte nicht gespeichert werden: ' + (e && e.message ? e.message : 'unbekannter Fehler'));
+    }
   }, 500);
 }
 

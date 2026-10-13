@@ -477,7 +477,8 @@ function App() {
   }
 
   async function patchChar(id, newChar) {
-    await window._sb.from('characters').update({ char_data: newChar }).eq('id', id);
+    const { error } = await window._sb.from('characters').update({ char_data: newChar }).eq('id', id);
+    if (error) { alert('Speichern fehlgeschlagen: ' + error.message); return false; }
     setEntry(e => e ? { ...e, _char: newChar } : e);
     setRows(rs => rs.map(r => r.id === id ? { ...r, char_data: newChar } : r));
     setVerKey(k => k + 1);
@@ -486,14 +487,15 @@ function App() {
   async function handleStatusChange(newStatus) {
     if (!entry) return;
     const newChar = { ...entry._char, status: newStatus };
-    await patchChar(entry.id, newChar);
+    if (await patchChar(entry.id, newChar) === false) return;
     setStatus(newStatus);
   }
 
   async function handleVisibilityToggle() {
     if (!entry) return;
     const next = !visible;
-    await window._sb.from('characters').update({ visible: next }).eq('id', entry.id);
+    const { error } = await window._sb.from('characters').update({ visible: next }).eq('id', entry.id);
+    if (error) { alert('Sichtbarkeit konnte nicht gespeichert werden: ' + error.message); return; }
     setVisible(next);
     setRows(rs => rs.map(r => r.id === entry.id ? { ...r, visible: next } : r));
   }

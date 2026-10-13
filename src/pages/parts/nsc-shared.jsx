@@ -368,7 +368,9 @@ function useUnlocks(nscs, charPids, activePerspective='alle', players=[]) {
       nsc_id: nscId,
       unlocked_keys: Array.from(keysSet),
       updated_at: new Date().toISOString(),
-    }, { onConflict: 'character_id,nsc_id' }).then(() => {});
+    }, { onConflict: 'character_id,nsc_id' }).then(({ error }) => {
+      if (error) { console.error('nsc_unlocks:', error); alert('Freischaltung konnte nicht gespeichert werden: ' + error.message); }
+    });
   };
 
   const charSets = (nscId) => charPids.map(pid => byPersp[pid]?.[nscId] || new Set());

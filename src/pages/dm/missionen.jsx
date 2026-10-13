@@ -331,7 +331,8 @@ function CreateForm({
       status: form.status
     }).select().single();
     setSaving(false);
-    if (!error && data) onCreated(data);
+    if (error) { alert('Mission konnte nicht gespeichert werden: ' + error.message); return; }
+    if (data) onCreated(data);
   }
   const row2 = {
     display: 'grid',
@@ -690,7 +691,8 @@ function EditForm({ mission, onSaved, onCancel, nscOptions }) {
       beschreibung: form.beschreibung.trim(), anweisungen, rewards, requirements, status: form.status
     }).eq('id', mission.id).select().single();
     setSaving(false);
-    if (!error && data) onSaved(data);
+    if (error) { alert('Mission konnte nicht gespeichert werden: ' + error.message); return; }
+    if (data) onSaved(data);
   }
   const row2 = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' };
   return /*#__PURE__*/React.createElement("div", {

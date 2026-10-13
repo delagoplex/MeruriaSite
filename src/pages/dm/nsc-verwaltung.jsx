@@ -1345,7 +1345,8 @@ function Editor(props) {
     <button onClick={async () => {
         const v = !sel.visible;
         updSel('visible', v);
-        await window._sb.from('nscs').update({ visible:v }).eq('id', sel.id);
+        const { error } = await window._sb.from('nscs').update({ visible:v }).eq('id', sel.id);
+        if (error) { updSel('visible', !v); alert('Sichtbarkeit konnte nicht gespeichert werden: ' + error.message); }
       }}
       title={sel.visible ? 'Für Spieler sichtbar — klicken zum Verbergen' : 'Für Spieler verborgen — klicken zum Freigeben'}
       aria-label={sel.visible ? 'Für Spieler sichtbar' : 'Für Spieler verborgen'} aria-pressed={!!sel.visible}
