@@ -20,24 +20,26 @@ const CATS = [
 
 const RARITIES = [
   { id: 'gewoehnlich', label: 'Gewöhnlich' },
+  { id: 'ungewoehnlich', label: 'Ungewöhnlich' },
   { id: 'selten',      label: 'Selten' },
   { id: 'sehrselten',  label: 'Sehr Selten' },
-  { id: 'einzigartig', label: 'Einzigartig' },
+  { id: 'legendaer',   label: 'Legendär' },
 ];
 
 const STAGE_LABELS = ['Unbekannt', 'Sichtung', 'Bekannt', 'Beobachtet', 'Vertraut', 'Studiert', 'Erforscht', 'Meisterhaft', 'Komplett'];
 
+// Seltenheitsgrad 1–5 entspricht den fünf Stufen der Ressourcen-Seite
 function _rarFromSg(sg) {
-  return sg <= 1 ? 'gewoehnlich' : sg === 2 ? 'selten' : sg === 3 ? 'sehrselten' : 'einzigartig';
+  return sg <= 1 ? 'gewoehnlich' : sg === 2 ? 'ungewoehnlich' : sg === 3 ? 'selten' : sg === 4 ? 'sehrselten' : 'legendaer';
 }
 function _rarFromStaerke(s) {
-  return s <= 2 ? 'gewoehnlich' : s <= 4 ? 'selten' : s === 5 ? 'sehrselten' : 'einzigartig';
+  return s <= 2 ? 'gewoehnlich' : s <= 4 ? 'ungewoehnlich' : s === 5 ? 'sehrselten' : 'legendaer';
 }
 function _rarFromCr(cr) {
   if (cr <= 1) return 'gewoehnlich';
-  if (cr <= 5) return 'selten';
+  if (cr <= 5) return 'ungewoehnlich';
   if (cr <= 10) return 'sehrselten';
-  return 'einzigartig';
+  return 'legendaer';
 }
 
 function computeStage(count, threshRow) {
@@ -67,61 +69,81 @@ function buildResources() {
 }
 
 // ── Threshold row ─────────────────────────────────────────────────────────────
-function ThresholdRow({ catId, rarity, initialRow, onSave }) {
-  const keys = ['stufe_2', 'stufe_3', 'stufe_4', 'stufe_5', 'stufe_6', 'stufe_7', 'stufe_8'];
-  const defaults = { stufe_2: 3, stufe_3: 6, stufe_4: 10, stufe_5: 15, stufe_6: 22, stufe_7: 30, stufe_8: 40 };
-  const [vals, setVals] = useState(() => {
-    const v = {};
-    keys.forEach(k => { v[k] = String((initialRow && initialRow[k] != null) ? initialRow[k] : defaults[k]); });
-    return v;
-  });
-  const [saved, setSaved] = useState(false);
+const THRESH_KEYS = ['stufe_2','stufe_3','stufe_4','stufe_5','stufe_6','stufe_7','stufe_8'];
+const THRESH_DEFAULTS = { stufe_2: 3, stufe_3: 6, stufe_4: 10, stufe_5: 15, stufe_6: 22, stufe_7: 30, stufe_8: 40 };
+const threshOrig = (row, k) => String((row && row[k] != null) ? row[k] : THRESH_DEFAULTS[k]);
 
-  useEffect(() => {
-    const v = {};
-    keys.forEach(k => { v[k] = String((initialRow && initialRow[k] != null) ? initialRow[k] : defaults[k]); });
-    setVals(v);
-  }, [initialRow]);
-
-  const dirty = useMemo(() => keys.some(k => {
-    const orig = (initialRow && initialRow[k] != null) ? initialRow[k] : defaults[k];
-    return String(orig) !== vals[k];
-  }), [vals, initialRow]);
-
-  async function handleSave() {
-    const row = { cat: catId, rarity: rarity.id };
-    keys.forEach(k => { row[k] = parseInt(vals[k], 10) || defaults[k]; });
-    const { error } = await window._sb.from('kollektikon_thresholds').upsert(row, { onConflict: 'cat,rarity' });
-    if (!error) { setSaved(true); onSave(row); setTimeout(() => setSaved(false), 1800); }
-  }
-
+// Reine Eingabezeile: der Zustand liegt in ThresholdsSection, gespeichert wird einmal für alle.
+function ThresholdRow({ rarity, initialRow, vals, onChange }) {
   return (
     <tr>
       <td><span className="thresh-rarity-label">{rarity.label}</span></td>
-      {keys.map((k, i) => (
-        <td key={k} style={{ textAlign: 'center' }}>
-          <input
-            className={`thresh-input${vals[k] !== String((initialRow?.[k] ?? defaults[k])) ? ' dirty' : ''}`}
-            type="number" min="1" max="999"
-            value={vals[k]}
-            onChange={e => setVals(v => ({ ...v, [k]: e.target.value }))}
-          />
-        </td>
-      ))}
-      <td style={{ paddingLeft: '8px' }}>
-        <button className={`thresh-save-btn${saved ? ' saved' : ''}`} onClick={handleSave} disabled={!dirty && !saved}>
-          {saved ? '✓ Gespeichert' : 'Speichern'}
-        </button>
-      </td>
+      {THRESH_KEYS.map(k => {
+        const cur = parseInt(vals[k], 10) || 0;
+        const step = d => onChange(k, String(Math.min(999, Math.max(1, cur + d))));
+        return (
+          <td key={k} style={{ textAlign: 'center' }}>
+            <div className={`counts-stepper${vals[k] !== threshOrig(initialRow, k) ? ' active' : ''}`} style={{ display: 'inline-flex' }}>
+              <button type="button" className="stepper-btn" onClick={() => step(-1)}>−</button>
+              <input
+                className="counts-mod-input"
+                style={{ width: 46 }}
+                type="number" min="1" max="999"
+                value={vals[k]}
+                onChange={e => onChange(k, e.target.value)}
+              />
+              <button type="button" className="stepper-btn" onClick={() => step(1)}>+</button>
+            </div>
+          </td>
+        );
+      })}
+      <td/>
     </tr>
   );
 }
 
 // ── Thresholds section ────────────────────────────────────────────────────────
 function ThresholdsSection({ thresholdsMap, onThresholdSaved }) {
+  const [edits, setEdits] = useState({});     // 'cat:rarity' -> { stufe_n: '12' } (nur geänderte Zeilen)
+  const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const valsOf = (key) => {
+    const row = thresholdsMap[key];
+    const v = {};
+    THRESH_KEYS.forEach(k => { v[k] = threshOrig(row, k); });
+    return { ...v, ...(edits[key] || {}) };
+  };
+  const dirtyKeys = Object.keys(edits).filter(key =>
+    THRESH_KEYS.some(k => edits[key][k] !== undefined && edits[key][k] !== threshOrig(thresholdsMap[key], k)));
+
+  function setField(key, k, value) {
+    setSaved(false);
+    setEdits(prev => ({ ...prev, [key]: { ...(prev[key] || {}), [k]: value } }));
+  }
+
+  async function saveAll() {
+    if (!dirtyKeys.length || saving) return;
+    setSaving(true);
+    const rows = dirtyKeys.map(key => {
+      const [cat, rarity] = key.split(':');
+      const v = valsOf(key);
+      const row = { cat, rarity };
+      THRESH_KEYS.forEach(k => { row[k] = parseInt(v[k], 10) || THRESH_DEFAULTS[k]; });
+      return row;
+    });
+    const { error } = await window._sb.from('kollektikon_thresholds').upsert(rows, { onConflict: 'cat,rarity' });
+    setSaving(false);
+    if (!error) {
+      rows.forEach(r => onThresholdSaved(r));
+      setEdits({});
+      setSaved(true);
+      setTimeout(() => setSaved(false), 1800);
+    }
+  }
+
   return (
     <div>
-      <div className="dm-section-label">Schwellen — Anzahl Exemplare pro Stufe</div>
       <div style={{ overflowX: 'auto' }}>
         <table className="thresh-table">
           <thead>
@@ -139,29 +161,36 @@ function ThresholdsSection({ thresholdsMap, onThresholdSaved }) {
                 <tr className="thresh-cat-row">
                   <td colSpan={9}><span className="thresh-cat-label">{cat.label}</span></td>
                 </tr>
-                {RARITIES.map(rar => (
-                  <ThresholdRow
-                    key={`${cat.id}:${rar.id}`}
-                    catId={cat.id}
-                    rarity={rar}
-                    initialRow={thresholdsMap[`${cat.id}:${rar.id}`]}
-                    onSave={onThresholdSaved}
-                  />
-                ))}
+                {RARITIES.map(rar => {
+                  const key = `${cat.id}:${rar.id}`;
+                  return (
+                    <ThresholdRow
+                      key={key}
+                      rarity={rar}
+                      initialRow={thresholdsMap[key]}
+                      vals={valsOf(key)}
+                      onChange={(k, v) => setField(key, k, v)}
+                    />
+                  );
+                })}
               </React.Fragment>
             ))}
           </tbody>
         </table>
       </div>
-      <div className="counts-hint" style={{ marginTop: '16px' }}>
-        Stufe 1 (Sichtung) wird ab 1 Exemplar automatisch erreicht. Die hier eingetragenen Werte gelten ab Stufe 2.
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginTop: 16, flexWrap: 'wrap' }}>
+        <div className="counts-hint" style={{ flex: 1, minWidth: 220 }}>
+          Stufe 1 (Sichtung) wird ab 1 Exemplar automatisch erreicht. Die hier eingetragenen Werte gelten ab Stufe 2.
+        </div>
+        <button className={`thresh-save-btn${saved ? ' saved' : ''}`} onClick={saveAll} disabled={!dirtyKeys.length && !saved}>
+          {saved ? '✓ Gespeichert' : dirtyKeys.length ? `Speichern (${dirtyKeys.length})` : 'Speichern'}
+        </button>
       </div>
     </div>
   );
 }
 
 // ── Single count row ──────────────────────────────────────────────────────────
-const THRESH_KEYS = ['stufe_2','stufe_3','stufe_4','stufe_5','stufe_6','stufe_7','stufe_8'];
 
 function nextStageInfo(count, threshRow) {
   if (!threshRow) return null;
