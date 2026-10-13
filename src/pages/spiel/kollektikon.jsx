@@ -637,6 +637,10 @@ const RAR_LABEL = {
 };
 const FACETS = {
   fische: [{
+    key: 'ort',
+    label: 'Ort',
+    options: []
+  }, {
     key: 'groesse',
     label: 'Größe',
     options: []
@@ -654,6 +658,10 @@ const FACETS = {
     options: ['Gewöhnlich', 'Selten', 'Sehr selten', 'Einzigartig']
   }],
   insekten: [{
+    key: 'ort',
+    label: 'Ort',
+    options: []
+  }, {
     key: 'groesse',
     label: 'Größe',
     options: ['Winzig', 'Klein', 'Mittel', 'Groß']
@@ -675,6 +683,10 @@ const FACETS = {
     options: ['Gewöhnlich', 'Selten', 'Sehr selten', 'Einzigartig']
   }],
   pflanzen: [{
+    key: 'ort',
+    label: 'Ort',
+    options: []
+  }, {
     key: 'typ',
     label: 'Kategorie',
     options: []
@@ -696,6 +708,10 @@ const FACETS = {
     options: ['Gewöhnlich', 'Selten', 'Sehr selten', 'Einzigartig']
   }],
   mineralien: [{
+    key: 'ort',
+    label: 'Ort',
+    options: []
+  }, {
     key: 'typ',
     label: 'Kategorie',
     options: []
@@ -825,7 +841,7 @@ function CardTag({
 
 /* Pick first 2-3 tags for a card display, in facet order */
 function pickCardTags(entry) {
-  const facets = (F2[entry.cat] || []).filter(f => f.key !== 'seltenheit');
+  const facets = (F2[entry.cat] || []).filter(f => f.key !== 'seltenheit' && f.key !== 'ort');
   const entryTags = entry.tags || {};
   const picked = [];
   for (const f of facets) {
@@ -2244,7 +2260,13 @@ function FilterPanel({
   onReset,
   onResetFacet
 }) {
-  const facets = window.FACETS[category] || [];
+  // Orte stammen aus den Karten-Pools (siehe KollektikonPage): nur Orte, an denen diese Kategorie vorkommt
+  const orte = window.KOLL_ORTE || {};
+  const facets = (window.FACETS[category] || [])
+    .map(f => f.key === 'ort'
+      ? { ...f, options: Object.keys(orte).filter(n => orte[n].cats.has(category)).sort((a, b) => a.localeCompare(b, 'de')) }
+      : f)
+    .filter(f => f.key !== 'ort' || f.options.length);
   const FG = window.FilterGroup;
   const totalActive = Object.values(selected || {}).reduce((s, arr) => s + (arr ? arr.length : 0), 0);
   if (!facets.length) return null;
@@ -2298,14 +2320,19 @@ function FilterPanel({
     }
   }, facets.map(f => {
     const facetActive = (selected[f.key] || []).length > 0;
-    return /*#__PURE__*/React.createElement(FG, {
+    const group = /*#__PURE__*/React.createElement(FG, {
       key: f.key,
       title: f.label,
       active: facetActive,
       onReset: () => onResetFacet && onResetFacet(f.key),
       collapsible: true
     }, /*#__PURE__*/React.createElement("div", {
-      style: {
+      style: f.key === 'ort' ? {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))',
+        gap: 8,
+        margin: '4px 0 8px'
+      } : {
         display: 'flex',
         flexWrap: 'wrap',
         gap: 4,
@@ -2313,12 +2340,42 @@ function FilterPanel({
       }
     }, f.options.map(opt => {
       const sel = (selected[f.key] || []).includes(opt);
+      if (f.key === 'ort') {
+        const bg = orte[opt] && orte[opt].bg;
+        return /*#__PURE__*/React.createElement("button", {
+          key: opt,
+          className: `filter-chip koll-ort${sel ? ' active' : ''}`,
+          onClick: () => onToggle(f.key, opt),
+          style: {
+            minHeight: 64,
+            padding: '10px 14px',
+            display: 'flex',
+            alignItems: 'flex-end',
+            textAlign: 'left',
+            fontSize: 12.5,
+            letterSpacing: '0.1em',
+            color: 'var(--white)',
+            textShadow: '0 1px 6px rgba(0,0,0,0.85)',
+            backgroundColor: 'rgba(var(--panel-rgb),0.9)',
+            backgroundImage: bg ? `linear-gradient(0deg, rgba(5,4,15,0.78) 0%, rgba(5,4,15,0.15) 70%), url("${bg}")` : undefined,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            borderRadius: 3,
+            borderWidth: sel ? 2 : 1,
+            boxShadow: sel ? '0 0 14px rgba(var(--purple-rgb),calc(0.55*var(--kp)))' : 'none'
+          }
+        }, opt);
+      }
       return /*#__PURE__*/React.createElement("button", {
         key: opt,
         className: `filter-chip${sel ? ' active' : ''}`,
         onClick: () => onToggle(f.key, opt)
       }, opt);
     })));
+    return f.key === 'ort' ? /*#__PURE__*/React.createElement("div", {
+      key: 'ort-wrap',
+      style: { gridColumn: '1 / -1' }
+    }, group) : group;
   })));
 }
 Object.assign(window, {
@@ -2599,6 +2656,7 @@ function buildKollektikonEntries(countsMap, thresholdsMap) {
         rarity
       };
       entry.tags = fullTags;
+      entry.tags.ort = (window.KOLL_ORT_BY_RES || {})[`${cat.id}:${rid}`] || [];
       if (isSeen) {
         entry.revealMode = null;
         entry.habitat = habitat;
@@ -2691,6 +2749,40 @@ function KollektikonPage() {
   // Counts + thresholds from Supabase — stage computed dynamically
   const [countsMap, setCountsMap] = uS3({});
   const [thresholdsMap, setThresholdsMap] = uS3({});
+  const [orteVer, setOrteVer] = uS3(0);
+  // Orte = Karten-Hexes/-Flächen mit Ressourcen-Pools (karte_pools); Banner = Banner oder Hex-Bild.
+  // Spieler sehen nur, was die Karten-RLS freigibt (sichtbare Felder).
+  uE3(() => {
+    let dead = false;
+    (async () => {
+      try {
+        const [pr, hr, ar] = await Promise.all([
+          window._sb.from('karte_pools').select('cat, resource_id, hex_id, area_id'),
+          window._sb.from('karte_hexes').select('id, name, banner_url, bild_url'),
+          window._sb.from('karte_areas').select('id, name, bild_url'),
+        ]);
+        if (dead || pr.error) return;
+        const nodes = {};
+        (hr.data || []).forEach(h => { nodes['h' + h.id] = { name: (h.name || '').trim(), bg: h.banner_url || h.bild_url || '' }; });
+        (ar.data || []).forEach(a => { nodes['a' + a.id] = { name: (a.name || '').trim(), bg: a.bild_url || '' }; });
+        const orte = {}, byRes = {};
+        (pr.data || []).forEach(p => {
+          const n = nodes[p.hex_id ? 'h' + p.hex_id : 'a' + p.area_id];
+          if (!n || !n.name) return;
+          const o = orte[n.name] || (orte[n.name] = { bg: '', cats: new Set() });
+          if (!o.bg) o.bg = n.bg;
+          o.cats.add(p.cat);
+          const k = p.cat + ':' + p.resource_id;
+          const list = byRes[k] || (byRes[k] = []);
+          if (!list.includes(n.name)) list.push(n.name);
+        });
+        window.KOLL_ORTE = orte;
+        window.KOLL_ORT_BY_RES = byRes;
+        setOrteVer(v => v + 1);
+      } catch (e) { /* ohne Orte läuft das Kollektikon unverändert weiter */ }
+    })();
+    return () => { dead = true; };
+  }, []);
   uE3(() => {
     async function load() {
       const [countRes, threshRes] = await Promise.all([
@@ -2731,7 +2823,7 @@ function KollektikonPage() {
     }).subscribe();
     return () => window._sb.removeChannel(ch);
   }, []);
-  const E3 = uM3(() => buildKollektikonEntries(countsMap, thresholdsMap), [countsMap, thresholdsMap]);
+  const E3 = uM3(() => buildKollektikonEntries(countsMap, thresholdsMap), [countsMap, thresholdsMap, orteVer]);
   function toggleTag(facetKey, value) {
     setFilterTags(prev => {
       const cur = prev[activeCat]?.[facetKey] || [];
