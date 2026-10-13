@@ -139,6 +139,8 @@ function ThresholdsSection({ thresholdsMap, onThresholdSaved }) {
       setEdits({});
       setSaved(true);
       setTimeout(() => setSaved(false), 1800);
+    } else {
+      alert('Schwellen konnten nicht gespeichert werden: ' + error.message);
     }
   }
 
@@ -225,14 +227,14 @@ function CountRow({ catId, resource, initialData, thresholdsMap, onSaved }) {
   const dirty = modVal !== 0 || revealMode !== origMode;
 
   async function handleSave() {
-    const { error } = await window._sb.from('kollektikon_counts')
-      .upsert({ cat: catId, resource_id: resource.id, menge: newMenge, reveal_mode: revealMode }, { onConflict: 'cat,resource_id' });
-    if (!error) {
-      setSaved(true);
-      setModifier('');
-      onSaved(`${catId}:${resource.id}`, { menge: newMenge, reveal_mode: revealMode });
-      setTimeout(() => setSaved(false), 1500);
-    }
+    // relative Änderung auf dem Server: kein Überschreiben fremder Änderungen
+    const { data, error } = await window._sb.rpc('kollektikon_adjust',
+      { p_cat: catId, p_resource_id: String(resource.id), p_delta: modVal, p_reveal_mode: revealMode });
+    if (error) { alert('Speichern fehlgeschlagen: ' + error.message); return; }
+    setSaved(true);
+    setModifier('');
+    onSaved(`${catId}:${resource.id}`, { menge: data && data.menge != null ? data.menge : newMenge, reveal_mode: revealMode });
+    setTimeout(() => setSaved(false), 1500);
   }
 
   const stageBadgeCls = currentStage === 0 && revealMode ? ' s0' : currentStage === 0 ? '' : currentStage >= 8 ? ' s8' : ' s1';
