@@ -147,7 +147,7 @@ async function loadStash() {
   return (data || []).map(s => ({
     id: s.id, name: s.name || '', terrain: s.terrain || '',
     features: s.features || '', beschreibung: s.beschreibung || '',
-    bild_url: s.bild_url || '',
+    bild_url: s.bild_url || '', folder: s.folder || null,
   }));
 }
 
@@ -189,6 +189,7 @@ async function sbUpsertStash(item) {
     bild_url: item.bild_url || '', folder: item.folder || null, sort_order: Date.now(),
   }, { onConflict: 'id' });
   if (error) console.error('sbUpsertStash:', error);
+  return !error;
 }
 
 async function sbDeleteStash(itemId) {
@@ -1647,6 +1648,7 @@ function MerMap() {
     setHexesMapId(currentMapId);
     setIsLoading(true);
     setSel(null); setEditing(false);
+    setHistory([]);   // Undo-Stand gehört zur vorherigen Karte
     setSelAreaId(null); setFloorIdx(0);
     setTool(null); setDrawMode(false); setDrawPts([]); setShapeStart(null); setShapeCur(null);
     setPoolModal(null); setFloorsPanelOpen(false);
@@ -2146,8 +2148,13 @@ function MerMap() {
     setStash((prev) => [...prev, stashItem]);
     if (selectedKey === oldKey) { setSel(null); setEditing(false); }
     setDragInfo(null);
-    sbUpsertStash(stashItem);
-    sbDeleteHex(h.id);
+    // Das Hex erst löschen, wenn das Lager es sicher gespeichert hat; sonst zurückholen
+    sbUpsertStash(stashItem).then((ok) => {
+      if (ok) { sbDeleteHex(h.id); return; }
+      setStash((prev) => prev.filter((s) => s.id !== stashItem.id));
+      setHexes((prev) => ({ ...prev, [oldKey]: h }));
+      alert('Das Hex konnte nicht ins Lager gelegt werden und bleibt auf der Karte.');
+    });
   }, [dragInfo, hexes, selectedKey, pushHistory, activeLagerFolder]);
 
   const dropOnEmptyMap = uC5(() => {
