@@ -1276,6 +1276,7 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
   const [rarFilter, setRarFilter] = uS4('');
   const [open, setOpen] = uS4(null);
   const [tagsOpen, setTagsOpen] = uS4(true);
+  const [poolTab, setPoolTab] = uS4('auswahl');   // auswahl | randomizer | pool
 
   const pt = (window.KARTE_POOL_TYPES || []).find(p => p.key === cat) || { label: cat, hue: 285 };
   const Kat = window.RessourcenKatalog;
@@ -1291,7 +1292,8 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
   );
   const activeTags = Object.values(sel).reduce((n, v) => n + v.length, 0);
 
-  const inPoolCount = katalog.filter(it => poolSet.has(it.id)).length;
+  const poolEntries = katalog.filter(it => poolSet.has(it.id)).sort((a, b) => a.name.localeCompare(b.name, 'de'));
+  const inPoolCount = poolEntries.length;
   const caughtCount = katalog.filter(it => poolSet.has(it.id) && (caughtCounts[`${cat}:${it.id}`] || 0) > 0).length;
 
   const filterInput = { background:'rgba(var(--panel-rgb),0.5)', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:2, padding:'8px 12px', fontFamily:'var(--font-body)', fontSize:13, color:'var(--white)' };
@@ -1303,7 +1305,7 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
       onMouseDown={e => e.stopPropagation()}
     >
       <div
-        style={{ width:760, maxWidth:'94vw', maxHeight:'calc(var(--vh, 1vh) * 90)', display:'flex', flexDirection:'column', overflow:'hidden', background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.99) 0%, rgba(var(--panel-rgb),0.99) 100%)', border:'1px solid rgba(var(--accent-rgb),calc(0.4*var(--ka)))', borderRadius:3, boxShadow:'0 24px 60px rgba(var(--shadow-rgb),calc(0.75 * var(--shadow-k))), 0 0 40px rgba(var(--purple-rgb),calc(0.2*var(--kp)))' }}
+        style={{ width:760, maxWidth:'94vw', height:'min(760px, calc(var(--vh, 1vh) * 90))', display:'flex', flexDirection:'column', overflow:'hidden', background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.99) 0%, rgba(var(--panel-rgb),0.99) 100%)', border:'1px solid rgba(var(--accent-rgb),calc(0.4*var(--ka)))', borderRadius:3, boxShadow:'0 24px 60px rgba(var(--shadow-rgb),calc(0.75 * var(--shadow-k))), 0 0 40px rgba(var(--purple-rgb),calc(0.2*var(--kp)))' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Head */}
@@ -1320,74 +1322,114 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
           >×</button>
         </header>
 
-        {/* Filters */}
-        <div style={{ padding:'12px 20px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))', display:'flex', flexDirection:'column', gap:10, flexShrink:0, maxHeight:'34vh', overflowY:'auto' }}>
-          <div style={{ display:'flex', gap:10 }}>
-            <input style={{ ...filterInput, flex:1, minWidth:0 }} type="text" placeholder="Suchen …" value={search} onChange={e => setSearch(e.target.value)}/>
-            <select style={{ ...filterInput, cursor:'pointer', maxWidth:150 }} value={rarFilter} onChange={e => setRarFilter(e.target.value)}>
-              <option value="" style={{ background:'rgb(var(--panel-rgb))' }}>Seltenheit: alle</option>
-              {RAR_ORDER.map(r => <option key={r} value={r} style={{ background:'rgb(var(--panel-rgb))' }}>{RAR[r].label}</option>)}
-            </select>
-            <button onClick={() => setTagsOpen(o => !o)} style={{ ...filterInput, cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.16em', textTransform:'uppercase', whiteSpace:'nowrap' }}>
-              Tags{activeTags ? ` (${activeTags})` : ''} {tagsOpen ? '▴' : '▾'}
-            </button>
+        {/* Tabs */}
+        <div style={{ display:'flex', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', flexShrink:0 }}>
+          {[['auswahl', 'Auswahl'], ['randomizer', 'Randomizer'], ['pool', `Aktueller Pool · ${inPoolCount}`]].map(([id, label]) => (
+            <button key={id} onClick={() => setPoolTab(id)}
+              style={{ flex:1, padding:'11px 0', background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.24em', textTransform:'uppercase', transition:'all 0.15s',
+                color: poolTab === id ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))',
+                borderBottom: `2px solid ${poolTab === id ? 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))' : 'transparent'}` }}
+            >{label}</button>
+          ))}
+        </div>
+
+        {poolTab === 'auswahl' && (
+          <React.Fragment>
+          <div style={{ padding:'12px 20px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))', display:'flex', flexDirection:'column', gap:10, flexShrink:0, maxHeight:'34vh', overflowY:'auto' }}>
+            <div style={{ display:'flex', gap:10 }}>
+              <input style={{ ...filterInput, flex:1, minWidth:0 }} type="text" placeholder="Suchen …" value={search} onChange={e => setSearch(e.target.value)}/>
+              <select style={{ ...filterInput, cursor:'pointer', maxWidth:150 }} value={rarFilter} onChange={e => setRarFilter(e.target.value)}>
+                <option value="" style={{ background:'rgb(var(--panel-rgb))' }}>Seltenheit: alle</option>
+                {RAR_ORDER.map(r => <option key={r} value={r} style={{ background:'rgb(var(--panel-rgb))' }}>{RAR[r].label}</option>)}
+              </select>
+              <button onClick={() => setTagsOpen(o => !o)} style={{ ...filterInput, cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.16em', textTransform:'uppercase', whiteSpace:'nowrap' }}>
+                Tags{activeTags ? ` (${activeTags})` : ''} {tagsOpen ? '▴' : '▾'}
+              </button>
+            </div>
+            {tagsOpen && <window.TagFilters cat={cat} sel={sel} onChange={setSel} />}
+            {activeTags > 0 && <button onClick={() => setSel({})} style={{ alignSelf:'flex-start', background:'none', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))' }}>✕ Tags zurücksetzen</button>}
           </div>
-          {tagsOpen && <window.TagFilters cat={cat} sel={sel} onChange={setSel} />}
-          {activeTags > 0 && <button onClick={() => setSel({})} style={{ alignSelf:'flex-start', background:'none', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))' }}>✕ Tags zurücksetzen</button>}
-        </div>
 
-        {/* Column header */}
-        <div style={{ display:'flex', alignItems:'center', gap:12, padding:'8px 30px 8px 20px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))', textTransform:'uppercase', flexShrink:0 }}>
-          <span style={{ width:20, flexShrink:0 }}/>
-          <span style={{ flex:1 }}>Name</span>
-          <span style={{ width:150, flexShrink:0 }}>Tags</span>
-          <span style={{ width:104, flexShrink:0 }}>Seltenheit</span>
-          <span style={{ width:88, flexShrink:0, textAlign:'center' }}>Status</span>
-        </div>
+          {/* Column header */}
+          <div style={{ display:'flex', alignItems:'center', gap:12, padding:'8px 30px 8px 20px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))', textTransform:'uppercase', flexShrink:0 }}>
+            <span style={{ width:20, flexShrink:0 }}/>
+            <span style={{ flex:1 }}>Name</span>
+            <span style={{ width:150, flexShrink:0 }}>Tags</span>
+            <span style={{ width:104, flexShrink:0 }}>Seltenheit</span>
+            <span style={{ width:88, flexShrink:0, textAlign:'center' }}>Status</span>
+          </div>
 
-        {/* Rows */}
-        <div style={{ flex:1, overflowY:'auto', padding:'4px 20px 10px' }}>
-          {rows.length === 0 && (
-            <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Treffer —</div>
-          )}
-          {rows.map(it => {
-            const inPool = poolSet.has(it.id);
-            const caught = (caughtCounts[`${cat}:${it.id}`] || 0) > 0;
-            return (
-              <div key={it.id} style={{ borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>
-              <div style={{ display:'flex', alignItems:'center', gap:12, padding:'9px 10px 9px 0' }}>
-                <button
-                  onClick={() => onToggle(it.id, inPool)}
-                  style={{ width:20, height:20, flexShrink:0, border:`1px solid ${inPool ? 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))'}`, borderRadius:2, background: inPool ? 'rgba(var(--accent-rgb),calc(0.95*var(--ka)))' : 'transparent', color:'var(--bg)', fontSize:13, lineHeight:1, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.15s' }}
-                >{inPool ? '✓' : ''}</button>
-                <window.ResThumb entry={it} size={32} />
-                <button onClick={() => setOpen(open === it.id ? null : it.id)} title="Details ein-/ausklappen"
-                  style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight: inPool ? 500 : 300, color: inPool ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', flex:1, minWidth:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', textAlign:'left', background:'none', border:'none', cursor:'pointer', padding:0 }}>{it.name}</button>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.1em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase', width:150, flexShrink:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{Object.values(it.tags).flat().slice(0, 3).join(', ')}</span>
-                <span style={{ width:104, flexShrink:0 }}><window.RarityPill rarity={it.rarity} /></span>
-                <span style={{ width:88, flexShrink:0, display:'flex', justifyContent:'center' }}>
-                  {inPool ? (
-                    <span
-                      title="Fang-Status kommt automatisch aus dem Kollektikon"
-                      style={{ padding:'3px 9px', border:`1px solid ${caught ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`, borderRadius:20, background: caught ? 'rgba(40,120,80,0.18)' : 'transparent', color: caught ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase' }}
-                    >{caught ? '✓ erfasst' : 'offen'}</span>
-                  ) : (
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--purple-rgb),calc(0.25*var(--kp) + var(--tb)))' }}>—</span>
-                  )}
-                </span>
-              </div>
-              {open === it.id && <div style={{ padding:'2px 4px 16px 32px' }}><window.ResDetail entry={it} /></div>}
-              </div>
-            );
-          })}
-        </div>
+          {/* Rows */}
+          <div style={{ flex:1, overflowY:'auto', padding:'4px 20px 10px' }}>
+            {rows.length === 0 && (
+              <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Treffer —</div>
+            )}
+            {rows.map(it => {
+              const inPool = poolSet.has(it.id);
+              const caught = (caughtCounts[`${cat}:${it.id}`] || 0) > 0;
+              return (
+                <div key={it.id} style={{ borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:12, padding:'9px 10px 9px 0' }}>
+                  <button
+                    onClick={() => onToggle(it.id, inPool)}
+                    style={{ width:20, height:20, flexShrink:0, border:`1px solid ${inPool ? 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))'}`, borderRadius:2, background: inPool ? 'rgba(var(--accent-rgb),calc(0.95*var(--ka)))' : 'transparent', color:'var(--bg)', fontSize:13, lineHeight:1, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.15s' }}
+                  >{inPool ? '✓' : ''}</button>
+                  <window.ResThumb entry={it} size={32} />
+                  <button onClick={() => setOpen(open === it.id ? null : it.id)} title="Details ein-/ausklappen"
+                    style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight: inPool ? 500 : 300, color: inPool ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', flex:1, minWidth:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', textAlign:'left', background:'none', border:'none', cursor:'pointer', padding:0 }}>{it.name}</button>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.1em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase', width:150, flexShrink:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{Object.values(it.tags).flat().slice(0, 3).join(', ')}</span>
+                  <span style={{ width:104, flexShrink:0 }}><window.RarityPill rarity={it.rarity} /></span>
+                  <span style={{ width:88, flexShrink:0, display:'flex', justifyContent:'center' }}>
+                    {inPool ? (
+                      <span
+                        title="Fang-Status kommt automatisch aus dem Kollektikon"
+                        style={{ padding:'3px 9px', border:`1px solid ${caught ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`, borderRadius:20, background: caught ? 'rgba(40,120,80,0.18)' : 'transparent', color: caught ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase' }}
+                      >{caught ? '✓ erfasst' : 'offen'}</span>
+                    ) : (
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--purple-rgb),calc(0.25*var(--kp) + var(--tb)))' }}>—</span>
+                    )}
+                  </span>
+                </div>
+                {open === it.id && <div style={{ padding:'2px 4px 16px 32px' }}><window.ResDetail entry={it} /></div>}
+                </div>
+              );
+            })}
+          </div>
 
-        {/* Randomizer (nutzt die Tag-Filter von oben) */}
-        <div style={{ padding:'12px 20px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))', flexShrink:0, maxHeight:'38vh', overflowY:'auto' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', color:'color-mix(in srgb, rgba(217,176,107,0.85), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginBottom:10 }}>⚄ Randomizer · zieht aus den gesetzten Tags, noch nicht im Pool</div>
-          <window.ResRandomizer cat={cat} excludeIds={poolSet} sel={sel} onSel={setSel} hideTags
-            addLabel="Zum Gebiet hinzufügen" onAdd={es => onRandomAdd(es.map(e => e.id))} />
-        </div>
+          </React.Fragment>
+        )}
+
+        {poolTab === 'randomizer' && (
+          <div style={{ flex:1, overflowY:'auto', padding:'14px 20px 16px' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', color:'color-mix(in srgb, rgba(217,176,107,0.85), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginBottom:12 }}>⚄ Zieht aus den gesetzten Tags, noch nicht im Pool</div>
+            <window.ResRandomizer cat={cat} excludeIds={poolSet} sel={sel} onSel={setSel}
+              addLabel="Zum Gebiet hinzufügen" onAdd={es => { onRandomAdd(es.map(e => e.id)); setPoolTab('pool'); }} />
+          </div>
+        )}
+
+        {poolTab === 'pool' && (
+          <div style={{ flex:1, overflowY:'auto', padding:'8px 20px 12px' }}>
+            {poolEntries.length === 0 && (
+              <div style={{ padding:'28px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— noch nichts im Pool · in „Auswahl" oder „Randomizer" hinzufügen —</div>
+            )}
+            {poolEntries.map(it => {
+              const caught = (caughtCounts[`${cat}:${it.id}`] || 0) > 0;
+              return (
+                <div key={it.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'9px 0', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>
+                  <window.ResThumb entry={it} size={32} />
+                  <span style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight:500, color:'var(--white)', flex:1, minWidth:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{it.name}</span>
+                  <span style={{ width:104, flexShrink:0 }}><window.RarityPill rarity={it.rarity} /></span>
+                  <span
+                    title="Fang-Status kommt automatisch aus dem Kollektikon"
+                    style={{ width:88, flexShrink:0, textAlign:'center', padding:'3px 0', border:`1px solid ${caught ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`, borderRadius:20, background: caught ? 'rgba(40,120,80,0.18)' : 'transparent', color: caught ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase' }}
+                  >{caught ? '✓ erfasst' : 'offen'}</span>
+                  <button onClick={() => onToggle(it.id, true)} title="Aus dem Pool entfernen"
+                    style={{ width:28, height:28, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:12, color:'color-mix(in srgb, rgba(220,140,160,0.7), rgb(var(--ink-rgb)) var(--cm))', background:'transparent', border:'1px solid rgba(220,80,120,0.35)', borderRadius:2, cursor:'pointer' }}>×</button>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* Footer */}
         <footer style={{ padding:'12px 20px 14px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
