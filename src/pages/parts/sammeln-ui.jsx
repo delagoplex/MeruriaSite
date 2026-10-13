@@ -21,7 +21,7 @@ function hexPts(size) {
 
 function Oct({ size = 8, color = 'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))', fill = 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))', sw = 1, style = {} }) {
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display: 'block', flexShrink: 0, ...style }}>
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display: 'block', flexShrink: 0, overflow: 'visible', ...style }}>
       <polygon points={hexPts(size)} fill={fill} stroke={color} strokeWidth={sw} />
     </svg>
   );

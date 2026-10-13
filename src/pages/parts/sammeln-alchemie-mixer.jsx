@@ -461,6 +461,13 @@ function AlchemyMixer() {
                   textTransform:'uppercase', color:'rgba(var(--text-hi-rgb),calc(0.96*var(--kt) + var(--tb)))',
                 }}>{KONKOKTION_TYPEN.find(t=>t.id===typId).label}</div>
                 {rarityData && <RarityPill seltenheit={seltenheit} size="md" />}
+                {/* Handwerkswurf direkt im Kopf: SG und Würfeln */}
+                <div style={{marginLeft:'auto',display:'flex',alignItems:'center',gap:'10px'}}>
+                  <span style={{fontFamily:'var(--font-mono)',fontSize:'11.5px',letterSpacing:'0.16em',textTransform:'uppercase',
+                    color:'rgba(var(--accent-rgb),calc(0.75*var(--ka) + var(--tb)))',padding:'3px 8px',
+                    border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',borderRadius:'2px'}}>SG {sgHandwerk}</span>
+                  <DiceButton spec="1W20" label="Würfeln" size="sm" />
+                </div>
               </div>
 
               <div style={{
@@ -475,13 +482,9 @@ function AlchemyMixer() {
                   const lookup = window.REAGENZ_EFFEKTE[`${e.familie} ${['I','II','III','IV'][e.level - 1]}`]
                               || window.REAGENZ_EFFEKTE[e.familie];
                   return (
-                    <div key={i} style={{
-                      borderLeft: `2px solid ${tag ? tag.hue : 'rgba(var(--purple-rgb),calc(0.5*var(--kp)))'}`,
-                      paddingLeft:'10px',
-                    }}>
-                      <div style={{display:'flex',alignItems:'baseline',gap:'8px',justifyContent:'space-between'}}>
+                    <div key={i}>
+                      <div style={{display:'flex',alignItems:'baseline',gap:'8px'}}>
                         <span style={{fontFamily:'var(--font-display)',fontSize:'13px',color:'rgba(var(--text-hi-rgb),calc(0.95*var(--kt) + var(--tb)))',letterSpacing:'0.06em'}}>{eName}</span>
-                        <span style={{fontFamily:'var(--font-mono)',fontSize:'11px',letterSpacing:'0.16em',color:tag ? tag.hue : 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))',textTransform:'uppercase'}}>{tag ? tag.short : ''}</span>
                       </div>
                       <div style={{fontFamily:'var(--font-body)',fontSize:'12.5px',fontWeight:300,color:'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))',lineHeight:1.5,marginTop:'2px',textWrap:'pretty'}}>
                         {lookup ? lookup.beschreibung : '—'}
@@ -491,31 +494,38 @@ function AlchemyMixer() {
                 })}
               </div>
 
+              {/* Typabhängige Kennwerte: Wirkungsdauer nur bei Trank und Gift */}
               <div style={{
                 display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px 14px',
                 paddingTop:'14px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
               }}>
-                <Spec label="Handwerks-SG" value={sgHandwerk ? `${sgHandwerk}` : '—'} />
-                <Spec label="Wirkungsdauer" value={dauer || '—'} />
-                <Spec label="Zeit" value={kosten ? window.fmtZeit(kosten.zeit) : '—'} />
-                <Spec label="Kosten" value={kosten ? window.fmtHade(kosten.kosten) : '—'} />
                 {typId === 'bombe' && (
                   <>
-                    <Spec label="Rettungs-SG" value={saveInfo ? `GES SG ${saveInfo.sg}` : '—'} />
+                    <Spec label="Rettungswurf" value={saveInfo ? `Geschicklichkeit · SG ${saveInfo.sg}` : '—'} />
                     <Spec label="Radius" value={saveInfo ? saveInfo.radius : '—'} />
                   </>
                 )}
                 {typId === 'gift' && (
-                  <Spec label="Rettungs-SG" value={saveInfo ? `KON SG ${saveInfo.sg}` : '—'} long />
+                  <>
+                    <Spec label="Rettungswurf" value={saveInfo ? `Konstitution · SG ${saveInfo.sg}` : '—'} />
+                    <Spec label="Wirkungsdauer" value={dauer || '—'} />
+                  </>
                 )}
                 {typId === 'trank' && (
-                  <Spec label="Anwendung" value="Wird getrunken" long />
+                  <>
+                    <Spec label="Anwendung" value="Wird getrunken" />
+                    <Spec label="Wirkungsdauer" value={dauer || '—'} />
+                  </>
                 )}
               </div>
 
-              <div style={{marginTop:'16px',paddingTop:'14px',borderTop:'1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))',display:'flex',alignItems:'center',gap:'12px',flexWrap:'wrap'}}>
-                <span style={{fontFamily:'var(--font-mono)',fontSize:'11.5px',letterSpacing:'0.18em',color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',textTransform:'uppercase'}}>Handwerkswurf</span>
-                <DiceButton spec="1W20" label={`gegen SG ${sgHandwerk}`} size="sm" />
+              {/* Aufwand: Zeit und Kosten */}
+              <div style={{
+                display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px 14px', marginTop:'14px',
+                paddingTop:'14px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
+              }}>
+                <Spec label="Zeit" value={kosten ? window.fmtZeit(kosten.zeit) : '—'} />
+                <Spec label="Kosten" value={kosten ? window.fmtHade(kosten.kosten) : '—'} />
               </div>
             </>
           )}
