@@ -713,17 +713,20 @@ renderAll();
     window._sb.from('characters').select('char_data').eq('visible', true),
     window._sb.from('nsc_public_directory').select('name, bild, geburtstag_doy').not('geburtstag_doy', 'is', null),
   ]);
+  // Namen und Bild-URLs stammen von Spielern und landen in innerHTML-Strings: escapen
+  const esc = t => String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  const safeUrl = u => (typeof u === 'string' && /^(https?://|/|assets/)/i.test(u.trim())) ? esc(u.trim()) : null;
   const map = {};
   for (const row of chars || []) {
     const d = row.char_data || {};
     if (!d.geburtstag_doy) continue;
     (map[d.geburtstag_doy] = map[d.geburtstag_doy] || []).push({
-      name: d.name || 'Charakter', bild: d.bild || null, type: 'sc'
+      name: esc(d.name || 'Charakter'), bild: safeUrl(d.bild), type: 'sc'
     });
   }
   for (const nsc of nscs || []) {
     (map[nsc.geburtstag_doy] = map[nsc.geburtstag_doy] || []).push({
-      name: nsc.name, bild: nsc.bild || null, type: 'nsc'
+      name: esc(nsc.name), bild: safeUrl(nsc.bild), type: 'nsc'
     });
   }
   window._birthdayMap = map;

@@ -997,7 +997,7 @@ function OutputPhase({
     };
     setSaving(true);
     try {
-      await window._sb.from('characters').insert({
+      const { error: insErr } = await window._sb.from('characters').insert({
         owner_id: window.SITE_USER?.id || null,
         name: draft.name || 'Unbenannt',
         race: draft.race || null,
@@ -1006,8 +1006,13 @@ function OutputPhase({
         char_data: draft,
         type: charType || 'spieler'
       });
+      if (insErr) throw insErr;
     } catch (e) {
       console.error(e);
+      setSaving(false);
+      alert('Der Charakter konnte nicht gespeichert werden: ' + (e && e.message ? e.message : 'unbekannter Fehler') + '
+Deine Eingaben bleiben erhalten, bitte noch einmal versuchen.');
+      return;
     }
     window.location.href = '/charaktere/mein-charakter.html';
   }
