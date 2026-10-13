@@ -74,7 +74,19 @@
       100%{ opacity:0; }
     }
     .meruria-hamburger { display: none; }
-    @media (max-width: 1024px) {
+    /* Die Leiste schrumpft schrittweise, bevor sie ins Burger-Menü wechselt */
+    @media (max-width: 1560px) {
+      .meruria-logo { margin-right: 36px !important; }
+      .meruria-desktop-nav { gap: 4px !important; }
+      .meruria-nav-trigger { padding: 10px 14px !important; letter-spacing: 0.12em !important; }
+    }
+    @media (max-width: 1400px) {
+      .meruria-logo { margin-right: 22px !important; }
+      .meruria-logo span { font-size: 18px !important; letter-spacing: 0.24em !important; }
+      .meruria-desktop-nav { gap: 3px !important; }
+      .meruria-nav-trigger { padding: 9px 9px !important; font-size: 12px !important; letter-spacing: 0.08em !important; }
+    }
+    @media (max-width: 1280px) {
       .meruria-logo { margin-right: auto !important; }
       .meruria-desktop-nav { display: none !important; }
       .meruria-hamburger { display: inline-flex !important; align-items: center; justify-content: center; }
@@ -231,13 +243,14 @@ function NavItem({ tab }) {
 
   const dur = '1.4s';
 
+  const triggerClass = 'meruria-nav-trigger';
   const triggerStyle = { fontFamily: 'var(--font-display)', fontSize: '12.5px', fontWeight: '400', letterSpacing: '0.18em', padding: '10px 20px', background: 'transparent', border: '1px solid var(--nav-btn-border)', color: 'var(--nav-text)', borderRadius: '3px', transition: 'all 0.2s', textTransform: 'uppercase', whiteSpace: 'nowrap', textDecoration: 'none', display: 'inline-block', cursor: 'pointer' };
   const triggerHoverOn  = (e) => { e.currentTarget.style.color = 'var(--white)'; e.currentTarget.style.borderColor = 'var(--nav-btn-hover-border)'; e.currentTarget.style.background = 'var(--nav-btn-hover-bg)'; };
   const triggerHoverOff = (e) => { e.currentTarget.style.color = 'var(--nav-text)'; e.currentTarget.style.borderColor = 'var(--nav-btn-border)'; e.currentTarget.style.background = 'transparent'; };
 
   if (tab.href && !tab.items) {
     return (
-      <a href={tab.href} style={triggerStyle} onMouseEnter={triggerHoverOn} onMouseLeave={triggerHoverOff}>
+      <a href={tab.href} className={triggerClass} style={triggerStyle} onMouseEnter={triggerHoverOn} onMouseLeave={triggerHoverOff}>
         {tab.label}
       </a>
     );
@@ -246,8 +259,8 @@ function NavItem({ tab }) {
   return (
     <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'relative' }}>
       {tab.href
-        ? <a href={tab.href} style={triggerStyle} onMouseEnter={triggerHoverOn} onMouseLeave={triggerHoverOff}>{tab.label}</a>
-        : <button style={triggerStyle} onMouseEnter={triggerHoverOn} onMouseLeave={triggerHoverOff}>{tab.label}</button>
+        ? <a href={tab.href} className={triggerClass} style={triggerStyle} onMouseEnter={triggerHoverOn} onMouseLeave={triggerHoverOff}>{tab.label}</a>
+        : <button className={triggerClass} style={triggerStyle} onMouseEnter={triggerHoverOn} onMouseLeave={triggerHoverOff}>{tab.label}</button>
       }
       {open &&
         <div onMouseEnter={show} onMouseLeave={hide} style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, minWidth: '180px', width: 'max-content', background: 'var(--nav-dropdown-bg)', border: '1px solid var(--nav-dropdown-border)', borderRadius: '4px', boxShadow: '0 8px 32px rgba(var(--shadow-rgb),calc(0.35 * var(--shadow-k)))', animation: 'slideDown 0.18s ease forwards', zIndex: 200, backdropFilter: 'blur(12px)' }}>
