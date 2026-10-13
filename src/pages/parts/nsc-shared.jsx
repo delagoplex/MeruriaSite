@@ -1,6 +1,6 @@
 import '../../components/char-age.jsx';
 // top-level functions were global in the old classic-script setup
-Object.assign(window, { meruriaDoyParts, meruriaDoyText, meruriaZodiacOf, nscFieldVisible, factsOf, factLabel, defaultUnlockedFor, nscEffectiveStatus, unlockableFactsOf, stageFromUnlocked, mapNscRow, useNSCData, useUnlocks, hexPoints, hexPointsInset, hexClipInset, hexA, effStage, accentOf, romanFor, NavItem, FloatingHexField, ParticleField, useScrollReveal, NSCPortrait, StageBadge, StageProgress, StatusPills, LockedSlot, Field, UnlockToggle });
+Object.assign(window, { wohlbefindenBand, meruriaDoyParts, meruriaDoyText, meruriaZodiacOf, nscFieldVisible, factsOf, factLabel, defaultUnlockedFor, nscEffectiveStatus, unlockableFactsOf, stageFromUnlocked, mapNscRow, useNSCData, useUnlocks, hexPoints, hexPointsInset, hexClipInset, hexA, effStage, accentOf, romanFor, NavItem, FloatingHexField, ParticleField, useScrollReveal, NSCPortrait, StageBadge, StageProgress, StatusPills, LockedSlot, Field, UnlockToggle });
 
 /* nsc-components.jsx — Shared building blocks for the NSC page
    (Helpers, atmosphere, nav, portrait, stage progress bar, locked-field helper) */
@@ -62,6 +62,13 @@ function nscFieldVisible(nsc, key) {
   return true;
 }
 
+// Wohlbefinden 0–10 → Zustand (Bänder wie im Kolonisierungs-Rechner)
+function wohlbefindenBand(n) {
+  if (n == null || n === '') return '';
+  n = +n;
+  return n >= 9 ? 'Aufblühend' : n >= 7 ? 'Zufrieden' : n >= 5 ? 'Neutral' : n >= 3 ? 'Unzufrieden' : n >= 1 ? 'Elend' : 'Verlässt die Siedlung';
+}
+
 function factsOf(nsc) {
   const keys = [];
   const has = k => (nsc.sections || []).includes(k);
@@ -79,7 +86,9 @@ function factsOf(nsc) {
   if (nsc.division && nsc.division !== 'Keine') keys.push('division');
   if (nsc.organisation) keys.push('organisation');
   if (nsc.kapsel) keys.push('kapsel');
-  if (nsc.wohnort) keys.push('wohnort');
+  if (nsc.wohnort || nsc.wohnortHexId || nsc.wohnortHex) keys.push('wohnort');
+  if (nsc.hatZuhause != null) keys.push('zuhause');
+  if (nsc.wohlbefinden != null) keys.push('wohlbefinden');
   (nsc.vollerName || []).forEach((_, i) => keys.push(`vna-${i}`));
   if (has('bio') && (nsc.biografie || '').trim()) keys.push('bio');
   if (has('aussehen') && Object.values(nsc.aussehen || {}).some(v => String(v || '').trim())) keys.push('aussehen');
@@ -113,7 +122,7 @@ function factLabel(key) {
     rasse:'Rasse', geschlecht:'Geschlecht', groesse:'Größe', alter:'Alter',
     geburtstag:'Geburtstag', gesinnung:'Gesinnung', klasse:'Klasse',
     hintergrund:'Hintergrund', beruf:'Beruf', division:'Division',
-    organisation:'Organisation', kapsel:'Kapsel', wohnort:'Wohnort',
+    organisation:'Organisation', kapsel:'Traumkapsel', wohnort:'Wohnort', zuhause:'Zuhause', wohlbefinden:'Wohlbefinden',
     gottheit:'Gottheit', unvergesslich:'Unvergesslich', bio:'Biografie', aussehen:'Aussehen', habe:'Vermögen',
   };
   if (map[key]) return map[key];
@@ -222,6 +231,10 @@ function mapNscRow(row) {
     organisation: row.organisation || null,
     kapsel:       row.kapsel || null,
     wohnort:      row.wohnort || null,
+    wohnortHexId: row.wohnort_hex_id || null,
+    wohnortHex:   row.wohnort_hex || null,   // nur für Spieler: { id, name }, wenn freigeschaltet und das Feld bekannt ist
+    hatZuhause:   row.hat_zuhause ?? null,
+    wohlbefinden: row.wohlbefinden ?? null,
     gottheit:     row.gottheit || null,
     biografie:    row.biografie || null,
     aussehen:     (row.aussehen && typeof row.aussehen === 'object') ? row.aussehen : {},

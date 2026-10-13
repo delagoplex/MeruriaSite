@@ -2398,7 +2398,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
       NscField("Wohnort", /*#__PURE__*/React.createElement("input", {value:extra.wohnort, onChange:e=>setEx('wohnort',e.target.value), style:nscFieldSt, placeholder:"Stadt, Viertel, Adresse…"})),
       NscField("Rang", /*#__PURE__*/React.createElement("input", {value:extra.rang, onChange:e=>setEx('rang',e.target.value), style:nscFieldSt, placeholder:"z.B. Leutnant, Meister…"})),
       NscField("Organisation", /*#__PURE__*/React.createElement("input", {value:extra.organisation, onChange:e=>setEx('organisation',e.target.value), style:nscFieldSt, placeholder:"Gilde, Kult, Gruppe…"})),
-      NscField("Kapsel", /*#__PURE__*/React.createElement("input", {value:extra.kapsel, onChange:e=>setEx('kapsel',e.target.value), style:nscFieldSt, placeholder:"Kapsel-Nummer…"})),
+      NscField("Traumkapsel", /*#__PURE__*/React.createElement("input", {value:extra.kapsel, onChange:e=>setEx('kapsel',e.target.value), style:nscFieldSt, placeholder:"Kapsel-Nummer…"})),
       NscField("Habe (Hade)", /*#__PURE__*/React.createElement("input", {type:"number",min:"0",value:extra.habe, onChange:e=>setEx('habe',Math.max(0,parseInt(e.target.value)||0)), style:{...nscFieldSt,width:110}})),
     ]),
 

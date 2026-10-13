@@ -810,8 +810,10 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
               ['division', 'Division', nsc.division && nsc.division !== 'Keine' ? `${dpRoman(nsc) ? `${dpRoman(nsc)} · ` : ''}${nsc.division}` : null],
               ['division', 'Rang', nsc.division && nsc.division !== 'Keine' && nsc.rang ? (rangNum ? `Rang ${rangNum}${rangTitel ? ' · ' + rangTitel : ''}` : nsc.rang) : null],
               ['organisation', 'Organisation', nsc.organisation],
-              ['kapsel', 'Kapsel', nsc.kapsel],
-              ['wohnort', 'Wohnort', nsc.wohnort],
+              ['kapsel', 'Traumkapsel', nsc.kapsel],
+              ['wohnort', 'Wohnort', nsc.wohnort || (nsc.wohnortHex && nsc.wohnortHex.name) || null],
+              ['zuhause', 'Zuhause', nsc.hatZuhause == null ? null : (nsc.hatZuhause ? 'Ja' : 'Nein')],
+              ['wohlbefinden', 'Wohlbefinden', nsc.wohlbefinden == null ? null : window.wohlbefindenBand(nsc.wohlbefinden)],
               ['gottheit', 'Gottheit', nsc.gottheit],
             ].filter(r => r[2]);
             const uKeys = [...new Set(rows.map(r => r[0]))];

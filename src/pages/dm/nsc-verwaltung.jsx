@@ -69,6 +69,9 @@ function nscToRow(n) {
     organisation: (n.organisation || '').trim() || null,
     kapsel: (n.kapsel || '').trim() || null,
     wohnort: (n.wohnort || '').trim() || null,
+    wohnort_hex_id: n.wohnortHexId || null,
+    hat_zuhause: n.hatZuhause ?? null,
+    wohlbefinden: n.wohlbefinden ?? null,
     gottheit: n.gottheit || null,
     biografie: n.biografie || null,
     aussehen: (n.aussehen && typeof n.aussehen === 'object') ? n.aussehen : {},
@@ -1436,6 +1439,58 @@ function LiveDbl({ display, editor, style, disabled, editing: ctlEditing, setEdi
   return <div title={disabled ? undefined : 'Klicken zum Bearbeiten'} onClick={disabled ? undefined : () => setEditing(true)} style={{ ...style, cursor:disabled ? 'default' : 'text', userSelect:'none' }}>{display}</div>;
 }
 /* Name aus NSC- und Spielercharakter-Liste wählen (Suche + Dropdown); freie Namen bleiben möglich. */
+// ── Hexfeld-Auswahl für den Wohnort (nur Orte: Hexfelder auf Karten der Gebiets-Ebene) ──
+let HEX_INDEX = null;
+async function loadHexIndex() {
+  const sb = window._sb;
+  const [mr, hr] = await Promise.all([
+    sb.from('karte_maps').select('id, name, parent_hex_id'),
+    sb.from('karte_hexes').select('id, map_id, name'),
+  ]);
+  const maps = Object.fromEntries((mr.data || []).map(m => [m.id, m]));
+  const hexes = Object.fromEntries((hr.data || []).map(h => [h.id, h]));
+  const depthOf = (mapId) => { let d = 0, m = maps[mapId], g = 0; while (m && m.parent_hex_id && g++ < 8) { const ph = hexes[m.parent_hex_id]; if (!ph) break; d++; m = maps[ph.map_id]; } return d; };
+  const pathOf = (h) => {
+    const names = [h.name]; let m = maps[h.map_id], g = 0;
+    while (m && m.parent_hex_id && g++ < 8) { const ph = hexes[m.parent_hex_id]; if (!ph) break; names.unshift(ph.name || '?'); m = maps[ph.map_id]; }
+    return names.join(' › ');
+  };
+  const all = (hr.data || []).filter(h => (h.name || '').trim());
+  const byId = Object.fromEntries(all.map(h => [h.id, { id: h.id, name: h.name, path: pathOf(h) }]));
+  // Orte = Hexfelder auf Karten der Ebene "Gebiet" (zweite Ebene unter der Weltkarte)
+  const options = all.filter(h => depthOf(h.map_id) === 2).map(h => byId[h.id]).sort((a, b) => a.path.localeCompare(b.path, 'de'));
+  return { options, byId };
+}
+function HexPicker({ valueId, onPick }) {
+  const [idx, setIdx] = useState(HEX_INDEX);
+  const [q, setQ] = useState('');
+  useEffect(() => { if (!HEX_INDEX) loadHexIndex().then(i => { HEX_INDEX = i; setIdx(i); }); }, []);
+  const cur = idx && valueId ? idx.byId[valueId] : null;
+  const ql = q.trim().toLowerCase();
+  const list = idx ? idx.options.filter(o => !ql || o.path.toLowerCase().includes(ql)).slice(0, 10) : [];
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
+      <span style={{ fontFamily:MONO, fontSize:11, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>Hexfeld auf der Karte</span>
+      {valueId && (
+        <span style={{ display:'flex', alignItems:'center', gap:8, fontFamily:BODY, fontSize:13, color:'var(--white)' }}>
+          ⬡ {cur ? cur.path : 'verknüpft'}
+          <button type="button" onClick={() => onPick(null)} title="Verknüpfung lösen"
+            style={{ marginLeft:'auto', width:24, height:24, padding:0, background:'transparent', border:'1px solid rgba(227,103,96,0.4)', borderRadius:2, color:'rgba(227,103,96,0.8)', cursor:'pointer' }}>×</button>
+        </span>
+      )}
+      <input value={q} onChange={e => setQ(e.target.value)} placeholder={idx ? 'Ort suchen …' : 'lade Karten …'}
+        style={{ fontFamily:BODY, fontSize:13, padding:'4px 8px', background:'rgba(var(--panel-rgb),0.6)', border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:2, color:'var(--white)', outline:'none' }}/>
+      <div style={{ display:'flex', flexDirection:'column', maxHeight:180, overflowY:'auto' }}>
+        {idx && list.length === 0 && <span style={{ fontFamily:MONO, fontSize:11, letterSpacing:'0.14em', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', padding:'6px 0' }}>— kein Ort gefunden —</span>}
+        {list.map(o => (
+          <button key={o.id} type="button" onClick={() => onPick(o)}
+            style={{ textAlign:'left', padding:'5px 8px', background: o.id === valueId ? 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))' : 'transparent', border:'none', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))', color:'var(--white)', fontFamily:BODY, fontSize:13, cursor:'pointer' }}>{o.path}</button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function LiveNamePicker({ value, onChange, options, placeholder, style }) {
   const [editing, setEditing] = useLiveEditing();
   const [q, setQ] = useState('');
@@ -1650,8 +1705,10 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   eckRow('zug', 'division', 'Division', sel.division !== 'Keine' ? divOf(sel.division).roman + ' · ' + sel.division : '');
   eckRow('zug', 'division', 'Rang', sel.division !== 'Keine' && (sel.rang || rangNum) ? (rangNum ? 'Rang ' + rangNum + (rangTitel ? ' · ' + rangTitel : '') : sel.rang) : '');
   eckRow('zug', 'organisation', 'Organisation', sel.organisation);
-  eckRow('zug', 'kapsel', 'Kapsel', sel.kapsel);
-  eckRow('zug', 'wohnort', 'Wohnort', sel.wohnort);
+  eckRow('zug', 'kapsel', 'Traumkapsel', sel.kapsel);
+  eckRow('zug', 'wohnort', 'Wohnort', sel.wohnort || (sel.wohnortHexId ? 'Hexfeld verknüpft' : ''));
+  eckRow('zug', 'zuhause', 'Zuhause', sel.hatZuhause == null ? '' : (sel.hatZuhause ? 'Ja' : 'Nein'));
+  eckRow('zug', 'wohlbefinden', 'Wohlbefinden', sel.wohlbefinden == null ? '' : window.wohlbefindenBand(sel.wohlbefinden) + (dmView ? ' · ' + sel.wohlbefinden + ' / 10' : ''));
   const eckGroups = [['Person', eckG.person], ['Werdegang', eckG.werdegang], ['Zugehörigkeit', eckG.zug]].filter(([_, rows]) => rows.length);
   const eckAll = [...eckG.person, ...eckG.werdegang, ...eckG.zug];
 
@@ -1882,8 +1939,36 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
                   <RangInfo division={sel.division} rang={rangNum}/>
                 </div>) }] : []),
               { key:'organisation', label:'Organisation', text:sel.organisation, editor:text('organisation') },
-              { key:'kapsel', label:'Kapsel', text:sel.kapsel, editor:text('kapsel') },
-              { key:'wohnort', label:'Wohnort', text:sel.wohnort, editor:text('wohnort') },
+              { key:'kapsel', label:'Traumkapsel', text:sel.kapsel, editor:text('kapsel') },
+              { key:'wohnort', label:'Wohnort', text:sel.wohnort || (sel.wohnortHexId ? '⬡ Hexfeld verknüpft' : ''), editor:close => (
+                <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+                  <input autoFocus value={sel.wohnort ?? ''} placeholder="Wohnort als Text" onChange={e => updSel('wohnort', e.target.value)}
+                    onKeyDown={e => { if (e.key === 'Enter') close(); }} style={smallIn}/>
+                  <HexPicker valueId={sel.wohnortHexId} onPick={o => {
+                    updSel('wohnortHexId', o ? o.id : null);
+                    if (o && !(sel.wohnort || '').trim()) updSel('wohnort', o.name);
+                  }}/>
+                </div>) },
+              { key:'zuhause', label:'Zuhause', text: sel.hatZuhause == null ? '' : (sel.hatZuhause ? 'Ja' : 'Nein'), editor:close => (
+                <select autoFocus value={sel.hatZuhause == null ? '' : (sel.hatZuhause ? 'ja' : 'nein')}
+                  onChange={e => { const v = e.target.value; updSel('hatZuhause', v === '' ? null : v === 'ja'); close(); }} style={smallSel}>
+                  <option value="">— unbekannt</option>
+                  <option value="ja">Ja, hat ein Zuhause</option>
+                  <option value="nein">Nein, obdachlos</option>
+                </select>) },
+              { key:'wohlbefinden', label:'Wohlbefinden', text: sel.wohlbefinden == null ? '' : sel.wohlbefinden + ' / 10 · ' + window.wohlbefindenBand(sel.wohlbefinden), editor:close => {
+                const stepSt = { width:28, height:28, padding:0, background:'rgba(var(--purple-rgb),calc(0.12*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))', borderRadius:3, color:'rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))', fontSize:15, lineHeight:1, cursor:'pointer' };
+                const cur = sel.wohlbefinden;
+                return (
+                  <div style={{ display:'flex', alignItems:'center', gap:6, flexWrap:'wrap' }}>
+                    <button type="button" style={stepSt} onClick={() => updSel('wohlbefinden', Math.max(0, (cur ?? 5) - 1))}>−</button>
+                    <span style={{ minWidth:44, textAlign:'center', fontFamily:MONO, fontSize:13, color:'var(--white)' }}>{cur == null ? '—' : cur + ' / 10'}</span>
+                    <button type="button" style={stepSt} onClick={() => updSel('wohlbefinden', Math.min(10, (cur ?? 4) + 1))}>+</button>
+                    <span style={{ fontFamily:BODY, fontSize:13, color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))' }}>{cur == null ? 'unbekannt' : window.wohlbefindenBand(cur)}</span>
+                    {cur != null && <button type="button" title="Zurücksetzen" style={{ ...stepSt, width:24, height:24, fontSize:12 }} onClick={() => { updSel('wohlbefinden', null); close(); }}>×</button>}
+                  </div>
+                );
+              } },
             ]],
           ];
           const ageRaw = sel.rasse ? ageInfo(sel.rasse, sel.alter) : null;
