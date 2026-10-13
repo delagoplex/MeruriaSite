@@ -1010,8 +1010,7 @@ function OutputPhase({
     } catch (e) {
       console.error(e);
       setSaving(false);
-      alert('Der Charakter konnte nicht gespeichert werden: ' + (e && e.message ? e.message : 'unbekannter Fehler') + '
-Deine Eingaben bleiben erhalten, bitte noch einmal versuchen.');
+      alert('Der Charakter konnte nicht gespeichert werden: ' + (e && e.message ? e.message : 'unbekannter Fehler') + '\nDeine Eingaben bleiben erhalten, bitte noch einmal versuchen.');
       return;
     }
     window.location.href = '/charaktere/mein-charakter.html';

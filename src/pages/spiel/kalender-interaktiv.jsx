@@ -715,7 +715,7 @@ renderAll();
   ]);
   // Namen und Bild-URLs stammen von Spielern und landen in innerHTML-Strings: escapen
   const esc = t => String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  const safeUrl = u => (typeof u === 'string' && /^(https?://|/|assets/)/i.test(u.trim())) ? esc(u.trim()) : null;
+  const safeUrl = u => (typeof u === 'string' && /^(https?:\/\/|\/|assets\/)/i.test(u.trim())) ? esc(u.trim()) : null;
   const map = {};
   for (const row of chars || []) {
     const d = row.char_data || {};
