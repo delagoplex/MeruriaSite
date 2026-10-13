@@ -73,6 +73,9 @@ function rowToHex(h) {
     bevoelkerung: h.bevoelkerung || '',
     kolonien: h.kolonien || '',
     erkundung: h.erkundung || [],
+    visible: h.visible !== false,   // true = alles offen (die Basistabelle liefert nur sichtbare Felder)
+    reveal: h.reveal || {},
+    tag_idx: h.tag_idx || null,     // Position der (maskierten) Tags in der Originalliste
   };
 }
 
@@ -98,18 +101,72 @@ async function loadMap(mapId) {
   return data;
 }
 
+// Spieleransicht: sichtbare Felder voll, "gehörte" Felder ohne nicht freigegebene Angaben (Maskierung in der DB).
+// Ältere Datenbank ohne die Ansicht: nur die vollständig sichtbaren Felder wie bisher.
 async function loadVisibleHexes(mapId) {
-  const { data } = await window._sb.from('karte_hexes')
-    .select('*').eq('map_id', mapId).eq('visible', true);
+  let rows = null;
+  const res = await window._sb.from('karte_hexes_player').select('*').eq('map_id', mapId);
+  if (!res.error) rows = res.data;
+  else {
+    const old = await window._sb.from('karte_hexes').select('*').eq('map_id', mapId).eq('visible', true);
+    rows = old.data;
+  }
   return Object.fromEntries(
-    (data || []).map(h => [hexKey(h.q, h.r), rowToHex(h)])
+    (rows || []).map(h => [hexKey(h.q, h.r), rowToHex({ ...h, visible: h.visible })])
   );
+}
+
+// Welche freigegebenen Felder hat dieser Spieler schon aufgedeckt? { hexId: ['name','info',…] }
+async function loadHexSeen(hexIds) {
+  if (!hexIds.length) return {};
+  const { data, error } = await window._sb.from('karte_hex_seen').select('hex_id, keys').in('hex_id', hexIds);
+  if (error) return {};
+  return Object.fromEntries((data || []).map(r => [r.hex_id, r.keys || []]));
+}
+async function saveHexSeen(hexId, keys) {
+  // Die Kartenseite läuft ohne SiteGate: Nutzer-ID direkt aus der Sitzung holen
+  const { data } = await window._sb.auth.getSession();
+  const uid = data && data.session && data.session.user && data.session.user.id;
+  if (!uid) return;
+  const { error } = await window._sb.from('karte_hex_seen').upsert({ user_id: uid, hex_id: hexId, keys }, { onConflict: 'user_id,hex_id' });
+  if (error) console.warn('karte_hex_seen:', error.message);
+}
+
+// Zustand einer Angabe für diesen Spieler: open (aufgedeckt) | new (freigegeben, noch verschlüsselt) | locked.
+// Jede Angabe wird einzeln freigegeben und einzeln entschlüsselt. "info" gibt alle Textangaben auf einmal frei.
+// Kolonien, Erkundungsfortschritt und Ressourcen sind immer sichtbar (kein Aufdecken nötig).
+var INFO_KEYS = ['terrain', 'beschreibung', 'features', 'datensonde', 'bevoelkerung'];
+var REVEAL_KEYS = ['name'].concat(INFO_KEYS, ['bild']);
+function revealState(hex, seen, key) {
+  if (!hex || hex.visible) return 'open';
+  const rv = hex.reveal || {};
+  const released = !!rv[key] || (INFO_KEYS.indexOf(key) >= 0 && !!rv.info);
+  if (!released) return 'locked';
+  return (seen || []).indexOf(key) >= 0 ? 'open' : 'new';
+}
+// Tags einzeln: Schlüssel tag_<index>; "tags" gibt alle auf einmal frei
+function tagPos(hex) {
+  const idx = hex.tag_idx;
+  return (hex.tags || []).map((t, j) => ({ t, i: idx && idx[j] != null ? idx[j] : j }));
+}
+function revealStates(hex, seen) {
+  const o = {};
+  REVEAL_KEYS.forEach(k => { o[k] = revealState(hex, seen, k); });
+  tagPos(hex).forEach(p => {
+    const key = 'tag_' + p.i;
+    if (hex.visible) { o[key] = 'open'; return; }
+    const rv = hex.reveal || {};
+    if (!(rv[key] || rv.tags || rv.info)) { o[key] = 'locked'; return; }
+    o[key] = (seen || []).indexOf(key) >= 0 ? 'open' : 'new';
+  });
+  return o;
 }
 
 Object.assign(window, {
   HEX_SIZE, HEX_W, HEX_H, NEIGHBORS, APOTHEM,
   axialToPixel, hexKey, TERRAIN_COLORS, terrainColor, DEFAULT_HEX_COLOR,
   easeInOutCubic, rowToHex, loadRootMap, loadMap, loadVisibleHexes,
+  loadHexSeen, saveHexSeen, revealState, revealStates,
   EBENEN, depthEbene,
 });
 
@@ -136,13 +193,29 @@ function HexBorder({ selected, hovered, color = DEFAULT_HEX_COLOR }) {
 }
 
 // Read-only hex tile: no grip, no edit overlay — just click to open info panel
-function HexTile({ hex, selected, hovered, onSelect, onHoverChange }) {
+function HexTile({ hex, selected, hovered, onSelect, onHoverChange, rv }) {
   const { x, y } = axialToPixel(hex.q, hex.r);
   const tcolor = terrainColor(hex.terrain);
+  const st = rv || { name:'open', info:'open', bild:'open', fortschritt:'open' };
+  const heard = !hex.visible && st.bild !== 'open' && st.terrain !== 'open';
+  const hasNew = Object.keys(st).some(k => st[k] === 'new');
+
+  // Bild an der Kachel: beim Aufdecken dieselbe Glitch-Animation wie im Panel
+  const prevBild = React.useRef(st.bild);
+  const [bildFx, setBildFx] = React.useState(false);
+  React.useEffect(() => {
+    const was = prevBild.current;
+    prevBild.current = st.bild;
+    if (was !== 'open' && st.bild === 'open') {
+      setBildFx(true);
+      const t = setTimeout(() => setBildFx(false), 1500);
+      return () => clearTimeout(t);
+    }
+  }, [st.bild]);
 
   return (
     <div
-      className={`mk-hex${selected ? ' is-selected' : ''}${hovered && !selected ? ' is-hovered' : ''}`}
+      className={`mk-hex${selected ? ' is-selected' : ''}${hovered && !selected ? ' is-hovered' : ''}${heard ? ' is-heard' : ''}`}
       style={{
         width: HEX_W, height: HEX_H,
         left: x - HEX_W/2, top: y - HEX_H/2,
@@ -156,11 +229,15 @@ function HexTile({ hex, selected, hovered, onSelect, onHoverChange }) {
       <div className="mk-hex-inner">
         <div className="mk-hex-clip"/>
         <div className="mk-slot-clip mk-slot-clip-canvas">
-          {hex.bild_url ? (
-            <img src={hex.bild_url} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition: hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block' }} alt=""/>
+          {hex.bild_url && st.bild === 'open' ? (
+            <GlitchImage active={bildFx}>
+              <img src={hex.bild_url} className={bildFx ? 'mk-img-in' : undefined} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition: hex.bild_pos ? `${hex.bild_pos.x}% ${hex.bild_pos.y}%` : '50% 50%', display:'block' }} alt=""/>
+            </GlitchImage>
           ) : null}
         </div>
         <HexBorder selected={selected} hovered={hovered} color={tcolor}/>
+        {heard && <div className="mk-hex-qmark">?</div>}
+        {hasNew && <div className="mk-hex-new" title="Neue Erkenntnis — anklicken">◈</div>}
         {/* Click target */}
         <div
           className="mk-hex-overlay"
@@ -316,9 +393,122 @@ function FancyBar({ b }) {
 
 var POOL_BAR_LABELS = { fische: 'Gefangene Fische', insekten: 'Gefangene Insekten', pflanzen: 'Gesammelte Pflanzen', mineralien: 'Abgebaute Mineralien' };
 
-function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectives, poolRows, kollStatus, childEbene }) {
+// Verschlüsselte Fassung einer freigegebenen Angabe: Zeichensalat, der Klick entschlüsselt (pro Spieler, einmalig).
+// Schlüssel für die "Verschlüsselung" ist der echte Text, es bleibt also dieselbe Länge und Form.
+// ── Aufdecken wie bei den Rezepten (1:1 aus rezepte.jsx / rezepte.css übernommen) ──
+// Gesperrt: Blockzeichen statt Text, der Text selbst bleibt unsichtbar im Fluss (Layout bleibt stabil).
+// Entsperrt (Klick): die Zeichen setzen sich von links nach rechts zum echten Text zusammen.
+var PANEL_GLYPHS = '▪▫□■◇◆▮▯•◦▬│┃⬚'.split('');
+var randG = () => PANEL_GLYPHS[(Math.random() * PANEL_GLYPHS.length) | 0];
+var scrambleRnd = t => { let o = ''; for (const c of t) o += (c === ' ' || c === '\n') ? c : randG(); return o; };
+// Buchstaben-Variante für Titel und Beschriftungen: gleiche Schrift, Höhe und Breite wie der echte Text –
+// Blockzeichen kommen aus einer anderen Schrift und lassen den Titel kleiner wirken und auf und ab springen.
+var randLetter = c => {
+  const up = c !== c.toLowerCase(), low = c !== c.toUpperCase();
+  const pick = s => s[(Math.random() * s.length) | 0];
+  if (up) return pick('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  if (low) return pick('abcdefghijklmnopqrstuvwxyz');
+  if (/[0-9]/.test(c)) return pick('0123456789');
+  return c;
+};
+var scrambleLetters = t => Array.from(String(t)).map(c => (c.trim() === '' ? c : randLetter(c))).join('');
+// feste Blockzeichenfolge (für Beschriftungen, die nicht neu gewürfelt werden sollen)
+var glyphStatic = t => Array.from(String(t || '')).map((c, i) => (c.trim() === '' ? c : PANEL_GLYPHS[(c.charCodeAt(0) * 7 + i * 13) % PANEL_GLYPHS.length])).join('');
+
+function Scramble({ text, revealed, onReveal, tag: Tag = 'span', className = '', style, nowrap, letters, fast }) {
+  const scr = letters ? scrambleLetters : scrambleRnd;
+  const [display, setDisplay] = React.useState(() => revealed ? text : scr(text));
+  const [phase, setPhase] = React.useState(revealed ? 'revealed' : 'locked');
+  const rafRef = React.useRef(null);
+  React.useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
+  React.useEffect(() => {
+    if (revealed && phase !== 'revealed' && phase !== 'decoding') runDecode();
+    else if (!revealed && phase === 'revealed') { cancelAnimationFrame(rafRef.current); setDisplay(scr(text)); setPhase('locked'); }
+  }, [revealed]);
+  function runDecode() {
+    setPhase('decoding');
+    const chars = [...text], total = (460 + Math.min(chars.length * 20, 760)) * (fast ? 0.5 : 1), start = performance.now(); let last = 0;
+    const step = now => {
+      const t = now - start;
+      if (now - last > 32 || t >= total) { last = now; let o = ''; for (let i = 0; i < chars.length; i++) { const c = chars[i]; if (c === ' ' || c === '\n') { o += c; continue; } const settle = (i / chars.length) * total * 0.62 + total * 0.32; o += t >= settle ? c : (letters ? randLetter(c) : randG()); } setDisplay(o); }
+      if (t < total) rafRef.current = requestAnimationFrame(step); else { setDisplay(text); setPhase('revealed'); }
+    };
+    rafRef.current = requestAnimationFrame(step);
+  }
+  const canClick = phase === 'locked' && !!onReveal;
+  return (
+    <Tag className={className} style={style}>
+      <span style={{ position: 'relative', display: 'block', overflow: 'hidden' }}>
+        <span style={{ visibility: 'hidden', userSelect: 'none' }} aria-hidden="true">{text}</span>
+        <span
+          className={`mk-scr ${phase}${canClick ? ' clickable' : ''}`}
+          style={{ position: 'absolute', top: 0, left: 0, right: 0, cursor: canClick ? 'pointer' : undefined, whiteSpace: nowrap ? 'nowrap' : undefined }}
+          title={canClick ? 'Klicken zum Enthüllen' : undefined}
+          onClick={canClick ? (e) => { e.stopPropagation(); onReveal(); } : undefined}
+        >{display}</span>
+      </span>
+    </Tag>
+  );
+}
+
+// Bild: verfremdete Vorschau (unscharf, mit Rauschen) vor dem Aufdecken, Glitch-Reveal danach (wie zuvor)
+function EncryptedImage({ src, onOpen }) {
+  return (
+    <button onClick={onOpen} className="mk-cipher-img" title="Verschlüsselt – zum Entschlüsseln anklicken"
+      style={{ display:'block', width:'100%', height:210, padding:0, border:'none', cursor:'pointer', position:'relative', overflow:'hidden', flexShrink:0, background:'rgba(var(--panel-rgb),1)' }}>
+      {src && <img src={src} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block', filter:'blur(16px) saturate(0.2) brightness(0.55) contrast(1.8)', transform:'scale(1.15)' }}/>}
+      <span className="mk-noise" aria-hidden="true"/>
+      <span style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:12, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.9*var(--ka) + var(--tb)))', textShadow:'0 0 12px rgba(var(--purple-rgb),calc(0.9*var(--kp)))' }}>
+        BILD VERSCHLÜSSELT
+      </span>
+    </button>
+  );
+}
+function GlitchImage({ active, children }) {
+  const base = { position:'relative', display:'block', width:'100%', height:'100%' };
+  if (!active) return <div style={base}>{children}</div>;
+  const dur = '1.4s';
+  const layer = (a, extra) => ({ position:'absolute', left:0, top:0, width:'100%', height:'100%', pointerEvents:'none', animation:`${a} ${dur} ease forwards`, ...extra });
+  return (
+    <div style={{ ...base, overflow:'hidden' }}>
+      {children}
+      <div aria-hidden="true" style={layer('neu-bg-glitch', { zIndex:2 })}/>
+      <div aria-hidden="true" style={layer('neu-bg-glitch2', { zIndex:2 })}/>
+    </div>
+  );
+}
+
+// Tag-Chip: schrumpft beim Aufdecken leicht und ploppt minimal über die Normalgröße (mit Glanz und Funken)
+function TagChip({ text, state, onReveal, pop }) {
+  const locked = state === 'new';
+  return (
+    <span className={'mk-tag' + (pop ? ' mk-tag-pop' : '') + (locked ? ' mk-tag--locked' : '')}
+      style={{ position:'relative', display:'inline-block', padding:'3px 9px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))', whiteSpace:'nowrap' }}>
+      <Scramble tag="span" nowrap fast text={text} revealed={state === 'open'} onReveal={locked ? onReveal : undefined} style={{ display:'inline-block', verticalAlign:'top' }}/>
+      {pop && Array.from({ length: 8 }).map((_, i) => <i key={i} className="mk-spark" style={{ '--a': (i * 45) + 'deg' }}/>)}
+      {pop && <i className="mk-tag-shine"/>}
+    </span>
+  );
+}
+
+function FactRow({ k, v }) {
+  return (
+    <div style={{ display:'flex', gap:8, alignItems:'baseline', marginBottom:8 }}>
+      <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', width:96, flexShrink:0 }}>{k}</span>
+      <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))', lineHeight:1.5 }}>{v}</span>
+    </div>
+  );
+}
+
+function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectives, poolRows, kollStatus, childEbene, rv, onReveal, glitch }) {
   if (!hex) return null;
   const isArea = nodeType === 'area';
+  // Aufdeck-Zustand jeder Angabe (Flächen und voll sichtbare Felder: alles offen)
+  const R = {};
+  REVEAL_KEYS.forEach(k => { R[k] = (isArea || !rv) ? 'open' : (rv[k] || 'open'); });
+  const G = glitch || {};
+  const O = k => R[k] === 'open';
+  const fOpen = true;   // Erkundungsfortschritt ist immer sichtbar
   const tcolor = isArea ? (hex.typ === 'eingang' ? 'oklch(0.78 0.1 80)' : 'oklch(0.7 0.15 285)') : terrainColor(hex.terrain);
   const [tab, setTab] = uS4('details');
   const [stats, setStats] = uS4(null);
@@ -327,29 +517,29 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
 
   // Rollup über Unterkarten direkt beim Öffnen laden (speist die Fortschrittsbalken im Details-Tab)
   uE4(() => {
-    if (!hex.has_submap || !hex.submap_id) { setStats([]); return; }
+    if (!fOpen || !hex.has_submap || !hex.submap_id) { setStats([]); return; }
     setStatsLoading(true);
     karteCollectSubtreeStats(
       { hexId: isArea ? null : hex.id, areaId: isArea ? hex.id : null, submapId: hex.submap_id },
       { onlyVisible: true }
     ).then(s => { setStats(s); setStatsLoading(false); })
      .catch(() => { setStats([]); setStatsLoading(false); });
-  }, [hex.id]);
+  }, [hex.id, fOpen]);
 
-  const objList = (objectives || []).filter(o => o.freigeschaltet);
+  const objList = fOpen ? (objectives || []).filter(o => o.freigeschaltet) : [];
 
   // Ressourcen: Pools werden pro Ort gepflegt und hier über den Teilbaum aggregiert.
   // Bis die Aggregation geladen ist, dienen die eigenen Pool-Zeilen als Startwert.
   const [aggPools, setAggPools] = uS4(null);
   uE4(() => {
-    if (!hex.has_submap || !hex.submap_id) { setAggPools(poolRows || []); return; }
+    if (!fOpen || !hex.has_submap || !hex.submap_id) { setAggPools(poolRows || []); return; }
     karteCollectSubtreePools(
       { hexId: isArea ? null : hex.id, areaId: isArea ? hex.id : null, submapId: hex.submap_id },
       { onlyVisible: true }
     ).then(setAggPools).catch(() => setAggPools(poolRows || []));
-  }, [hex.id]);
+  }, [hex.id, fOpen]);
 
-  const nodePools = aggPools || poolRows || [];
+  const nodePools = fOpen ? (aggPools || poolRows || []) : [];
   const hasPoolData = nodePools.length > 0;
 
   // Fortschrittsbalken: Objectives-Rollup nach Tags + Pool-Fangquoten + Legacy-Erkundung
@@ -362,7 +552,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
     const pct = Math.round(caught / items.length * 100);
     bars.push(makeBar(POOL_BAR_LABELS[pt.key] || pt.label, pct, pct));
   });
-  if (!isArea) (hex.erkundung || []).forEach(e => {
+  if (!isArea && fOpen) (hex.erkundung || []).forEach(e => {
     const opts = { color: e.farbe || null, iconPath: e.icon || null };
     const total = +e.total || 0;
     if (total > 0) {
@@ -387,25 +577,22 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
     >{label}</button>
   );
 
-  const tags = hex.tags || [];
-  const topBild = isArea ? hex.bild_url : (hex.banner_url || hex.bild_url);
+  const topBildRaw = isArea ? hex.bild_url : (hex.banner_url || hex.bild_url);
+  const topBild = O('bild') ? topBildRaw : null;
+  const hasTopBlock = !!topBildRaw && R.bild !== 'locked';   // Bildbereich vorhanden (verschlüsselt oder offen)
 
   // Kolonien: strukturierte Liste [{name, rassen:[]}] (Fallback: alter Freitext)
   const kolonien = Array.isArray(hex.kolonie) ? hex.kolonie : [];
 
   // Fakten-Zeilen für den Details-Tab
-  const facts = [];
-  if (isSubmap && !isArea && hex.features) facts.push(['Besonderheiten', hex.features]);
-  if (isSubmap && !isArea) facts.push(['Datensonde', hex.datensonde ? '✓ installiert' : '✗ nicht installiert']);
-  if (!isSubmap && !isArea && hex.bevoelkerung) facts.push(['Bevölkerung', hex.bevoelkerung]);
-  if (!isSubmap && !isArea && kolonien.length === 0 && hex.kolonien) facts.push(['Kolonien', hex.kolonien]);
+  // Fakten einzeln: [Beschriftung, Wert, Schlüssel]; Zeilen, die vorhanden sind, aber noch nicht aufgedeckt
+  const factDefs = [];
+  if (isSubmap && !isArea && hex.features) factDefs.push(['Besonderheiten', hex.features, 'features']);
+  if (isSubmap && !isArea) factDefs.push(['Datensonde', hex.datensonde ? '✓ installiert' : '✗ nicht installiert', 'datensonde']);
+  if (!isSubmap && !isArea && hex.bevoelkerung) factDefs.push(['Bevölkerung', hex.bevoelkerung, 'bevoelkerung']);
+  const kolonienText = (!isSubmap && !isArea && !kolonien.length && hex.kolonien) ? hex.kolonien : '';
+  const facts = factDefs.filter(d => O(d[2]));
 
-  const FactRow = ({ k, v }) => (
-    <div style={{ display:'flex', gap:8, alignItems:'baseline', marginBottom:8 }}>
-      <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', width:96, flexShrink:0 }}>{k}</span>
-      <span style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))', lineHeight:1.5 }}>{v}</span>
-    </div>
-  );
 
   return (
     <React.Fragment>
@@ -415,16 +602,24 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
         onMouseDown={(e) => e.stopPropagation()}
         style={{ background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.98) 0%, rgba(var(--panel-rgb),0.98) 100%)', borderLeft:'1px solid rgba(var(--accent-rgb),calc(0.28*var(--ka)))', boxShadow:'-24px 0 60px rgba(var(--shadow-rgb),calc(0.65 * var(--shadow-k)))' }}
       >
-        {/* Top-Bild (klickbar → Vollbild) */}
-        {topBild && (
-          <button
-            onClick={() => setFullImg(true)}
-            title="Bild in Vollansicht öffnen"
-            style={{ display:'block', width:'100%', padding:0, border:'none', background:'none', cursor:'zoom-in', position:'relative', flexShrink:0 }}
-          >
-            <img src={topBild} loading="lazy" style={{ width:'100%', height:210, objectFit:'cover', display:'block' }} alt=""/>
-            <span style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, rgba(var(--panel-rgb),0.15) 0%, rgba(var(--panel-rgb),0) 35%, rgba(var(--panel-rgb),0.92) 100%)', pointerEvents:'none' }}/>
-          </button>
+        {/* Bild: versiegelt (freigegeben, noch nicht aufgedeckt) oder offen (klickbar → Vollbild); Aufdecken wie bei den Rezepten */}
+        {hasTopBlock && (
+          <div style={{ position:'relative', height:210, flexShrink:0, overflow:'hidden' }}>
+            {O('bild') && topBild ? (
+              <GlitchImage active={!!G.bild}>
+                <button
+                  onClick={() => setFullImg(true)}
+                  title="Bild in Vollansicht öffnen"
+                  style={{ display:'block', width:'100%', height:'100%', padding:0, border:'none', background:'none', cursor:'zoom-in', position:'relative' }}
+                >
+                  <img src={topBild} loading="lazy" className={G.bild ? 'mk-img-in' : undefined} style={{ width:'100%', height:210, objectFit:'cover', display:'block' }} alt=""/>
+                  <span style={{ position:'absolute', inset:0, background:'linear-gradient(to bottom, rgba(var(--panel-rgb),0.15) 0%, rgba(var(--panel-rgb),0) 35%, rgba(var(--panel-rgb),0.92) 100%)', pointerEvents:'none' }}/>
+                </button>
+              </GlitchImage>
+            ) : (
+              <EncryptedImage src={topBildRaw} onOpen={() => onReveal && onReveal('bild')}/>
+            )}
+          </div>
         )}
         <button
           onClick={onClose} title="Schließen (Esc)"
@@ -433,16 +628,20 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
           onMouseLeave={e => { e.currentTarget.style.color='color-mix(in srgb, rgba(220,140,160,0.55), rgb(var(--ink-rgb)) var(--cm))'; e.currentTarget.style.borderColor='rgba(220,80,120,0.18)'; e.currentTarget.style.background='rgba(var(--panel-rgb),0.55)'; }}
         >×</button>
 
-        <header style={{ padding: topBild ? '14px 22px 16px' : '18px 22px 16px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'flex-start', justifyContent:'space-between', position:'relative', zIndex:2, flexShrink:0 }}>
+        <header style={{ padding: hasTopBlock ? '14px 22px 16px' : '18px 22px 16px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'flex-start', justifyContent:'space-between', position:'relative', zIndex:2, flexShrink:0 }}>
           <div>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.32em', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
               {isArea ? (hex.typ === 'eingang' ? 'Betretbarer Ort' : 'Point of Interest') : 'Hexfeld · Info'}
             </div>
             <div style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:22, letterSpacing:'0.16em', color:'var(--white)', textTransform:'uppercase', marginTop:6, textShadow:'0 0 18px rgba(var(--purple-rgb),calc(0.35*var(--kp)))' }}>
-              {hex.name || 'Unbekannte Region'}
+              {R.name === 'locked'
+                ? <span className="mk-unknown">? ? ?</span>
+                : <Scramble tag="span" letters text={hex.name || 'Unbekannte Region'} revealed={O('name')} onReveal={R.name === 'new' ? () => onReveal && onReveal('name') : undefined} style={{ display:'inline-block', verticalAlign:'top' }}/>}
             </div>
             <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', color: tcolor, marginTop:6 }}>
-              ◈ {isArea ? (hex.typ === 'eingang' ? 'Betretbar' : 'POI') : (hex.terrain || 'Unbekannt')}
+              ◈ {isArea ? (hex.typ === 'eingang' ? 'Betretbar' : 'POI') : (R.terrain === 'locked'
+                ? '???'
+                : <Scramble tag="span" nowrap letters text={hex.terrain || 'Unbekannt'} revealed={O('terrain')} onReveal={R.terrain === 'new' ? () => onReveal && onReveal('terrain') : undefined} style={{ display:'inline-block', verticalAlign:'top' }}/>)}
             </div>
           </div>
         </header>
@@ -456,64 +655,85 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
 
         <div className="mk-drawer-body">
           {tab === 'details' && (<React.Fragment>
-          {/* Tags */}
-          {tags.length > 0 && (
-            <div style={{ display:'flex', flexWrap:'wrap', gap:5, marginBottom:14, pointerEvents:'none' }}>
-              {tags.map(t => (
-                <span key={t} style={{ padding:'3px 9px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{t}</span>
-              ))}
-            </div>
-          )}
-
-          {/* Beschreibung */}
-          {hex.beschreibung && (
-            <div style={{ marginBottom:16 }}>
-              <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)))', marginBottom:6 }}>Beschreibung</div>
-              <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.65 }}>{hex.beschreibung}</div>
-            </div>
-          )}
-
-          {/* Fakten */}
-          {facts.map(([k, v]) => <FactRow key={k} k={k} v={v}/>)}
-
-          {/* Kolonien: Name + Rassen-Chips */}
-          {!isArea && kolonien.length > 0 && (
-            <React.Fragment>
-              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'8px 0 8px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
-                <span>Kolonien</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
+          {(() => {
+            const free = !(rv && !hex.visible);   // voll sichtbares Feld / Fläche: alles offen
+            const labelStyle = { fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)))', marginBottom:6 };
+            // Tags: jede einzeln (offen = Chip mit Pop-Effekt, freigegeben = verschlüsselter Chip, sonst nicht vorhanden)
+            const tagList = tagPos(hex).map(p => ({ ...p, st: free ? 'open' : (rv['tag_' + p.i] || 'locked') })).filter(p => p.st !== 'locked');
+            // Fakten-Zeile: Wert offen / versiegelt / nicht vorhanden
+            const factRow = (d) => {
+              const st = R[d[2]];
+              if (st === 'locked') return null;
+              return (
+                <FactRow key={d[2]} k={d[0]}
+                  v={<Scramble tag="span" nowrap text={String(d[1])} revealed={st === 'open'} onReveal={st === 'new' ? () => onReveal && onReveal(d[2]) : undefined} style={{ display:'inline-block', verticalAlign:'top' }}/>}/>
+              );
+            };
+            const descNode = !hex.beschreibung || R.beschreibung === 'locked' ? null : (
+              <div style={{ marginBottom:16 }}>
+                <div style={labelStyle}>Beschreibung</div>
+                <Scramble tag="div" text={hex.beschreibung} revealed={R.beschreibung === 'open'}
+                  onReveal={R.beschreibung === 'new' ? () => onReveal && onReveal('beschreibung') : undefined}
+                  style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))', lineHeight:1.65 }}/>
               </div>
-              {kolonien.map((k, i) => (
-                <div key={i} style={{ marginBottom:8, padding:'9px 12px', background:'rgba(var(--panel-rgb),0.5)', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3 }}>
-                  <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:400, color:'var(--white)', marginBottom: (k.rassen || []).length ? 6 : 0 }}>{k.name || 'Unbenannte Kolonie'}</div>
-                  {(k.rassen || []).length > 0 && (
-                    <div style={{ display:'flex', flexWrap:'wrap', gap:4 }}>
-                      {k.rassen.map(r => (
-                        <span key={r} style={{ padding:'2px 8px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{r}</span>
-                      ))}
+            );
+            const shownFacts = factDefs.filter(d => R[d[2]] !== 'locked');
+            const anything = tagList.length > 0 || !!descNode || shownFacts.length > 0 || kolonien.length > 0 || !!kolonienText || bars.length > 0 || statsLoading;
+            return (
+              <React.Fragment>
+                {tagList.length > 0 && (
+                  <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginBottom:14 }}>
+                    {tagList.map(p => <TagChip key={p.i} text={p.t} state={p.st} pop={!!G['tag_' + p.i]} onReveal={() => onReveal && onReveal('tag_' + p.i)}/>)}
+                  </div>
+                )}
+
+                {descNode}
+
+                {shownFacts.map(factRow)}
+                {kolonienText && <FactRow k="Kolonien" v={kolonienText}/>}
+
+                {/* Kolonien: immer sichtbar (Name + Rassen-Chips) */}
+                {!isArea && kolonien.length > 0 && (
+                  <React.Fragment>
+                    <div style={{ display:'flex', alignItems:'center', gap:8, margin:'8px 0 8px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
+                      <span>Kolonien</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
                     </div>
-                  )}
-                </div>
-              ))}
-            </React.Fragment>
-          )}
+                    {kolonien.map((k, i) => (
+                      <div key={i} style={{ marginBottom:8, padding:'9px 12px', background:'rgba(var(--panel-rgb),0.5)', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3 }}>
+                        <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:400, color:'var(--white)', marginBottom: (k.rassen || []).length ? 6 : 0 }}>{k.name || 'Unbenannte Kolonie'}</div>
+                        {(k.rassen || []).length > 0 && (
+                          <div style={{ display:'flex', flexWrap:'wrap', gap:4 }}>
+                            {k.rassen.map(r => (
+                              <span key={r} style={{ padding:'2px 8px', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:4, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.1em', color:'color-mix(in srgb, rgba(180,165,230,0.8), rgb(var(--ink-rgb)) var(--cm))' }}>{r}</span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </React.Fragment>
+                )}
 
-          {/* Erkundungsfortschritt — automatisch berechnet (Ziele-Tags, Pool-Fangquoten, Legacy-Erkundung) */}
-          {(bars.length > 0 || statsLoading) && (
-            <React.Fragment>
-              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
-                <span>Erkundungsfortschritt</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
-              </div>
-              {statsLoading && bars.length === 0 && (
-                <div style={{ padding:'10px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>◈ berechne …</div>
-              )}
-              {bars.map((b, i) => <FancyBar key={`${b.label}-${i}`} b={b}/>)}
-            </React.Fragment>
-          )}
+                {/* Erkundungsfortschritt: immer sichtbar */}
+                {(bars.length > 0 || statsLoading) && (
+                  <React.Fragment>
+                    <div style={{ display:'flex', alignItems:'center', gap:8, margin:'0 0 10px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
+                      <span>Erkundungsfortschritt</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
+                    </div>
+                    {statsLoading && bars.length === 0 && (
+                      <div style={{ padding:'10px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>◈ berechne …</div>
+                    )}
+                    {bars.map((b, i) => <FancyBar key={`${b.label}-${i}`} b={b}/>)}
+                  </React.Fragment>
+                )}
 
-          {/* Fallback empty */}
-          {!hex.beschreibung && tags.length === 0 && facts.length === 0 && kolonien.length === 0 && bars.length === 0 && !statsLoading && (
-            <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Informationen —</div>
-          )}
+                {!anything && (
+                  <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>
+                    {free ? '— keine Informationen —' : '— noch nichts über dieses Gebiet bekannt —'}
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })()}
           </React.Fragment>)}
 
           {/* ── Tab: Ziele ── */}
@@ -691,17 +911,23 @@ function hexBgClipPolys(list) {
   return out;
 }
 
-function HexLabel({ hex }) {
-  if (!hex.name && !hex.terrain) return null;
+function HexLabel({ hex, rv }) {
+  const st = rv || { name:'open', terrain:'open' };
+  if (st.name === 'locked' && st.terrain === 'locked') return null;
+  const tcolor = st.terrain === 'open' ? terrainColor(hex.terrain) : DEFAULT_HEX_COLOR;
   const { x, y } = axialToPixel(hex.q, hex.r);
-  const tcolor = terrainColor(hex.terrain);
+  // Name und Terrain-Tag laufen beim Aufdecken (im Panel) auch an der Kachel durch die Entschlüsselung
   return (
     <div
       className="mk-hex-label-floating"
       style={{ left: x, top: y + HEX_H * 0.30, '--hex-color': tcolor }}
     >
-      {hex.terrain ? <div className="mk-hex-label-terr" style={{ color: tcolor }}>◈ {hex.terrain}</div> : null}
-      {hex.name ? <div className="mk-hex-label-name">{hex.name}</div> : null}
+      {st.terrain !== 'locked' && hex.terrain
+        ? <Scramble tag="div" className="mk-hex-label-terr" nowrap letters style={{ color: tcolor }} text={'◈ ' + hex.terrain} revealed={st.terrain === 'open'}/>
+        : null}
+      {st.name !== 'locked' && hex.name
+        ? <Scramble tag="div" className="mk-hex-label-name" letters text={hex.name} revealed={st.name === 'open'}/>
+        : null}
     </div>
   );
 }
@@ -712,6 +938,8 @@ function MerMapPlayer() {
   const [mapStack, setMapStack]             = uS5([]);
 
   const [hexes, setHexes]     = uS5({});
+  const [seenMap, setSeenMap] = uS5({});      // { hexId: [aufgedeckte Felder] } – pro Spieler
+  const [glitchMap, setGlitchMap] = uS5({});  // { hexId: { feld: true } } – läuft kurz nach dem Aufdecken
   const [camera, setCamera]   = uS5({ x: 0, y: 0, zoom: 1 });
   const [selectedKey, setSel] = uS5(null);
   const [hoveredKey, setHov]  = uS5(null);
@@ -775,6 +1003,7 @@ function MerMapPlayer() {
       setHexes(h);
       setAreas(areaList);
       const hexIds = Object.values(h).map(x => x.id);
+      loadHexSeen(hexIds).then(sm => setSeenMap(old => ({ ...old, ...sm })));
       const areaIds = areaList.map(a => a.id);
       const [objs, pools] = await Promise.all([
         loadObjectives(hexIds, areaIds),
@@ -949,6 +1178,18 @@ function MerMapPlayer() {
   const hexList = Object.values(hexes);
   const bgClip = uM5(() => hexBgClipPolys(hexList), [hexes]);
   const selectedHex = selectedKey ? hexes[selectedKey] : null;
+  const revealOf = (h) => revealStates(h, seenMap[h.id]);
+  // Spieler deckt ein freigegebenes Feld auf: merken (pro Spieler) und Glitch-Effekt abspielen
+  const onReveal = (hexId, key) => {
+    const keys = Array.from(new Set([...(seenMap[hexId] || []), key]));
+    setSeenMap(m => ({ ...m, [hexId]: keys }));
+    saveHexSeen(hexId, keys);
+    setGlitchMap(g => ({ ...g, [hexId]: { ...(g[hexId] || {}), [key]: true } }));
+    setTimeout(() => setGlitchMap(g => {
+      const c = { ...(g[hexId] || {}) }; delete c[key];
+      return { ...g, [hexId]: c };
+    }), 1500);
+  };
   const isImageMap = mapMeta.kind === 'image';
   const floors = mapMeta.floors || [];
   const floor = floors[floorIdx] || null;
@@ -1076,11 +1317,12 @@ function MerMapPlayer() {
                 hovered={hexKey(h.q, h.r) === hoveredKey}
                 onSelect={onHexClick}
                 onHoverChange={onHexHover}
+                rv={revealOf(h)}
               />
             ))}
             {labelsVisible && (
               <div className="mk-labels-layer">
-                {hexList.map((h) => <HexLabel key={`lbl-${h.id}`} hex={h}/>)}
+                {hexList.map((h) => <HexLabel key={`lbl-${h.id}`} hex={h} rv={revealOf(h)}/>)}
               </div>
             )}
           </div>
@@ -1213,6 +1455,9 @@ function MerMapPlayer() {
           poolRows={nodePoolRows}
           kollStatus={kollStatus}
           childEbene={selectedArea ? 'Ort' : depthEbene(mapStack.length + 1)}
+          rv={selectedArea ? null : revealOf(selectedNode)}
+          onReveal={(key) => onReveal(selectedNode.id, key)}
+          glitch={glitchMap[selectedNode.id]}
         />
       )}
     </React.Fragment>

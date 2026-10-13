@@ -128,6 +128,7 @@ function rowToHex(h) {
     bevoelkerung: h.bevoelkerung || '',
     kolonien: h.kolonien || '',
     erkundung: h.erkundung || [],
+    reveal: h.reveal,
   };
 }
 
@@ -163,6 +164,7 @@ async function sbUpsertHex(mapId, hex) {
     bevoelkerung: hex.bevoelkerung || '',
     kolonien: hex.kolonien || '',
     erkundung: hex.erkundung || [],
+    ...(hex.reveal !== undefined ? { reveal: hex.reveal || {} } : {}),
     updated_at: new Date().toISOString(),
   }, { onConflict: 'id' });
   if (error) console.error('sbUpsertHex:', error);
@@ -787,6 +789,51 @@ function EditorDrawer({
             <span style={{ flex:1 }}/>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Klick zum Umschalten</span>
           </button>
+
+          {/* Aufdeckung: ein nicht sichtbares Feld kann "gehört" sein und Angaben einzeln freigeben */}
+          {!isArea && !hex.visible && (
+            <div style={{ marginBottom:14, padding:'10px 12px', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:3, background:'rgba(var(--panel-rgb),0.5)' }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))', marginBottom:8 }}>Aufdeckung für Spieler</div>
+              <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+                {[['bekannt','Gehört'],['name','Name'],['terrain','Terrain'],['beschreibung','Beschreibung'],['features','Besonderheiten'],['datensonde','Datensonde'],['bevoelkerung','Bevölkerung'],['tags','Alle Tags'],['bild','Bild']].map(([k, lbl]) => {
+                  const rv = hex.reveal || {};
+                  const on = !!rv[k];
+                  return (
+                    <button key={k} onClick={() => upd('reveal', { ...rv, [k]: !on })}
+                      title={k === 'bekannt' ? 'Das Feld erscheint für Spieler ohne Namen, Infos und Bild' : 'Diese Angabe für alle Spieler freigeben (sie decken sie selbst mit Glitch-Effekt auf)'}
+                      style={{ padding:'5px 11px', cursor:'pointer', borderRadius:3, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', textTransform:'uppercase',
+                        background: on ? 'rgba(40,120,80,0.18)' : 'transparent',
+                        border: `1px solid ${on ? 'rgba(80,200,140,0.5)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`,
+                        color: on ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>
+                      {on ? '◆ ' : '○ '}{lbl}
+                    </button>
+                  );
+                })}
+              </div>
+              {(hex.tags || []).length > 0 && (
+                <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginTop:8, alignItems:'center' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))' }}>Tags einzeln:</span>
+                  {hex.tags.map((t, i) => {
+                    const rvv = hex.reveal || {};
+                    const key = 'tag_' + i;
+                    const on = !!rvv[key];
+                    return (
+                      <button key={i} onClick={() => upd('reveal', { ...rvv, [key]: !on })}
+                        style={{ padding:'5px 11px', cursor:'pointer', borderRadius:3, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase',
+                          background: on ? 'rgba(40,120,80,0.18)' : 'transparent',
+                          border: `1px solid ${on ? 'rgba(80,200,140,0.5)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`,
+                          color: on ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>
+                        {on ? '◆ ' : '○ '}{t}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+              <div style={{ fontFamily:'var(--font-body)', fontSize:12.5, fontWeight:300, lineHeight:1.5, marginTop:8, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))' }}>
+                {(hex.reveal || {}).bekannt ? 'Spieler sehen dieses Feld als „gehört“; freigegebene Angaben decken sie selbst auf.' : 'Ohne „Gehört“ bleibt das Feld für Spieler verborgen.'}
+              </div>
+            </div>
+          )}
 
           {/* ── Ansichtsmodus ── */}
           {!editMode && (<React.Fragment>

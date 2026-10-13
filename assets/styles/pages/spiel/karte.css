@@ -24,11 +24,6 @@ body::after {
   50%     { opacity:0.55; }
 }
 @keyframes mk-flicker { 0%,80%,100%{opacity:1} 82%{opacity:0.55} 84%{opacity:1} 87%{opacity:0.7} 89%{opacity:1} 91%{opacity:0.4} 93%{opacity:1} }
-@keyframes mk-scan {
-  0%   { transform: translateY(-110%); opacity:0; }
-  8%   { opacity:0.55; }
-  100% { transform: translateY(900%); opacity:0; }
-}
 
 /* Map background: faint star/grid texture */
 .mk-stage {
@@ -482,12 +477,6 @@ body::after {
   content:''; position:absolute; left:0; right:0; top:0; height:1px;
   background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb),calc(0.7*var(--ka))), transparent);
 }
-.mk-drawer::after {
-  content:''; position:absolute; left:0; right:0; height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(var(--text-rgb),calc(0.85*var(--kt))), transparent);
-  animation: mk-scan 6s linear infinite;
-  pointer-events: none;
-}
 .mk-drawer-head {
   padding: 18px 22px 16px;
   border-bottom: 1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)));
@@ -935,4 +924,93 @@ body::after {
   .mk-back { padding: 6px 10px; letter-spacing: 0.16em; }
   .mk-title { font-size: 13px; letter-spacing: 0.16em; }
   .mk-topbar > div[style*="flex: 1"], .mk-topbar > div[style*="flex:1"] { display: none; }
+}
+
+/* ── Hex-Felder aufdecken: "gehört", neue Erkenntnis, Glitch-Effekt ─────── */
+.mk-hex.is-heard { opacity: 0.78; }
+.mk-hex.is-heard .mk-hex-border polygon { stroke-dasharray: 7 6; }
+.mk-hex-qmark {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 40px; letter-spacing: 0.1em; pointer-events: none;
+  color: rgba(var(--accent-rgb), calc(0.55*var(--ka) + var(--tb)));
+  text-shadow: 0 0 14px rgba(var(--purple-rgb), calc(0.6*var(--kp)));
+  animation: mkQmarkPulse 3s ease-in-out infinite;
+}
+@keyframes mkQmarkPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+.mk-hex-new {
+  position: absolute; top: 20%; right: 22%; width: 20px; height: 20px; z-index: 6; pointer-events: none;
+  display: flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1;
+  color: var(--white); background: rgba(var(--purple-rgb), calc(0.55*var(--kp)));
+  border: 1px solid rgba(var(--accent-rgb), calc(0.9*var(--ka))); border-radius: 50%;
+  box-shadow: 0 0 12px rgba(var(--purple-rgb), calc(0.8*var(--kp)));
+  animation: mkNewPulse 1.6s ease-in-out infinite;
+}
+@keyframes mkNewPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+.mk-reveal-dot { animation: mkNewPulse 1.6s ease-in-out infinite; display: inline-block; }
+.mk-reveal-btn:hover { background: rgba(var(--purple-rgb), calc(0.3*var(--kp))) !important; box-shadow: 0 0 18px rgba(var(--purple-rgb), calc(0.5*var(--kp))); }
+.mk-unknown { letter-spacing: 0.4em; opacity: 0.55; }
+
+/* Aufdecken wie bei den Rezepten (aus rezepte.css übernommen) */
+@keyframes mk-lockPulse { 0%,100% { opacity: 0.82; } 50% { opacity: 0.5; } }
+@keyframes mk-plate-lock-pulse { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
+.mk-scr { transition: color 0.2s, text-shadow 0.2s; }
+.mk-scr.locked { color: color-mix(in srgb, rgba(150,140,210,0.5), rgb(var(--ink-rgb)) var(--cm)); animation: mk-lockPulse 4.5s ease-in-out infinite; }
+.mk-scr.locked.clickable:hover { color: color-mix(in srgb, rgba(184,170,242,0.9), rgb(var(--ink-rgb)) var(--cm)); text-shadow: 0 0 12px rgba(var(--purple-rgb), calc(0.4*var(--kp))); animation: none; }
+.mk-scr.decoding { color: color-mix(in srgb, rgba(176,200,238,0.92), rgb(var(--ink-rgb)) var(--cm)); }
+
+/* Bild: verfremdete Vorschau, Glitch-Reveal (Keyframes wie das "Neu" im Menü) */
+@keyframes neu-bg-glitch {
+  0%  { opacity:0; clip-path:inset(50% 0 50% 0); background:transparent; }
+  5%  { opacity:1; clip-path:inset(0% 0 72% 0);  transform:translateX(-8px);  background:rgba(var(--purple-rgb),calc(0.45*var(--kp))); }
+  15% { clip-path:inset(55% 0 8% 0);             transform:translateX(10px);  background:rgba(var(--accent-rgb),calc(0.50*var(--ka))); }
+  25% { clip-path:inset(18% 0 48% 0);            transform:translateX(-6px);  background:rgba(80,50,200,0.40); }
+  35% { clip-path:inset(68% 0 4% 0);             transform:translateX(8px);   background:rgba(var(--accent-rgb),calc(0.45*var(--ka))); }
+  45% { clip-path:inset(8% 0 62% 0);             transform:translateX(-5px);  background:rgba(var(--purple-rgb),calc(0.35*var(--kp))); }
+  55% { clip-path:inset(40% 0 20% 0);            transform:translateX(6px);   background:rgba(80,50,200,0.30); }
+  70% { opacity:0.4; }
+  100%{ opacity:0; }
+}
+@keyframes neu-bg-glitch2 {
+  0%  { opacity:0; clip-path:inset(50% 0 50% 0); background:transparent; }
+  8%  { opacity:1; clip-path:inset(58% 0 0% 0);  transform:translateX(12px) scaleX(1.03); background:rgba(var(--accent-rgb),calc(0.55*var(--ka))); }
+  18% { clip-path:inset(4% 0 58% 0);             transform:translateX(-10px);             background:rgba(var(--purple-rgb),calc(0.48*var(--kp))); }
+  28% { clip-path:inset(32% 0 28% 0);            transform:translateX(8px);               background:rgba(80,50,200,0.45); }
+  38% { clip-path:inset(78% 0 0% 0);             transform:translateX(-7px);              background:rgba(var(--accent-rgb),calc(0.40*var(--ka))); }
+  50% { clip-path:inset(12% 0 45% 0);            transform:translateX(6px);               background:rgba(var(--purple-rgb),calc(0.32*var(--kp))); }
+  70% { opacity:0.3; }
+  100%{ opacity:0; }
+}
+.mk-cipher-img { position: relative; }
+.mk-noise { position: absolute; inset: 0; opacity: 0.55; pointer-events: none; mix-blend-mode: screen;
+  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0 2px, transparent 2px 4px),
+                    repeating-linear-gradient(90deg, rgba(var(--purple-rgb), 0.35) 0 3px, transparent 3px 9px); }
+.mk-img-in { animation: mkImgIn 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes mkImgIn { 0% { filter: blur(18px) saturate(0.2) brightness(0.5); transform: scale(1.12); } 70% { filter: blur(2px); } 100% { filter: none; transform: scale(1); } }
+
+/* Tag-Reveal: schrumpft stark, ploppt minimal über die Normalgröße und setzt sich */
+.mk-tag--locked { border-style: dashed !important; cursor: pointer; }
+.mk-tag-pop { animation: mkTagPop 0.4s cubic-bezier(0.3, 0.7, 0.3, 1) both; }
+@keyframes mkTagPop {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(0.72); }
+  72%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+/* Glanz: heller Streifen läuft einmal diagonal über den Tag */
+.mk-tag-shine { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; pointer-events: none; opacity: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(var(--text-hi-rgb), 0.85) 50%, transparent 65%);
+  background-size: 300% 100%; background-position: 130% 0; mix-blend-mode: screen;
+  animation: mkShine 0.45s ease-out 0.1s forwards; }
+@keyframes mkShine { 0% { opacity: 1; background-position: 130% 0; } 100% { opacity: 0.9; background-position: -30% 0; } }
+.mk-spark { position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px 0 0 -2px; pointer-events: none; opacity: 0;
+  background: var(--white); border-radius: 1px; transform: rotate(45deg);
+  box-shadow: 0 0 6px rgba(var(--purple-rgb), calc(1*var(--kp)));
+  animation: mkSpark 0.28s ease-out 0.15s forwards; }
+@keyframes mkSpark {
+  0%   { opacity: 1; transform: rotate(var(--a)) translateX(0) scale(1); }
+  100% { opacity: 0; transform: rotate(var(--a)) translateX(22px) scale(0.2); }
+}
+.mk-unknown { letter-spacing: 0.4em; opacity: 0.55; }
+@media (prefers-reduced-motion: reduce) {
+  .mk-hex-new, .mk-hex-qmark, .mk-scr.locked, .mk-img-in, .mk-tag-pop, .mk-spark, .mk-tag-shine { animation: none; }
 }
