@@ -39,13 +39,14 @@ function App() {
   return (
     <>
       <SiteNav />
-      {activeId === 'uebersicht' && (
-        <PageHero
-          kicker="Spielerhandbuch"
-          title="Sammeln & Handwerk"
-          sub="Vom Wegrand zur Werkbank — wie Pflanzen, Mineralien und Kreaturenteile zu Tränken, Klingen und magischen Artefakten werden. Material schlägt Zeit, Entscheidungen schlagen Rezepte."
-        />
-      )}
+      {/* Seitenkopf auf allen Unterseiten: zeigt, wo man gerade ist */}
+      <PageHero
+        kicker="Spielerhandbuch"
+        title="Sammeln & Handwerk"
+        sub={activeId === 'uebersicht'
+          ? "Vom Wegrand zur Werkbank — wie Pflanzen, Mineralien und Kreaturenteile zu Tränken, Klingen und magischen Artefakten werden. Material schlägt Zeit, Entscheidungen schlagen Rezepte."
+          : (chapter ? chapter.roman + ' · ' + chapter.label : (activeId === 'mixer' ? 'Werkbank · Alchemie-Mixer' : activeId === 'rechner' ? 'Werkbank · Handwerks-Rechner' : 'Werkbank · Sammel-Simulator'))}
+      />
       <div style={{ display:'flex', position:'relative', zIndex:1 }}>
         <CraftSidebar chapters={window.CRAFT_CHAPTERS} activeId={activeId} onSelect={setActiveId} />
         <main style={{

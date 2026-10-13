@@ -1,6 +1,7 @@
 // Page entry for /dm/kartenmanagement.html
 import '../../components/image-upload.jsx';
 import '../../components/ressourcen-ui.jsx';
+import '../parts/karte-zaehler.jsx';
 
 ;(function () {
 // top-level functions were global in the old classic-script setup
@@ -128,6 +129,7 @@ function rowToHex(h) {
     bevoelkerung: h.bevoelkerung || '',
     kolonien: h.kolonien || '',
     erkundung: h.erkundung || [],
+    reveal: h.reveal,
   };
 }
 
@@ -163,6 +165,7 @@ async function sbUpsertHex(mapId, hex) {
     bevoelkerung: hex.bevoelkerung || '',
     kolonien: hex.kolonien || '',
     erkundung: hex.erkundung || [],
+    ...(hex.reveal !== undefined ? { reveal: hex.reveal || {} } : {}),
     updated_at: new Date().toISOString(),
   }, { onConflict: 'id' });
   if (error) console.error('sbUpsertHex:', error);
@@ -632,7 +635,6 @@ function EditorDrawer({
   const hex = node;
   const isArea = nodeType === 'area';
   const [tagInput, setTagInput] = uS4('');
-  const [newErkName, setNewErkName] = uS4('');
   const [tab, setTab] = uS4('details');
   const [editMode, setEditMode] = uS4(false);
   const [nameEdit, setNameEdit] = uS4(false);
@@ -651,17 +653,22 @@ function EditorDrawer({
     setTagInput('');
   };
 
-  // Erkundung (main map) — neues System: Gesamtanzahl + gefunden
-  const erk = hex.erkundung || [];
-  const addErk = () => {
-    const v = newErkName.trim();
-    if (v) { upd('erkundung', [...erk, { name: v, gefunden: 0, total: 0 }]); setNewErkName(''); }
-  };
-  const updErk = (i, field, val) =>
-    upd('erkundung', erk.map((e, idx) => idx === i
-      ? { ...e, [field]: (field === 'gefunden' || field === 'total') ? Math.max(0, +val || 0) : val }
-      : e));
-  const removeErk = (i) => upd('erkundung', erk.filter((_, idx) => idx !== i));
+  // Ebenen: Region = Hex auf der Weltkarte, Gebiet = Hex auf der Regionskarte (Zähler + Kolonien).
+  // Die Region zeigt nur die Summe der Zähler ihrer Gebiete (nicht editierbar).
+  const isRegionHex = !isArea && !isSubmap;
+  const isGebietHex = !isArea && isSubmap && childEbene === 'Gebiet';
+  const [regionStats, setRegionStats] = uS4(null);
+  uE4(() => {
+    if (!isRegionHex) return;
+    if (!hex.submap_id) { setRegionStats(window.karteAggregateZaehler([])); return; }
+    let dead = false;
+    setRegionStats(null);
+    window.karteCollectGebietStats(hex.submap_id, { onlyVisible: false })
+      .then(s => { if (!dead) setRegionStats(s); })
+      .catch(() => { if (!dead) setRegionStats(window.karteAggregateZaehler([])); });
+    return () => { dead = true; };
+  }, [isRegionHex, hex.id, hex.submap_id]);
+  uE4(() => { if (isRegionHex && tab === 'ziele') setTab('details'); }, [isRegionHex, tab]);
 
   const SectionHead = ({ label }) => (
     <div style={{ display:'flex', alignItems:'center', gap:8, margin:'18px 0 10px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))' }}>
@@ -709,10 +716,10 @@ function EditorDrawer({
       >
         <header style={{ padding:'18px 22px 16px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'flex-start', justifyContent:'space-between', flexShrink:0 }}>
           <div>
-            <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.32em', color:'color-mix(in srgb, rgba(217,176,107,0.85), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.32em', color:'rgba(var(--accent-rgb),calc(0.95*var(--ka) + var(--tb)))', textShadow:'0 0 14px rgba(var(--purple-rgb),calc(0.55*var(--kp)))', textTransform:'uppercase' }}>
               {isArea
-                ? `Fläche · ${hex.typ === 'eingang' ? 'Eingang' : 'POI'} · Bearbeiten`
-                : `Hexagon · ${hex.q} · ${-hex.r} · Bearbeiten`}
+                ? `Fläche · ${hex.typ === 'eingang' ? 'Eingang' : 'POI'}`
+                : `Hexagon · ${hex.q} · ${-hex.r}`}
             </div>
             {nameEdit ? (
               <input
@@ -722,17 +729,17 @@ function EditorDrawer({
                 onChange={e => upd('name', e.target.value)}
                 onBlur={() => setNameEdit(false)}
                 onKeyDown={e => { if (e.key === 'Enter' || e.key === 'Escape') { e.stopPropagation(); setNameEdit(false); } }}
-                style={{ display:'block', width:'100%', fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginTop:6, background:'transparent', border:'none', borderBottom:'1px dashed rgba(217,176,107,0.5)', outline:'none', padding:0 }}
+                style={{ display:'block', width:'100%', fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginTop:6, background:'transparent', border:'none', borderBottom:'1px dashed rgba(var(--accent-rgb),calc(0.7*var(--ka)))', outline:'none', padding:0 }}
               />
             ) : (
               <div
                 onClick={() => setNameEdit(true)}
                 title="Klicken zum Umbenennen"
-                style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginTop:6, cursor:'text', borderBottom:'1px dashed transparent' }}
-                onMouseEnter={e => e.currentTarget.style.borderBottomColor = 'rgba(217,176,107,0.4)'}
+                style={{ fontFamily:'var(--font-display)', fontWeight:400, fontSize:20, letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase', marginTop:6, cursor:'text', borderBottom:'1px dashed transparent', textShadow:'0 0 18px rgba(var(--purple-rgb),calc(0.45*var(--kp)))' }}
+                onMouseEnter={e => e.currentTarget.style.borderBottomColor = 'rgba(var(--accent-rgb),calc(0.6*var(--ka)))'}
                 onMouseLeave={e => e.currentTarget.style.borderBottomColor = 'transparent'}
               >
-                {hex.name || 'Unbenannt'} <span style={{ fontSize:12.5, color:'color-mix(in srgb, rgba(217,176,107,0.5), rgb(var(--ink-rgb)) var(--cm))', verticalAlign:'middle' }}>✎</span>
+                {hex.name || 'Unbenannt'} <span style={{ fontSize:12.5, color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', verticalAlign:'middle' }}>✎</span>
               </div>
             )}
           </div>
@@ -754,9 +761,9 @@ function EditorDrawer({
           >{editMode ? '✓ Ansicht' : '✎ Bearbeiten'}</button>
           <button
             onClick={onClose} title="Schließen (Esc)"
-            style={{ width:32, height:32, flexShrink:0, background:'transparent', border:'1px solid rgba(220,80,120,0.18)', borderRadius:2, color:'color-mix(in srgb, rgba(220,140,160,0.4), rgb(var(--ink-rgb)) var(--cm))', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer', transition:'all 0.18s' }}
-            onMouseEnter={e => { e.currentTarget.style.color='color-mix(in srgb, #ffd0dc, rgb(var(--ink-rgb)) var(--cm))'; e.currentTarget.style.borderColor='rgba(220,80,120,0.75)'; e.currentTarget.style.background='rgba(180,40,80,0.16)'; }}
-            onMouseLeave={e => { e.currentTarget.style.color='color-mix(in srgb, rgba(220,140,160,0.4), rgb(var(--ink-rgb)) var(--cm))'; e.currentTarget.style.borderColor='rgba(220,80,120,0.18)'; e.currentTarget.style.background='transparent'; }}
+            style={{ width:32, height:32, flexShrink:0, background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:2, color:'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))', fontFamily:'var(--font-mono)', fontSize:14, cursor:'pointer', transition:'all 0.18s' }}
+            onMouseEnter={e => { e.currentTarget.style.color='var(--white)'; e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(0.7*var(--ka)))'; e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.18*var(--kp)))'; }}
+            onMouseLeave={e => { e.currentTarget.style.color='rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))'; e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.3*var(--kp)))'; e.currentTarget.style.background='transparent'; }}
           >×</button>
           </div>
         </header>
@@ -764,7 +771,7 @@ function EditorDrawer({
         {/* Tabs */}
         <div style={{ display:'flex', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', flexShrink:0 }}>
           <TabBtn id="details" label="Details"/>
-          <TabBtn id="ziele" label={`Ziele · ${objList.length}`} accent="rgba(217,176,107,0.9)"/>
+          {!isRegionHex && <TabBtn id="ziele" label={`Ziele · ${objList.length}`} accent="rgba(217,176,107,0.9)"/>}
           <TabBtn id="ressourcen" label="Ressourcen"/>
         </div>
 
@@ -788,6 +795,51 @@ function EditorDrawer({
             <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>Klick zum Umschalten</span>
           </button>
 
+          {/* Aufdeckung: ein nicht sichtbares Feld kann "gehört" sein und Angaben einzeln freigeben */}
+          {!isArea && !hex.visible && (
+            <div style={{ marginBottom:14, padding:'10px 12px', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:3, background:'rgba(var(--panel-rgb),0.5)' }}>
+              <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))', marginBottom:8 }}>Aufdeckung für Spieler</div>
+              <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+                {[['bekannt','Gehört'],['name','Name'],['terrain','Terrain'],['beschreibung','Beschreibung'],['features','Besonderheiten'],['datensonde','Datensonde'],['bevoelkerung','Bevölkerung'],['tags','Alle Tags'],['bild','Bild']].map(([k, lbl]) => {
+                  const rv = hex.reveal || {};
+                  const on = !!rv[k];
+                  return (
+                    <button key={k} onClick={() => upd('reveal', { ...rv, [k]: !on })}
+                      title={k === 'bekannt' ? 'Das Feld erscheint für Spieler ohne Namen, Infos und Bild' : 'Diese Angabe für alle Spieler freigeben (sie decken sie selbst mit Glitch-Effekt auf)'}
+                      style={{ padding:'5px 11px', cursor:'pointer', borderRadius:3, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', textTransform:'uppercase',
+                        background: on ? 'rgba(40,120,80,0.18)' : 'transparent',
+                        border: `1px solid ${on ? 'rgba(80,200,140,0.5)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`,
+                        color: on ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>
+                      {on ? '◆ ' : '○ '}{lbl}
+                    </button>
+                  );
+                })}
+              </div>
+              {(hex.tags || []).length > 0 && (
+                <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginTop:8, alignItems:'center' }}>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))' }}>Tags einzeln:</span>
+                  {hex.tags.map((t, i) => {
+                    const rvv = hex.reveal || {};
+                    const key = 'tag_' + i;
+                    const on = !!rvv[key];
+                    return (
+                      <button key={i} onClick={() => upd('reveal', { ...rvv, [key]: !on })}
+                        style={{ padding:'5px 11px', cursor:'pointer', borderRadius:3, fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase',
+                          background: on ? 'rgba(40,120,80,0.18)' : 'transparent',
+                          border: `1px solid ${on ? 'rgba(80,200,140,0.5)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`,
+                          color: on ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--text-rgb),calc(0.65*var(--kt) + var(--tb)))' }}>
+                        {on ? '◆ ' : '○ '}{t}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+              <div style={{ fontFamily:'var(--font-body)', fontSize:12.5, fontWeight:300, lineHeight:1.5, marginTop:8, color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))' }}>
+                {(hex.reveal || {}).bekannt ? 'Spieler sehen dieses Feld als „gehört“; freigegebene Angaben decken sie selbst auf.' : 'Ohne „Gehört“ bleibt das Feld für Spieler verborgen.'}
+              </div>
+            </div>
+          )}
+
           {/* ── Ansichtsmodus ── */}
           {!editMode && (<React.Fragment>
             {hex.bild_url && (
@@ -810,22 +862,15 @@ function EditorDrawer({
               const facts = [];
               if (!isArea && hex.terrain) facts.push(['Terrain', hex.terrain]);
               if (isArea) facts.push(['Typ', hex.typ === 'eingang' ? 'Eingang (führt zu Unterkarte)' : 'POI (nur Info + Bild)']);
-              if (hex.has_submap) facts.push(['Unterkarte', hex.name || 'vorhanden']);
               if (isArea) facts.push(['Status', `${hex.entdeckt ? '✓ entdeckt' : '○ unentdeckt'} · ${hex.komplettiert ? '✓✓ komplettiert' : '○ offen'}`]);
-              if (isSubmap && !isArea) facts.push(['Datensonde', hex.datensonde ? '✓ installiert' : '✗ nicht installiert']);
+              if (isSubmap && !isArea && !isGebietHex) facts.push(['Datensonde', hex.datensonde ? '✓ installiert' : '✗ nicht installiert']);
               if (!isSubmap && !isArea && hex.bevoelkerung) facts.push(['Bevölkerung', hex.bevoelkerung]);
-              if (!isSubmap && !isArea && kolonien.length > 0) {
+              if (isGebietHex && kolonien.length > 0) {
                 kolonien.forEach(k => facts.push(['Kolonie', `${k.name || 'Unbenannt'}${(k.rassen || []).length ? ` — ${k.rassen.join(', ')}` : ''}`]));
-              } else if (!isSubmap && !isArea && hex.kolonien) {
+              } else if (isGebietHex && hex.kolonien) {
                 facts.push(['Kolonien', hex.kolonien]);
               }
               if (isSubmap && !isArea && hex.features) facts.push(['Besonderheiten', hex.features]);
-              // Erkundung: nur Einträge im neuen Format (gefunden/gesamt) anzeigen —
-              // Altbestand mit %-Werten erscheint erst wieder, wenn er neu erfasst wurde
-              (!isArea ? (hex.erkundung || []) : []).forEach(e => {
-                const total = +e.total || 0;
-                if (total > 0) facts.push([e.name || 'Erkundung', `${+e.gefunden || 0} / ${total} gefunden`]);
-              });
               return facts.map(([k, v]) => (
                 <div key={k + v} style={{ display:'flex', gap:8, alignItems:'baseline' }}>
                   <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))', width:96, flexShrink:0 }}>{k}</span>
@@ -833,6 +878,14 @@ function EditorDrawer({
                 </div>
               ));
             })()}
+            {(isRegionHex || isGebietHex) && (
+              <div>
+                <SectionHead label={isRegionHex ? 'Erkundungsfortschritt · Summe der Gebiete' : 'Zähler'}/>
+                <KarteZaehlerView
+                  stats={isRegionHex ? regionStats : window.karteAggregateZaehler([hex.erkundung])}
+                  showGebiete={isRegionHex}/>
+              </div>
+            )}
             {!hex.bild_url && !(hex.tags || []).length && !hex.beschreibung && (
               <div style={{ padding:'14px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— noch keine Details · ✎ Bearbeiten oben rechts —</div>
             )}
@@ -950,7 +1003,7 @@ function EditorDrawer({
           </div>
 
           {/* ── Subkarten-Felder ── */}
-          {isSubmap && !isArea && (
+          {isSubmap && !isArea && !isGebietHex && (
             <React.Fragment>
               {/* Datensonde */}
               <SectionHead label="Knotenpunkt"/>
@@ -966,13 +1019,22 @@ function EditorDrawer({
           )}
 
           {/* ── Hauptkarten-Felder ── */}
-          {!isSubmap && !isArea && (
+          {isRegionHex && (
             <React.Fragment>
-              <SectionHead label="Bevölkerung & Kolonien"/>
+              <SectionHead label="Bevölkerung"/>
               <div className="mk-field">
                 <label htmlFor="mk-bev">Bevölkerung</label>
                 <input id="mk-bev" className="mk-input" type="text" placeholder="z. B. ~3.200 · hauptsächlich Nomaden" value={hex.bevoelkerung || ''} onChange={e => upd('bevoelkerung', e.target.value)}/>
               </div>
+              <SectionHead label="Erkundungsfortschritt"/>
+              <div style={{ fontFamily:'var(--font-body)', fontSize:13, fontWeight:300, color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginBottom:10 }}>
+                Wird automatisch aus den Zählern der Gebiete berechnet und ist hier nicht editierbar.
+              </div>
+              <KarteZaehlerView stats={regionStats} showGebiete/>
+            </React.Fragment>
+          )}
+          {isGebietHex && (
+            <React.Fragment>
               {/* Kolonien: Name + Rassen-Tags */}
               <div style={{ display:'flex', alignItems:'center', gap:8, margin:'14px 0 8px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))' }}>
                 <span>Kolonien</span>
@@ -998,74 +1060,8 @@ function EditorDrawer({
                 />
               ))}
 
-              {/* Erkundungsfortschritt: gefunden / gesamt */}
-              <div style={{ display:'flex', alignItems:'center', gap:8, margin:'14px 0 8px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))' }}>
-                <span>Erkundungsfortschritt</span>
-                <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.18*var(--kp)))' }}/>
-              </div>
-              {erk.map((e, i) => {
-                const total = +e.total || 0;
-                const gefunden = Math.min(+e.gefunden || 0, total || Infinity);
-                const pct = total > 0 ? Math.round(gefunden / total * 100) : 0;
-                const barColor = e.farbe || 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))';
-                return (
-                  <div key={i} style={{ marginBottom:8, padding:'9px 10px', background:'rgba(var(--panel-rgb),0.5)', border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))', borderRadius:3 }}>
-                    <div style={{ display:'flex', gap:6, alignItems:'center' }}>
-                      <input className="mk-input" style={{ flex:1, fontSize:13, minWidth:0 }} value={e.name || ''} onChange={ev => updErk(i, 'name', ev.target.value)} placeholder="Kategorie …"/>
-                      <input className="mk-input" style={{ width:58, fontSize:12.5, textAlign:'center', flexShrink:0 }} type="number" min="0" value={e.gefunden ?? 0} onChange={ev => updErk(i, 'gefunden', ev.target.value)} title="Gefunden"/>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:12.5, color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', flexShrink:0 }}>/</span>
-                      <input className="mk-input" style={{ width:58, fontSize:12.5, textAlign:'center', flexShrink:0 }} type="number" min="0" value={e.total ?? 0} onChange={ev => updErk(i, 'total', ev.target.value)} title="Gesamtanzahl"/>
-                      <button onClick={() => removeErk(i)} title="Entfernen" style={{ width:28, height:28, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:12, color:'color-mix(in srgb, rgba(220,140,160,0.7), rgb(var(--ink-rgb)) var(--cm))', background:'transparent', border:'1px solid rgba(220,80,120,0.35)', borderRadius:2, cursor:'pointer' }}>×</button>
-                    </div>
-
-                    {/* Optional: Farbe (Colorpicker) + Symbol (SVG-Pfad) */}
-                    <div style={{ display:'flex', gap:6, alignItems:'center', marginTop:6 }}>
-                      <input
-                        type="color"
-                        value={e.farbe || 'var(--lav2)'}
-                        onChange={ev => updErk(i, 'farbe', ev.target.value)}
-                        title="Balken-/Symbolfarbe wählen"
-                        style={{ width:30, height:26, padding:0, flexShrink:0, background:'rgba(var(--panel-rgb),0.5)', border:`1px solid ${e.farbe ? e.farbe : 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))'}`, borderRadius:2, cursor:'pointer' }}
-                      />
-                      {e.farbe && (
-                        <button onClick={() => updErk(i, 'farbe', '')} title="Farbe zurücksetzen (Automatik)" style={{ width:22, height:26, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:2, cursor:'pointer', padding:0 }}>↺</button>
-                      )}
-                      {(() => {
-                        const parsed = window.karteParseIcon(e.icon);
-                        const vbW = parsed ? ((parsed.viewBox.split(/\s+/).map(Number)[2]) || 100) : 100;
-                        const sw = vbW <= 50 ? 1.5 : 2;
-                        return (
-                          <svg viewBox={parsed ? parsed.viewBox : '0 0 100 100'} width="22" height="22" fill="none" style={{ color: barColor, stroke: barColor, opacity:0.9, flexShrink:0 }} title="Symbol-Vorschau">
-                            {parsed
-                              ? parsed.paths.map((d, pi) => <path key={pi} d={d} fill="none" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"/>)
-                              : <g><circle cx="50" cy="50" r="26" fill="none" strokeWidth="2"/><circle cx="50" cy="50" r="6.5" fill="none" strokeWidth="1.6"/></g>}
-                          </svg>
-                        );
-                      })()}
-                      <input
-                        className="mk-input"
-                        style={{ flex:1, fontSize:12, fontFamily:'var(--font-mono)', minWidth:0, padding:'5px 8px' }}
-                        type="text"
-                        value={e.icon || ''}
-                        onChange={ev => updErk(i, 'icon', ev.target.value)}
-                        placeholder="Symbol: SVG-Code (z. B. von svgrepo.com) oder Pfaddaten einfügen …"
-                        title="Komplettes SVG oder reinen Pfad einfügen — leer = automatisches Icon"
-                      />
-                    </div>
-
-                    <div style={{ display:'flex', alignItems:'center', gap:8, marginTop:6 }}>
-                      <div style={{ flex:1, position:'relative', height:4, background:'rgba(var(--purple-rgb),calc(0.08*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', borderRadius:2, overflow:'hidden' }}>
-                        <div style={{ position:'absolute', left:0, top:0, bottom:0, width:`${pct}%`, background: e.farbe ? e.farbe : 'linear-gradient(90deg, rgba(124,100,220,0.9), rgba(var(--accent-rgb),calc(0.85*var(--ka))))', borderRadius:2, transition:'width 0.4s' }}/>
-                      </div>
-                      <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', color:'rgba(var(--accent-rgb),calc(0.65*var(--ka) + var(--tb)))', flexShrink:0 }}>{pct} %</span>
-                    </div>
-                  </div>
-                );
-              })}
-              <div style={{ display:'flex', gap:6, marginBottom:4 }}>
-                <input className="mk-input" style={{ flex:1 }} type="text" placeholder="Neue Kategorie …" value={newErkName} onChange={e => setNewErkName(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addErk(); }}}/>
-                <button onClick={addErk} style={{ padding:'0 12px', fontFamily:'var(--font-mono)', fontSize:12.5, color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', background:'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border:'1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))', borderRadius:4, cursor:'pointer' }}>+</button>
-              </div>
+              <SectionHead label="Zähler"/>
+              <KarteZaehlerEditor value={hex.erkundung} onChange={(list) => upd('erkundung', list)}/>
             </React.Fragment>
           )}
 
@@ -1166,7 +1162,7 @@ function EditorDrawer({
           {/* ── Tab: Ressourcen ── */}
           {tab === 'ressourcen' && poolEditable && (<React.Fragment>
             <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
-              <span>Ressourcen-Pools · Ort {hex.name || ''}</span>
+              <span>Ressourcen-Pools · Gebiet {hex.name || ''}</span>
               <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
@@ -1200,14 +1196,14 @@ function EditorDrawer({
           {/* Aggregierte Anzeige auf Welt / Region / Gebiet */}
           {tab === 'ressourcen' && !poolEditable && (<React.Fragment>
             <div style={{ display:'flex', alignItems:'center', gap:8, fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
-              <span>Ressourcen · Summe aller Orte darunter</span>
+              <span>Ressourcen · Summe aller Gebiete darunter</span>
               <div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
             </div>
             {!aggPools && (
               <div style={{ padding:'12px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>◈ sammle …</div>
             )}
             {aggPools && aggPools.length === 0 && (
-              <div style={{ padding:'12px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— noch keine Pools in den Orten —</div>
+              <div style={{ padding:'12px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.22em', color:'rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— noch keine Pools in den Gebieten —</div>
             )}
             {aggPools && (window.KARTE_POOL_TYPES || []).map(pt => {
               const items = aggPools.filter(r => r.cat === pt.key);
@@ -1236,7 +1232,7 @@ function EditorDrawer({
               );
             })}
             <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', letterSpacing:'0.1em', textTransform:'uppercase' }}>
-              Ressourcen werden pro Ort gepflegt — öffne den Ort zum Bearbeiten
+              Ressourcen werden pro Gebiet gepflegt — öffne das Gebiet zum Bearbeiten
             </div>
           </React.Fragment>)}
         </div>
@@ -1280,6 +1276,7 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
   const [rarFilter, setRarFilter] = uS4('');
   const [open, setOpen] = uS4(null);
   const [tagsOpen, setTagsOpen] = uS4(true);
+  const [poolTab, setPoolTab] = uS4('auswahl');   // auswahl | randomizer | pool
 
   const pt = (window.KARTE_POOL_TYPES || []).find(p => p.key === cat) || { label: cat, hue: 285 };
   const Kat = window.RessourcenKatalog;
@@ -1295,7 +1292,8 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
   );
   const activeTags = Object.values(sel).reduce((n, v) => n + v.length, 0);
 
-  const inPoolCount = katalog.filter(it => poolSet.has(it.id)).length;
+  const poolEntries = katalog.filter(it => poolSet.has(it.id)).sort((a, b) => a.name.localeCompare(b.name, 'de'));
+  const inPoolCount = poolEntries.length;
   const caughtCount = katalog.filter(it => poolSet.has(it.id) && (caughtCounts[`${cat}:${it.id}`] || 0) > 0).length;
 
   const filterInput = { background:'rgba(var(--panel-rgb),0.5)', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:2, padding:'8px 12px', fontFamily:'var(--font-body)', fontSize:13, color:'var(--white)' };
@@ -1307,7 +1305,7 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
       onMouseDown={e => e.stopPropagation()}
     >
       <div
-        style={{ width:760, maxWidth:'94vw', maxHeight:'calc(var(--vh, 1vh) * 90)', display:'flex', flexDirection:'column', overflow:'hidden', background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.99) 0%, rgba(var(--panel-rgb),0.99) 100%)', border:'1px solid rgba(var(--accent-rgb),calc(0.4*var(--ka)))', borderRadius:3, boxShadow:'0 24px 60px rgba(var(--shadow-rgb),calc(0.75 * var(--shadow-k))), 0 0 40px rgba(var(--purple-rgb),calc(0.2*var(--kp)))' }}
+        style={{ width:760, maxWidth:'94vw', height:'min(760px, calc(var(--vh, 1vh) * 90))', display:'flex', flexDirection:'column', overflow:'hidden', background:'linear-gradient(180deg, rgba(var(--panel-rgb),0.99) 0%, rgba(var(--panel-rgb),0.99) 100%)', border:'1px solid rgba(var(--accent-rgb),calc(0.4*var(--ka)))', borderRadius:3, boxShadow:'0 24px 60px rgba(var(--shadow-rgb),calc(0.75 * var(--shadow-k))), 0 0 40px rgba(var(--purple-rgb),calc(0.2*var(--kp)))' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Head */}
@@ -1324,74 +1322,114 @@ function PoolModal({ cat, anchorLabel, poolSet, caughtCounts, onToggle, onRandom
           >×</button>
         </header>
 
-        {/* Filters */}
-        <div style={{ padding:'12px 20px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))', display:'flex', flexDirection:'column', gap:10, flexShrink:0, maxHeight:'34vh', overflowY:'auto' }}>
-          <div style={{ display:'flex', gap:10 }}>
-            <input style={{ ...filterInput, flex:1, minWidth:0 }} type="text" placeholder="Suchen …" value={search} onChange={e => setSearch(e.target.value)}/>
-            <select style={{ ...filterInput, cursor:'pointer', maxWidth:150 }} value={rarFilter} onChange={e => setRarFilter(e.target.value)}>
-              <option value="" style={{ background:'rgb(var(--panel-rgb))' }}>Seltenheit: alle</option>
-              {RAR_ORDER.map(r => <option key={r} value={r} style={{ background:'rgb(var(--panel-rgb))' }}>{RAR[r].label}</option>)}
-            </select>
-            <button onClick={() => setTagsOpen(o => !o)} style={{ ...filterInput, cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.16em', textTransform:'uppercase', whiteSpace:'nowrap' }}>
-              Tags{activeTags ? ` (${activeTags})` : ''} {tagsOpen ? '▴' : '▾'}
-            </button>
+        {/* Tabs */}
+        <div style={{ display:'flex', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', flexShrink:0 }}>
+          {[['auswahl', 'Auswahl'], ['randomizer', 'Randomizer'], ['pool', `Aktueller Pool · ${inPoolCount}`]].map(([id, label]) => (
+            <button key={id} onClick={() => setPoolTab(id)}
+              style={{ flex:1, padding:'11px 0', background:'transparent', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.24em', textTransform:'uppercase', transition:'all 0.15s',
+                color: poolTab === id ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(0.55*var(--ka)))',
+                borderBottom: `2px solid ${poolTab === id ? 'rgba(var(--accent-rgb),calc(0.85*var(--ka)))' : 'transparent'}` }}
+            >{label}</button>
+          ))}
+        </div>
+
+        {poolTab === 'auswahl' && (
+          <React.Fragment>
+          <div style={{ padding:'12px 20px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))', display:'flex', flexDirection:'column', gap:10, flexShrink:0, maxHeight:'34vh', overflowY:'auto' }}>
+            <div style={{ display:'flex', gap:10 }}>
+              <input style={{ ...filterInput, flex:1, minWidth:0 }} type="text" placeholder="Suchen …" value={search} onChange={e => setSearch(e.target.value)}/>
+              <select style={{ ...filterInput, cursor:'pointer', maxWidth:150 }} value={rarFilter} onChange={e => setRarFilter(e.target.value)}>
+                <option value="" style={{ background:'rgb(var(--panel-rgb))' }}>Seltenheit: alle</option>
+                {RAR_ORDER.map(r => <option key={r} value={r} style={{ background:'rgb(var(--panel-rgb))' }}>{RAR[r].label}</option>)}
+              </select>
+              <button onClick={() => setTagsOpen(o => !o)} style={{ ...filterInput, cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.16em', textTransform:'uppercase', whiteSpace:'nowrap' }}>
+                Tags{activeTags ? ` (${activeTags})` : ''} {tagsOpen ? '▴' : '▾'}
+              </button>
+            </div>
+            {tagsOpen && <window.TagFilters cat={cat} sel={sel} onChange={setSel} />}
+            {activeTags > 0 && <button onClick={() => setSel({})} style={{ alignSelf:'flex-start', background:'none', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))' }}>✕ Tags zurücksetzen</button>}
           </div>
-          {tagsOpen && <window.TagFilters cat={cat} sel={sel} onChange={setSel} />}
-          {activeTags > 0 && <button onClick={() => setSel({})} style={{ alignSelf:'flex-start', background:'none', border:'none', cursor:'pointer', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.16em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))' }}>✕ Tags zurücksetzen</button>}
-        </div>
 
-        {/* Column header */}
-        <div style={{ display:'flex', alignItems:'center', gap:12, padding:'8px 30px 8px 20px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))', textTransform:'uppercase', flexShrink:0 }}>
-          <span style={{ width:20, flexShrink:0 }}/>
-          <span style={{ flex:1 }}>Name</span>
-          <span style={{ width:150, flexShrink:0 }}>Tags</span>
-          <span style={{ width:104, flexShrink:0 }}>Seltenheit</span>
-          <span style={{ width:88, flexShrink:0, textAlign:'center' }}>Status</span>
-        </div>
+          {/* Column header */}
+          <div style={{ display:'flex', alignItems:'center', gap:12, padding:'8px 30px 8px 20px', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))', textTransform:'uppercase', flexShrink:0 }}>
+            <span style={{ width:20, flexShrink:0 }}/>
+            <span style={{ flex:1 }}>Name</span>
+            <span style={{ width:150, flexShrink:0 }}>Tags</span>
+            <span style={{ width:104, flexShrink:0 }}>Seltenheit</span>
+            <span style={{ width:88, flexShrink:0, textAlign:'center' }}>Status</span>
+          </div>
 
-        {/* Rows */}
-        <div style={{ flex:1, overflowY:'auto', padding:'4px 20px 10px' }}>
-          {rows.length === 0 && (
-            <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Treffer —</div>
-          )}
-          {rows.map(it => {
-            const inPool = poolSet.has(it.id);
-            const caught = (caughtCounts[`${cat}:${it.id}`] || 0) > 0;
-            return (
-              <div key={it.id} style={{ borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>
-              <div style={{ display:'flex', alignItems:'center', gap:12, padding:'9px 10px 9px 0' }}>
-                <button
-                  onClick={() => onToggle(it.id, inPool)}
-                  style={{ width:20, height:20, flexShrink:0, border:`1px solid ${inPool ? 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))'}`, borderRadius:2, background: inPool ? 'rgba(var(--accent-rgb),calc(0.95*var(--ka)))' : 'transparent', color:'var(--bg)', fontSize:13, lineHeight:1, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.15s' }}
-                >{inPool ? '✓' : ''}</button>
-                <window.ResThumb entry={it} size={32} />
-                <button onClick={() => setOpen(open === it.id ? null : it.id)} title="Details ein-/ausklappen"
-                  style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight: inPool ? 500 : 300, color: inPool ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', flex:1, minWidth:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', textAlign:'left', background:'none', border:'none', cursor:'pointer', padding:0 }}>{it.name}</button>
-                <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.1em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase', width:150, flexShrink:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{Object.values(it.tags).flat().slice(0, 3).join(', ')}</span>
-                <span style={{ width:104, flexShrink:0 }}><window.RarityPill rarity={it.rarity} /></span>
-                <span style={{ width:88, flexShrink:0, display:'flex', justifyContent:'center' }}>
-                  {inPool ? (
-                    <span
-                      title="Fang-Status kommt automatisch aus dem Kollektikon"
-                      style={{ padding:'3px 9px', border:`1px solid ${caught ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`, borderRadius:20, background: caught ? 'rgba(40,120,80,0.18)' : 'transparent', color: caught ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase' }}
-                    >{caught ? '✓ erfasst' : 'offen'}</span>
-                  ) : (
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--purple-rgb),calc(0.25*var(--kp) + var(--tb)))' }}>—</span>
-                  )}
-                </span>
-              </div>
-              {open === it.id && <div style={{ padding:'2px 4px 16px 32px' }}><window.ResDetail entry={it} /></div>}
-              </div>
-            );
-          })}
-        </div>
+          {/* Rows */}
+          <div style={{ flex:1, overflowY:'auto', padding:'4px 20px 10px' }}>
+            {rows.length === 0 && (
+              <div style={{ padding:'24px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— keine Treffer —</div>
+            )}
+            {rows.map(it => {
+              const inPool = poolSet.has(it.id);
+              const caught = (caughtCounts[`${cat}:${it.id}`] || 0) > 0;
+              return (
+                <div key={it.id} style={{ borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:12, padding:'9px 10px 9px 0' }}>
+                  <button
+                    onClick={() => onToggle(it.id, inPool)}
+                    style={{ width:20, height:20, flexShrink:0, border:`1px solid ${inPool ? 'rgba(var(--accent-rgb),calc(0.9*var(--ka)))' : 'rgba(var(--purple-rgb),calc(0.35*var(--kp)))'}`, borderRadius:2, background: inPool ? 'rgba(var(--accent-rgb),calc(0.95*var(--ka)))' : 'transparent', color:'var(--bg)', fontSize:13, lineHeight:1, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', transition:'all 0.15s' }}
+                  >{inPool ? '✓' : ''}</button>
+                  <window.ResThumb entry={it} size={32} />
+                  <button onClick={() => setOpen(open === it.id ? null : it.id)} title="Details ein-/ausklappen"
+                    style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight: inPool ? 500 : 300, color: inPool ? 'var(--white)' : 'rgba(var(--text-rgb),calc(0.55*var(--kt)))', flex:1, minWidth:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap', textAlign:'left', background:'none', border:'none', cursor:'pointer', padding:0 }}>{it.name}</button>
+                  <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.1em', color:'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))', textTransform:'uppercase', width:150, flexShrink:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{Object.values(it.tags).flat().slice(0, 3).join(', ')}</span>
+                  <span style={{ width:104, flexShrink:0 }}><window.RarityPill rarity={it.rarity} /></span>
+                  <span style={{ width:88, flexShrink:0, display:'flex', justifyContent:'center' }}>
+                    {inPool ? (
+                      <span
+                        title="Fang-Status kommt automatisch aus dem Kollektikon"
+                        style={{ padding:'3px 9px', border:`1px solid ${caught ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`, borderRadius:20, background: caught ? 'rgba(40,120,80,0.18)' : 'transparent', color: caught ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase' }}
+                      >{caught ? '✓ erfasst' : 'offen'}</span>
+                    ) : (
+                      <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, color:'rgba(var(--purple-rgb),calc(0.25*var(--kp) + var(--tb)))' }}>—</span>
+                    )}
+                  </span>
+                </div>
+                {open === it.id && <div style={{ padding:'2px 4px 16px 32px' }}><window.ResDetail entry={it} /></div>}
+                </div>
+              );
+            })}
+          </div>
 
-        {/* Randomizer (nutzt die Tag-Filter von oben) */}
-        <div style={{ padding:'12px 20px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))', flexShrink:0, maxHeight:'38vh', overflowY:'auto' }}>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', color:'color-mix(in srgb, rgba(217,176,107,0.85), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginBottom:10 }}>⚄ Randomizer · zieht aus den gesetzten Tags, noch nicht im Pool</div>
-          <window.ResRandomizer cat={cat} excludeIds={poolSet} sel={sel} onSel={setSel} hideTags
-            addLabel="Zum Ort hinzufügen" onAdd={es => onRandomAdd(es.map(e => e.id))} />
-        </div>
+          </React.Fragment>
+        )}
+
+        {poolTab === 'randomizer' && (
+          <div style={{ flex:1, overflowY:'auto', padding:'14px 20px 16px' }}>
+            <div style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', color:'color-mix(in srgb, rgba(217,176,107,0.85), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginBottom:12 }}>⚄ Zieht aus den gesetzten Tags, noch nicht im Pool</div>
+            <window.ResRandomizer cat={cat} excludeIds={poolSet} sel={sel} onSel={setSel}
+              addLabel="Zum Gebiet hinzufügen" onAdd={es => { onRandomAdd(es.map(e => e.id)); setPoolTab('pool'); }} />
+          </div>
+        )}
+
+        {poolTab === 'pool' && (
+          <div style={{ flex:1, overflowY:'auto', padding:'8px 20px 12px' }}>
+            {poolEntries.length === 0 && (
+              <div style={{ padding:'28px 0', textAlign:'center', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.2em', color:'rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))', textTransform:'uppercase' }}>— noch nichts im Pool · in „Auswahl" oder „Randomizer" hinzufügen —</div>
+            )}
+            {poolEntries.map(it => {
+              const caught = (caughtCounts[`${cat}:${it.id}`] || 0) > 0;
+              return (
+                <div key={it.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'9px 0', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.08*var(--kp)))' }}>
+                  <window.ResThumb entry={it} size={32} />
+                  <span style={{ fontFamily:'var(--font-body)', fontSize:14, fontWeight:500, color:'var(--white)', flex:1, minWidth:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{it.name}</span>
+                  <span style={{ width:104, flexShrink:0 }}><window.RarityPill rarity={it.rarity} /></span>
+                  <span
+                    title="Fang-Status kommt automatisch aus dem Kollektikon"
+                    style={{ width:88, flexShrink:0, textAlign:'center', padding:'3px 0', border:`1px solid ${caught ? 'rgba(80,200,140,0.55)' : 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))'}`, borderRadius:20, background: caught ? 'rgba(40,120,80,0.18)' : 'transparent', color: caught ? 'color-mix(in srgb, rgba(120,220,160,0.95), rgb(var(--ink-rgb)) var(--cm))' : 'rgba(var(--accent-rgb),calc(0.5*var(--ka)))', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase' }}
+                  >{caught ? '✓ erfasst' : 'offen'}</span>
+                  <button onClick={() => onToggle(it.id, true)} title="Aus dem Pool entfernen"
+                    style={{ width:28, height:28, flexShrink:0, fontFamily:'var(--font-mono)', fontSize:12, color:'color-mix(in srgb, rgba(220,140,160,0.7), rgb(var(--ink-rgb)) var(--cm))', background:'transparent', border:'1px solid rgba(220,80,120,0.35)', borderRadius:2, cursor:'pointer' }}>×</button>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* Footer */}
         <footer style={{ padding:'12px 20px 14px', borderTop:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', display:'flex', alignItems:'center', justifyContent:'space-between', flexShrink:0 }}>
