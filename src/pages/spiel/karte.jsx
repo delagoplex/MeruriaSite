@@ -329,6 +329,12 @@ function barIcon(kind) {
 
 function barKind(label) {
   const l = (label || '').toLowerCase();
+  if (l.includes('gesamt')) return { kind: 'poi', hue: 160 };
+  if (l.includes('datensonde')) return { kind: 'sonst', hue: 215 };
+  if (l.includes('höhle') || l.includes('hoehle')) return { kind: 'poi', hue: 30 };
+  if (l.includes('vorkommen')) return { kind: 'pflanzen', hue: 95 };
+  if (l.includes('wrack')) return { kind: 'boss', hue: 20 };
+  if (l.includes('träumer') || l.includes('traeumer')) return { kind: 'sonst', hue: 320 };
   if (l.includes('fisch')) return { kind: 'fische', hue: 200 };
   if (l.includes('insekt')) return { kind: 'insekten', hue: 95 };
   if (l.includes('biom') || l.includes('pflanz') || l.includes('flora')) return { kind: 'pflanzen', hue: 140 };
@@ -515,9 +521,26 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
   const [statsLoading, setStatsLoading] = uS4(false);
   const [fullImg, setFullImg] = uS4(false);
 
+  // Ebenen: Region = Hex auf der Weltkarte (zeigt nur die Summe der Gebiets-Zähler),
+  // Gebiet = Hex auf der Regionskarte (Kolonien + eigene Zähler).
+  const isRegion = !isArea && !isSubmap;
+  const isGebiet = !isArea && isSubmap && childEbene === 'Gebiet';
+  const [zStats, setZStats] = uS4(null);
+  uE4(() => {
+    if (!isRegion) { setZStats(null); return; }
+    if (!hex.submap_id) { setZStats(window.karteAggregateZaehler([])); return; }
+    let dead = false;
+    setZStats(null);
+    window.karteCollectGebietStats(hex.submap_id, { onlyVisible: true })
+      .then(s => { if (!dead) setZStats(s); })
+      .catch(() => { if (!dead) setZStats(window.karteAggregateZaehler([])); });
+    return () => { dead = true; };
+  }, [hex.id, isRegion]);
+  uE4(() => { if (isRegion && tab === 'ziele') setTab('details'); }, [isRegion, tab]);
+
   // Rollup über Unterkarten direkt beim Öffnen laden (speist die Fortschrittsbalken im Details-Tab)
   uE4(() => {
-    if (!fOpen || !hex.has_submap || !hex.submap_id) { setStats([]); return; }
+    if (!fOpen || isRegion || !hex.has_submap || !hex.submap_id) { setStats([]); return; }
     setStatsLoading(true);
     karteCollectSubtreeStats(
       { hexId: isArea ? null : hex.id, areaId: isArea ? hex.id : null, submapId: hex.submap_id },
@@ -528,7 +551,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
 
   const objList = fOpen ? (objectives || []).filter(o => o.freigeschaltet) : [];
 
-  // Ressourcen: Pools werden pro Ort gepflegt und hier über den Teilbaum aggregiert.
+  // Ressourcen: Pools werden pro Gebiet gepflegt und hier über den Teilbaum aggregiert.
   // Bis die Aggregation geladen ist, dienen die eigenen Pool-Zeilen als Startwert.
   const [aggPools, setAggPools] = uS4(null);
   uE4(() => {
@@ -544,6 +567,17 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
 
   // Fortschrittsbalken: Objectives-Rollup nach Tags + Pool-Fangquoten + Legacy-Erkundung
   const bars = [];
+  if (isRegion && zStats) {
+    if (zStats.total > 0) bars.push(makeBar('Gesamtfortschritt', zStats.pct, zStats.pct));
+    if (zStats.gebiete > 0) {
+      const gp = Math.round(zStats.perfekt / zStats.gebiete * 100);
+      bars.push(makeBar(`Gebiete perfektioniert · ${zStats.perfekt}/${zStats.gebiete}`, gp, gp));
+    }
+    zStats.zaehler.forEach(z => {
+      const p = z.total > 0 ? Math.round(z.gefunden / z.total * 100) : 0;
+      bars.push(makeBar(`${z.name} · ${z.gefunden}/${z.total}`, p, p));
+    });
+  }
   (stats || []).forEach(s => bars.push(makeBar(barLabel(s.kat), s.entdeckt, s.komplettiert)));
   (window.KARTE_POOL_TYPES || []).forEach(pt => {
     const items = nodePools.filter(r => r.cat === pt.key);
@@ -552,7 +586,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
     const pct = Math.round(caught / items.length * 100);
     bars.push(makeBar(POOL_BAR_LABELS[pt.key] || pt.label, pct, pct));
   });
-  if (!isArea && fOpen) (hex.erkundung || []).forEach(e => {
+  if (!isArea && !isRegion && fOpen) (hex.erkundung || []).forEach(e => {
     const opts = { color: e.farbe || null, iconPath: e.icon || null };
     const total = +e.total || 0;
     if (total > 0) {
@@ -588,9 +622,9 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
   // Fakten einzeln: [Beschriftung, Wert, Schlüssel]; Zeilen, die vorhanden sind, aber noch nicht aufgedeckt
   const factDefs = [];
   if (isSubmap && !isArea && hex.features) factDefs.push(['Besonderheiten', hex.features, 'features']);
-  if (isSubmap && !isArea) factDefs.push(['Datensonde', hex.datensonde ? '✓ installiert' : '✗ nicht installiert', 'datensonde']);
+  if (isSubmap && !isArea && !isGebiet) factDefs.push(['Datensonde', hex.datensonde ? '✓ installiert' : '✗ nicht installiert', 'datensonde']);
   if (!isSubmap && !isArea && hex.bevoelkerung) factDefs.push(['Bevölkerung', hex.bevoelkerung, 'bevoelkerung']);
-  const kolonienText = (!isSubmap && !isArea && !kolonien.length && hex.kolonien) ? hex.kolonien : '';
+  const kolonienText = (isGebiet && !kolonien.length && hex.kolonien) ? hex.kolonien : '';
   const facts = factDefs.filter(d => O(d[2]));
 
 
@@ -649,7 +683,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
         {/* Tabs */}
         <div style={{ display:'flex', borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', flexShrink:0 }}>
           <TabBtn id="details" label="Details"/>
-          <TabBtn id="ziele" label={`Ziele${objList.length ? ` · ${objList.length}` : ''}`} accent="rgba(217,176,107,0.9)"/>
+          {!isRegion && <TabBtn id="ziele" label={`Ziele${objList.length ? ` · ${objList.length}` : ''}`} accent="rgba(217,176,107,0.9)"/>}
           {hasPoolData && <TabBtn id="ressourcen" label="Ressourcen"/>}
         </div>
 
@@ -678,7 +712,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
               </div>
             );
             const shownFacts = factDefs.filter(d => R[d[2]] !== 'locked');
-            const anything = tagList.length > 0 || !!descNode || shownFacts.length > 0 || kolonien.length > 0 || !!kolonienText || bars.length > 0 || statsLoading;
+            const anything = tagList.length > 0 || !!descNode || shownFacts.length > 0 || (isGebiet && kolonien.length > 0) || !!kolonienText || bars.length > 0 || statsLoading;
             return (
               <React.Fragment>
                 {tagList.length > 0 && (
@@ -693,7 +727,7 @@ function InfoPanel({ hex, nodeType, onClose, onExploreSubmap, isSubmap, objectiv
                 {kolonienText && <FactRow k="Kolonien" v={kolonienText}/>}
 
                 {/* Kolonien: immer sichtbar (Name + Rassen-Chips) */}
-                {!isArea && kolonien.length > 0 && (
+                {isGebiet && kolonien.length > 0 && (
                   <React.Fragment>
                     <div style={{ display:'flex', alignItems:'center', gap:8, margin:'8px 0 8px', fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))' }}>
                       <span>Kolonien</span><div style={{ flex:1, height:1, background:'rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}/>
