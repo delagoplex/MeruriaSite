@@ -2214,9 +2214,9 @@ function App() {
       if (isVis) s.delete(id); else s.add(id);
       return { ...prev, [cat]: s };
     });
-    try {
-      await window._sb.rpc('set_resource_visible', { p_cat: cat, p_resource_id: String(id), p_visible: !isVis });
-    } catch {
+    const { error } = await window._sb.rpc('set_resource_visible', { p_cat: cat, p_resource_id: String(id), p_visible: !isVis });
+    if (error) {
+      alert('Sichtbarkeit konnte nicht gespeichert werden: ' + error.message);
       setVis(prev => {
         const s = new Set(prev[cat]);
         if (isVis) s.add(id); else s.delete(id);

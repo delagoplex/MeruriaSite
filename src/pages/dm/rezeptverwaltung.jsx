@@ -774,17 +774,20 @@ function App() {
   }, [tab, approved, pending, search]);
 
   async function handleToggleCooked(id, current) {
-    await window._sb.from('recipes').update({ wurde_gekocht: !current }).eq('id', id);
+    const { error } = await window._sb.from('recipes').update({ wurde_gekocht: !current }).eq('id', id);
+    if (error) { alert('Speichern fehlgeschlagen: ' + error.message); return; }
     loadRecipes();
   }
 
   async function handleApprove(id) {
-    await window._sb.from('recipes').update({ status: 'approved', approved_at: new Date().toISOString() }).eq('id', id);
+    const { error } = await window._sb.from('recipes').update({ status: 'approved', approved_at: new Date().toISOString() }).eq('id', id);
+    if (error) { alert('Speichern fehlgeschlagen: ' + error.message); return; }
     loadRecipes();
   }
 
   async function handleRejectConfirm(id, grund) {
-    await window._sb.from('recipes').update({ status: 'rejected', abgelehnt_grund: grund || null }).eq('id', id);
+    const { error } = await window._sb.from('recipes').update({ status: 'rejected', abgelehnt_grund: grund || null }).eq('id', id);
+    if (error) { alert('Speichern fehlgeschlagen: ' + error.message); return; }
     setRejectTarget(null);
     loadRecipes();
   }

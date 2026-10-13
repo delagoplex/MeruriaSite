@@ -530,7 +530,9 @@ async function loadCharacters() {
 window.ZauberSection = ZauberSection;
 
 async function deleteChar(id) {
-  await window._sb.from('characters').delete().eq('id', id);
+  const { error } = await window._sb.from('characters').delete().eq('id', id);
+  if (error) { alert('Der Charakter konnte nicht gelöscht werden: ' + error.message); return false; }
+  return true;
 }
 
 function exportChars(chars, filename) {
@@ -562,7 +564,8 @@ async function importCharsFromFile(file) {
             type: 'spieler',
           };
         });
-        await window._sb.from('characters').insert(inserts);
+        const { error } = await window._sb.from('characters').insert(inserts);
+        if (error) alert('Import fehlgeschlagen: ' + error.message);
         resolve();
       } catch(err) { console.error(err); resolve(); }
     };

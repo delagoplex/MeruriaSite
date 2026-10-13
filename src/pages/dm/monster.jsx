@@ -2598,7 +2598,8 @@ function App() {
   // Kollektikon visibility toggle (DM)
   const [kolSet, setKolSet] = useState(new Set());
   useEffect(() => {
-    window._sb.from('ressourcen_sichtbar').select('resource_id').eq('cat', 'kreaturen').then(({
+    // Sichtbarkeit liegt seit 031 in kollektikon_counts.reveal_mode (nicht mehr in ressourcen_sichtbar)
+    window._sb.from('kollektikon_counts').select('resource_id').eq('cat', 'kreaturen').not('reveal_mode', 'is', null).then(({
       data
     }) => {
       if (data) setKolSet(new Set(data.map(r => r.resource_id)));
@@ -2606,20 +2607,14 @@ function App() {
   }, []);
   const toggleKol = useCallback(async monster => {
     const rid = _monsterKolId(monster.name);
-    if (kolSet.has(rid)) {
-      await window._sb.from('ressourcen_sichtbar').delete().eq('cat', 'kreaturen').eq('resource_id', rid);
-      setKolSet(prev => {
-        const s = new Set(prev);
-        s.delete(rid);
-        return s;
-      });
-    } else {
-      await window._sb.from('ressourcen_sichtbar').insert({
-        cat: 'kreaturen',
-        resource_id: rid
-      });
-      setKolSet(prev => new Set([...prev, rid]));
-    }
+    const makeVisible = !kolSet.has(rid);
+    const { error } = await window._sb.rpc('set_resource_visible', { p_cat: 'kreaturen', p_resource_id: String(rid), p_visible: makeVisible });
+    if (error) { alert('Sichtbarkeit konnte nicht gespeichert werden: ' + error.message); return; }
+    setKolSet(prev => {
+      const s = new Set(prev);
+      if (makeVisible) s.add(rid); else s.delete(rid);
+      return s;
+    });
   }, [kolSet]);
   const allTypes = useMemo(() => [...new Set(allMonster.map(m => m.art))].sort(), [allMonster]);
   const chipsDrag = useDragScroll({
