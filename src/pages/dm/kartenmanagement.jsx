@@ -148,6 +148,7 @@ async function loadStash() {
     id: s.id, name: s.name || '', terrain: s.terrain || '',
     features: s.features || '', beschreibung: s.beschreibung || '',
     bild_url: s.bild_url || '', folder: s.folder || null,
+    extra: s.extra && typeof s.extra === 'object' ? s.extra : {},
   }));
 }
 
@@ -186,7 +187,7 @@ async function sbUpsertStash(item) {
   const { error } = await window._sb.from('karte_stash').upsert({
     id: item.id, name: item.name || '', terrain: item.terrain || '',
     features: item.features || '', beschreibung: item.beschreibung || '',
-    bild_url: item.bild_url || '', folder: item.folder || null, sort_order: Date.now(),
+    bild_url: item.bild_url || '', folder: item.folder || null, extra: item.extra || {}, sort_order: Date.now(),
   }, { onConflict: 'id' });
   if (error) console.error('sbUpsertStash:', error);
   return !error;
@@ -2130,7 +2131,7 @@ function MerMap() {
       const placed = stash.find((s) => s.id === info.id); if (!placed) return;
       pushHistory();
       setStash((prev) => prev.filter((s) => s.id !== info.id));
-      const movedHex = { ...placed, q: toQ, r: toR, visible: false, has_submap: false, submap_id: null };
+      const movedHex = { ...placed, ...(placed.extra || {}), q: toQ, r: toR, visible: false, has_submap: false, submap_id: null };
       setHexes((prev) => ({ ...prev, [tk]: movedHex }));
       sbUpsertHex(currentMapIdRef.current, movedHex);
       sbDeleteStash(placed.id);
@@ -2144,7 +2145,8 @@ function MerMap() {
     const h = hexes[oldKey]; if (!h) { setDragInfo(null); return; }
     pushHistory();
     setHexes((prev) => { const out = { ...prev }; delete out[oldKey]; return out; });
-    const stashItem = { id: h.id, name: h.name || '', terrain: h.terrain || '', features: h.features || '', beschreibung: h.beschreibung || '', bild_url: h.bild_url || '', folder: activeLagerFolder === '__all__' ? null : activeLagerFolder };
+    const stashItem = { id: h.id, name: h.name || '', terrain: h.terrain || '', features: h.features || '', beschreibung: h.beschreibung || '', bild_url: h.bild_url || '', folder: activeLagerFolder === '__all__' ? null : activeLagerFolder,
+      extra: { tags: h.tags || [], ressourcen: h.ressourcen || {}, kolonie: h.kolonie || null, erkundung: h.erkundung || [], reveal: h.reveal || {}, bild_pos: h.bild_pos || null, banner_url: h.banner_url || '', datensonde: !!h.datensonde, bevoelkerung: h.bevoelkerung || '', kolonien: h.kolonien || '' } };
     setStash((prev) => [...prev, stashItem]);
     if (selectedKey === oldKey) { setSel(null); setEditing(false); }
     setDragInfo(null);
@@ -2162,7 +2164,7 @@ function MerMap() {
     const placed = stash.find((s) => s.id === dragInfo.id); if (!placed) { setDragInfo(null); return; }
     pushHistory();
     setStash((prev) => prev.filter((s) => s.id !== dragInfo.id));
-    const movedHex = { ...placed, q: 0, r: 0, visible: false, has_submap: false, submap_id: null };
+    const movedHex = { ...placed, ...(placed.extra || {}), q: 0, r: 0, visible: false, has_submap: false, submap_id: null };
     setHexes(() => ({ '0,0': movedHex }));
     setSel('0,0'); setDragInfo(null);
     sbUpsertHex(currentMapIdRef.current, movedHex);
