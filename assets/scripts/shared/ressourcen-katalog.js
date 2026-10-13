@@ -10,17 +10,19 @@
 (function () {
   const RARITY_META = {
     gewoehnlich: { label: 'Gewöhnlich',  color: 'rgba(240,238,255,0.85)' },
+    ungewoehnlich: { label: 'Ungewöhnlich', color: 'oklch(0.74 0.14 150)' },
     selten:      { label: 'Selten',      color: 'oklch(0.72 0.13 240)'   },
     sehrselten:  { label: 'Sehr selten', color: 'oklch(0.68 0.18 310)'   },
-    einzigartig: { label: 'Einzigartig', color: 'oklch(0.80 0.14 60)'    },
+    legendaer:   { label: 'Legendär',    color: 'oklch(0.80 0.14 60)'    },
   };
-  const RARITY_ORDER = ['gewoehnlich', 'selten', 'sehrselten', 'einzigartig'];
+  const RARITY_ORDER = ['gewoehnlich', 'ungewoehnlich', 'selten', 'sehrselten', 'legendaer'];
   // Gewichte für den Randomizer: je seltener, desto unwahrscheinlicher
-  const RARITY_WEIGHT = { gewoehnlich: 10, selten: 4, sehrselten: 1.5, einzigartig: 0.5 };
+  const RARITY_WEIGHT = { gewoehnlich: 10, ungewoehnlich: 6, selten: 3, sehrselten: 1.5, legendaer: 0.5 };
 
-  const rarFromSg = sg => sg <= 1 ? 'gewoehnlich' : sg === 2 ? 'selten' : sg === 3 ? 'sehrselten' : 'einzigartig';
-  const rarFromStaerke = s => s <= 2 ? 'gewoehnlich' : s <= 4 ? 'selten' : s === 5 ? 'sehrselten' : 'einzigartig';
-  const rarFromCr = cr => cr <= 1 ? 'gewoehnlich' : cr <= 5 ? 'selten' : cr <= 10 ? 'sehrselten' : 'einzigartig';
+  // Seltenheitsgrad 1–5 = die fünf Stufen der Ressourcen-Seite; Fische/Kreaturen wie bisher gruppiert
+  const rarFromSg = sg => sg <= 1 ? 'gewoehnlich' : sg === 2 ? 'ungewoehnlich' : sg === 3 ? 'selten' : sg === 4 ? 'sehrselten' : 'legendaer';
+  const rarFromStaerke = s => s <= 2 ? 'gewoehnlich' : s <= 4 ? 'ungewoehnlich' : s === 5 ? 'sehrselten' : 'legendaer';
+  const rarFromCr = cr => cr <= 1 ? 'gewoehnlich' : cr <= 5 ? 'ungewoehnlich' : cr <= 10 ? 'sehrselten' : 'legendaer';
 
   const arr = v => Array.isArray(v) ? v.filter(Boolean) : (v ? [v] : []);
   const facts = list => list.filter(f => f[1] !== undefined && f[1] !== null && f[1] !== '');

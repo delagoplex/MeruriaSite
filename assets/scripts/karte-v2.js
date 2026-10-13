@@ -18,17 +18,18 @@
   // ── Seltenheiten (identisch zum Kollektikon) ───────────────────
   const RARITY_META = {
     gewoehnlich: { label: 'Gewöhnlich',  color: 'rgba(240,238,255,0.85)' },
+    ungewoehnlich: { label: 'Ungewöhnlich', color: 'oklch(0.74 0.14 150)' },
     selten:      { label: 'Selten',      color: 'oklch(0.72 0.13 240)'   },
     sehrselten:  { label: 'Sehr selten', color: 'oklch(0.68 0.18 310)'   },
-    einzigartig: { label: 'Einzigartig', color: 'oklch(0.80 0.14 60)'    },
+    legendaer:   { label: 'Legendär',    color: 'oklch(0.80 0.14 60)'    },
   };
-  const RARITY_ORDER = ['gewoehnlich', 'selten', 'sehrselten', 'einzigartig'];
+  const RARITY_ORDER = ['gewoehnlich', 'ungewoehnlich', 'selten', 'sehrselten', 'legendaer'];
 
   function rarFromSg(sg) {
-    return sg <= 1 ? 'gewoehnlich' : sg === 2 ? 'selten' : sg === 3 ? 'sehrselten' : 'einzigartig';
+    return sg <= 1 ? 'gewoehnlich' : sg === 2 ? 'ungewoehnlich' : sg === 3 ? 'selten' : sg === 4 ? 'sehrselten' : 'legendaer';
   }
   function rarFromStaerke(s) {
-    return s <= 2 ? 'gewoehnlich' : s <= 4 ? 'selten' : s === 5 ? 'sehrselten' : 'einzigartig';
+    return s <= 2 ? 'gewoehnlich' : s <= 4 ? 'ungewoehnlich' : s === 5 ? 'sehrselten' : 'legendaer';
   }
 
   // ── Katalog aus den echten Datenbanken ─────────────────────────

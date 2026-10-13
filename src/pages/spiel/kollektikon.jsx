@@ -548,19 +548,24 @@ const RARITY = {
     pips: 1,
     hue: 140
   },
+  ungewoehnlich: {
+    label: 'Ungewöhnlich',
+    pips: 2,
+    hue: 170
+  },
   selten: {
     label: 'Selten',
-    pips: 2,
-    hue: 200
+    pips: 3,
+    hue: 215
   },
   sehrselten: {
     label: 'Sehr selten',
-    pips: 3,
+    pips: 4,
     hue: 285
   },
-  einzigartig: {
-    label: 'Einzigartig',
-    pips: 4,
+  legendaer: {
+    label: 'Legendär',
+    pips: 5,
     hue: 40
   }
 };
@@ -631,9 +636,10 @@ Object.assign(window, {
 /* ── Filter facets (per category) ── */
 const RAR_LABEL = {
   gewoehnlich: 'Gewöhnlich',
+  ungewoehnlich: 'Ungewöhnlich',
   selten: 'Selten',
   sehrselten: 'Sehr selten',
-  einzigartig: 'Einzigartig'
+  legendaer: 'Legendär'
 };
 const FACETS = {
   fische: [{
@@ -655,7 +661,7 @@ const FACETS = {
   }, {
     key: 'seltenheit',
     label: 'Seltenheit',
-    options: ['Gewöhnlich', 'Selten', 'Sehr selten', 'Einzigartig']
+    options: ['Gewöhnlich', 'Ungewöhnlich', 'Selten', 'Sehr selten', 'Legendär']
   }],
   insekten: [{
     key: 'ort',
@@ -680,7 +686,7 @@ const FACETS = {
   }, {
     key: 'seltenheit',
     label: 'Seltenheit',
-    options: ['Gewöhnlich', 'Selten', 'Sehr selten', 'Einzigartig']
+    options: ['Gewöhnlich', 'Ungewöhnlich', 'Selten', 'Sehr selten', 'Legendär']
   }],
   pflanzen: [{
     key: 'ort',
@@ -705,7 +711,7 @@ const FACETS = {
   }, {
     key: 'seltenheit',
     label: 'Seltenheit',
-    options: ['Gewöhnlich', 'Selten', 'Sehr selten', 'Einzigartig']
+    options: ['Gewöhnlich', 'Ungewöhnlich', 'Selten', 'Sehr selten', 'Legendär']
   }],
   mineralien: [{
     key: 'ort',
@@ -722,7 +728,7 @@ const FACETS = {
   }, {
     key: 'seltenheit',
     label: 'Seltenheit',
-    options: ['Gewöhnlich', 'Selten', 'Sehr selten', 'Einzigartig']
+    options: ['Gewöhnlich', 'Ungewöhnlich', 'Selten', 'Sehr selten', 'Legendär']
   }],
   kreaturen: [{
     key: 'cr',
@@ -747,7 +753,7 @@ const FACETS = {
   }, {
     key: 'seltenheit',
     label: 'Seltenheit',
-    options: ['Gewöhnlich', 'Selten', 'Sehr selten', 'Einzigartig']
+    options: ['Gewöhnlich', 'Ungewöhnlich', 'Selten', 'Sehr selten', 'Legendär']
   }],
   kreaturenteile: [{
     key: 'verwendung',
@@ -760,7 +766,7 @@ const FACETS = {
   }, {
     key: 'seltenheit',
     label: 'Seltenheit',
-    options: ['Gewöhnlich', 'Selten', 'Sehr selten', 'Einzigartig']
+    options: ['Gewöhnlich', 'Ungewöhnlich', 'Selten', 'Sehr selten', 'Legendär']
   }],
   wal: [{
     key: 'beschaffenheit',
@@ -773,7 +779,7 @@ const FACETS = {
   }, {
     key: 'seltenheit',
     label: 'Seltenheit',
-    options: ['Selten', 'Sehr selten', 'Einzigartig']
+    options: ['Selten', 'Sehr selten', 'Legendär']
   }],
   lebensspeicher: [{
     key: 'form',
@@ -786,7 +792,7 @@ const FACETS = {
   }, {
     key: 'seltenheit',
     label: 'Seltenheit',
-    options: ['Sehr selten', 'Einzigartig']
+    options: ['Sehr selten', 'Legendär']
   }]
 };
 
@@ -1223,7 +1229,7 @@ function RarityPips({
       alignItems: 'center',
       gap: small ? 3 : 4
     }
-  }, [1, 2, 3, 4].map(i => /*#__PURE__*/React.createElement("span", {
+  }, [1, 2, 3, 4, 5].map(i => /*#__PURE__*/React.createElement("span", {
     key: i,
     style: {
       width: small ? 5 : 6,
@@ -2435,10 +2441,10 @@ function _scrambleName(name) {
   }).join('');
 }
 function _rarFromSg(sg) {
-  return sg <= 1 ? 'gewoehnlich' : sg === 2 ? 'selten' : sg === 3 ? 'sehrselten' : 'einzigartig';
+  return sg <= 1 ? 'gewoehnlich' : sg === 2 ? 'ungewoehnlich' : sg === 3 ? 'selten' : sg === 4 ? 'sehrselten' : 'legendaer';
 }
 function _rarFromStaerke(s) {
-  return s <= 2 ? 'gewoehnlich' : s <= 4 ? 'selten' : s === 5 ? 'sehrselten' : 'einzigartig';
+  return s <= 2 ? 'gewoehnlich' : s <= 4 ? 'ungewoehnlich' : s === 5 ? 'sehrselten' : 'legendaer';
 }
 function _crLabel(cr) {
   if (cr === 0) return 'HG 0';
@@ -2449,9 +2455,9 @@ function _crLabel(cr) {
 }
 function _rarFromCr(cr) {
   if (cr <= 1) return 'gewoehnlich';
-  if (cr <= 5) return 'selten';
+  if (cr <= 5) return 'ungewoehnlich';
   if (cr <= 10) return 'sehrselten';
-  return 'einzigartig';
+  return 'legendaer';
 }
 function _gefahrFromCr(cr) {
   if (cr <= 1) return 'Friedlich';
