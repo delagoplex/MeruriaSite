@@ -1014,3 +1014,7 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
   .mk-hex-new, .mk-hex-qmark, .mk-scr.locked, .mk-img-in, .mk-tag-pop, .mk-spark, .mk-tag-shine { animation: none; }
 }
+
+/* Zähler-Eingabe: nur die eigenen +/−-Buttons, keine Browser-Pfeile */
+.mk-input.mk-num { -moz-appearance: textfield; appearance: textfield; }
+.mk-input.mk-num::-webkit-outer-spin-button, .mk-input.mk-num::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }

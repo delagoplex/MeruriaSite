@@ -292,6 +292,60 @@
     return out;
   }
 
+  // ── Zähler pro Gebiet (karte_hexes.erkundung = [{name, gefunden, total}]) ─────
+  // Gebiet = Hex auf der Regionskarte. Die Region (Hex auf der Weltkarte) zeigt nur die Summe.
+  const ZAEHLER_PRESETS = ['Datensonden', 'Höhlen', 'Ressourcenvorkommen', 'Wrackteile', 'Träumerkapseln'];
+  const zKey = n => String(n || '').trim().toLowerCase();
+  const zList = v => (Array.isArray(v) ? v : []).filter(e => e && (+e.total || 0) > 0);
+
+  // Ein Gebiet gilt als perfektioniert, wenn alle Zähler mit Ziel > 0 voll sind (und es mindestens einen gibt).
+  function zaehlerPerfekt(erkundung) {
+    const rel = zList(erkundung);
+    return rel.length > 0 && rel.every(e => (+e.gefunden || 0) >= (+e.total || 0));
+  }
+
+  // Fasst eine Liste von Zähler-Listen (eine je Gebiet) zusammen.
+  // Rückgabe: { gebiete, perfekt, zaehler:[{name, gefunden, total}], gefunden, total, pct }
+  function aggregateZaehler(lists) {
+    const m = new Map();
+    let perfekt = 0;
+    lists.forEach(l => {
+      if (zaehlerPerfekt(l)) perfekt++;
+      zList(l).forEach(e => {
+        const k = zKey(e.name);
+        const total = +e.total || 0;
+        const gefunden = Math.min(+e.gefunden || 0, total);
+        const s = m.get(k) || { name: String(e.name || '').trim() || 'Zähler', gefunden: 0, total: 0 };
+        s.gefunden += gefunden; s.total += total;
+        m.set(k, s);
+      });
+    });
+    const order = n => { const i = ZAEHLER_PRESETS.findIndex(p => zKey(p) === zKey(n)); return i < 0 ? 99 : i; };
+    const zaehler = [...m.values()].sort((a, b) => order(a.name) - order(b.name));
+    const gefunden = zaehler.reduce((s, z) => s + z.gefunden, 0);
+    const total = zaehler.reduce((s, z) => s + z.total, 0);
+    return { gebiete: lists.length, perfekt, zaehler, gefunden, total, pct: total > 0 ? Math.round(gefunden / total * 100) : 0 };
+  }
+
+  // Summiert die Zähler aller Gebiete einer Regionskarte (ein Ebenen-Schritt unter der Region).
+  // Spieler lesen über die Spieler-View (nur sichtbare bzw. bekannte Gebiete), die DM-Seite über die Tabelle.
+  async function collectGebietStats(regionMapId, opts) {
+    if (!regionMapId) return aggregateZaehler([]);
+    const onlyVisible = !!(opts && opts.onlyVisible);
+    let rows = null;
+    if (onlyVisible) {
+      const r = await window._sb.from('karte_hexes_player').select('id, erkundung').eq('map_id', regionMapId);
+      if (!r.error) rows = r.data || [];
+    }
+    if (!rows) {
+      let q = window._sb.from('karte_hexes').select('id, erkundung').eq('map_id', regionMapId);
+      if (onlyVisible) q = q.eq('visible', true);
+      const r = await q;
+      rows = r.data || [];
+    }
+    return aggregateZaehler(rows.map(h => h.erkundung));
+  }
+
   // ── Icon-Eingabe für Erkundungs-Symbole ────────────────────────
   // Akzeptiert entweder reine Pfaddaten ("M50 14 …", viewBox 0 0 100 100)
   // oder komplettes SVG-Markup (z. B. von svgrepo.com kopiert) — daraus werden
@@ -323,5 +377,9 @@
     loadPools, sbAddPoolItem, sbRemovePoolItem,
     karteCollectSubtreeStats: collectSubtreeStats,
     karteCollectSubtreePools: collectSubtreePools,
+    KARTE_ZAEHLER_PRESETS: ZAEHLER_PRESETS,
+    karteZaehlerPerfekt: zaehlerPerfekt,
+    karteAggregateZaehler: aggregateZaehler,
+    karteCollectGebietStats: collectGebietStats,
   });
 })();
