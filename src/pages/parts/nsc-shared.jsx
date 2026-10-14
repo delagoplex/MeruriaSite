@@ -426,7 +426,9 @@ function useUnlocks(nscs, charPids, activePerspective='alle', players=[]) {
       for (const nsc of nscs) result[pid][nsc.id] = new Set();
     }
     setByPersp(result);
-    if (charPids.length) window._sb.from('nsc_unlocks').delete().in('character_id', charPids);
+    // Der Builder sendet erst bei then/await; ohne das lief das Löschen nie.
+    if (charPids.length) window._sb.from('nsc_unlocks').delete().in('character_id', charPids)
+      .then(({ error }) => { if (error) console.error('resetAll:', error); });
   };
 
   const toggleForPids = (nscId, key, pids) => {
@@ -483,7 +485,8 @@ function useUnlocks(nscs, charPids, activePerspective='alle', players=[]) {
       for (const pid of pids) {
         next[pid] = { ...next[pid], [nscId]: new Set() };
         window._sb.from('nsc_unlocks').delete()
-          .eq('character_id', pid).eq('nsc_id', nscId);
+          .eq('character_id', pid).eq('nsc_id', nscId)
+          .then(({ error }) => { if (error) console.error('resetForPids:', error); });
       }
       return next;
     });

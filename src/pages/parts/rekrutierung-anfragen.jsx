@@ -113,7 +113,11 @@ function App() {
     const ins = await sb.from('nscs').insert(row).select('id').single();
     if (ins.error) { setErr('NSC anlegen fehlgeschlagen: ' + ins.error.message); setBusy(false); return; }
     const upd = await sb.from('rekrutierung_anfragen').update({ status:'angenommen', nsc_id:ins.data.id, bearbeitet_am:new Date().toISOString() }).eq('id', sel.id);
-    if (upd.error) setErr('NSC angelegt, aber die Anfrage konnte nicht aktualisiert werden: ' + upd.error.message);
+    if (upd.error) {
+      // Sonst bliebe die Anfrage offen und ein zweites Annehmen legte den NSC doppelt an
+      const del = await sb.from('nscs').delete().eq('id', ins.data.id);
+      setErr('Anfrage konnte nicht aktualisiert werden: ' + upd.error.message + (del.error ? ' (der angelegte NSC musste von Hand entfernt werden)' : ' (der NSC wurde wieder entfernt)'));
+    }
     setBusy(false);
     await load();
   }

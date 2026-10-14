@@ -443,7 +443,6 @@ function App() {
     (async () => {
       const { data } = await window._sb.from('characters').select('*').eq('type','spieler').order('created_at');
       const r = data || [];
-      console.log('[DM] Charaktere geladen:', r.length, '| owner_ids:', r.map(c => c.owner_id));
       const ids = [...new Set(r.map(c => c.owner_id))].filter(Boolean);
       let pm = {};
       if (ids.length) {

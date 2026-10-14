@@ -514,7 +514,7 @@ function FactGuessForm({ nsc, keys, unlocked, characterId, onCorrect, acc }) {
           <button type="submit" disabled={busy || !guess.trim()} style={{ padding:'8px 12px', border:`1px solid ${dpHA(acc,0.5)}`, borderRadius:2, background:dpHA(acc,0.12), color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.12em', textTransform:'uppercase', cursor:busy ? 'wait' : 'pointer', opacity:busy || !guess.trim() ? 0.55 : 1 }}>{busy ? 'Prüfe …' : 'Eintragen'}</button>
         </form>
       )}
-      {status && <div role="status" style={{ marginTop:9, fontFamily:'var(--font-body)', fontSize:12.5, color:status.startsWith('Richtige') ? 'rgba(95,227,154,0.9)' : 'rgba(200,190,240,0.65)' }}>{status}</div>}
+      {status && <div role="status" style={{ marginTop:9, fontFamily:'var(--font-body)', fontSize:12.5, color:status.startsWith('Richtig') ? 'rgba(95,227,154,0.9)' : 'rgba(200,190,240,0.65)' }}>{status}</div>}
       {reveal && <div key={reveal.key} style={{ marginTop:10, padding:'9px 11px', border:`1px solid ${dpHA(acc,0.28)}`, background:dpHA(acc,0.06), fontFamily:'var(--font-body)', fontSize:13, lineHeight:1.6 }}><NscFactReveal text={reveal.text}/></div>}
     </div>
   );

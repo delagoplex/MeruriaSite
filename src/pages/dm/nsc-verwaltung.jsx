@@ -905,7 +905,9 @@ function App() {
     const { data: inserted, error } = await window._sb.from('nscs').insert(row).select('id').single();
     if (error) { alert('Anlegen fehlgeschlagen: ' + error.message); return; }
     const { data: rows } = await window._sb.rpc('get_nsc_admin_data');
-    const n = mapNscRow((rows || []).find(item => item.id === inserted.id));
+    const created = (rows || []).find(item => item.id === inserted.id);
+    if (!created) { alert('Der NSC wurde angelegt, konnte aber nicht geladen werden. Bitte die Seite neu laden.'); return; }
+    const n = mapNscRow(created);
     setNscs(prev => [n, ...prev]);
     setSelId(n.id); setCreating(false);
   }
