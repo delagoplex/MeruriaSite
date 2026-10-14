@@ -1,6 +1,7 @@
 // Page entry for /charaktererstellung/neuer-charakter.html
 import '../../components/image-upload.jsx';
 import '../../components/char-age.jsx';
+import '../../components/site-gate.jsx';
 
 ;(function () {
 (function () {
@@ -225,10 +226,106 @@ function Nav({
   }, "\u2190 Zur\xFCck"));
 }
 
-// ── TYPE SELECT ────────────────────────────────────────────────────────────
+// ── TYPE SELECT ────────────────────────────────────────────────────────
+// Auswahlfläche: beide Flächen sehen im Ruhezustand gleich aus, beim Überfahren leuchtet eine auf.
+// locked: halbtransparentes Schloss (NSC-Erstellung braucht für Spieler ein Passwort).
+const NSC_UNLOCK_KEY = 'nsc_quiz_unlocked';
+function TypeCard({ label, sub, onClick, locked = false }) {
+  const [hov, setHov] = useState(false);
+  return (
+    <button type="button" onClick={onClick} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      onFocus={() => setHov(true)} onBlur={() => setHov(false)}
+      aria-label={label + (locked ? ' (gesperrt, Passwort nötig)' : '')}
+      style={{
+        position:'relative', cursor:'pointer', textAlign:'center', minWidth:190, padding:'22px 44px', borderRadius:3,
+        background: hov ? 'rgba(var(--purple-rgb),calc(.17*var(--kp)))' : 'rgba(var(--purple-rgb),calc(.06*var(--kp)))',
+        border: '1px solid ' + (hov ? 'rgba(var(--accent-rgb),calc(.75*var(--ka)))' : 'rgba(var(--purple-rgb),calc(.32*var(--kp)))'),
+        boxShadow: hov ? '0 0 22px rgba(var(--purple-rgb),calc(.35*var(--kp)))' : 'none',
+        transition:'all .2s',
+      }}>
+      <div style={{ fontFamily:'var(--font-d)', fontSize:'17px', fontWeight:300, letterSpacing:'.22em', textTransform:'uppercase',
+        color: hov ? 'var(--white)' : 'rgba(var(--text-rgb),calc(.78*var(--kt) + var(--tb)))', transition:'color .2s' }}>{label}</div>
+      <div style={{ fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.18em', textTransform:'uppercase', marginTop:6,
+        color: hov ? 'rgba(var(--accent-rgb),calc(.85*var(--ka) + var(--tb)))' : 'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))', transition:'color .2s' }}>{sub}</div>
+      {locked && (
+        <svg aria-hidden="true" width="46" height="54" viewBox="0 0 46 54"
+          style={{ position:'absolute', left:'50%', top:'50%', transform:'translate(-50%,-50%)', pointerEvents:'none',
+            opacity: hov ? 0.6 : 0.42, transition:'opacity .2s', filter:'drop-shadow(0 0 6px rgba(0,0,0,.45))' }}>
+          <path d="M13 24 V16 a10 10 0 0 1 20 0 V24" fill="none" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" />
+          <rect x="6" y="23" width="34" height="27" rx="4" fill="#ffffff" />
+          <circle cx="23" cy="34" r="3.6" fill="rgba(0,0,0,.55)" />
+          <rect x="21.4" y="35" width="3.2" height="8" rx="1.4" fill="rgba(0,0,0,.55)" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
+// Passwortabfrage für „Neuer NSC“ (geprüft per RPC check_nsc_quiz_password, Migration 060)
+function NscUnlockForm({ onUnlocked, onCancel }) {
+  const [pw, setPw] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState('');
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!pw || busy) return;
+    setBusy(true); setErr('');
+    const { data, error } = await window._sb.rpc('check_nsc_quiz_password', { p_password: pw });
+    setBusy(false);
+    if (error) { setErr('Prüfung fehlgeschlagen: ' + error.message); return; }
+    if (!data) { setErr('Das Passwort stimmt nicht.'); return; }
+    try { sessionStorage.setItem(NSC_UNLOCK_KEY, '1'); } catch (e2) { /* privater Modus */ }
+    onUnlocked();
+  };
+  const field = { fontFamily:'var(--font-m)', fontSize:'13px', letterSpacing:'.08em', color:'var(--white)', background:'rgba(var(--bg-rgb),.6)',
+    border:'1px solid rgba(var(--purple-rgb),calc(.4*var(--kp)))', borderRadius:3, padding:'9px 12px', outline:'none', minWidth:220 };
+  const btn = { fontFamily:'var(--font-m)', fontSize:'11.5px', letterSpacing:'.18em', textTransform:'uppercase', cursor:'pointer', borderRadius:3, padding:'9px 16px' };
+  return (
+    <form onSubmit={submit} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:10, marginTop:6, animation:'fadeIn .25s ease' }}>
+      <div style={{ fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(.6*var(--ka) + var(--tb)))' }}>
+        NSC-Erstellung · Passwort der Spielleitung
+      </div>
+      <div style={{ display:'flex', gap:8, flexWrap:'wrap', justifyContent:'center' }}>
+        <input type="password" autoFocus value={pw} onChange={e => setPw(e.target.value)} placeholder="Passwort" aria-label="Passwort" style={field} />
+        <button type="submit" disabled={busy || !pw} style={{ ...btn, color:'var(--white)', background:'rgba(var(--purple-rgb),calc(.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(.6*var(--ka)))', opacity: busy || !pw ? .6 : 1 }}>
+          {busy ? 'Prüfe …' : 'Entsperren'}
+        </button>
+        <button type="button" onClick={onCancel} style={{ ...btn, color:'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))', background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(.25*var(--kp)))' }}>Abbrechen</button>
+      </div>
+      {err && <div role="alert" style={{ fontFamily:'var(--font-b)', fontSize:'13px', color:'color-mix(in srgb, rgba(240,130,130,.95), rgb(var(--ink-rgb)) var(--cm))' }}>{err}</div>}
+    </form>
+  );
+}
+
+// Spielleitung: Passwort für Spieler festlegen
+function NscPasswordSetter() {
+  const [msg, setMsg] = useState('');
+  const setIt = async () => {
+    const pw = window.prompt('Neues Passwort für „Neuer NSC“ (mindestens 4 Zeichen):');
+    if (pw == null) return;
+    const { error } = await window._sb.rpc('set_nsc_quiz_password', { p_password: pw });
+    setMsg(error ? 'Nicht gespeichert: ' + error.message : 'Passwort gespeichert.');
+  };
+  return (
+    <div style={{ display:'flex', alignItems:'center', gap:10, marginTop:4 }}>
+      <button type="button" onClick={setIt} style={{ fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.18em', textTransform:'uppercase', cursor:'pointer',
+        background:'transparent', border:'none', padding:'4px 0', color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))', textDecoration:'underline', textUnderlineOffset:3 }}>
+        ◈ Passwort für „Neuer NSC“ festlegen
+      </button>
+      {msg && <span style={{ fontFamily:'var(--font-b)', fontSize:'13px', color:'var(--silver)' }}>{msg}</span>}
+    </div>
+  );
+}
+
 function TypeSelectPhase({
   onSelect
 }) {
+  const isDm = window.SITE_USER?.role === 'dm';
+  const [unlocked, setUnlocked] = useState(() => {
+    try { return sessionStorage.getItem(NSC_UNLOCK_KEY) === '1'; } catch (e) { return false; }
+  });
+  const [askPw, setAskPw] = useState(false);
+  const nscLocked = !isDm && !unlocked;
   return /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -279,17 +376,19 @@ function TypeSelectPhase({
       flexWrap: 'wrap',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/React.createElement(GlitchBtn, {
+  }, /*#__PURE__*/React.createElement(TypeCard, {
     label: "Neuer SC",
     sub: "Spielercharakter",
-    onClick: () => onSelect('sc'),
-    primary: true
-  }), /*#__PURE__*/React.createElement(GlitchBtn, {
+    onClick: () => onSelect('sc')
+  }), /*#__PURE__*/React.createElement(TypeCard, {
     label: "Neuer NSC",
     sub: "Nicht-Spieler-Charakter",
-    onClick: () => onSelect('nsc'),
-    primary: false
-  })));
+    locked: nscLocked,
+    onClick: () => nscLocked ? setAskPw(true) : onSelect('nsc')
+  })), nscLocked && askPw && /*#__PURE__*/React.createElement(NscUnlockForm, {
+    onUnlocked: () => { setUnlocked(true); setAskPw(false); },
+    onCancel: () => setAskPw(false)
+  }), isDm && /*#__PURE__*/React.createElement(NscPasswordSetter, null));
 }
 
 // ── CHIP ───────────────────────────────────────────────────────────────────
@@ -2604,7 +2703,8 @@ function App() {
     phase === 'output' && charType === 'nsc' && /*#__PURE__*/React.createElement(NscOutputPhase, {nscTags,nscPossible,nscQuizAnswers})
   );
 }
-ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(App, null));
+// SiteGate: Anmeldung nötig (Speichern braucht sie ohnehin) und setzt window.SITE_USER (Rolle für die NSC-Sperre)
+ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(window.SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
 })();
 
 })();
