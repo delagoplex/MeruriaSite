@@ -4,7 +4,7 @@
 .dm-kol-wrap { max-width: 1280px; margin: 0 auto; padding: 8px 6px 40px; }
 
 /* Mengen-Zeile im Detailfenster eines Eintrags */
-.dm-kol-inline { margin: 14px 22px 0; padding: 12px 14px; border: 1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka))); border-radius: 4px; background: rgba(var(--purple-rgb),calc(0.1*var(--kp))); }
+.dm-kol-inline { margin: 4px 22px 24px; padding: 12px 14px; border: 1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka))); border-radius: 4px; background: rgba(var(--purple-rgb),calc(0.1*var(--kp))); }
 .dm-kol-inline .counts-row { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: 'info info info' 'reveal reveal reveal' 'menge stage save'; align-items: center; gap: 12px 16px; padding: 0; border: none; }
 .dm-kol-inline .counts-row:hover { background: none; }
 .dm-kol-inline .counts-info { grid-area: info; }

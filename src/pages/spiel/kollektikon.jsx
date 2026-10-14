@@ -1636,7 +1636,7 @@ function DetailPanel({
       e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))';
       e.currentTarget.style.background = 'transparent';
     }
-  }, "ESC \xD7")), dmSlot, /*#__PURE__*/React.createElement("div", {
+  }, "ESC \xD7")), /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
       height: 240,
@@ -1945,7 +1945,7 @@ function DetailPanel({
     style: {
       opacity: 0.6
     }
-  }, "Bergungsgarde \xB7 Arkanheim")))));
+  }, "Bergungsgarde \xB7 Arkanheim"))), dmSlot));
 }
 function Field({
   label,
