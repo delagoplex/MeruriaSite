@@ -71,6 +71,10 @@ Access is enforced by Row Level Security, not by the client-side role checks (`w
 | `shared-helpers.jsx` | `window.hexPoints`, `window.useScrollReveal` | Helpers shared by the hub/overview pages that used identical copies |
 | `filter-utils.jsx` | `window.FilterGroup`, `window.XBtn`, … | Filter UI primitives used by /dm/monster.html |
 | `rasse-picker.jsx` | `window.RassePicker` | Auswahlleiste Rasse / angeborenes Talent / Waffe für NSC-Statblöcke (Monsterseite, Kampfsimulation, Rekrutierung) |
+| `footer.jsx`, `page-header.jsx`, `page-hero.jsx`, `section-banner.jsx`, `carousel.jsx`, `float-nav.jsx`, `floating-hex-field.jsx` | `window.*` | Seitenrahmen, Hero-/Abschnittsbanner, Karussell, Schwebe-Navigation und Hex-Hintergrund der Hub- und Inhaltsseiten |
+| `monster-detail.jsx` | `window.MonsterDetail`, `_TYPE_COLORS` | Statblock-Ansicht und Typfarben der Monster |
+| `steckbrief-components.jsx`, `char-age.jsx` | `window.CharAge`, … | Charakterbogen und kalenderabhängige Alters-/Geburtstagslogik (`CharAge`) |
+| `image-upload.jsx`, `ressourcen-ui.jsx`, `bekannte-section.jsx`, `division-people.jsx`, `damage-icon.jsx`, `school-icon.jsx` | `window.*` | Upload-Feld (Storage), Ressourcen-Karten, Bekannte-Abschnitt, Divisionspersonen, Icons |
 
 ### Authentication
 
@@ -264,6 +268,10 @@ Adding a new book: create `<book>-data.js`, declare the window variable, add it 
 | `flee-mortals-data.js` | `MONSTER_DATA_FLEE_MORTALS` | `"Flee Mortals"` | `monster/flee-mortals/` |
 | `sonstige-data.js` | `MONSTER_DATA_SONSTIGE` | `"Sonstige"` | `monster/sonstige/` |
 | `rekrutierung-data.js` | `MONSTER_DATA_REKRUTIERUNG` | `"Rekrutierung"` | Divisionslogo aus `images/divisions/` |
+| `avernus-data.js` | `MONSTER_DATA_AVERNUS` | `"Avernus"` | `monster/avernus/` |
+| `tome-of-beasts-data.js`, `tome-of-beasts-2-data.js` | `MONSTER_DATA_TOME_OF_BEASTS`, `…_2` | `"Tome of Beasts"` | Supabase-Storage (kein lokaler Ordner); `-2` ist derzeit leer |
+
+Hinweis: `drakkenheim`, `floral-dragons`, `flee-mortals`, `sonstige` und `tome-of-beasts` haben keine lokalen Bilderordner; ihre `bild`-Werte zeigen auf Supabase-Storage. `dm/kampfsimulation.html` lädt nicht alle Quellen, die `dm/monster.html` lädt (es fehlen u. a. Avernus, Tome of Beasts, Flee Mortals, Sonstige).
 
 `rekrutierung-data.js` ist **generiert**: `node tools/generate-rekrutierung-nsc.mjs` baut aus `computeNscStats()` (`assets/scripts/shared/nsc-statblock.js`) und `divisions-data.js` pro Division und Rang (8 × 10) den NSC-Statblock "<Titel> (<Division>, Rang N)" (Humanoid, Unterart "NPC"; HG als Näherung nach der DMG-Tabelle). Werte in `nsc-statblock.js`/`divisions-data.js` ändern und neu generieren, nicht die Ausgabedatei von Hand bearbeiten.
 
@@ -516,11 +524,13 @@ Defined in `:root` in `base.css`. Light-mode overrides under `[data-theme="light
 | `--sidebar-w` | `200–220px` | TOC sidebar width (per-page) |
 | `--accent` | varies | Division page accent color |
 
-Monster type colors are defined as CSS custom properties in `Monster.css` (e.g. `--type-drache: #f32b00`) and as `oklch()` values in the `TYPE_COLORS` JS object in `/dm/monster.html`.
+Monster type colors live as `oklch()` values in `_TYPE_COLORS` in `src/components/monster-detail.jsx` (and a copy in `src/pages/dm/kampfsimulation.jsx`).
 
 ## Kollektikon data (`assets/scripts/data/kollektikon-data.js`)
 
-Single source of truth for the Kollektikon, shared by `/index.html` and `/spiel/kollektikon.html`. Neither page contains hardcoded data — both derive their arrays at runtime.
+**Achtung:** Die Seiten `/index.html` und `/spiel/kollektikon.html` laden diese Datei nicht. Sie nutzen `window.KOL_CATEGORIES` aus `assets/scripts/shared/kollektikon-bar.js` (feste Totals) und den Ressourcen-Katalog (`shared/ressourcen-katalog.js`) plus die Datenbank (`kollektikon_counts`, `kollektikon_thresholds`). `kollektikon-data.js` wird nur von `spielerhandbuch/rezepte.html` und `dm/rezeptverwaltung.html` geladen und liefert dort andere Zahlen; neue Kollektikon-Einträge gehören deshalb nicht hierher.
+
+Struktur der Datei (nur für die beiden Rezeptseiten relevant):
 
 | Variable | Purpose |
 |---|---|
