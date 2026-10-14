@@ -798,7 +798,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
 
         <button onClick={()=>setSortDir(d=>d==='asc'?'desc':'asc')}
           title={sortDir==='asc'?'Aufsteigend':'Absteigend'}
-          style={{...selStyle,cursor:"pointer"}}>
+          style={{...selStyle,padding:"5px 10px",cursor:"pointer"}}>
           {sortDir==='asc'?'↑':'↓'}
         </button>
 
