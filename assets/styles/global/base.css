@@ -439,5 +439,5 @@ img, video, canvas, svg { max-width: 100%; }
 /* Spielercharakter cards: player chip sits in the flow above the portrait instead of overlapping the name */
 @media (max-width: 768px) {
   .sc-card .sc-chip[style] { position: relative !important; top: auto !important; right: auto !important; align-self: flex-start; width: fit-content; max-width: 100%; margin: 0 0 14px; }
-  .sc-card .sc-headtext[style] { padding-right: 0 !important; }
+  .sc-card .sc-headtext[style] { padding-right: 0 !important; padding-top: 4px !important; }
 }

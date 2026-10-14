@@ -412,7 +412,7 @@ function CharCard({ char, compact, delay, dm, onToggleVisible }) {
                 <Portrait char={char} size={compact ? 86 : 124} />
                 <LevelBadge stufe={char.stufe} acc={acc} size={compact ? 32 : 40} />
               </div>
-              <div className="sc-headtext" style={{ flex:1, minWidth:0, paddingTop:'4px', paddingRight:'120px' }}>
+              <div className="sc-headtext" style={{ flex:1, minWidth:0, paddingTop:'34px' }}>
                 <div style={{ marginBottom:'3px' }}>
                   <h3 style={{ fontFamily:'var(--font-display)', fontSize: compact ? '15px' : '17px', fontWeight:400, letterSpacing:'0.06em', color:'var(--white)', textShadow: hov ? `0 0 14px ${hexA(acc,0.55)}` : 'none', lineHeight:1.15, textWrap:'balance' }}>{char.name}</h3>
                 </div>
