@@ -272,5 +272,11 @@ function BirthDatePicker({ doy, jahr, onChange, buttonStyle }) {
   );
 }
 
-window.CharAge = { load, today: () => state.today, age, fromBirth, yearLabel, useReady, BirthYearField, BirthDatePicker, doyParts, birthDateText };
+// Monate mit Sternzeichen (Index = Monat) und Starttag im Jahr, z. B. für das Sternzeichen-Quiz der Charaktererstellung
+const signMonthIndex = sign => PICKER_MONTHS.findIndex(m => m.sign === sign);
+const randomDoyForSign = sign => {
+  const i = signMonthIndex(sign);
+  return i < 0 ? null : PICKER_STARTS[i] + Math.floor(Math.random() * PICKER_MONTHS[i].days);
+};
+window.CharAge = { load, today: () => state.today, age, fromBirth, yearLabel, useReady, BirthYearField, BirthDatePicker, doyParts, birthDateText, signMonthIndex, randomDoyForSign };
 load();

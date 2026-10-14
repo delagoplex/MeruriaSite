@@ -139,6 +139,19 @@ window.OPTION_HINTS = {
   'Komfortabel': 'Gute Unterkunft, Ausrüstung instand',
   'Wohlhabend':  'Gehobene Unterkunft, Statussymbol',
   'Edel':        'Dienerschaft, feinste Kreise, fürstliches Niveau',
+  // Sternzeichen = Geburtsmonat (siehe Kalender); Hinweis zeigt Monat und Wesenszüge
+  'Die Arche':     'Janvar · Bewahrung, Heimweh, Schutz',
+  'Die Böe':       'Fevorn · Anpassung, Mut, Risiko',
+  'Die Wurzel':    'Mareth · Geduld, Stärke, Beharrlichkeit',
+  'Die Linse':     'Aprel · Wachsamkeit, Entdeckung, Neugier',
+  'Die Stille':    'Mairen · Isolation, innere Stärke, Verlust',
+  'Das Irrlicht':  'Junvar · Reisende, Unruhe, Bestimmung',
+  'Die Klinge':    'Juval · Entschlossenheit, Härte, Opfer',
+  'Die Glut':      'Auvar · Hoffnung, Neuanfang, Wandel',
+  'Die Brücke':    'Septhar · Verbindung, Überwindung, Wandel',
+  'Der Schleier':  'Oktar · Dunkelheit, Rückzug, Geheimnisse',
+  'Das Labyrinth': 'Novren · Komplexität, Täuschung, Erkenntnis',
+  'Der Spalt':     'Derath · Übergänge, Entscheidungen, Neubeginn',
 };
 
 window.CHAR_QUIZ = [
@@ -906,6 +919,38 @@ window.CHAR_QUIZ = [
         behalte:['Ärmlich','Schlecht'] },
       { text:'Ja, einfach aber täglich',
         behalte:['Einfach'] },
+    ]
+  },
+  // ── Sternzeichen ── z1–z3 ───────────────────────────────────────────────
+  // Drei Achsen (3 × 2 × 2) machen jedes der zwölf Zeichen eindeutig; das Zeichen
+  // legt den Geburtsmonat fest, der Tag wird in den Details gewählt.
+  { id:'z1', kat:'sternzeichen',
+    frage:'Was trägt deinen Charakter im Innersten?',
+    optionen:[
+      { text:'Festhalten — Beständigkeit, Ausdauer, das, was bleibt',
+        behalte:['Die Arche','Die Wurzel','Die Stille','Die Klinge'] },
+      { text:'Aufbrechen — Veränderung, Wagnis, das, was kommt',
+        behalte:['Die Böe','Das Irrlicht','Die Glut','Der Spalt'] },
+      { text:'Durchschauen — Erkenntnis, Zusammenhänge, das, was verborgen liegt',
+        behalte:['Die Linse','Die Brücke','Der Schleier','Das Labyrinth'] },
+    ]
+  },
+  { id:'z2', kat:'sternzeichen',
+    frage:'Richtet sich seine Kraft eher nach außen oder nach innen?',
+    optionen:[
+      { text:'Nach außen — er schützt, wagt, hofft, sucht oder verbindet andere',
+        behalte:['Die Arche','Die Klinge','Die Böe','Die Glut','Die Linse','Die Brücke'] },
+      { text:'Nach innen — er harrt aus, zieht sich zurück, ringt mit sich und seinen Wegen',
+        behalte:['Die Wurzel','Die Stille','Das Irrlicht','Der Spalt','Der Schleier','Das Labyrinth'] },
+    ]
+  },
+  { id:'z3', kat:'sternzeichen',
+    frage:'Welches Wort beschreibt ihn besser?',
+    optionen:[
+      { text:'Beständig — geduldig, zugewandt, eher hoffend als kämpfend',
+        behalte:['Die Arche','Die Wurzel','Die Glut','Der Spalt','Die Brücke','Das Labyrinth'] },
+      { text:'Kompromisslos — getrieben, hart zu sich, eher wagend als wartend',
+        behalte:['Die Klinge','Die Stille','Die Böe','Das Irrlicht','Die Linse','Der Schleier'] },
     ]
   },
 ];

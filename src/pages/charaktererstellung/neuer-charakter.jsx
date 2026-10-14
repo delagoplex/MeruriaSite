@@ -678,6 +678,7 @@ function QuizPhase({
     lebensstil: 'Lebensstil',
     gottheit: 'Gottheit',
     samen: 'Same der Furcht',
+    sternzeichen: 'Sternzeichen',
     werkzeuge: 'Werkzeugübungen',
     geschlecht: 'Geschlecht',
     status: 'Status',
@@ -729,6 +730,19 @@ function OutputPhase({
     geschichte: '', persoenlichkeit: '', ideal: '', bindung: '', lieblingsfarbe: '',
   });
   const setDet = (k, v) => setDetails(p => ({...p, [k]: v}));
+
+  // Sternzeichen (Auswahl, Quiz oder manuelle Wahl) legt den Geburtsmonat fest:
+  // liegt das Geburtsdatum nicht im passenden Monat, wird ein Tag darin ausgelost.
+  const currentSign = (tags.sternzeichen && tags.sternzeichen !== 'unbekannt') ? tags.sternzeichen
+    : (finals.sternzeichen || ((possible.sternzeichen || []).length === 1 ? possible.sternzeichen[0] : null));
+  useEffect(() => {
+    if (!currentSign) return;
+    setDetails(p => {
+      const sp = p.geburtstag_doy ? window.CharAge.doyParts(p.geburtstag_doy) : null;
+      if (sp && sp.sign === currentSign) return p;
+      return { ...p, geburtstag_doy: window.CharAge.randomDoyForSign(currentSign) };
+    });
+  }, [currentSign]);
 
   // Token
   const [tokenInput, setTokenInput] = useState('');
@@ -924,6 +938,8 @@ function OutputPhase({
   }, {
     lbl: 'Gottheit',    kat: 'gottheit',    ...getFinal('gottheit')
   }, {
+    lbl: 'Sternzeichen', kat: 'sternzeichen', ...getFinal('sternzeichen')
+  }, {
     lbl: 'Zauberwirker',
     ...getZauberwirker()
   }, {
@@ -944,6 +960,9 @@ function OutputPhase({
       return r.val;
     };
     const divisionName = g('division');
+    // Sternzeichen bestimmt den Geburtsmonat; ohne gewählten Tag wird einer im Monat ausgelost
+    const effSign = g('sternzeichen');
+    const birthDoy = details.geburtstag_doy || (effSign ? window.CharAge.randomDoyForSign(effSign) : null);
     const divObj = (window.DIVISIONS_DATA || []).find(d => d.name === divisionName) || null;
 
     const gottheitName = g('gottheit');
@@ -974,9 +993,9 @@ function OutputPhase({
       },
       // ── Persönlichkeit & Aussehen ───────────────────────────
       alignment:      tags.gesinnung    || null,
-      zodiac:         tags.sternzeichen || null,
+      zodiac:         birthDoy ? (window.CharAge.doyParts(birthDoy) || {}).sign || effSign : effSign,
       gender:         tags.geschlecht   || null,
-      geburtstag_doy: details.geburtstag_doy || null,
+      geburtstag_doy: birthDoy,
       age:            (() => { const a = window.CharAge.fromBirth(details.geburtstag_jahr, details.geburtstag_doy); return a != null ? String(a) : (details.alter || null); })(),
       age_ref_abs:    window.CharAge.today(),
       geburtstag_jahr: details.geburtstag_jahr ?? null,
@@ -1564,7 +1583,12 @@ function OutputPhase({
           /*#__PURE__*/React.createElement("label", {style:{fontFamily:'var(--font-m)',fontSize:'11px',letterSpacing:'.14em',
             color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))',textTransform:'uppercase'}}, "Geburtsdatum"),
           /*#__PURE__*/React.createElement(window.CharAge.BirthDatePicker, {doy:details.geburtstag_doy, jahr:details.geburtstag_jahr,
-            onChange:({doy,jahr})=>setDetails(p=>({...p, geburtstag_doy:doy, geburtstag_jahr:jahr})),
+            onChange:({doy,jahr})=>{
+              setDetails(p=>({...p, geburtstag_doy:doy, geburtstag_jahr:jahr}));
+              // ein Datum in einem anderen Monat ändert das Sternzeichen mit
+              const sp = doy ? window.CharAge.doyParts(doy) : null;
+              if (sp && sp.sign && sp.sign !== currentSign) setFinal('sternzeichen', sp.sign);
+            },
             buttonStyle:{fontFamily:'var(--font-m)', fontSize:'12.5px', background:'rgba(var(--bg-rgb),.5)', border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))', borderRadius:3, color:'var(--white)', outline:'none', padding:'6px 10px'}})
         ),
         /*#__PURE__*/React.createElement("div", {style:{display:'flex',flexDirection:'column',gap:4}},
@@ -1710,7 +1734,8 @@ function OutputPhase({
     division: 'Division',
     lebensstil: 'Lebensstil',
     gottheit: 'Gottheit',
-    samen: 'Same der Furcht'
+    samen: 'Same der Furcht',
+    sternzeichen: 'Sternzeichen'
   }[kat] || kat), answers.map((a, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     className: "ans-q"
@@ -2489,7 +2514,7 @@ function App() {
     rasse: window.ALLE_RASSEN || [], klasse: window.ALLE_KLASSEN || [],
     hintergrund: window.ALLE_HINTERGRUENDE || [], division: window.ALLE_DIVISIONEN || [],
     lebensstil: window.ALLE_LEBENSSTILE || [], gottheit: [], samen: window.ALLE_SAMEN || [],
-    werkzeuge: window.WERKZEUGE_LIST || [],
+    werkzeuge: window.WERKZEUGE_LIST || [], sternzeichen: window.ALLE_STERNZEICHEN || [],
   });
   const [quizAnswers, setQuizAnswers] = useState([]);
 
@@ -2542,7 +2567,7 @@ function App() {
     rasse: window.ALLE_RASSEN||[], klasse: window.ALLE_KLASSEN||[],
     hintergrund: window.ALLE_HINTERGRUENDE||[], division: window.ALLE_DIVISIONEN||[],
     lebensstil: window.ALLE_LEBENSSTILE||[], gottheit: possible.gottheit, samen: window.ALLE_SAMEN||[],
-    werkzeuge: window.WERKZEUGE_LIST||[],
+    werkzeuge: window.WERKZEUGE_LIST||[], sternzeichen: window.ALLE_STERNZEICHEN||[],
   });
   const resetNscPossible = () => setNscPossible({
     rasse: window.ALLE_RASSEN||[], geschlecht: NSC_GESCHLECHT_LIST,
