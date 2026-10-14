@@ -1,10 +1,11 @@
 // Hade-Rechner für die NSC-Erstellung (normale und Monster-NSC), nach den Tabellen der Spielleitung (WorldAnvil):
 //  · Nach Wohlstand: 1W20 → Wohlstand; Händler 1W10 × Faktor, Bürger 1W4 × Faktor / 5
 //  · Nach Klasse: Würfel × 1.000 Hade (Mönch × 100)
-// Exposes: window.HadeRechner ({ value, onChange })
+//  · Mit Divisionsrang gibt der Rang die Wohlstandsstufe vor (bleibt änderbar)
+// Exposes: window.HadeRechner ({ value, onChange, rang })
 
 ;(function () {
-const { useState } = React;
+const { useState, useEffect } = React;
 
 const WOHLSTAND = [
   { name:'Jämmerlich',  von:1,  bis:1,  faktor:20 },
@@ -25,6 +26,9 @@ const KLASSEN = [
   { name:'Zauberer', n:3, w:4, mal:1000 },
 ];
 
+// Divisionsrang → Wohlstand (Rang 10 = Einstieg … Rang 1 = Leitung)
+const wohlstandFuerRang = r => r >= 10 ? 'Ärmlich' : r >= 8 ? 'Schlecht' : r >= 6 ? 'Einfach' : r >= 4 ? 'Komfortabel' : r >= 2 ? 'Wohlhabend' : 'Edel';
+
 const wuerfel = w => 1 + Math.floor(Math.random() * w);
 const fmt = n => Number(n).toLocaleString('de-DE');
 
@@ -39,12 +43,14 @@ const btn = { fontFamily:F.m, fontSize:'11.5px', letterSpacing:'.18em', textTran
   color:'var(--white)', background:'rgba(var(--purple-rgb),calc(.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(.6*var(--ka)))' };
 const lbl = { fontFamily:F.m, fontSize:'11px', letterSpacing:'.18em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))', marginBottom:6 };
 
-function HadeRechner({ value, onChange }) {
+function HadeRechner({ value, onChange, rang = null }) {
   const [art, setArt] = useState('wohlstand');          // wohlstand | klasse
   const [stand, setStand] = useState('Einfach');
   const [wer, setWer] = useState('buerger');             // haendler | buerger
   const [klasse, setKlasse] = useState('Kämpfer');
   const [wurf, setWurf] = useState('');                  // Rechenweg des letzten Wurfs
+  const rangStand = rang ? wohlstandFuerRang(rang) : null;
+  useEffect(() => { if (rangStand) { setStand(rangStand); setArt('wohlstand'); } }, [rangStand]);
 
   const standWuerfeln = () => {
     const r = wuerfel(20);
@@ -79,10 +85,10 @@ function HadeRechner({ value, onChange }) {
 
       {art === 'wohlstand' ? (
         <div>
-          <div style={lbl}>Wohlstand</div>
+          <div style={lbl}>Wohlstand{rangStand ? ' · durch Rang ' + rang + ' vorgegeben: ' + rangStand : ''}</div>
           <div style={{ display:'flex', gap:6, flexWrap:'wrap', alignItems:'center' }}>
             {WOHLSTAND.map(s => <button key={s.name} type="button" style={chip(stand === s.name)} onClick={() => setStand(s.name)}>{s.name}</button>)}
-            <button type="button" style={{ ...btn, background:'transparent' }} onClick={standWuerfeln}>⚄ 1W20</button>
+            {!rangStand && <button type="button" style={{ ...btn, background:'transparent' }} onClick={standWuerfeln}>⚄ 1W20</button>}
           </div>
           <div style={{ ...lbl, marginTop:12 }}>Vermögen als</div>
           <div style={{ display:'flex', gap:6 }}>

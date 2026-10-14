@@ -2623,7 +2623,8 @@ function NscOutputPhase({ nscTags, nscPossible }) {
 
     // ── Hade (nach Wohlstand oder Klasse, Tabellen der Spielleitung) ─────────
     NscSektion("Hade \xB7 Wie viel tr\xE4gt dein NSC bei sich?", [
-      /*#__PURE__*/React.createElement(window.HadeRechner, {key:'hade', value:extra.habe, onChange:v=>setEx('habe',v)})
+      /*#__PURE__*/React.createElement(window.HadeRechner, {key:'hade', value:extra.habe, onChange:v=>setEx('habe',v),
+        rang: nscDivision && nscDivision !== 'Keine' ? (parseInt(extra.rang, 10) || null) : null})
     ], true),
 
     // ── Identität (Zusatz) ────────────────────────────────────────────────
