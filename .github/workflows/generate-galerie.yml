@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - 'assets/images/monster/**'
+      - 'assets/images/gods/**'
       - 'tools/generate-galerie-data.mjs'
 
 jobs:
@@ -29,4 +29,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add assets/scripts/data/galerie-data.js
           git diff --staged --quiet || git commit -m "auto: galerie-data.js neu generiert"
+          git pull --rebase origin master
           git push
