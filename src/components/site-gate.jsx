@@ -159,6 +159,17 @@ function SiteGate({ children }) {
 
   if (!ready) return <div style={{ position:'fixed', inset:0, background:'var(--bg)' }} />;
   if (!authed) return <LoginForm onAuth={() => setAuthed(true)} />;
+  // Seiten unter /dm/ sind Spielleitungs-Seiten: Spielern keine DM-Oberfläche ausliefern
+  // (die Daten schützt RLS, das hier verhindert nur verwirrende Bedienelemente).
+  if (window.location.pathname.indexOf('/dm/') === 0 && window.SITE_USER?.role !== 'dm') {
+    return (
+      <div style={{ position:'fixed', inset:0, background:'var(--bg)', display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column', gap:14, padding:24, textAlign:'center' }}>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))' }}>Kein Zugriff</div>
+        <div style={{ fontFamily:'var(--font-body)', fontSize:14, color:'var(--silver)', maxWidth:420, lineHeight:1.7 }}>Dieser Bereich ist der Spielleitung vorbehalten.</div>
+        <a href="/" style={{ fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.24em', textTransform:'uppercase', color:'var(--white)' }}>Zur Startseite</a>
+      </div>
+    );
+  }
   return children;
 }
 
