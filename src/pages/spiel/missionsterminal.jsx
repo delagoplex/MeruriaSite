@@ -2,6 +2,8 @@
 import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/page-hero.jsx';
+import '../../components/dm-mode.jsx';
+import '../parts/missionen-dm-host.jsx';
 
 ;(function () {
 (function () {
@@ -1268,6 +1270,7 @@ function App() {
   const [progress, setProgress] = useState({});
   const [pickerMission, setPickerMission] = useState(null);
   const [applyBusy, setApplyBusy] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);   // Spielleitung hat Missionen geändert
   useEffect(() => {
     async function load() {
       const uid = window.SITE_USER?.id;
@@ -1294,7 +1297,7 @@ function App() {
         desc: m.beschreibung
       }));
       setQuests(mapped);
-      if (mapped.length) setSelectedId(mapped[0].id);
+      setSelectedId(cur => cur && mapped.some(m => m.id === cur) ? cur : (mapped.length ? mapped[0].id : null));
       const appMap = {};
       (adata || []).forEach(a => {
         appMap[a.mission_id] = a;
@@ -1309,7 +1312,7 @@ function App() {
       setLoading(false);
     }
     load();
-  }, []);
+  }, [reloadKey]);
   const stepClick = (questId, stepIdx, max) => {
     setProgress(prev => {
       const cur = prev[questId] ? [...prev[questId]] : [];
@@ -1414,7 +1417,7 @@ function App() {
       background: 'var(--border)'
     }
   }), /*#__PURE__*/React.createElement("div", null, filtered.length, " / ", quests.length, " AUFTR\xC4GE"))
-  }), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement(window.MissionenDmBar, { selectedId, onChanged: () => setReloadKey(k => k + 1) }), /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
       zIndex: 5,

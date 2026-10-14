@@ -1,6 +1,6 @@
-// Page entry for /dm/missionen.html
-import '../../components/nav.jsx';
-import '../../components/site-gate.jsx';
+// Missionsverwaltung der Spielleitung (früher die Seite /dm/missionen.html).
+// Wird von /spiel/missionsterminal.html nur für die Spielleitung nachgeladen und als Overlay gezeigt.
+// Exposes: window.MissionenDmApp ({ initialId, initialTab, startCreate })
 
 ;(function () {
 (function () {
@@ -10,10 +10,6 @@ const {
   useRef,
   useCallback
 } = React;
-const {
-  SiteNav,
-  SiteGate
-} = window;
 const KAT = {
   Suche: {
     color: '#7fb8ff',
@@ -1270,49 +1266,16 @@ function TokensTab() {
 }
 
 // ─── APP ─────────────────────────────────────────────────────────────────────
-function App() {
-  const user = window.SITE_USER;
-  const [activeTab, setActiveTab] = useState('missions');
+function App({ initialId = null, initialTab = 'missions', startCreate = false }) {
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [missions, setMissions] = useState([]);
   const [nscOptions, setNscOptions] = useState([]);
-  const [selectedId, setSelectedId] = useState(null);
-  const [creating, setCreating] = useState(false);
+  const [selectedId, setSelectedId] = useState(initialId);
+  const [creating, setCreating] = useState(startCreate);
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [appCounts, setAppCounts] = useState({});
 
-  // DM guard
-  if (user && user.role !== 'dm') {
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SiteNav, {
-      rightLabel: "DM \xB7 MISSIONEN"
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        gap: '12px'
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontFamily: 'var(--font-display)',
-        fontSize: '18px',
-        letterSpacing: '.2em',
-        color: 'rgba(var(--accent-rgb),calc(0.6*var(--ka) + var(--tb)))',
-        textTransform: 'uppercase'
-      }
-    }, "Kein Zugriff"), /*#__PURE__*/React.createElement("a", {
-      href: "/spiel/missionsterminal.html",
-      style: {
-        fontFamily: 'var(--font-mono)',
-        fontSize: '11.5px',
-        color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
-        letterSpacing: '.2em',
-        textDecoration: 'none'
-      }
-    }, "\u2190 Zum Missionsterminal")));
-  }
   async function loadMissions() {
     setLoading(true);
     const [{ data }, { data: nscData }] = await Promise.all([
@@ -1368,14 +1331,13 @@ function App() {
   }
   const selected = missions.find(m => m.id === selectedId);
   return /*#__PURE__*/React.createElement("div", {
+    className: "dm-missionen",
     style: {
       display: 'flex',
       flexDirection: 'column',
-      minHeight: 'calc(var(--vh, 1vh) * 100)'
+      height: '100%'
     }
-  }, /*#__PURE__*/React.createElement(SiteNav, {
-    rightLabel: "DM \xB7 MISSIONEN"
-  }), /*#__PURE__*/React.createElement("div", {
+  },/*#__PURE__*/React.createElement("div", {
     style: {
       padding: '18px 32px 0',
       borderBottom: '1px solid rgba(var(--accent-rgb),calc(0.08*var(--ka)))',
@@ -1397,7 +1359,7 @@ function App() {
       textTransform: 'uppercase',
       marginBottom: '6px'
     }
-  }, "\u25C8 DM-Bereich"), /*#__PURE__*/React.createElement("h1", {
+  }, "\u25C8 Spielleitung"), /*#__PURE__*/React.createElement("h1", {
     style: {
       fontFamily: 'var(--font-display)',
       fontSize: '24px',
@@ -1529,7 +1491,7 @@ function App() {
     onEdit: () => setEditing(true)
   }))));
 }
-ReactDOM.createRoot(document.getElementById('root')).render(/*#__PURE__*/React.createElement(SiteGate, null, /*#__PURE__*/React.createElement(App, null)));
+window.MissionenDmApp = App;
 })();
 
 })();

@@ -178,7 +178,6 @@ const NAV = [
       { label: 'Ressourcen', href: '/dm/ressourcen.html', locked: true },
       { label: 'Tarot', href: '/dm/tarot.html', locked: true },
       { label: 'Kampfsimulation', href: '/dm/kampfsimulation.html', locked: true },
-      { label: 'Missionen', href: '/dm/missionen.html', locked: true },
       { label: 'Kartenmanagement', href: '/dm/kartenmanagement.html', locked: true },
       { label: 'Kolonisierung & Bau', href: '/dm/kolonisierung-und-bau.html', locked: true },
       { label: 'Rekrutierung', href: '/dm/rekrutierung.html', locked: true },

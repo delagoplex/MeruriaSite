@@ -189,7 +189,7 @@
   },
   {
     "from": "DM_Missionen.html",
-    "to": "/dm/missionen.html"
+    "to": "/spiel/missionsterminal.html"
   },
   {
     "from": "NSC-Verwaltung.html",
@@ -270,5 +270,9 @@
   {
     "from": "dm/kollektikon.html",
     "to": "/spiel/kollektikon.html"
+  },
+  {
+    "from": "dm/missionen.html",
+    "to": "/spiel/missionsterminal.html"
   }
 ]

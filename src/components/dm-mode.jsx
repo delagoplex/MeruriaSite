@@ -74,9 +74,10 @@ function DmOverlay({ title, onClose, children, className, padded = true }) {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = prev; };
   }, []);
-  return (
+  // Portal: sonst läge das Overlay im Stapelkontext des Elternelements (z. B. unter der Navigation)
+  return ReactDOM.createPortal(
     <div className={'dm-overlay' + (className ? ' ' + className : '')} role="dialog" aria-modal="true" aria-label={title}
-      style={{ position:'fixed', inset:0, zIndex:900, display:'flex', flexDirection:'column', background:'var(--bg)' }}>
+      style={{ position:'fixed', inset:0, zIndex:2000, display:'flex', flexDirection:'column', background:'var(--bg)' }}>
       <div style={{ flexShrink:0, height:48, display:'flex', alignItems:'center', gap:14, padding:'0 18px',
         borderBottom:'1px solid rgba(var(--accent-rgb),calc(0.28*var(--ka)))', background:'rgba(var(--purple-rgb),calc(0.14*var(--kp)))' }}>
         <span style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.28em', textTransform:'uppercase', color:'var(--white)' }}>◈ {title}</span>
@@ -89,7 +90,8 @@ function DmOverlay({ title, onClose, children, className, padded = true }) {
         </button>
       </div>
       <div style={{ flex:1, minHeight:0, overflow:'auto', padding: padded ? '18px' : 0 }}>{children}</div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

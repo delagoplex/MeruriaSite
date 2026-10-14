@@ -1,0 +1,16 @@
+/* Missionsverwaltung der Spielleitung — Overlay auf /spiel/missionsterminal.html.
+   Alle Regeln sind auf .dm-missionen begrenzt, damit das Terminal darunter unverändert bleibt. */
+.dm-missionen input, .dm-missionen textarea, .dm-missionen select {
+  font-family: var(--font-body); font-size: 13px; font-weight: 300;
+  color: var(--white); background: rgba(var(--bg-rgb),0.6);
+  border: 1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp))); border-radius: 3px;
+  padding: 7px 10px; outline: none; width: 100%;
+  transition: border-color .15s;
+}
+.dm-missionen input:focus, .dm-missionen textarea:focus, .dm-missionen select:focus { border-color: rgba(var(--purple-rgb),calc(0.6*var(--kp))); }
+.dm-missionen select option { background: rgb(var(--panel-rgb)); }
+.dm-missionen textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+.dm-missionen label { display: block; font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .22em; color: rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb))); text-transform: uppercase;
+  margin-bottom: 5px; }
+.dm-missionen .field { margin-bottom: 14px; }
