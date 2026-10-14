@@ -2112,6 +2112,16 @@ function MerMap() {
   }, []);
   const onStashDragEnd = uC5(() => setDragInfo(null), []);
 
+  // Ziele und Pools hängen per CASCADE am Hex; beim Zurückholen aus dem Lager werden sie neu angelegt
+  const restoreHexExtras = uC5((hexId, extra) => {
+    const ziele = (extra && extra.ziele) || [];
+    const pools = (extra && extra.pools) || [];
+    if (!ziele.length && !pools.length) return;
+    setObjectives(prev => [...prev, ...ziele.map(o => ({ ...o, hex_id: hexId }))]);
+    setPoolRows(prev => [...prev, ...pools.map(p => ({ ...p, hex_id: hexId, area_id: null }))]);
+    return { ziele, pools };
+  }, []);
+
   const dropOnGhost = uC5((toQ, toR) => {
     if (!dragInfo) return;
     const info = dragInfo; setDragInfo(null);
@@ -2133,11 +2143,16 @@ function MerMap() {
       setStash((prev) => prev.filter((s) => s.id !== info.id));
       const movedHex = { ...placed, ...(placed.extra || {}), q: toQ, r: toR, visible: false, has_submap: false, submap_id: null };
       setHexes((prev) => ({ ...prev, [tk]: movedHex }));
-      sbUpsertHex(currentMapIdRef.current, movedHex);
+      const restored = restoreHexExtras(movedHex.id, placed.extra);
+      sbUpsertHex(currentMapIdRef.current, movedHex).then(() => {
+        if (!restored) return;
+        restored.ziele.forEach(o => sbUpsertObjective({ ...o, hex_id: movedHex.id }));
+        restored.pools.forEach(p => sbAddPoolItem({ hex_id: movedHex.id }, p.cat, p.resource_id));
+      });
       sbDeleteStash(placed.id);
       setSel(tk);
     }
-  }, [dragInfo, hexes, stash, pushHistory]);
+  }, [dragInfo, hexes, stash, pushHistory, restoreHexExtras]);
 
   const dropOnLager = uC5(() => {
     if (!dragInfo || !dragInfo.fromMap) { setDragInfo(null); return; }
@@ -2146,7 +2161,8 @@ function MerMap() {
     pushHistory();
     setHexes((prev) => { const out = { ...prev }; delete out[oldKey]; return out; });
     const stashItem = { id: h.id, name: h.name || '', terrain: h.terrain || '', features: h.features || '', beschreibung: h.beschreibung || '', bild_url: h.bild_url || '', folder: activeLagerFolder === '__all__' ? null : activeLagerFolder,
-      extra: { tags: h.tags || [], ressourcen: h.ressourcen || {}, kolonie: h.kolonie || null, erkundung: h.erkundung || [], reveal: h.reveal || {}, bild_pos: h.bild_pos || null, banner_url: h.banner_url || '', datensonde: !!h.datensonde, bevoelkerung: h.bevoelkerung || '', kolonien: h.kolonien || '' } };
+      extra: { tags: h.tags || [], ressourcen: h.ressourcen || {}, kolonie: h.kolonie || null, erkundung: h.erkundung || [], reveal: h.reveal || {}, bild_pos: h.bild_pos || null, banner_url: h.banner_url || '', datensonde: !!h.datensonde, bevoelkerung: h.bevoelkerung || '', kolonien: h.kolonien || '',
+        ziele: objectives.filter(o => o.hex_id === h.id), pools: poolRows.filter(r => r.hex_id === h.id).map(r => ({ cat: r.cat, resource_id: r.resource_id })) } };
     setStash((prev) => [...prev, stashItem]);
     if (selectedKey === oldKey) { setSel(null); setEditing(false); }
     setDragInfo(null);
@@ -2157,7 +2173,7 @@ function MerMap() {
       setHexes((prev) => ({ ...prev, [oldKey]: h }));
       alert('Das Hex konnte nicht ins Lager gelegt werden und bleibt auf der Karte.');
     });
-  }, [dragInfo, hexes, selectedKey, pushHistory, activeLagerFolder]);
+  }, [dragInfo, hexes, selectedKey, pushHistory, activeLagerFolder, objectives, poolRows]);
 
   const dropOnEmptyMap = uC5(() => {
     if (!dragInfo || !dragInfo.fromStash) { setDragInfo(null); return; }
@@ -2167,9 +2183,14 @@ function MerMap() {
     const movedHex = { ...placed, ...(placed.extra || {}), q: 0, r: 0, visible: false, has_submap: false, submap_id: null };
     setHexes(() => ({ '0,0': movedHex }));
     setSel('0,0'); setDragInfo(null);
-    sbUpsertHex(currentMapIdRef.current, movedHex);
+    const restored = restoreHexExtras(movedHex.id, placed.extra);
+    sbUpsertHex(currentMapIdRef.current, movedHex).then(() => {
+      if (!restored) return;
+      restored.ziele.forEach(o => sbUpsertObjective({ ...o, hex_id: movedHex.id }));
+      restored.pools.forEach(p => sbAddPoolItem({ hex_id: movedHex.id }, p.cat, p.resource_id));
+    });
     sbDeleteStash(placed.id);
-  }, [dragInfo, stash, pushHistory]);
+  }, [dragInfo, stash, pushHistory, restoreHexExtras]);
 
   const onFolderChange = uC5((itemId, folder) => {
     setStash(prev => prev.map(s => s.id === itemId ? { ...s, folder } : s));
