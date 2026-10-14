@@ -266,6 +266,11 @@ function NscUnlockForm({ onUnlocked, onCancel }) {
   const [pw, setPw] = useState('');
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
+  useEffect(() => {
+    const k = e => { if (e.key === 'Escape') onCancel(); };
+    window.addEventListener('keydown', k);
+    return () => window.removeEventListener('keydown', k);
+  }, [onCancel]);
   const submit = async (e) => {
     e.preventDefault();
     if (!pw || busy) return;
@@ -281,12 +286,15 @@ function NscUnlockForm({ onUnlocked, onCancel }) {
     border:'1px solid rgba(var(--purple-rgb),calc(.4*var(--kp)))', borderRadius:3, padding:'9px 12px', outline:'none', minWidth:220 };
   const btn = { fontFamily:'var(--font-m)', fontSize:'11.5px', letterSpacing:'.18em', textTransform:'uppercase', cursor:'pointer', borderRadius:3, padding:'9px 16px' };
   return (
-    <form onSubmit={submit} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:10, marginTop:6, animation:'fadeIn .25s ease' }}>
+    <div role="dialog" aria-modal="true" aria-label="NSC-Erstellung entsperren" onMouseDown={e => { if (e.target === e.currentTarget) onCancel(); }}
+      style={{ position:'fixed', inset:0, zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center', padding:20, background:'rgba(var(--bg-rgb),.78)', backdropFilter:'blur(3px)', animation:'fadeIn .2s ease' }}>
+    <form onSubmit={submit} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:14, padding:'26px 28px', maxWidth:460, width:'100%',
+      background:'rgba(var(--panel-rgb),.98)', border:'1px solid rgba(var(--accent-rgb),calc(.45*var(--ka)))', borderRadius:4, boxShadow:'0 20px 60px rgba(var(--shadow-rgb),calc(.6*var(--shadow-k)))' }}>
       <div style={{ fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(.6*var(--ka) + var(--tb)))' }}>
         NSC-Erstellung · Passwort der Spielleitung
       </div>
       <div style={{ display:'flex', gap:8, flexWrap:'wrap', justifyContent:'center' }}>
-        <input type="password" autoFocus value={pw} onChange={e => setPw(e.target.value)} placeholder="Passwort" aria-label="Passwort" style={field} />
+        <input type="password" autoFocus value={pw} onChange={e => setPw(e.target.value)} placeholder="Passwort" aria-label="Passwort" style={{ ...field, flex:"1 1 100%" }} />
         <button type="submit" disabled={busy || !pw} style={{ ...btn, color:'var(--white)', background:'rgba(var(--purple-rgb),calc(.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(.6*var(--ka)))', opacity: busy || !pw ? .6 : 1 }}>
           {busy ? 'Prüfe …' : 'Entsperren'}
         </button>
@@ -294,6 +302,7 @@ function NscUnlockForm({ onUnlocked, onCancel }) {
       </div>
       {err && <div role="alert" style={{ fontFamily:'var(--font-b)', fontSize:'13px', color:'color-mix(in srgb, rgba(240,130,130,.95), rgb(var(--ink-rgb)) var(--cm))' }}>{err}</div>}
     </form>
+    </div>
   );
 }
 
