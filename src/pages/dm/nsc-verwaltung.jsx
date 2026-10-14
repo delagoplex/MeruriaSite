@@ -142,7 +142,7 @@ const secTitleSt = { fontFamily:MONO, fontSize:11.5, letterSpacing:'0.3em', colo
 const eyeSt = on => ({ background:'transparent', border:'none', cursor:'pointer', fontSize:12.5, padding:'0 2px', lineHeight:1, color:on ? '#5fe39a' : 'rgba(var(--accent-rgb),calc(0.3*var(--ka)))' });
 
 function Eye({ on, onClick, pad }) {
-  return <button title="Sichtbarkeit für Spieler" onClick={onClick} style={{ ...eyeSt(on), padding:pad || '0 2px' }}>{on ? '◉' : '⊘'}</button>;
+  return <button title="Sichtbarkeit für Spieler" aria-label="Sichtbarkeit für Spieler" aria-pressed={!!on} onClick={onClick} style={{ ...eyeSt(on), padding:pad || '0 2px' }}>{on ? '◉' : '⊘'}</button>;
 }
 /* Symbole für die Haltung gegenüber der Gruppe (Linien-Icons, übernehmen currentColor) */
 const HALTUNG_FARBE = { 'Verbündet':'#5aa9ff', 'Neutral':'#c8c0e8', 'Feind':'#e8605a' };
@@ -1439,7 +1439,7 @@ function LiveDbl({ display, editor, style, disabled, editing: ctlEditing, setEdi
     return () => { document.removeEventListener('mousedown', md); document.removeEventListener('keydown', kd); };
   }, [editing]);
   if (editing) return <div ref={ref} style={style}>{editor(() => setEditing(false))}</div>;
-  return <div title={disabled ? undefined : 'Klicken zum Bearbeiten'} onClick={disabled ? undefined : () => setEditing(true)} style={{ ...style, cursor:disabled ? 'default' : 'text', userSelect:'none' }}>{display}</div>;
+  return <div title={disabled ? undefined : 'Klicken zum Bearbeiten'} role={disabled ? undefined : 'button'} tabIndex={disabled ? undefined : 0} onKeyDown={disabled ? undefined : (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setEditing(true); } }} onClick={disabled ? undefined : () => setEditing(true)} style={{ ...style, cursor:disabled ? 'default' : 'text', userSelect:'none' }}>{display}</div>;
 }
 /* Name aus NSC- und Spielercharakter-Liste wählen (Suche + Dropdown); freie Namen bleiben möglich. */
 // ── Hexfeld-Auswahl für den Wohnort (nur Orte: Hexfelder auf Karten der Gebiets-Ebene) ──

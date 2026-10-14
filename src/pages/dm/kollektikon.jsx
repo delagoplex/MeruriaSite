@@ -84,7 +84,7 @@ function ThresholdRow({ rarity, initialRow, vals, onChange }) {
         return (
           <td key={k} style={{ textAlign: 'center' }}>
             <div className={`counts-stepper${vals[k] !== threshOrig(initialRow, k) ? ' active' : ''}`} style={{ display: 'inline-flex' }}>
-              <button type="button" className="stepper-btn" onClick={() => step(-1)}>−</button>
+              <button type="button" className="stepper-btn" aria-label="Verringern" onClick={() => step(-1)}>−</button>
               <input
                 className="counts-mod-input"
                 style={{ width: 46 }}
@@ -92,7 +92,7 @@ function ThresholdRow({ rarity, initialRow, vals, onChange }) {
                 value={vals[k]}
                 onChange={e => onChange(k, e.target.value)}
               />
-              <button type="button" className="stepper-btn" onClick={() => step(1)}>+</button>
+              <button type="button" className="stepper-btn" aria-label="Erhöhen" onClick={() => step(1)}>+</button>
             </div>
           </td>
         );
@@ -259,7 +259,7 @@ function CountRow({ catId, resource, initialData, thresholdsMap, onSaved }) {
       <div className="counts-menge-block">
         <span className="counts-current-val">{currentMenge.toLocaleString('de')}</span>
         <div className={`counts-stepper${modVal !== 0 ? ' active' : ''}`}>
-          <button className="stepper-btn" onClick={() => setModifier(String(modVal - 1))}>−</button>
+          <button className="stepper-btn" aria-label="Verringern" onClick={() => setModifier(String(modVal - 1))}>−</button>
           <input
             className="counts-mod-input"
             type="number"
@@ -268,7 +268,7 @@ function CountRow({ catId, resource, initialData, thresholdsMap, onSaved }) {
             onChange={e => setModifier(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter' && dirty) handleSave(); }}
           />
-          <button className="stepper-btn" onClick={() => setModifier(String(modVal + 1))}>+</button>
+          <button className="stepper-btn" aria-label="Erhöhen" onClick={() => setModifier(String(modVal + 1))}>+</button>
         </div>
         {modVal !== 0 && <>
           <span className="counts-arrow">→</span>
