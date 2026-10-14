@@ -57,7 +57,7 @@ window.RASSEN_INDEX = [
   { type:'race',  name:'Tritons' },
   { type:'race',  name:'Schattenmenschen' },
   { type:'race',  name:'Wandler' },
-  { type:'race',  name:'Warforged' },
+  { type:'race',  name:'Kriegsgeschmiedete' },
   { type:'race',  name:'Wechselbälger' },
   { type:'race',  name:'Wiedergeborene' },
   { type:'race',  name:'Yuan-ti' },
@@ -42605,7 +42605,7 @@ window.GEBAEUDE_RASSEN = [
     ]
   },
   {
-    "name": "Warforged",
+    "name": "Kriegsgeschmiedete",
     "uebergruppe": null,
     "tagline": "",
     "quote": "Wir wurden gebaut um zu kämpfen. Wir haben gewählt zu leben.",

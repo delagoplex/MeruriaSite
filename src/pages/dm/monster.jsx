@@ -2862,9 +2862,9 @@ function App() {
       opacity: 0.6
     }
   }, "(", monster.length, ")")), monster.map(m => /*#__PURE__*/React.createElement(MonsterRow, {
-    key: m.name,
+    key: m.name + '|' + (m.source || ''),
     monster: m,
-    active: selected && selected.name === m.name,
+    active: selected && selected.name === m.name && selected.source === m.source,
     onClick: setSelected,
     compact: t.compactList,
     kolVisible: kolSet.has(_monsterKolId(m.name)),
