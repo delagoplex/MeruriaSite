@@ -385,18 +385,6 @@ function CharCard({ char, compact, delay, dm, onToggleVisible }) {
   return (
     <div className="reveal-up" style={{ transitionDelay:`${delay}s` }}>
       <div style={{ position:'relative', opacity: hidden ? 0.55 : 1, transition:'opacity 0.2s' }}>
-        {dm && (
-          <button type="button" onClick={() => onToggleVisible(char)}
-            title={hidden ? 'Für Spieler verborgen — klicken zum Freigeben' : 'Für Spieler sichtbar — klicken zum Verbergen'}
-            aria-label={hidden ? 'Für Spieler verborgen' : 'Für Spieler sichtbar'} aria-pressed={!hidden}
-            style={{ position:'absolute', right:12, bottom:10, zIndex:6, cursor:'pointer', padding:'4px 10px', borderRadius:3,
-              fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', textTransform:'uppercase',
-              color: hidden ? 'rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)))' : 'color-mix(in srgb, rgba(80,200,140,0.95), rgb(var(--ink-rgb)) var(--cm))',
-              background: hidden ? 'rgba(var(--bg-rgb),0.85)' : 'rgba(80,200,140,0.1)',
-              border: `1px solid ${hidden ? 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' : 'rgba(80,200,140,0.45)'}` }}>
-            {hidden ? '○ Verborgen' : '◆ Sichtbar'}
-          </button>
-        )}
         <a href={`/charaktere/steckbrief.html?id=${char.id}`}
           onMouseEnter={() => setHov(true)}
           onMouseLeave={() => setHov(false)}
@@ -468,6 +456,20 @@ function CharCard({ char, compact, delay, dm, onToggleVisible }) {
             </div>
           </article>
         </a>
+        {/* Spielleitung: Sichtbarkeit als Leiste unter der Karte, damit nichts auf dem Karteninhalt liegt */}
+        {dm && (
+          <button type="button" onClick={() => onToggleVisible(char)}
+            title={hidden ? 'Für Spieler verborgen — klicken zum Freigeben' : 'Für Spieler sichtbar — klicken zum Verbergen'}
+            aria-pressed={!hidden}
+            style={{ display:'flex', width:'100%', alignItems:'center', justifyContent:'center', gap:8, marginTop:-1, cursor:'pointer',
+              padding:'7px 12px', borderRadius:'0 0 3px 3px',
+              fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.18em', textTransform:'uppercase',
+              color: hidden ? 'rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)))' : 'color-mix(in srgb, rgba(80,200,140,0.95), rgb(var(--ink-rgb)) var(--cm))',
+              background: hidden ? 'rgba(var(--purple-rgb),calc(0.06*var(--kp)))' : 'rgba(80,200,140,0.08)',
+              border: `1px solid ${hidden ? 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))' : 'rgba(80,200,140,0.35)'}` }}>
+            {hidden ? '○ Für Spieler verborgen' : '◆ Für Spieler sichtbar'}
+          </button>
+        )}
       </div>
     </div>
   );

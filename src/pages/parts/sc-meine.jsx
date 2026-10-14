@@ -718,7 +718,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
 
   const selStyle = {
     fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".12em",textTransform:"uppercase",
-    padding:"5px 10px",background:"rgb(var(--panel-rgb))",border:"1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))",
+    padding:"5px 28px 5px 10px",background:"rgb(var(--panel-rgb))",border:"1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))",
     borderRadius:3,cursor:"pointer",color:"rgba(var(--text-rgb),calc(0.75*var(--kt) + var(--tb)))",outline:"none",colorScheme:"dark"
   };
 
@@ -790,7 +790,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
           {divs.map(d=><option key={d} value={d}>{d}</option>)}
         </select>}
 
-        <select value={sortBy} onChange={e=>setSortBy(e.target.value)} style={selStyle}>
+        <select value={sortBy} onChange={e=>setSortBy(e.target.value)} style={{...selStyle, minWidth:200}}>
           <option value="date">Erstellungsdatum</option>
           <option value="name">Name</option>
           <option value="level">Stufe</option>

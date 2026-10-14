@@ -5,10 +5,18 @@
 
 /* Mengen-Zeile im Detailfenster eines Eintrags */
 .dm-kol-inline { margin: 14px 22px 0; padding: 12px 14px; border: 1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka))); border-radius: 4px; background: rgba(var(--purple-rgb),calc(0.1*var(--kp))); }
-.dm-kol-inline .counts-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 0; border: none; }
+.dm-kol-inline .counts-row { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: 'info info info' 'reveal reveal reveal' 'menge stage save'; align-items: center; gap: 12px 16px; padding: 0; border: none; }
 .dm-kol-inline .counts-row:hover { background: none; }
-.dm-kol-inline .counts-info { flex-basis: 100%; }
-.dm-kol-inline .counts-stage-block { flex: 1; align-items: flex-start; min-width: 0; }
+.dm-kol-inline .counts-info { grid-area: info; }
+.dm-kol-inline .reveal-mode-wrap { grid-area: reveal; align-items: center; gap: 6px; }
+.dm-kol-inline .counts-menge-block { grid-area: menge; }
+.dm-kol-inline .counts-stage-block { grid-area: stage; align-items: flex-start; min-width: 0; }
+.dm-kol-inline .counts-save-btn { grid-area: save; min-width: 64px; padding: 8px 14px; }
+.dm-kol-inline .counts-next, .dm-kol-inline .counts-delta { white-space: nowrap; }
+.dm-kol-inline .reveal-mode-wrap::before, .dm-kol-inline .counts-menge-block::before { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb))); margin-right: 6px; min-width: 76px; }
+.dm-kol-inline .reveal-mode-wrap::before { content: 'Freigabe'; }
+.dm-kol-inline .counts-menge-block::before { content: 'Menge'; }
+.dm-kol-inline .reveal-mode-btn { padding: 6px 12px; }
 .dm-kol-inline-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--white); margin-bottom: 8px; }
 
 /* Header */
