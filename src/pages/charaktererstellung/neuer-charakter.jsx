@@ -244,9 +244,9 @@ function TypeCard({ label, sub, onClick, locked = false }) {
         transition:'all .2s',
       }}>
       <div style={{ fontFamily:'var(--font-d)', fontSize:'17px', fontWeight:300, letterSpacing:'.22em', textTransform:'uppercase',
-        color: hov ? 'var(--white)' : 'rgba(var(--text-rgb),calc(.78*var(--kt) + var(--tb)))', transition:'color .2s' }}>{label}</div>
+        color: hov ? 'var(--white)' : 'rgba(var(--text-rgb),calc(.78*var(--kt) + var(--tb)))', transition:'color .2s, opacity .2s', opacity: locked ? (hov ? .45 : .3) : 1 }}>{label}</div>
       <div style={{ fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.18em', textTransform:'uppercase', marginTop:6,
-        color: hov ? 'rgba(var(--accent-rgb),calc(.85*var(--ka) + var(--tb)))' : 'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))', transition:'color .2s' }}>{sub}</div>
+        color: hov ? 'rgba(var(--accent-rgb),calc(.85*var(--ka) + var(--tb)))' : 'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))', transition:'color .2s, opacity .2s', opacity: locked ? (hov ? .45 : .3) : 1 }}>{sub}</div>
       {locked && (
         <svg aria-hidden="true" width="46" height="54" viewBox="0 0 46 54"
           style={{ position:'absolute', left:'50%', top:'50%', transform:'translate(-50%,-50%)', pointerEvents:'none',
