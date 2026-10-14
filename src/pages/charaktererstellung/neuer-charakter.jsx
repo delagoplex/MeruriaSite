@@ -2,6 +2,7 @@
 import '../../components/image-upload.jsx';
 import '../../components/char-age.jsx';
 import '../../components/site-gate.jsx';
+import '../parts/nsc-monster-flow.jsx';
 
 ;(function () {
 (function () {
@@ -400,6 +401,32 @@ function TypeSelectPhase({
   }), isDm && /*#__PURE__*/React.createElement(NscPasswordSetter, null));
 }
 
+// ── NSC: Monster oder nicht? ─────────────────────────────────────────────
+function NscArtPhase({ onWahl }) {
+  const [wurf, setWurf] = useState(null);   // Ergebnis beim Würfeln, kurz angezeigt
+  const wuerfeln = () => {
+    const monster = Math.random() < 0.5;
+    setWurf(monster);
+    setTimeout(() => onWahl(monster), 1100);
+  };
+  const karte = (label, sub, onClick, aktiv) => /*#__PURE__*/React.createElement(TypeCard, { key: label, label, sub, onClick: wurf == null ? onClick : () => {}, locked: false });
+  return /*#__PURE__*/React.createElement("div", {
+    style: { display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:'calc(calc(var(--vh, 1vh) * 100) - 52px)', gap:18, padding:40, animation:'fadeIn .5s ease' }
+  },
+    /*#__PURE__*/React.createElement("div", { style:{ fontFamily:'var(--font-m)', fontSize:'11.5px', letterSpacing:'.3em', color:'rgba(var(--purple-rgb),calc(.5*var(--kp) + var(--tb)))', textTransform:'uppercase' } }, "Neuer NSC"),
+    /*#__PURE__*/React.createElement("h1", { style:{ fontFamily:'var(--font-d)', fontSize:'clamp(20px,4vw,34px)', fontWeight:300, letterSpacing:'.18em', color:'var(--white)', textTransform:'uppercase', textAlign:'center' } }, "Ist dein NSC ein Monster?"),
+    /*#__PURE__*/React.createElement("p", { style:{ fontFamily:'var(--font-b)', fontWeight:300, fontSize:'13px', color:'rgba(var(--text-rgb),calc(.45*var(--kt) + var(--tb)))', maxWidth:440, textAlign:'center', lineHeight:1.85, marginBottom:12 } },
+      "Monster-NSC werden aus der Monsterdatenbank gewählt und bringen ihren Statblock mit. Normale NSC entstehen wie Spielercharaktere über Tags und Quiz."),
+    /*#__PURE__*/React.createElement("div", { style:{ display:'flex', gap:20, flexWrap:'wrap', justifyContent:'center' } },
+      karte("Ja", "Monster-NSC", () => onWahl(true)),
+      karte("Nein", "Normaler NSC", () => onWahl(false)),
+      karte("Würfeln", "Zufall entscheidet", wuerfeln)
+    ),
+    wurf != null && /*#__PURE__*/React.createElement("div", { role:'status', style:{ fontFamily:'var(--font-m)', fontSize:'12px', letterSpacing:'.24em', textTransform:'uppercase', color:'var(--white)', animation:'fadeIn .25s ease' } },
+      "⚄ Gewürfelt: ", wurf ? "Monster-NSC" : "Normaler NSC")
+  );
+}
+
 // ── CHIP ───────────────────────────────────────────────────────────────────
 function Chip({
   label,
@@ -791,6 +818,7 @@ function QuizPhase({
     geschlecht: 'Geschlecht',
     status: 'Status',
     lebensphase: 'Lebensphase',
+    gesinnung: 'Gesinnung',
   }[currentQ.kat] || currentQ.kat), /*#__PURE__*/React.createElement("h3", {
     style: {
       fontFamily: 'var(--font-d)',
@@ -2076,7 +2104,38 @@ const NSC_GESCHLECHT_LIST = ['Männlich','Weiblich','Divers','Keine Angabe'];
 const NSC_LEBENSPHASE_LIST = ['Jung','Erwachsen','Mittelalt','Alt','Greisenhaft'];
 const NSC_STATUS_LIST = ['Lebendig','Verbündet','Neutral','Verschollen','Feind','Gefallen','Verstorben'];
 
+// Gesinnung in vier Stufen; die neutralen Antworten überlappen (Neutral gilt für beide)
+const NSC_GESINNUNG_SETS = {
+  'gut':        ['Rechtschaffen gut','Neutral gut','Chaotisch gut'],
+  'eher-gut':   ['Rechtschaffen neutral','Neutral','Chaotisch neutral','Neutral gut'],
+  'eher-boese': ['Rechtschaffen neutral','Neutral','Chaotisch neutral','Neutral böse'],
+  'boese':      ['Rechtschaffen böse','Neutral böse','Chaotisch böse'],
+};
+// Rassen nach Flug und Resistenzen (aus RASSEN_STRUKTUR, inkl. Blut-/Ahnenlinien)
+const nscRassenMit = test => (window.ALLE_RASSEN || []).filter(r => {
+  const d = (window.RASSEN_STRUKTUR || {})[r];
+  if (!d) return false;
+  return test(d) || Object.values(d.varianten || {}).some(v => test({ ...d, ...v }));
+});
+const NSC_RASSE_FLIEGT = nscRassenMit(d => Object.keys(d.bewegung || {}).some(k => /^flieg/i.test(k)));
+const NSC_RASSE_RESIST = nscRassenMit(d => (d.resistenzen || []).length > 0 || (d.immunitaeten || []).length > 0);
+const nscOhne = liste => (window.ALLE_RASSEN || []).filter(r => !liste.includes(r));
+
 const NSC_QUIZ_DATA = [
+  { id:'nsc-gs-1', kat:'gesinnung', frage:'Welche Gesinnung hat dein NSC?',
+    optionen:[
+      { text:'Gut', behalte:NSC_GESINNUNG_SETS['gut'] },
+      { text:'Neutral – eher gut', behalte:NSC_GESINNUNG_SETS['eher-gut'] },
+      { text:'Neutral – eher böse', behalte:NSC_GESINNUNG_SETS['eher-boese'] },
+      { text:'Böse', behalte:NSC_GESINNUNG_SETS['boese'] },
+    ]
+  },
+  { id:'nsc-r-fly', kat:'rasse', frage:'Kann dein NSC fliegen?',
+    optionen:[ { text:'Ja', behalte:NSC_RASSE_FLIEGT }, { text:'Nein', behalte:nscOhne(NSC_RASSE_FLIEGT) } ]
+  },
+  { id:'nsc-r-res', kat:'rasse', frage:'Hat dein NSC Resistenzen (z. B. gegen Gift, Feuer oder Kälte)?',
+    optionen:[ { text:'Ja', behalte:NSC_RASSE_RESIST }, { text:'Nein', behalte:nscOhne(NSC_RASSE_RESIST) } ]
+  },
   ...(window.CHAR_QUIZ ? window.CHAR_QUIZ.filter(q => q.kat === 'rasse') : []),
   { id:'nsc-g-1', kat:'geschlecht', frage:'Welches Geschlecht hat dieser NSC?',
     optionen:[{text:'Männlich',behalte:['Männlich']},{text:'Weiblich',behalte:['Weiblich']},{text:'Divers',behalte:['Divers']},{text:'Keine Angabe',behalte:['Keine Angabe']}]
@@ -2143,7 +2202,7 @@ function NscTagPhase({ nscTags, setNscTag, onNext }) {
     return [...gods,...demons,...naturgeister].map(g => g.name);
   }, []);
   const t = nscTags;
-  const chipFields = ['rasse','geschlecht','status','division','lebensphase','gottheit'];
+  const chipFields = ['rasse','geschlecht','status','division','lebensphase','gottheit','gesinnung'];
   const filledCount = chipFields.filter(k => t[k] !== null).length + (t.name.trim() ? 1 : 0) + (t.beruf.trim() ? 1 : 0);
   const inputStyle = extra => ({
     fontFamily:'var(--font-b)', fontSize:'13px', fontWeight:300,
@@ -2178,6 +2237,7 @@ function NscTagPhase({ nscTags, setNscTag, onNext }) {
     /*#__PURE__*/React.createElement(CatBlock, {title:"Division",items:NSC_DIVISIONS_LIST,selected:t.division,onSelect:v=>setNscTag('division',v)}),
     /*#__PURE__*/React.createElement(CatBlock, {title:"Lebensphase",items:NSC_LEBENSPHASE_LIST,selected:t.lebensphase,onSelect:v=>setNscTag('lebensphase',v)}),
     /*#__PURE__*/React.createElement(CatBlock, {title:"Gottheit",items:GOETTER,selected:t.gottheit,onSelect:v=>setNscTag('gottheit',v)}),
+    /*#__PURE__*/React.createElement(CatBlock, {title:"Gesinnung",items:window.ALLE_GESINNUNGEN||[],selected:t.gesinnung,onSelect:v=>setNscTag('gesinnung',v)}),
     /*#__PURE__*/React.createElement("div", {style:{marginTop:44,display:'flex',alignItems:'center',justifyContent:'flex-end',gap:14},className:"no-print"},
       /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11.5px',color:'rgba(var(--accent-rgb),calc(.38*var(--ka) + var(--tb)))',letterSpacing:'.1em'}},
         filledCount, " Feld", filledCount!==1?'er':'', " ausgefüllt"),
@@ -2298,6 +2358,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     { lbl:'Status', ...getNsc('status') },
     { lbl:'Division', ...getNsc('division') },
     { lbl:'Lebensphase', ...getNsc('lebensphase') },
+    { lbl:'Gesinnung', ...getNsc('gesinnung') },
     { lbl:'Gottheit', ...getNsc('gottheit') },
     { lbl:'Beruf', val:nscTags.beruf.trim()||'—', src:nscTags.beruf.trim()?'sel':'none' },
   ];
@@ -2365,6 +2426,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
         kapsel:      extra.kapsel.trim()         || null,
         wohnort:     extra.wohnort.trim()        || null,
         gottheit:    g('gottheit'),
+        gesinnung:   g('gesinnung'),
         habe:        parseInt(extra.habe)||0,
         status:      statusVal ? [statusVal] : [],
         unvergesslich: extra.unvergesslich.trim() || null,
@@ -2628,7 +2690,7 @@ function App() {
 
   // ── NSC state ──
   const [nscTags, setNscTagsState] = useState({
-    name:'', beruf:'', rasse:null, geschlecht:null, status:null, division:null, lebensphase:null, gottheit:null
+    name:'', beruf:'', rasse:null, geschlecht:null, status:null, division:null, lebensphase:null, gottheit:null, gesinnung:null
   });
   const [nscPossible, setNscPossible] = useState({
     rasse: window.ALLE_RASSEN || [],
@@ -2637,6 +2699,7 @@ function App() {
     division: NSC_DIVISIONS_LIST,
     lebensphase: NSC_LEBENSPHASE_LIST,
     gottheit: [],
+    gesinnung: window.ALLE_GESINNUNGEN || [],
   });
   const [nscQuizAnswers, setNscQuizAnswers] = useState([]);
 
@@ -2681,6 +2744,7 @@ function App() {
     rasse: window.ALLE_RASSEN||[], geschlecht: NSC_GESCHLECHT_LIST,
     status: NSC_STATUS_LIST, division: NSC_DIVISIONS_LIST,
     lebensphase: NSC_LEBENSPHASE_LIST, gottheit: nscPossible.gottheit,
+    gesinnung: window.ALLE_GESINNUNGEN||[],
   });
 
   const goToQuiz = () => { setQuizAnswers([]); resetPossible(); setPhase('quiz'); };
@@ -2693,14 +2757,18 @@ function App() {
       if (charType === 'nsc') { setNscQuizAnswers([]); resetNscPossible(); }
       else { setQuizAnswers([]); resetPossible(); }
       setPhase('tags');
-    } else if (phase === 'tags') setPhase('typeSelect');
+    } else if (phase === 'tags') setPhase(charType === 'nsc' ? 'nscArt' : 'typeSelect');
+    else if (phase === 'monster') setPhase('nscArt');
+    else if (phase === 'nscArt') setPhase('typeSelect');
   };
 
   return /*#__PURE__*/React.createElement("div", {style:{background:'var(--bg)',minHeight:'calc(var(--vh, 1vh) * 100)'}},
     /*#__PURE__*/React.createElement(Nav, {showBack:phase!=='typeSelect',onBack:goBack}),
     phase === 'typeSelect' && /*#__PURE__*/React.createElement(TypeSelectPhase, {
-      onSelect: t => { setCharType(t==='nsc'?'nsc':'spieler'); setPhase('tags'); }
+      onSelect: t => { setCharType(t==='nsc'?'nsc':'spieler'); setPhase(t==='nsc' ? 'nscArt' : 'tags'); }
     }),
+    phase === 'nscArt' && /*#__PURE__*/React.createElement(NscArtPhase, { onWahl: monster => setPhase(monster ? 'monster' : 'tags') }),
+    phase === 'monster' && /*#__PURE__*/React.createElement(window.NscMonsterFlow, { onDone: () => setPhase('typeSelect') }),
     phase === 'tags' && charType !== 'nsc' && /*#__PURE__*/React.createElement(TagPhase, {tags,setTag,setWerkzeug,onNext:goToQuiz}),
     phase === 'tags' && charType === 'nsc' && /*#__PURE__*/React.createElement(NscTagPhase, {nscTags,setNscTag,onNext:goToNscQuiz}),
     phase === 'quiz' && charType !== 'nsc' && /*#__PURE__*/React.createElement(QuizPhase, {tags,possible,quizAnswers,onAnswer:handleAnswer,onFinish:()=>setPhase('output')}),
