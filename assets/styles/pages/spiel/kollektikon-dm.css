@@ -1,47 +1,15 @@
-<!DOCTYPE html>
-<html lang="de"><head>
-<meta charset="UTF-8">
-<base href="/">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="/assets/images/favicon/favicon-m.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/assets/images/favicon/favicon-m-180.png">
-<title>Meruria — DM · Kollektikon</title>
-<script src="/assets/scripts/theme-init.js"></script>
-<link rel="stylesheet" href="/assets/styles/global/fonts.css">
-<link rel="stylesheet" href="/assets/styles/global/base.css">
-<script src="/assets/scripts/vendor/react.production.min.js"></script>
-<script src="/assets/scripts/vendor/react-dom.production.min.js"></script>
-<script type="module" src="/src/pages/dm/kollektikon.jsx"></script>
-<script src="/assets/scripts/vendor/supabase.min.js"></script>
-<script src="/assets/scripts/supabase-client.js"></script>
-<script src="/assets/scripts/data/resources/ff14_fish-data.js"></script>
-<script src="/assets/scripts/data/resources/mineralien/ff14_mineralien-data.js"></script>
-<script src="/assets/scripts/data/resources/pflanzen/ff14_pflanzen-data.js"></script>
-<script src="/assets/scripts/data/resources/pflanzen/fantasy_plant-data.js"></script>
-<script src="/assets/scripts/data/resources/insekten/insekten-data.js"></script>
-<script src="/assets/scripts/data/monster/monsterhandbuch-data.js"></script>
-<script src="/assets/scripts/data/monster/foliant-der-feinde-data.js"></script>
-<script src="/assets/scripts/data/monster/drakkenheim-data.js"></script>
-<script src="/assets/scripts/data/monster/almanach-der-monster-data.js"></script>
-<script src="/assets/scripts/data/monster/floral-dragons-data.js"></script>
-<script src="/assets/scripts/data/monster/ruhm-der-riesen-data.js"></script>
-<script src="/assets/scripts/data/monster/schatzkammer-der-drachen-data.js"></script>
-<script src="/assets/scripts/data/monster/flee-mortals-data.js"></script>
-<script src="/assets/scripts/data/monster/avernus-data.js"></script>
-<script src="/assets/scripts/data/monster/tome-of-beasts-data.js"></script>
-<script src="/assets/scripts/data/monster/tome-of-beasts-2-data.js"></script>
-<script src="/assets/scripts/data/monster/sonstige-data.js"></script>
-<script src="/assets/scripts/data/monster-data.js"></script>
-<script src="/assets/scripts/shared/ressourcen-katalog.js"></script>
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { min-height: calc(var(--vh, 1vh) * 100); background: var(--bg); color: var(--white); }
-#root { min-height: calc(var(--vh, 1vh) * 100); }
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(var(--purple-rgb),calc(0.3*var(--kp))); border-radius: 2px; }
+/* Kollektikon — Bedienelemente der Spielleitung (früher die Seite /dm/kollektikon.html).
+   Gilt nur innerhalb von .dm-kol-wrap bzw. .dm-kol-inline auf /spiel/kollektikon.html. */
 
-.dm-kol-wrap { max-width: 1280px; margin: 0 auto; padding: 80px 24px 80px; }
+.dm-kol-wrap { max-width: 1280px; margin: 0 auto; padding: 8px 6px 40px; }
+
+/* Mengen-Zeile im Detailfenster eines Eintrags */
+.dm-kol-inline { margin: 14px 22px 0; padding: 12px 14px; border: 1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka))); border-radius: 4px; background: rgba(var(--purple-rgb),calc(0.1*var(--kp))); }
+.dm-kol-inline .counts-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 0; border: none; }
+.dm-kol-inline .counts-row:hover { background: none; }
+.dm-kol-inline .counts-info { flex-basis: 100%; }
+.dm-kol-inline .counts-stage-block { flex: 1; align-items: flex-start; min-width: 0; }
+.dm-kol-inline-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--white); margin-bottom: 8px; }
 
 /* Header */
 .dm-kol-header { margin-bottom: 36px; }
@@ -143,8 +111,3 @@ body { min-height: calc(var(--vh, 1vh) * 100); background: var(--bg); color: var
 .kol-detail { position: sticky; top: 70px; padding: 20px; border: 1px solid rgba(var(--purple-rgb),calc(0.16*var(--kp))); border-radius: 3px; background: rgba(var(--panel-rgb),0.35); }
 .kol-detail .counts-row { flex-wrap: wrap; }
 @media (max-width: 900px) { .kol-split { grid-template-columns: 1fr; } .kol-detail { position: static; } }
-</style>
-</head>
-<body>
-<div id="root"></div>
-</body></html>

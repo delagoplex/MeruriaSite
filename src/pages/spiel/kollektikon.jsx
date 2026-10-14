@@ -3,6 +3,8 @@ import '../../components/nav.jsx';
 import '../../components/filter-utils.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/page-hero.jsx';
+import '../../components/dm-mode.jsx';
+import '../parts/kollektikon-dm-host.jsx';
 
 ;(function () {
 (function () {
@@ -1550,7 +1552,8 @@ function EntryCard({
 /* ── Detail Overlay (right-sliding panel) ── */
 function DetailPanel({
   entry,
-  onClose
+  onClose,
+  dmSlot = null
 }) {
   uE2(() => {
     const onKey = e => {
@@ -1633,7 +1636,7 @@ function DetailPanel({
       e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))';
       e.currentTarget.style.background = 'transparent';
     }
-  }, "ESC \xD7")), /*#__PURE__*/React.createElement("div", {
+  }, "ESC \xD7")), dmSlot, /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
       height: 240,
@@ -2792,7 +2795,7 @@ function KollektikonPage() {
   uE3(() => {
     async function load() {
       const [countRes, threshRes] = await Promise.all([
-        window._sb.from('kollektikon_counts').select('cat, resource_id, menge'),
+        window._sb.from('kollektikon_counts').select('cat, resource_id, menge, reveal_mode'),
         window._sb.from('kollektikon_thresholds').select('*'),
       ]);
       if (countRes.data) {
@@ -2958,8 +2961,15 @@ function KollektikonPage() {
     }
   }, /*#__PURE__*/React.createElement(SiteNav, null), /*#__PURE__*/React.createElement(DPanel, {
     entry: sel,
-    onClose: () => setSel(null)
-  }), /*#__PURE__*/React.createElement(PageHero, {
+    onClose: () => setSel(null),
+    // Spielleitung: Menge und Freigabe direkt am Eintrag (parts/kollektikon-dm-host.jsx)
+    dmSlot: /*#__PURE__*/React.createElement(window.KolDmSlot, {
+      entry: sel,
+      countsMap,
+      thresholdsMap,
+      onSaved: (key, data) => setCountsMap(prev => ({ ...prev, [key]: data }))
+    })
+  }),/*#__PURE__*/React.createElement(PageHero, {
     kicker: "Welt \xB7 Sammlung",
     title: "Das Kollektikon",
     sub: /*#__PURE__*/React.createElement(React.Fragment, null, "Vollst\xE4ndige \xDCbersicht \xFCber alle Ressourcen, Lebensformen und Materialien des Planeten Meruria. Eintr\xE4ge werden hinzugef\xFCgt, sobald die ", /*#__PURE__*/React.createElement("em", null, "Bergungsgarde"), ", die ", /*#__PURE__*/React.createElement("em", null, "Quellensucher"), " oder verifizierte Beobachtende eine gesicherte Sichtung melden."),
@@ -3156,7 +3166,12 @@ function KollektikonPage() {
       gap: 10,
       alignItems: 'flex-end'
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(window.KolDmBar, {
+    countsMap,
+    thresholdsMap,
+    onCountSaved: (key, data) => setCountsMap(prev => ({ ...prev, [key]: data })),
+    onThresholdSaved: row => setThresholdsMap(prev => ({ ...prev, [`${row.cat}:${row.rarity}`]: row }))
+  }), /*#__PURE__*/React.createElement("div", {
     className: "kol-search",
     style: {
       position: 'relative',

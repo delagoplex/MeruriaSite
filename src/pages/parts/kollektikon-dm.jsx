@@ -1,14 +1,12 @@
-// Page entry for /dm/kollektikon.html
-import '../../components/nav.jsx';
-import '../../components/site-gate.jsx';
+// Kollektikon-Werkzeuge der Spielleitung (früher die Seite /dm/kollektikon.html).
+// Wird von /spiel/kollektikon.html nur für die Spielleitung nachgeladen (parts/kollektikon-dm-host.jsx).
+// Exposes: window.KollektikonDm = { CountRow, CountsSection, ThresholdsSection, RandomizerSection }
 import '../../components/ressourcen-ui.jsx';
 
 ;(function () {
 // top-level functions were global in the old classic-script setup
-Object.assign(window, { _rarFromSg, _rarFromStaerke, _rarFromCr, computeStage, buildResources, ThresholdRow, ThresholdsSection, nextStageInfo, CountRow, CountsSection, RandomizerSection, App });
 
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
-const { SiteNav, SiteGate } = window;
 
 const CATS = [
   { id: 'fische',     label: 'Fische' },
@@ -509,80 +507,7 @@ function RandomizerSection() {
 }
 
 // ── App ───────────────────────────────────────────────────────────────────────
-function App() {
-  const [activeTab, setActiveTab] = useState('mengen');
-  const [countsMap, setCountsMap] = useState({});
-  const [thresholdsMap, setThresholdsMap] = useState({});
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function load() {
-      const [countRes, threshRes] = await Promise.all([
-        window._sb.from('kollektikon_counts').select('cat, resource_id, menge'),
-        window._sb.from('kollektikon_thresholds').select('*'),
-      ]);
-      if (countRes.data) {
-        const cm = {};
-        countRes.data.forEach(({ cat, resource_id, menge, reveal_mode }) => {
-          cm[`${cat}:${resource_id}`] = { menge, reveal_mode: reveal_mode || null };
-        });
-        setCountsMap(cm);
-      }
-      if (threshRes.data) {
-        const tm = {};
-        threshRes.data.forEach(row => { tm[`${row.cat}:${row.rarity}`] = row; });
-        setThresholdsMap(tm);
-      }
-      setLoading(false);
-    }
-    load();
-  }, []);
-
-  function handleCountSaved(key, data) {
-    setCountsMap(prev => ({ ...prev, [key]: data }));
-  }
-  function handleThresholdSaved(row) {
-    setThresholdsMap(prev => ({ ...prev, [`${row.cat}:${row.rarity}`]: row }));
-  }
-
-  return (
-    <div>
-      <SiteNav rightLabel="DM · KOLLEKTIKON" />
-      <div className="dm-kol-wrap">
-        <div className="dm-kol-header">
-          <div className="dm-kol-kicker">◈ Meisterverwaltung</div>
-          <div className="dm-kol-title">Kollektikon</div>
-        </div>
-
-        <div className="dm-kol-tabs">
-          <button className={`dm-kol-tab${activeTab === 'mengen' ? ' active' : ''}`} onClick={() => setActiveTab('mengen')}>
-            Mengen
-          </button>
-          <button className={`dm-kol-tab${activeTab === 'schwellen' ? ' active' : ''}`} onClick={() => setActiveTab('schwellen')}>
-            Schwellen
-          </button>
-          <button className={`dm-kol-tab${activeTab === 'randomizer' ? ' active' : ''}`} onClick={() => setActiveTab('randomizer')}>
-            Randomizer
-          </button>
-        </div>
-
-        {loading ? (
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))', padding: '24px 0' }}>Lädt…</div>
-        ) : activeTab === 'mengen' ? (
-          <CountsSection countsMap={countsMap} thresholdsMap={thresholdsMap} onSaved={handleCountSaved} />
-        ) : activeTab === 'randomizer' ? (
-          <RandomizerSection />
-        ) : (
-          <ThresholdsSection thresholdsMap={thresholdsMap} onThresholdSaved={handleThresholdSaved} />
-        )}
-      </div>
-    </div>
-  );
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <SiteGate><App /></SiteGate>
-);
+window.KollektikonDm = { CountRow, CountsSection, ThresholdsSection, RandomizerSection };
 
 })();
 

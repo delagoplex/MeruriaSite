@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────────────────────────
    Ressourcen-Katalog — einheitliche Sicht auf FISH_DB, INSEKTEN_DB,
    PFLANZEN_DB + FANTASY_PLANT_DB, MINERALIEN_DB und MONSTER_DATA.
-   Genutzt von /dm/kollektikon.html (Verwaltung + Randomizer) und dem
+   Genutzt von den Kollektikon-Werkzeugen der Spielleitung (/spiel/kollektikon.html) und dem
    Pool-Modal der Kartenverwaltung.
 
    Eintrag: { id, cat, name, desc, icon, rarity, tags:{Gruppe:[Wert]},

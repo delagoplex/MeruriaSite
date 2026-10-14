@@ -209,7 +209,7 @@
   },
   {
     "from": "DM_Kollektikon.html",
-    "to": "/dm/kollektikon.html"
+    "to": "/spiel/kollektikon.html"
   },
   {
     "from": "DM_Rekrutierung.html",
@@ -266,5 +266,9 @@
   {
     "from": "dm/charakterverwaltung.html",
     "to": "/spiel/charaktere.html"
+  },
+  {
+    "from": "dm/kollektikon.html",
+    "to": "/spiel/kollektikon.html"
   }
 ]
