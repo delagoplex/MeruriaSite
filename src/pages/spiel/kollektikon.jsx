@@ -2956,8 +2956,7 @@ function KollektikonPage() {
   const colMin = density === 'compact' ? 145 : density === 'spacious' ? 200 : 170;
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      minHeight: 'calc(var(--vh, 1vh) * 100)',
-      paddingTop: 'var(--nav-h)'
+      minHeight: 'calc(var(--vh, 1vh) * 100)'
     }
   }, /*#__PURE__*/React.createElement(SiteNav, null), /*#__PURE__*/React.createElement(DPanel, {
     entry: sel,

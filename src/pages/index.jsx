@@ -1903,7 +1903,7 @@ function RecentCharCard({ c }) {
   const accentEdge = `oklch(0.72 0.16 ${c.hue} / 0.45)`;
   const isSC = c.kind === 'SC';
   return (
-    <a href={c.kind === 'SC' ? `/charaktere/steckbrief.html?id=${c.id}` : '/charaktere/spielercharaktere.html'}
+    <a href={c.kind === 'SC' ? `/charaktere/steckbrief.html?id=${c.id}` : '/spiel/charaktere.html'}
       onMouseEnter={()=>setHov(true)}
       onMouseLeave={()=>setHov(false)}
       style={{

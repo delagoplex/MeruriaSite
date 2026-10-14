@@ -1,5 +1,5 @@
 // Statblock aus der Monster-/NSC-Datenbank in das Statblock-Format (Feld `steckbrief`) des NSC übernehmen.
-// Genutzt von /dm/nsc-verwaltung und /dm/rekrutierungsanfragen.
+// Genutzt vom NSC-Editor (/spiel/kontakte.html) und den Rekrutierungsanfragen (/dm/rekrutierung.html).
 window.statToSteckbrief = function (m, art) {
   return {
     name:m.name, quelle:[m.source, art].filter(Boolean).join(' · '),

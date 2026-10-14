@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Scans assets/images/** and writes assets/scripts/data/bilder-data.js, the list behind the
-// "Bild wählen" picker in /dm/nsc-verwaltung. Groups are the top-level folders
+// "Bild wählen" picker of the NSC editor (/spiel/kontakte.html). Groups are the top-level folders
 // (npc, races, monster, …); entries are paths relative to assets/images.
 // Runs automatically before `npm run build` / `npm run dev` (see package.json: prebuild, predev),
 // or manually: node tools/generate-bilder-data.mjs

@@ -1600,7 +1600,7 @@ function SbSummary({ sb }) {
   );
 }
 
-// ── Spieler-Vorschau — Nachbau des NSC-Detailpanels (charaktere/nsc.html) ───
+// ── Spieler-Vorschau — Nachbau des NSC-Detailpanels (spiel/kontakte.html) ───
 function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc, updSel, updNsc, toggleFieldVis, heroSlot, haltungSlot, visSlot, onPortraitClick, deleteSel, sbSlot, addSection, createFromContact }) {
   const acc = divOf(sel.division).accent;
   const has = k => (sel.sections || []).includes(k);

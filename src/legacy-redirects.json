@@ -213,7 +213,7 @@
   },
   {
     "from": "DM_Rekrutierung.html",
-    "to": "/dm/rekrutierungspreise.html"
+    "to": "/dm/rekrutierung.html?tab=preise"
   },
   {
     "from": "DM_Rezepte.html",

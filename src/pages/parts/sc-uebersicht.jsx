@@ -658,7 +658,7 @@ function App() {
       <div style={{ position:'relative', zIndex:5, maxWidth:'1380px', margin:'0 auto', padding:'46px 36px 80px' }}>
 
         {/* Breadcrumb */}
-        <div className="reveal-up" style={{ marginBottom:'14px', display:'flex', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
+        <div className="reveal-up" style={{ marginBottom:'14px', display:'flex', flexWrap:'wrap', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           <a href="/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Meruria</a>
           <span style={{ opacity:0.4 }}>›</span>
           <span style={{ color:'var(--lav)' }}>Spielercharaktere</span>

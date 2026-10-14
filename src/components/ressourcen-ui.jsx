@@ -1,6 +1,6 @@
 // Gemeinsame Bausteine für Ressourcen (Fische, Insekten, Pflanzen, Mineralien, Kreaturen):
 // Detailkarte, Tag-Filter und Randomizer. Datenbasis: window.RessourcenKatalog
-// (assets/scripts/shared/ressourcen-katalog.js). Genutzt von /dm/kollektikon und der Kartenverwaltung.
+// (assets/scripts/shared/ressourcen-katalog.js). Genutzt von den Kollektikon-Werkzeugen (/spiel/kollektikon.html) und der Kartenverwaltung.
 
 ;(function () {
 const { useState, useMemo, useEffect } = React;
