@@ -3,6 +3,7 @@ import '../../components/image-upload.jsx';
 import '../../components/char-age.jsx';
 import '../../components/site-gate.jsx';
 import '../parts/nsc-monster-flow.jsx';
+import '../parts/hade-rechner.jsx';
 
 ;(function () {
 (function () {
@@ -2271,11 +2272,11 @@ function NscField(label, children) {
     children
   );
 }
-function NscSektion(title, children) {
-  return /*#__PURE__*/React.createElement(NscSektionComp, {key:title, title, children});
+function NscSektion(title, children, defaultOpen = false) {
+  return /*#__PURE__*/React.createElement(NscSektionComp, {key:title, title, children, defaultOpen});
 }
-function NscSektionComp({ title, children }) {
-  const [open, setOpen] = useState(false);
+function NscSektionComp({ title, children, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
   return /*#__PURE__*/React.createElement("div", {style:{marginBottom:5,borderRadius:3,
     border:`1px solid ${open?'rgba(var(--purple-rgb),calc(.28*var(--kp)))':'rgba(var(--purple-rgb),calc(.1*var(--kp)))'}`}},
     /*#__PURE__*/React.createElement("button", {type:"button", onClick:()=>setOpen(o=>!o),
@@ -2589,6 +2590,11 @@ function NscOutputPhase({ nscTags, nscPossible }) {
       )
     )),
 
+    // ── Hade (nach Wohlstand oder Klasse, Tabellen der Spielleitung) ─────────
+    NscSektion("Hade \xB7 Wie viel tr\xE4gt dein NSC bei sich?", [
+      /*#__PURE__*/React.createElement(window.HadeRechner, {key:'hade', value:extra.habe, onChange:v=>setEx('habe',v)})
+    ], true),
+
     // ── Identität (Zusatz) ────────────────────────────────────────────────
     NscSektion("Identit\xE4t \xB7 Details", [
       NscField("Titel", /*#__PURE__*/React.createElement("input", {value:extra.titel, onChange:e=>setEx('titel',e.target.value), style:nscFieldSt, placeholder:"z.B. Stadtkapitän, Ältester…"})),
@@ -2598,7 +2604,6 @@ function NscOutputPhase({ nscTags, nscPossible }) {
       NscField("Rang", /*#__PURE__*/React.createElement("input", {value:extra.rang, onChange:e=>setEx('rang',e.target.value), style:nscFieldSt, placeholder:"z.B. Leutnant, Meister…"})),
       NscField("Organisation", /*#__PURE__*/React.createElement("input", {value:extra.organisation, onChange:e=>setEx('organisation',e.target.value), style:nscFieldSt, placeholder:"Gilde, Kult, Gruppe…"})),
       NscField("Traumkapsel", /*#__PURE__*/React.createElement("input", {value:extra.kapsel, onChange:e=>setEx('kapsel',e.target.value), style:nscFieldSt, placeholder:"Kapsel-Nummer…"})),
-      NscField("Habe (Hade)", /*#__PURE__*/React.createElement("input", {type:"number",min:"0",value:extra.habe, onChange:e=>setEx('habe',Math.max(0,parseInt(e.target.value)||0)), style:{...nscFieldSt,width:110}})),
     ]),
 
     // ── Erscheinung & Persönlichkeit ──────────────────────────────────────

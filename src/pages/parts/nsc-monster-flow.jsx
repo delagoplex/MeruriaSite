@@ -3,6 +3,7 @@
 // NSC mit seinem Statblock (Feld steckbrief) angelegt. Die Monsterdaten werden erst hier nachgeladen.
 // Exposes: window.NscMonsterFlow ({ onDone }), window.nscGesinnungGruppen (Gesinnung → Gruppen-IDs)
 import '../../components/dm-mode.jsx';
+import './hade-rechner.jsx';
 
 ;(function () {
 const { useState, useEffect, useMemo } = React;
@@ -89,6 +90,7 @@ function NscMonsterFlow({ onDone }) {
   const [direkt, setDirekt] = useState('');
   const [suche, setSuche] = useState('');
   const [name, setName] = useState('');
+  const [hade, setHade] = useState(0);
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState('');
   const [fertig, setFertig] = useState(null);
@@ -128,8 +130,9 @@ function NscMonsterFlow({ onDone }) {
       gesinnung: m.gesinnung || null,
       status: ['Lebendig'],
       visible: false,
-      sections: ['statblock'],
       steckbrief: window.statToSteckbrief(m, 'Monster-NSC'),
+      habe: hade,
+      sections: hade > 0 ? ['statblock', 'ausr'] : ['statblock'],
       field_visibility: {},
     });
     setSaving(false);
@@ -230,6 +233,10 @@ function NscMonsterFlow({ onDone }) {
                 <Zeile label="Bewegung">{Object.entries(gewaehlt.bewegung || {}).map(([k, v]) => k + ' ' + v).join(', ')}</Zeile>
                 <Zeile label="Resistenzen">{(gewaehlt.schadensresistenzen || []).join(', ')}</Zeile>
                 <Zeile label="Immunitäten">{(gewaehlt.schadensimmunitaeten || []).join(', ')}</Zeile>
+                <div style={{ marginTop:18 }}>
+                  <div style={{ fontFamily:F.m, fontSize:'11px', letterSpacing:'.2em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))', marginBottom:8 }}>Wie viel Hade trägt dein NSC bei sich?</div>
+                  <window.HadeRechner value={hade} onChange={setHade} />
+                </div>
                 <div style={{ marginTop:18 }}>
                   <div style={{ fontFamily:F.m, fontSize:'11px', letterSpacing:'.2em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))', marginBottom:6 }}>Name des NSC *</div>
                   <input value={name} onChange={e => setName(e.target.value)} placeholder="z. B. Graugeist am Hafen"
