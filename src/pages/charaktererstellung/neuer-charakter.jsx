@@ -2296,6 +2296,29 @@ function NscSektionComp({ title, children, defaultOpen = false }) {
   );
 }
 
+// Divisionsrang 10 (Einstieg) … 1 (Leitung) mit den Titeln aus DIVISIONS_DATA; gespeichert wird die Zahl als Text
+function NscRangWahl({ division, value, onChange }) {
+  const div = (window.DIVISIONS_DATA || []).find(d => d.name === division);
+  if (!div) return /*#__PURE__*/React.createElement("div", { style:{ fontFamily:'var(--font-b)', fontSize:'13px', color:'var(--silver)' } },
+    "Ohne Division gibt es keinen Rang. W\xE4hle oben oder im Quiz eine Division.");
+  const raenge = [...div.raenge].sort((a, b) => b.rang - a.rang);
+  const aktiv = raenge.find(r => String(r.rang) === String(value));
+  const chip = on => ({ fontFamily:'var(--font-m)', fontSize:'11.5px', letterSpacing:'.1em', cursor:'pointer', padding:'6px 10px', borderRadius:3, textAlign:'left',
+    color: on ? 'var(--white)' : 'rgba(var(--text-rgb),calc(.72*var(--kt) + var(--tb)))',
+    background: on ? 'rgba(var(--purple-rgb),calc(.22*var(--kp)))' : 'rgba(var(--purple-rgb),calc(.05*var(--kp)))',
+    border: '1px solid ' + (on ? 'rgba(var(--accent-rgb),calc(.65*var(--ka)))' : 'rgba(var(--purple-rgb),calc(.25*var(--kp)))') });
+  return /*#__PURE__*/React.createElement("div", { style:{ display:'flex', flexDirection:'column', gap:10 } },
+    /*#__PURE__*/React.createElement("div", { style:{ display:'flex', gap:6, flexWrap:'wrap' } },
+      raenge.map(r => /*#__PURE__*/React.createElement("button", { key:r.rang, type:"button", style:chip(aktiv === r), onClick:() => onChange(aktiv === r ? '' : String(r.rang)) },
+        "Rang ", r.rang, " \xB7 ", r.titel)),
+      /*#__PURE__*/React.createElement("button", { type:"button", style:{ ...chip(false), color:'var(--white)', border:'1px solid rgba(var(--accent-rgb),calc(.6*var(--ka)))' },
+        onClick:() => onChange(String(raenge[Math.floor(Math.random() * raenge.length)].rang)) }, "\u2684 W\xFCrfeln")
+    ),
+    aktiv && /*#__PURE__*/React.createElement("div", { style:{ fontFamily:'var(--font-b)', fontSize:'13px', lineHeight:1.7, color:'var(--silver)' } },
+      /*#__PURE__*/React.createElement("span", { style:{ color:'var(--white)' } }, aktiv.titel, ": "), aktiv.beschreibung)
+  );
+}
+
 function NscOutputPhase({ nscTags, nscPossible }) {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -2352,6 +2375,9 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     }
     return { val:'—', src:'none' };
   };
+
+  // Division wie beim Speichern: Auswahl, eindeutiges Quizergebnis oder erster Kandidat
+  const nscDivision = (() => { const r = getNsc('division'); return r.src === 'none' ? null : r.src === 'multi' ? (nscPossible.division || [])[0] : r.val; })();
 
   const rows = [
     { lbl:'Rasse', ...getNsc('rasse') },
@@ -2422,7 +2448,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
         lebensphase: g('lebensphase')            || extra.lebensphase || null,
         beruf:       nscTags.beruf.trim()        || null,
         division:    g('division'),
-        rang:        extra.rang.trim()           || null,
+        rang:        (g('division') && g('division') !== 'Keine' && String(extra.rang).trim()) || null,
         organisation:extra.organisation.trim()  || null,
         kapsel:      extra.kapsel.trim()         || null,
         wohnort:     extra.wohnort.trim()        || null,
@@ -2433,9 +2459,9 @@ function NscOutputPhase({ nscTags, nscPossible }) {
         unvergesslich: extra.unvergesslich.trim() || null,
         eigenschaften: extra.eigenschaften.split('\n').map(s=>s.trim()).filter(Boolean),
         talente:       extra.talente.split('\n').map(s=>s.trim()).filter(Boolean),
-        makel:         extra.makel.trim()        || null,
+        makel:         extra.makel.split('\n').map(s=>s.trim()).filter(Boolean),   // text[] NOT NULL
         motivationen:  extra.motivationen.filter(s=>s.trim()),
-        geheimnisse:   extra.geheimnisse.filter(s=>s.trim()),
+        geheimnisse:   extra.geheimnisse.filter(s=>s.trim()).map(s=>({ text:s.trim(), vis:false })),
         kontakte: {
           familie:  (extra.kontakte.familie||[]).filter(e=>e.name.trim()).map(e=>({name:e.name.trim(),rolle:e.rolle.trim(),verstorben:false})),
           freunde:  (extra.kontakte.freunde||[]).filter(e=>e.name.trim()).map(e=>({name:e.name.trim(),rolle:e.rolle.trim(),verstorben:false})),
@@ -2590,6 +2616,11 @@ function NscOutputPhase({ nscTags, nscPossible }) {
       )
     )),
 
+    // ── Divisionsrang (nur mit Division) ─────────────────────────────────────
+    NscSektion("Divisionsrang", [
+      /*#__PURE__*/React.createElement(NscRangWahl, {key:'rang', division:nscDivision, value:extra.rang, onChange:v=>setEx('rang',v)})
+    ], true),
+
     // ── Hade (nach Wohlstand oder Klasse, Tabellen der Spielleitung) ─────────
     NscSektion("Hade \xB7 Wie viel tr\xE4gt dein NSC bei sich?", [
       /*#__PURE__*/React.createElement(window.HadeRechner, {key:'hade', value:extra.habe, onChange:v=>setEx('habe',v)})
@@ -2601,7 +2632,6 @@ function NscOutputPhase({ nscTags, nscPossible }) {
       NscField("Alter (Jahre)", /*#__PURE__*/React.createElement("input", {type:"number",value:(window.CharAge.fromBirth(extra.geburtstag_jahr,extra.geburtstag_doy) ?? extra.alter), disabled:window.CharAge.fromBirth(extra.geburtstag_jahr,extra.geburtstag_doy)!=null, onChange:e=>setEx('alter',e.target.value), style:{...nscFieldSt,width:90}})),
       NscField("Geburtsdatum", /*#__PURE__*/React.createElement(window.CharAge.BirthDatePicker, {doy:extra.geburtstag_doy, jahr:extra.geburtstag_jahr, onChange:({doy,jahr})=>setExtra(p=>({...p, geburtstag_doy:doy, geburtstag_jahr:jahr})), buttonStyle:{...nscFieldSt, cursor:'pointer', textAlign:'left'}})),
       NscField("Wohnort", /*#__PURE__*/React.createElement("input", {value:extra.wohnort, onChange:e=>setEx('wohnort',e.target.value), style:nscFieldSt, placeholder:"Stadt, Viertel, Adresse…"})),
-      NscField("Rang", /*#__PURE__*/React.createElement("input", {value:extra.rang, onChange:e=>setEx('rang',e.target.value), style:nscFieldSt, placeholder:"z.B. Leutnant, Meister…"})),
       NscField("Organisation", /*#__PURE__*/React.createElement("input", {value:extra.organisation, onChange:e=>setEx('organisation',e.target.value), style:nscFieldSt, placeholder:"Gilde, Kult, Gruppe…"})),
       NscField("Traumkapsel", /*#__PURE__*/React.createElement("input", {value:extra.kapsel, onChange:e=>setEx('kapsel',e.target.value), style:nscFieldSt, placeholder:"Kapsel-Nummer…"})),
     ]),
