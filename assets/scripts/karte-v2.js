@@ -135,7 +135,7 @@
       id: o.id, hex_id: o.hex_id || null, area_id: o.area_id || null,
       titel: o.titel || '', tags: o.tags || [], beschreibung: o.beschreibung || '',
       bedingung: o.bedingung || '', belohnung: o.belohnung || '',
-      monster: o.monster || [],
+      monster: [],   // kommt nur für die Spielleitung aus karte_objective_monster (loadObjectives)
       entdeckt: !!o.entdeckt, komplettiert: !!o.komplettiert, freigeschaltet: !!o.freigeschaltet,
       sort_order: o.sort_order || 0,
     };
@@ -152,6 +152,12 @@
       const { data } = await window._sb.from('karte_objectives').select('*').in('area_id', areaIds);
       (data || []).forEach(o => out.push(rowToObjective(o)));
     }
+    // Monsterlisten liegen in einer DM-only-Tabelle (Migration 058); Spielern liefert RLS nichts
+    if (out.length && window.SITE_USER && window.SITE_USER.role === 'dm') {
+      const { data } = await window._sb.from('karte_objective_monster').select('objective_id, monster').in('objective_id', out.map(o => o.id));
+      const byId = new Map((data || []).map(r => [r.objective_id, r.monster || []]));
+      out.forEach(o => { o.monster = byId.get(o.id) || []; });
+    }
     out.sort((a, b) => a.sort_order - b.sort_order);
     return out;
   }
@@ -161,11 +167,13 @@
       id: o.id, hex_id: o.hex_id || null, area_id: o.area_id || null,
       titel: o.titel || '', tags: o.tags || [], beschreibung: o.beschreibung || '',
       bedingung: o.bedingung || '', belohnung: o.belohnung || '',
-      monster: o.monster || [],
       entdeckt: !!o.entdeckt, komplettiert: !!o.komplettiert, freigeschaltet: !!o.freigeschaltet,
       sort_order: o.sort_order || 0,
     }, { onConflict: 'id' });
-    if (error) console.error('sbUpsertObjective:', error);
+    if (error) { console.error('sbUpsertObjective:', error); return; }
+    const { error: mErr } = await window._sb.from('karte_objective_monster')
+      .upsert({ objective_id: o.id, monster: o.monster || [] }, { onConflict: 'objective_id' });
+    if (mErr) console.error('sbUpsertObjective monster:', mErr);
   }
 
   async function sbDeleteObjective(id) {
