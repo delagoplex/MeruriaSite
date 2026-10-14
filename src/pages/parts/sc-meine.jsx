@@ -903,7 +903,7 @@ function App() {
     </div>
   );
   if (chars.length === 0) return <EmptyState />;
-  if (entry) { const SV = window.SteckbriefView; return <SV entry={entry} onBack={handleBack} hasMultiple={chars.length > 1} hideNav={true} />; }
+  if (entry) { const SV = window.SteckbriefView; return <SV entry={entry} onBack={handleBack} hasMultiple={true} hideNav={true} />; }
 
   return (
     <CharSelection

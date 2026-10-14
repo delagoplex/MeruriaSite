@@ -1924,11 +1924,12 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
           <div style={{display:"flex",alignItems:"center",gap:14}}>
             {hasMultiple && onBack && (
               <button onClick={onBack} style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".18em",
-                color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",background:"transparent",border:"none",cursor:"pointer",padding:0,
-                textTransform:"uppercase",transition:"color .15s"}}
-                onMouseEnter={e=>e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))"}
-                onMouseLeave={e=>e.currentTarget.style.color="rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))"}>
-                ← Auswahl
+                color:"rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))",background:"transparent",
+                border:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",borderRadius:3,cursor:"pointer",padding:"5px 12px",
+                textTransform:"uppercase",transition:"all .15s",flexShrink:0}}
+                onMouseEnter={e=>{e.currentTarget.style.color="var(--white)";e.currentTarget.style.borderColor="rgba(var(--accent-rgb),calc(0.6*var(--ka)))";}}
+                onMouseLeave={e=>{e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))";e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.3*var(--kp)))";}}>
+                ← Zurück
               </button>
             )}
             {!canEdit && (
