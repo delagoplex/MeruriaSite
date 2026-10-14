@@ -455,7 +455,7 @@ function App() {
     level: [],
     sort: 'name-az'
   });
-  const handleMouseMove = useCallback(e => setMouse({
+  const handleMouseMove = useCallback(e => window.throttledSet(setMouse, {
     x: e.clientX / window.innerWidth,
     y: e.clientY / window.innerHeight
   }), []);

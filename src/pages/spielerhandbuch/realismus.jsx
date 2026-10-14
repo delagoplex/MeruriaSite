@@ -4268,7 +4268,7 @@ function App() {
     return () => window.removeEventListener('resize', measure);
   }, []);
   const handleMouseMove = useCallback(e => {
-    setMouse({
+    window.throttledSet(setMouse, {
       x: e.clientX / window.innerWidth,
       y: e.clientY / window.innerHeight
     });

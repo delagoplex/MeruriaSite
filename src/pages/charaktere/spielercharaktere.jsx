@@ -500,7 +500,7 @@ function ActivePill({ label, onRemove }) {
 function App() {
   const [mouse, setMouse] = useState({ x:0.5, y:0.5 });
   const tweaks = TWEAK_DEFAULTS;
-  const handleMouseMove = useCallback(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
+  const handleMouseMove = useCallback(e => { window.throttledSet(setMouse, { x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
 
   const [characters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(true);

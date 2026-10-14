@@ -1277,7 +1277,7 @@ function App() {
   const [headerBottom, setHeaderBottom] = useState(0);
   const pageTitleRef = useRef(null);
   const handleMouseMove = useCallback(e => {
-    setMouse({
+    window.throttledSet(setMouse, {
       x: e.clientX / window.innerWidth,
       y: e.clientY / window.innerHeight
     });

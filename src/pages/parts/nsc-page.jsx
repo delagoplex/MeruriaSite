@@ -381,7 +381,7 @@ function App() {
   const [mouse, setMouse] = appUS({ x:0.5, y:0.5 });
   const [selected, setSelected] = appUS(null);
   const compactCards = TWEAK_DEFAULTS.compactCards;
-  const handleMouseMove = appUC(e => { setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
+  const handleMouseMove = appUC(e => { window.throttledSet(setMouse, { x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
 
   // Aktive Perspektive (welcher Spielercharakter blickt gerade)
   const [perspective, setPerspective] = appUS('alle');

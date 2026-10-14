@@ -28,3 +28,12 @@ window.themeRgb = function (name) {
   var k = document.documentElement.dataset.theme + name, c = window.__themeRgbCache || (window.__themeRgbCache = {});
   return c[k] || (c[k] = getComputedStyle(document.documentElement).getPropertyValue(name).trim());
 };
+
+// Mausposition für die Parallaxe: höchstens alle 50 ms in den React-State schreiben (sonst rendert
+// jede Mausbewegung die ganze Seite neu); der letzte Wert kommt über den Timer garantiert an.
+window.throttledSet = function (setter, value) {
+  var now = Date.now();
+  clearTimeout(setter.__h);
+  if (now - (setter.__t || 0) >= 50) { setter.__t = now; setter(value); return; }
+  setter.__h = setTimeout(function () { setter.__t = Date.now(); setter(value); }, 50);
+};

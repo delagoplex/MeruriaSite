@@ -625,7 +625,7 @@ function App() {
     y: 0.5
   });
   const handleMouseMove = useCallback(e => {
-    setMouse({
+    window.throttledSet(setMouse, {
       x: e.clientX / window.innerWidth,
       y: e.clientY / window.innerHeight
     });

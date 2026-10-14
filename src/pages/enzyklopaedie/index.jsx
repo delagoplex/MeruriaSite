@@ -914,7 +914,7 @@ function App() {
     return () => ro.disconnect();
   }, []);
   const handleMouseMove = useCallback(e => {
-    setMouse({
+    window.throttledSet(setMouse, {
       x: e.clientX / window.innerWidth,
       y: e.clientY / window.innerHeight
     });

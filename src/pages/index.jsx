@@ -2702,7 +2702,7 @@ function App() {
   const heroRef = uR5(null);
 
   const onMove = uC5(e => {
-    setMouse({ x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight });
+    window.throttledSet(setMouse, { x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight });
   }, []);
 
   return (
