@@ -129,15 +129,15 @@
   },
   {
     "from": "Charaktere.html",
-    "to": "/charaktere/index.html"
+    "to": "/spiel/charaktere.html"
   },
   {
     "from": "MeinCharakter.html",
-    "to": "/charaktere/mein-charakter.html"
+    "to": "/spiel/charaktere.html?tab=meine"
   },
   {
     "from": "Spielercharaktere.html",
-    "to": "/charaktere/spielercharaktere.html"
+    "to": "/spiel/charaktere.html"
   },
   {
     "from": "NSC.html",
@@ -197,7 +197,7 @@
   },
   {
     "from": "DM_Charaktere.html",
-    "to": "/dm/charakterverwaltung.html"
+    "to": "/spiel/charaktere.html"
   },
   {
     "from": "Kartenmanagement.html",
@@ -250,5 +250,21 @@
   {
     "from": "dm/nsc-verwaltung.html",
     "to": "/spiel/kontakte.html"
+  },
+  {
+    "from": "charaktere/index.html",
+    "to": "/spiel/charaktere.html"
+  },
+  {
+    "from": "charaktere/mein-charakter.html",
+    "to": "/spiel/charaktere.html?tab=meine"
+  },
+  {
+    "from": "charaktere/spielercharaktere.html",
+    "to": "/spiel/charaktere.html"
+  },
+  {
+    "from": "dm/charakterverwaltung.html",
+    "to": "/spiel/charaktere.html"
   }
 ]

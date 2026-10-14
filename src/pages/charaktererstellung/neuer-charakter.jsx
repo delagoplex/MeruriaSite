@@ -1013,7 +1013,7 @@ function OutputPhase({
       alert('Der Charakter konnte nicht gespeichert werden: ' + (e && e.message ? e.message : 'unbekannter Fehler') + '\nDeine Eingaben bleiben erhalten, bitte noch einmal versuchen.');
       return;
     }
-    window.location.href = '/charaktere/mein-charakter.html';
+    window.location.href = '/spiel/charaktere.html?tab=meine';
   }
   return /*#__PURE__*/React.createElement("div", {
     style: {

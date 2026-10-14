@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="/assets/images/favicon/favicon-m.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/images/favicon/favicon-m-180.png">
-<title>Meruria — Mein Charakter</title>
+<title>Meruria — Spielercharaktere</title>
 <script src="/assets/scripts/theme-init.js"></script>
 <link rel="stylesheet" href="/assets/styles/global/fonts.css">
 <link rel="stylesheet" href="/assets/styles/global/base.css">
 <link rel="stylesheet" href="/assets/styles/pages/charaktere/mein-charakter.css">
 <script src="/assets/scripts/vendor/react.production.min.js"></script>
 <script src="/assets/scripts/vendor/react-dom.production.min.js"></script>
-<script type="module" src="/src/pages/charaktere/mein-charakter.jsx"></script>
+<script type="module" src="/src/pages/spiel/charaktere.jsx"></script>
 <script src="/assets/scripts/vendor/supabase.min.js"></script>
 <script src="/assets/scripts/supabase-client.js"></script>
 <script src="/assets/scripts/data/zauber-data.js"></script>
@@ -28,24 +28,14 @@
 <script src="/assets/scripts/data/hintergruende-data.js"></script>
 <script src="/assets/scripts/data/ausrüstung-data.js"></script>
 
+<style>
+  @keyframes pulse-dot { 0%,100%{opacity:0.55; transform:scale(1)} 50%{opacity:1; transform:scale(1.15)} }
+  @keyframes hexFloat0 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-18px) rotate(4deg)} }
+  @keyframes hexFloat1 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-12px) rotate(-3deg)} }
+  @keyframes hexFloat2 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-22px) rotate(6deg)} }
+  @keyframes hexFloat3 { 0%,100%{transform:translateY(0px) rotate(0deg)} 50%{transform:translateY(-8px) rotate(-2deg)} }
+</style>
 </head>
 <body>
 <div id="root"></div>
-
-
-<!-- ═══════════════════════════════════════════
-     SCRIPT 1 — Utilities · ImageSlot · Atome
-     ═══════════════════════════════════════════ -->
-
-
-<!-- ═══════════════════════════════════════════
-     SCRIPT 2 — Sektions-Komponenten (extern)
-     ═══════════════════════════════════════════ -->
-
-
-<!-- ═══════════════════════════════════════════
-     SCRIPT 3 — Haupt-App
-     ═══════════════════════════════════════════ -->
-
-
 </body></html>

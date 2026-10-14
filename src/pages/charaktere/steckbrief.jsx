@@ -1,6 +1,8 @@
 // Page entry for /charaktere/steckbrief.html
 import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
+import '../../components/dm-mode.jsx';
+import '../../components/image-upload.jsx';
 import '../../components/steckbrief-components.jsx';
 
 ;(function () {
@@ -112,6 +114,22 @@ var { SiteNav, SiteGate } = window;
 
 function SteckbriefPage() {
   const [char, setChar] = useS3(null);
+  // Spielleitung: bearbeitbarer Bogen mit DM-Leiste (Status, Sichtbarkeit, Stufe, Rang, Löschen)
+  const { isDm, dmOn } = window.useDmMode();
+  const [row, setRow] = useS3(null);
+  const [playerName, setPlayerName] = useS3('');
+  const [dmReady, setDmReady] = useS3(!!window.ScDmSteckbrief);
+  useE3(() => {
+    if (!isDm || window.ScDmSteckbrief) return;
+    // Daten, die nur der bearbeitbare Bogen braucht
+    window.loadDmScripts(['zauber-data', 'klassen-data', 'klassen-detail-data', 'klassen-merkmale-data', 'charaktererstellung-data', 'rassen-data', 'rassen-detail-index', 'talente-data', 'hintergruende-data'].map(n => '/assets/scripts/data/' + n + '.js'))
+      .then(() => import('../parts/sc-dm.jsx')).then(() => setDmReady(true)).catch(err => console.error(err));
+  }, [isDm]);
+  useE3(() => {
+    if (!isDm || !row || !row.owner_id) return;
+    window._sb.from('profiles').select('display_name').eq('id', row.owner_id).single()
+      .then(({ data }) => setPlayerName((data && data.display_name) || ''));
+  }, [isDm, row]);
   const [loading, setLoading] = useS3(true);
   const [err, setErr] = useS3(null);
 
@@ -120,6 +138,7 @@ function SteckbriefPage() {
     if (!id) { setErr('Keine Charakter-ID in der URL.'); setLoading(false); return; }
     window._sb.from('characters').select('*').eq('id', id).single().then(({ data, error }) => {
       if (error || !data) { setErr('Charakter nicht gefunden.'); setLoading(false); return; }
+      setRow(data);
       const d = data.char_data || {};
       setChar(d.hp !== undefined ? d : buildChar(d));
       setLoading(false);
@@ -137,11 +156,26 @@ function SteckbriefPage() {
     <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",paddingTop:"var(--nav-h)",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16}}>
       {SiteNav && <SiteNav />}
       <span style={{fontFamily:"var(--font-mono)",fontSize:12.5,color:"rgba(227,103,96,0.8)"}}>{err || 'Unbekannter Fehler'}</span>
-      <a href="/charaktere/spielercharaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:11.5,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))",textDecoration:"underline"}}>← Zurück zur Übersicht</a>
+      <a href="/spiel/charaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:11.5,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))",textDecoration:"underline"}}>← Zurück zur Übersicht</a>
     </div>
   );
 
-  return <SteckbriefView char={char} />;
+  if (dmOn && dmReady && window.ScDmSteckbrief && row) {
+    const Dm = window.ScDmSteckbrief;
+    return (
+      <div>
+        {SiteNav && <SiteNav />}
+        <div style={{display:"flex",justifyContent:"flex-end",padding:"8px 20px 0"}}><window.DmModeToggle /></div>
+        <Dm row={row} playerName={playerName} />
+      </div>
+    );
+  }
+  return (
+    <React.Fragment>
+      {isDm && <div style={{position:"fixed",top:"calc(var(--nav-h) + 8px)",right:20,zIndex:50}}><window.DmModeToggle /></div>}
+      <SteckbriefView char={char} />
+    </React.Fragment>
+  );
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<SiteGate><SteckbriefPage/></SiteGate>);

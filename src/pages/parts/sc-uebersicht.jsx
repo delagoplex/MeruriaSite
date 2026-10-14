@@ -1,7 +1,5 @@
-// Page entry for /charaktere/spielercharaktere.html
-import '../../components/nav.jsx';
-import '../../components/site-gate.jsx';
-import '../../components/char-age.jsx';
+// Tab „Spielercharaktere“ von /spiel/charaktere.html (früher die Seite /charaktere/spielercharaktere.html).
+// Exposes: window.ScUebersicht. Nav, SiteGate und CharAge lädt der Seiten-Entry.
 
 ;(function () {
 // top-level functions were global in the old classic-script setup
@@ -375,8 +373,9 @@ function MetaLine({ label, value, acc, highlight, divisionAccent }) {
 }
 
 // ── CHARACTER CARD ──────────────────────────────────────
-function CharCard({ char, compact, delay }) {
+function CharCard({ char, compact, delay, dm, onToggleVisible }) {
   const [hov, setHov] = useState(false);
+  const hidden = char.visible === false;
   const acc    = accentOf(char);
   const accDim = hexA(acc, 0.4);
   const accBg  = hexA(acc, 0.10);
@@ -385,7 +384,19 @@ function CharCard({ char, compact, delay }) {
 
   return (
     <div className="reveal-up" style={{ transitionDelay:`${delay}s` }}>
-      <div style={{ position:'relative' }}>
+      <div style={{ position:'relative', opacity: hidden ? 0.55 : 1, transition:'opacity 0.2s' }}>
+        {dm && (
+          <button type="button" onClick={() => onToggleVisible(char)}
+            title={hidden ? 'Für Spieler verborgen — klicken zum Freigeben' : 'Für Spieler sichtbar — klicken zum Verbergen'}
+            aria-label={hidden ? 'Für Spieler verborgen' : 'Für Spieler sichtbar'} aria-pressed={!hidden}
+            style={{ position:'absolute', right:12, bottom:10, zIndex:6, cursor:'pointer', padding:'4px 10px', borderRadius:3,
+              fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.14em', textTransform:'uppercase',
+              color: hidden ? 'rgba(var(--purple-rgb),calc(0.75*var(--kp) + var(--tb)))' : 'color-mix(in srgb, rgba(80,200,140,0.95), rgb(var(--ink-rgb)) var(--cm))',
+              background: hidden ? 'rgba(var(--bg-rgb),0.85)' : 'rgba(80,200,140,0.1)',
+              border: `1px solid ${hidden ? 'rgba(var(--purple-rgb),calc(0.4*var(--kp)))' : 'rgba(80,200,140,0.45)'}` }}>
+            {hidden ? '○ Verborgen' : '◆ Sichtbar'}
+          </button>
+        )}
         <a href={`/charaktere/steckbrief.html?id=${char.id}`}
           onMouseEnter={() => setHov(true)}
           onMouseLeave={() => setHov(false)}
@@ -502,7 +513,16 @@ function App() {
   const tweaks = TWEAK_DEFAULTS;
   const handleMouseMove = useCallback(e => { window.throttledSet(setMouse, { x: e.clientX/window.innerWidth, y: e.clientY/window.innerHeight }); }, []);
 
-  const [characters, setCharacters] = useState([]);
+  // Spielleitung sieht bei eingeschaltetem DM-Modus auch verborgene Charaktere und kann sie freigeben
+  const { isDm, dmOn } = window.useDmMode();
+  const [allCharacters, setCharacters] = useState([]);
+  const characters = useMemo(() => (isDm && !dmOn) ? allCharacters.filter(c => c.visible !== false) : allCharacters, [allCharacters, isDm, dmOn]);
+  const toggleVisible = useCallback(async (c) => {
+    const next = c.visible === false;
+    const { error } = await window._sb.from('characters').update({ visible: next }).eq('id', c.id);
+    if (error) { alert('Sichtbarkeit konnte nicht gespeichert werden: ' + error.message); return; }
+    setCharacters(prev => prev.map(x => x.id === c.id ? { ...x, visible: next } : x));
+  }, []);
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState('');
@@ -630,8 +650,7 @@ function App() {
   useScrollReveal([filtered.length, tweaks.compactCards, loading]);
 
   return (
-    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'calc(var(--vh, 1vh) * 100)', paddingTop:'var(--nav-h)' }}>
-      <SiteNav />
+    <div onMouseMove={handleMouseMove} style={{ position:'relative', minHeight:'calc(var(--vh, 1vh) * 100)' }}>
       {<ParticleField mouseX={mouse.x} mouseY={mouse.y} />}
       {<FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />}
 
@@ -642,9 +661,9 @@ function App() {
         <div className="reveal-up" style={{ marginBottom:'14px', display:'flex', alignItems:'center', gap:'10px', fontFamily:'var(--font-mono)', fontSize:'11.5px', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
           <a href="/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Meruria</a>
           <span style={{ opacity:0.4 }}>›</span>
-          <a href="/charaktere/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Charaktere</a>
-          <span style={{ opacity:0.4 }}>›</span>
           <span style={{ color:'var(--lav)' }}>Spielercharaktere</span>
+          <span style={{ flex:1 }} />
+          <window.DmModeToggle />
         </div>
 
         <div className="reveal-up" style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', gap:'24px', marginBottom:'32px', flexWrap:'wrap' }}>
@@ -784,7 +803,7 @@ function App() {
               ) : (
                 <div style={{ display:'grid', gridTemplateColumns: tweaks.compactCards ? 'repeat(auto-fill, minmax(310px, 1fr))' : 'repeat(auto-fill, minmax(400px, 1fr))', gap:'16px' }}>
                   {filtered.map((char, i) => (
-                    <CharCard key={char.id} char={char} compact={tweaks.compactCards} delay={Math.min(i * 0.04, 0.4)} />
+                    <CharCard key={char.id} char={char} compact={tweaks.compactCards} delay={Math.min(i * 0.04, 0.4)} dm={dmOn} onToggleVisible={toggleVisible} />
                   ))}
                 </div>
               )}
@@ -810,9 +829,7 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <SiteGate><App /></SiteGate>
-);
+window.ScUebersicht = App;
 
 })();
 

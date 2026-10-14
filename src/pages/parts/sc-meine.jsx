@@ -1,10 +1,5 @@
-// Page entry for /charaktere/mein-charakter.html
-import '../../components/nav.jsx';
-import '../../components/image-upload.jsx';
-import '../../components/site-gate.jsx';
-import '../../components/steckbrief-components.jsx';
-import '../../components/school-icon.jsx';
-import '../../components/damage-icon.jsx';
+// Tab „Meine Charaktere“ von /spiel/charaktere.html (früher die Seite /charaktere/mein-charakter.html).
+// Exposes: window.ScMeine (und window.ZauberSection für den Steckbrief). Komponenten lädt der Seiten-Entry.
 
 ;(function () {
 // top-level functions were global in the old classic-script setup
@@ -741,16 +736,6 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
       <div className="mc-head" style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"24px 0 20px",
         borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))",marginBottom:24}}>
         <div className="mc-head-left" style={{display:"flex",alignItems:"center",gap:20}}>
-          {/* Zurück-Button */}
-          <a href="/index.html"
-            style={{display:"inline-flex",alignItems:"center",gap:6,fontFamily:"var(--font-mono)",
-              fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",
-              textDecoration:"none",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:3,
-              padding:"5px 12px",transition:"all .18s",flexShrink:0}}
-            onMouseEnter={e=>{e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))";e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.5*var(--kp)))";}}
-            onMouseLeave={e=>{e.currentTarget.style.color="rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))";e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.2*var(--kp)))";}}>
-            ← Zurück
-          </a>
           <div>
             <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".28em",color:"rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))",
               textTransform:"uppercase",marginBottom:3}}>Meruria · Charaktere</div>
@@ -854,7 +839,7 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
 /* ── Leer-Zustand ──────────────────────────── */
 function EmptyState() {
   return (
-    <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+    <div style={{minHeight:"60vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
       <div style={{maxWidth:480,width:"100%",padding:"0 24px",textAlign:"center"}}>
         <div style={{fontFamily:"var(--font-mono)",fontSize:11.5,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:16}}>
           Meruria · Charaktere
@@ -911,14 +896,14 @@ function App() {
   }
 
   if (loading) return (
-    <div style={{minHeight:"calc(var(--vh, 1vh) * 100)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+    <div style={{minHeight:"60vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
       <span style={{fontFamily:"var(--font-mono)",fontSize:11.5,letterSpacing:".3em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase"}}>
         Lade Charaktere…
       </span>
     </div>
   );
   if (chars.length === 0) return <EmptyState />;
-  if (entry) { const SV = window.SteckbriefView; return <SV entry={entry} onBack={handleBack} hasMultiple={chars.length > 1} />; }
+  if (entry) { const SV = window.SteckbriefView; return <SV entry={entry} onBack={handleBack} hasMultiple={chars.length > 1} hideNav={true} />; }
 
   return (
     <CharSelection
@@ -930,8 +915,6 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <SiteGate><App /></SiteGate>
-);
+window.ScMeine = App;
 
 })();

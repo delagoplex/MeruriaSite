@@ -52,10 +52,10 @@ var PORTALS = [
     tag:'Die acht wichtigsten Organisationen',
     blurb:'Aufbau, Aufgaben und Leitung der acht Divisionen — von den Kuratoren bis zur Bergungsgarde.',
     peek:[{l:'I — Kuratoren',href:'/divisionen/kuratoren.html'},{l:'II — Sturmritter',href:'/divisionen/sturmritter.html'},{l:'III — Sentinels',href:'/divisionen/sentinels.html'},{l:'IV — Friedenshüter',href:'/divisionen/friedenshueter.html'},{l:'V — Outfitters',href:'/divisionen/outfitters.html'},{l:'VI — Pathfinders',href:'/divisionen/pathfinders.html'},{l:'VII — Quellensucher',href:'/divisionen/quellensucher.html'},{l:'VIII — Bergungsgarde',href:'/divisionen/bergungsgarde.html'}] },
-  { id:'charaktere',       href:'/charaktere/index.html',           n:'V',   label:'Charaktere',           hue:30,
+  { id:'charaktere',       href:'/spiel/charaktere.html',           n:'V',   label:'Charaktere',           hue:30,
     tag:'SC & NSC im Überblick',
     blurb:'Die Steckbriefe aller Figuren — eigene Charaktere, Mitspielende und NSC.',
-    peek:[{l:'Meine Charaktere',href:'/charaktere/mein-charakter.html'},{l:'Spielercharaktere',href:'/charaktere/spielercharaktere.html'},{l:'Kontakte',href:'/spiel/kontakte.html'}] },
+    peek:[{l:'Spielercharaktere',href:'/spiel/charaktere.html'},{l:'Meine Charaktere',href:'/spiel/charaktere.html?tab=meine'},{l:'Kontakte',href:'/spiel/kontakte.html'}] },
   { id:'tools',            href:'/spiel/kollektikon.html',           n:'VI',  label:'Spiel',                hue:175,
     tag:'Werkzeuge am Spieltisch',
     blurb:'Kollektikon, Karte, Kalender, Missionsterminal, Rezepte und Steckbrief — alles auf einen Blick.',
@@ -2848,7 +2848,7 @@ function App() {
         </div>
 
         <div style={{ marginTop:28 }}>
-          <CTAButton href="/charaktere/index.html" label="Zu den Charakteren"/>
+          <CTAButton href="/spiel/charaktere.html" label="Zu den Charakteren"/>
         </div>
       </section>
 

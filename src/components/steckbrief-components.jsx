@@ -1932,7 +1932,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               </button>
             )}
             {!canEdit && (
-              <a href="/charaktere/spielercharaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".18em",
+              <a href="/spiel/charaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".18em",
                 color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textDecoration:"none",textTransform:"uppercase",transition:"color .15s"}}
                 onMouseEnter={e=>e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))"}
                 onMouseLeave={e=>e.currentTarget.style.color="rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))"}>

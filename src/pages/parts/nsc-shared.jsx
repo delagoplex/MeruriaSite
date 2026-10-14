@@ -576,9 +576,8 @@ const NAV = [
     { label:'Ausrüstung', href:'/charaktererstellung/ausruestung.html' },
   ]},
   { id:'charaktere', label:'Charaktere', items:[
-    { label:'Übersicht', href:'/charaktere/index.html', dividerAfter:true },
-    { label:'Meine Charaktere', href:'Meine /charaktere/index.html' },
-    { label:'Spielercharaktere', href:'/charaktere/spielercharaktere.html' },
+    { label:'Spielercharaktere', href:'/spiel/charaktere.html' },
+    { label:'Meine Charaktere', href:'/spiel/charaktere.html?tab=meine' },
     { label:'Kontakte', href:'/spiel/kontakte.html' },
   ]},
   { id:'enzyklopaedie', label:'Enzyklopädie', items:[
