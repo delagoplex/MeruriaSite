@@ -2274,7 +2274,7 @@ function NscOutputPhase({ nscTags, nscPossible }) {
     /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'11.5px',letterSpacing:'.3em',color:'color-mix(in srgb, rgba(94,232,208,.7), rgb(var(--ink-rgb)) var(--cm))',textTransform:'uppercase'}}, "NSC gespeichert"),
     /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-d)',fontSize:'22px',fontWeight:300,letterSpacing:'.2em',color:'var(--white)'}}, "„", nscTags.name, "“ wurde angelegt."),
     /*#__PURE__*/React.createElement("div", {style:{display:'flex',gap:12,marginTop:8}},
-      /*#__PURE__*/React.createElement("a", {href:'/dm/nsc-verwaltung.html', style:{...btnBase,color:'rgba(var(--accent-rgb),calc(.75*var(--ka) + var(--tb)))',background:'rgba(var(--purple-rgb),calc(.1*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))',padding:'10px 20px',textDecoration:'none'}}, "→ Zum NSC-Register"),
+      /*#__PURE__*/React.createElement("a", {href:'/spiel/kontakte.html', style:{...btnBase,color:'rgba(var(--accent-rgb),calc(.75*var(--ka) + var(--tb)))',background:'rgba(var(--purple-rgb),calc(.1*var(--kp)))',border:'1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))',padding:'10px 20px',textDecoration:'none'}}, "→ Zum NSC-Register"),
       /*#__PURE__*/React.createElement("button", {onClick:()=>window.location.reload(), style:{...btnBase,color:'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))',background:'transparent',border:'1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))',padding:'10px 20px'}}, "+ Weiteren NSC anlegen")
     )
   );

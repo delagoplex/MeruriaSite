@@ -321,7 +321,7 @@ function GeheimnisEntry({ text, idx, acc }) {
 // ── Kontakt-Eintrag (klickbar wenn ein verlinkter NSC existiert) ──
 function findNscByName(name) {
   if (!name) return null;
-  const NSC_LIST = window.NSC;
+  const NSC_LIST = window.NSC || [];   // ohne Liste gibt es nur keine Verlinkung
   // Strip titles & whitespace, lowercase for matching
   const clean = name.replace(/^(Mutter|Bruder|Magister|Magistra|Doktor|Hauptmann|Inquisitor|Sucherin|Späher|Wirtin|Bergungsmeisterin|Quartiermeister|Wachfeldwebel|Vampirfürst|Hüter)\s+/i, '').trim().toLowerCase();
   return NSC_LIST.find(n => {
@@ -521,7 +521,7 @@ function FactGuessForm({ nsc, keys, unlocked, characterId, onCorrect, acc }) {
 }
 
 // ── Detail Panel ─────────────────────────────────────────
-function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], characterId, onFactRevealed }) {
+function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, onEdit, charPersp = [], characterId, onFactRevealed }) {
   const scrollRef = dpUR(null);
   // dmTarget: für welche Charaktere gelten die Toggle-Klicks (relevant wenn gm=true)
   const [dmTarget, setDmTarget] = dpUS(() => charPersp.map(p => p.id));
@@ -611,6 +611,13 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
             № {nsc.id.toUpperCase()} · {visible('division') && nsc.division && nsc.division !== 'Keine' ? `${dpRoman(nsc) ? `${dpRoman(nsc)} · ` : ''}${nsc.division}` : 'NSC'}
             {gm && <span style={{ marginLeft:10, color:'color-mix(in srgb, #ffb850, rgb(var(--ink-rgb)) var(--cm))', fontWeight:600 }}>· SPIELLEITUNG</span>}
           </div>
+          {onEdit && (
+            <button onClick={() => onEdit(nsc)} style={{
+              marginLeft:'auto', marginRight:10, cursor:'pointer', padding:'4px 10px', borderRadius:2,
+              background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))', color:'var(--white)',
+              fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.2em', textTransform:'uppercase',
+            }}>Bearbeiten</button>
+          )}
           <button onClick={onClose} style={{
             background:'transparent', border:`1px solid ${dpHA(acc, 0.5)}`, color:'rgba(var(--text-rgb),calc(0.7*var(--kt) + var(--tb)))',
             cursor:'pointer', padding:'4px 10px',
@@ -625,7 +632,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
         <div className="nsc-panel-hero" style={{ display:'flex', gap:22, padding:'24px 26px 14px', alignItems:'flex-start' }}>
           <div style={{ position:'relative', flexShrink:0 }}>
             <NSCPortrait nsc={nsc} stage={stage} acc={acc} size={140}/>
-            {stage === 0 && (
+            {stage === 0 && !gm && (
               <div style={{
                 position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center',
                 fontFamily:'var(--font-mono)', fontSize:36, fontWeight:700,
@@ -644,7 +651,7 @@ function DetailPanel({ nsc, unlocks, gm, onClose, onSelectNsc, charPersp = [], c
                 {nsc.titel}
               </div>
             )}
-            {stage === 0 ? (
+            {stage === 0 && !gm ? (
               <h2 style={{
                 fontFamily:'var(--font-mono)', fontWeight:400, fontSize:18, letterSpacing:'0.12em',
                 color:'rgba(var(--accent-rgb),calc(0.45*var(--ka) + var(--tb)))', lineHeight:1.2,

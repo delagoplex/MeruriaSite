@@ -141,7 +141,7 @@
   },
   {
     "from": "NSC.html",
-    "to": "/charaktere/nsc.html"
+    "to": "/spiel/kontakte.html"
   },
   {
     "from": "Steckbrief.html",
@@ -193,7 +193,7 @@
   },
   {
     "from": "NSC-Verwaltung.html",
-    "to": "/dm/nsc-verwaltung.html"
+    "to": "/spiel/kontakte.html"
   },
   {
     "from": "DM_Charaktere.html",
@@ -242,5 +242,13 @@
   {
     "from": "dm/rekrutierungsanfragen.html",
     "to": "/dm/rekrutierung.html?tab=anfragen"
+  },
+  {
+    "from": "charaktere/nsc.html",
+    "to": "/spiel/kontakte.html"
+  },
+  {
+    "from": "dm/nsc-verwaltung.html",
+    "to": "/spiel/kontakte.html"
   }
 ]

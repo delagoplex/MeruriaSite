@@ -284,13 +284,16 @@ function useNSCData(perspective = 'alle', isDm = false) {
       }
       const sb = window._sb;
       try {
-      const [{ data: charRows, error: charError }, { data: profileRows, error: profileError }] = await Promise.all([
+      const [{ data: allCharRows, error: charError }, { data: profileRows, error: profileError }] = await Promise.all([
         sb.from('characters').select('id,name,owner_id').eq('type','spieler').order('name'),
         sb.from('profiles').select('id,display_name'),
         window.CharAge.load(),
       ]);
       if (charError) throw charError;
       if (profileError) throw profileError;
+      // Spieler können nur aus der Sicht ihrer eigenen Charaktere schauen: fremde (sichtbare) Charaktere
+      // lehnt get_nsc_player_data ab und die Seite bliebe leer.
+      const charRows = isDm ? (allCharRows || []) : (allCharRows || []).filter(c => c.owner_id === window.SITE_USER?.id);
       const selectedCharacter = (charRows || []).some(c => c.id === perspective) ? perspective : null;
       const { data: nscRows, error: nscError } = isDm
         ? await sb.rpc('get_nsc_admin_data')
@@ -576,7 +579,7 @@ const NAV = [
     { label:'Übersicht', href:'/charaktere/index.html', dividerAfter:true },
     { label:'Meine Charaktere', href:'Meine /charaktere/index.html' },
     { label:'Spielercharaktere', href:'/charaktere/spielercharaktere.html' },
-    { label:'NSC', href:'/charaktere/nsc.html' },
+    { label:'Kontakte', href:'/spiel/kontakte.html' },
   ]},
   { id:'enzyklopaedie', label:'Enzyklopädie', items:[
     { label:'Gottheiten', href:'/enzyklopaedie/gottheiten.html' },

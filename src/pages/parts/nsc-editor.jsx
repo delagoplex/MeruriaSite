@@ -1,7 +1,7 @@
-// Page entry for /dm/nsc-verwaltung.html
-import '../../components/nav.jsx';
-import '../../components/site-gate.jsx';
-import '../parts/nsc-shared.jsx';
+// NSC-Editor der Spielleitung (früher die Seite /dm/nsc-verwaltung.html).
+// Wird von /spiel/kontakte.html nur für die Spielleitung nachgeladen und dort als Overlay gezeigt.
+// Exposes: window.NSCEditor ({ initialId, startCreate })
+import './nsc-shared.jsx';
 import '../../components/char-age.jsx';
 
 ;(function () {
@@ -801,7 +801,7 @@ function QuickCreate({ onCreate, canCancel, onCancel, allStats, statsReady }) {
 }
 
 // ── App ────────────────────────────────────────────────────
-function App() {
+function App({ initialId = null, startCreate = false }) {
   const { nscs, setNscs, charPersp, charPids, players, loading } = useDMData();
   const unlocks = useUnlocks(nscs, charPids, 'alle', players);
 
@@ -822,8 +822,8 @@ function App() {
   // Sobald Daten da sind: ersten NSC wählen bzw. Schnellanlage öffnen
   useEffect(() => {
     if (loading) return;
-    if (nscs.length === 0) setCreating(true);
-    else if (!selId) setSelId(nscs[0].id);
+    if (nscs.length === 0 || startCreate) setCreating(true);
+    if (nscs.length && !selId) setSelId(initialId && nscs.some(n => n.id === initialId) ? initialId : nscs[0].id);
   }, [loading]);
 
   // Statblock-Quellen lazy nachladen (NSC-Statblöcke + Monsterdatenbank)
@@ -955,7 +955,7 @@ function App() {
   const sideSelSt = { width:'100%', padding:'6px 8px', background:'rgba(var(--bg-rgb),0.85)', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', borderRadius:3, color:'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))', fontFamily:BODY, fontSize:12.5, outline:'none', boxSizing:'border-box', cursor:'pointer' };
 
   if (loading) return (
-    <div style={{ height:'calc(calc(var(--vh, 1vh) * 100) - var(--nav-h))', display:'flex', alignItems:'center', justifyContent:'center' }}>
+    <div style={{ height:'100%', display:'flex', alignItems:'center', justifyContent:'center' }}>
       <div style={{ fontFamily:MONO, fontSize:12, letterSpacing:'0.3em', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))', textTransform:'uppercase' }}>◈ Lade NSC-Verwaltung …</div>
     </div>
   );
@@ -2709,15 +2709,7 @@ function Preview({ sel, nscs, charPersp, unlocks, persp, setPersp, vis, openNsc,
   );
 }
 
-function Root() {
-  return (
-    <SiteGate>
-      <SiteNav rightLabel="NSC-VERWALTUNG" />
-      <App />
-    </SiteGate>
-  );
-}
-ReactDOM.createRoot(document.getElementById('root')).render(<Root />);
+window.NSCEditor = App;
 
 })();
 

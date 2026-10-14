@@ -233,7 +233,7 @@ function App() {
                       ) : (
                         <div style={{ marginTop:24, paddingTop:20, borderTop:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
                           <span style={{ ...info, color:statusCol(sel.status) }}>{sel.status === 'angenommen' ? '✓ Angenommen' : '✕ Abgelehnt'}{sel.bearbeitet_am ? ' · ' + fmtDat(sel.bearbeitet_am) : ''}</span>
-                          {sel.nsc_id && <a href="/dm/nsc-verwaltung.html" style={{ ...info, color:'var(--white)' }}>→ NSC-Verwaltung öffnen</a>}
+                          {sel.nsc_id && <a href="/spiel/kontakte.html" style={{ ...info, color:'var(--white)' }}>→ Kontakte öffnen</a>}
                           <button onClick={loeschen} style={{ ...btnBase, marginLeft:'auto', padding:'7px 12px', background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))', color:'rgba(var(--text-rgb),calc(0.6*var(--kt) + var(--tb)))' }}>Löschen</button>
                         </div>
                       )}

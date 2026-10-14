@@ -1,16 +1,13 @@
-/* NSC-Verwaltung.css — DM-Verwaltungsseite (Vollbild-App unter der Nav) */
+/* NSC-Editor der Spielleitung — läuft als Overlay (DmOverlay) über /spiel/kontakte.html.
+   Alles ist auf .nscv-shell begrenzt, damit die Spieleransicht darunter unverändert bleibt. */
 
-:root { --nav-h: 52px; }
-
-html, body { overflow: hidden; }
-
-select option { background: rgb(var(--panel-rgb)); color: var(--white); }
-input::placeholder, textarea::placeholder { color: rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb))); }
-input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
+.nscv-shell select option { background: rgb(var(--panel-rgb)); color: var(--white); }
+.nscv-shell input::placeholder, .nscv-shell textarea::placeholder { color: rgba(var(--accent-rgb),calc(0.35*var(--ka) + var(--tb))); }
+.nscv-shell input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
 
 .nscv-shell {
   display: flex;
-  height: calc(calc(var(--vh, 1vh) * 100) - var(--nav-h));
+  height: 100%;
   overflow: hidden;
   background: radial-gradient(ellipse 900px 500px at 70% -10%, rgba(var(--purple-rgb),calc(0.10*var(--kp))), transparent), var(--bg);
 }

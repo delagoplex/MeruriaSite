@@ -12,6 +12,15 @@ const { STAGE_LABELS, MAX_STAGE, STATUS_DEF, STATUS_ORDER,
 
 const TWEAK_DEFAULTS = {"compactCards": false};
 
+// Daten, die nur der NSC-Editor braucht (Bildauswahl, Rassen-/Waffenwerte für Statblöcke)
+const NSC_EDITOR_SCRIPTS = [
+  '/assets/scripts/data/bilder-data.js',
+  '/assets/scripts/data/rassen-struktur-data.js',
+  '/assets/scripts/data/ausrüstung-data.js',
+  '/assets/scripts/shared/rasse-anwenden.js',
+  '/assets/scripts/shared/statblock-steckbrief.js',
+];
+
 const uniq = arr => Array.from(new Set(arr.filter(Boolean))).sort((a,b) => a.localeCompare(b,'de'));
 const statusOf = n => Array.isArray(n.status) ? n.status : (n.status ? [n.status] : []);
 
@@ -109,7 +118,7 @@ function NSCCard({ nsc, unlocks, gm, compact, delay, onClick }) {
   const accBg  = hexA(acc, 0.10);
   const statusList = Array.isArray(nsc.status) ? nsc.status : (nsc.status ? [nsc.status] : []);
   const isDead = statusList.includes('Gefallen') || statusList.includes('Verstorben');
-  const isUnknown = stage === 0;
+  const isUnknown = stage === 0 && !gm;   // die Spielleitung sieht immer, wer es ist
   const uFacts = unlockableFactsOf(nsc);
   const totalFacts = uFacts.length;
   const openFacts = uFacts.filter(k => unlocked.has(k)).length;
@@ -386,6 +395,18 @@ function App() {
   // Aktive Perspektive (welcher Spielercharakter blickt gerade)
   const [perspective, setPerspective] = appUS('alle');
   const isDm = window.SITE_USER?.role === 'dm';
+  // Spielleitung: Freischalten im Detailfenster und der NSC-Editor als Overlay (nur bei eingeschaltetem DM-Modus)
+  const { dmOn } = window.useDmMode();
+  const [editor, setEditor] = appUS(null);          // null | { id, create }
+  const [editorReady, setEditorReady] = appUS(!!window.NSCEditor);
+  const openEditor = appUC((opts) => {
+    setEditor(opts);
+    if (window.NSCEditor) return;
+    window.loadDmScripts(NSC_EDITOR_SCRIPTS)
+      .then(() => import('./nsc-editor.jsx'))
+      .then(() => setEditorReady(true))
+      .catch(err => { console.error(err); alert('Der NSC-Editor konnte nicht geladen werden.'); setEditor(null); });
+  }, []);
 
   // Spieler erhalten nur die für ihre aktive Figur freigegebenen NSC-Fakten.
   const { nscs, perspectives, charPids, players, loading: dataLoading, loadError, refresh: refreshNscs } = useNSCData(perspective, isDm);
@@ -561,7 +582,7 @@ function App() {
       <FloatingHexField mouseX={mouse.x} mouseY={mouse.y} />
 
       <PageHeader />
-      <SiteNav rightLabel="NSC-REGISTER" />
+      <SiteNav rightLabel="KONTAKTE" />
 
       {/* MAIN */}
       <div style={{ position:'relative', zIndex:5, maxWidth:1380, margin:'0 auto', padding:'46px 36px 80px' }}>
@@ -570,9 +591,7 @@ function App() {
           <div style={{ display:'flex', alignItems:'center', gap:10, fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))' }}>
             <a href="/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Meruria</a>
             <span style={{ opacity:0.4 }}>›</span>
-            <a href="/charaktere/index.html" style={{ color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textDecoration:'none' }}>Charaktere</a>
-            <span style={{ opacity:0.4 }}>›</span>
-            <span style={{ color:'var(--lav)' }}>NSC</span>
+            <span style={{ color:'var(--lav)' }}>Kontakte</span>
           </div>
           <div style={{ display:'flex', alignItems:'flex-start', gap:10, flexWrap:'wrap' }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))', textTransform:'uppercase', paddingTop:7, flexShrink:0 }}>
@@ -632,6 +651,15 @@ function App() {
             </div>
           </div>
         </div>
+
+        {/* Spielleitung: Umschalter und Anlegen */}
+        {isDm && (
+          <div style={{ display:'flex', alignItems:'center', gap:10, flexWrap:'wrap', marginBottom:22 }}>
+            <window.DmModeToggle />
+            {dmOn && <button type="button" onClick={() => openEditor({ id:null, create:true })} style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer', padding:'6px 12px', borderRadius:3, color:'var(--white)', background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))' }}>+ Neuer Kontakt</button>}
+            {dmOn && <button type="button" onClick={() => openEditor({ id:null, create:false })} style={{ fontFamily:'var(--font-mono)', fontSize:11.5, letterSpacing:'0.18em', textTransform:'uppercase', cursor:'pointer', padding:'6px 12px', borderRadius:3, color:'var(--white)', background:'rgba(var(--purple-rgb),calc(0.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(0.7*var(--ka)))', background:'transparent' }}>Alle bearbeiten</button>}
+          </div>
+        )}
 
         {/* Hero */}
         <div className="reveal-up" style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', gap:24, marginBottom:36, flexWrap:'wrap' }}>
@@ -836,7 +864,7 @@ function App() {
                 gap:16,
               }}>
                 {filtered.map((nsc, i) => (
-                  <NSCCard key={nsc.id} nsc={nsc} unlocks={unlocks} gm={false} compact={compactCards}
+                  <NSCCard key={nsc.id} nsc={nsc} unlocks={unlocks} gm={dmOn} compact={compactCards}
                     delay={Math.min(i * 0.04, 0.4)}
                     onClick={(n) => setSelected(n)} />
                 ))}
@@ -856,17 +884,27 @@ function App() {
       {/* FOOTER */}
       <div style={{ position:'relative', zIndex:10, padding:'10px 32px', borderTop:'1px solid rgba(var(--accent-rgb),calc(0.07*var(--ka)))', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
         <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>◈ REGISTER-STATUS: NOMINAL ◈ EPOCHE: UNBEKANNT</div>
-        <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>MERURIA // NSC-REGISTER</div>
+        <div style={{ fontFamily:'var(--font-mono)', fontSize:11, color:'rgba(var(--accent-rgb),calc(0.22*var(--ka) + var(--tb)))', letterSpacing:'0.2em' }}>MERURIA // KONTAKTE</div>
       </div>
 
       {/* Detail Panel */}
-      <NSCDetailPanel nsc={selected} unlocks={unlocks} gm={false} onClose={() => setSelected(null)}
+      <NSCDetailPanel nsc={selected} unlocks={unlocks} gm={dmOn} onClose={() => setSelected(null)}
+        onEdit={dmOn ? (n) => { setSelected(null); openEditor({ id:n.id, create:false }); } : null}
         onSelectNsc={(n) => setSelected(n)}
         characterId={charPids.includes(perspective) ? perspective : null}
         onFactRevealed={key => {
           if (selected && charPids.includes(perspective)) unlocks.revealForPid(selected.id, perspective, key);
           refreshNscs();
         }} />
+
+      {/* NSC-Editor der Spielleitung */}
+      {editor && (
+        <window.DmOverlay title="Kontakte · Spielleitung" padded={false} onClose={() => { setEditor(null); refreshNscs(); }}>
+          {editorReady && window.NSCEditor
+            ? <window.NSCEditor initialId={editor.id} startCreate={editor.create} />
+            : <div style={{ height:'100%', display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'var(--font-mono)', fontSize:12, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))' }}>◈ Lade Editor …</div>}
+        </window.DmOverlay>
+      )}
 
     </div>
   );

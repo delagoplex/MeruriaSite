@@ -55,7 +55,7 @@ var PORTALS = [
   { id:'charaktere',       href:'/charaktere/index.html',           n:'V',   label:'Charaktere',           hue:30,
     tag:'SC & NSC im Überblick',
     blurb:'Die Steckbriefe aller Figuren — eigene Charaktere, Mitspielende und NSC.',
-    peek:[{l:'Meine Charaktere',href:'/charaktere/mein-charakter.html'},{l:'Spielercharaktere',href:'/charaktere/spielercharaktere.html'},{l:'NSC',href:'/charaktere/nsc.html'}] },
+    peek:[{l:'Meine Charaktere',href:'/charaktere/mein-charakter.html'},{l:'Spielercharaktere',href:'/charaktere/spielercharaktere.html'},{l:'Kontakte',href:'/spiel/kontakte.html'}] },
   { id:'tools',            href:'/spiel/kollektikon.html',           n:'VI',  label:'Spiel',                hue:175,
     tag:'Werkzeuge am Spieltisch',
     blurb:'Kollektikon, Karte, Kalender, Missionsterminal, Rezepte und Steckbrief — alles auf einen Blick.',

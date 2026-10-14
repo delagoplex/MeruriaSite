@@ -164,12 +164,12 @@ const NAV = [
     items: [
       { label: 'Meine Charaktere', href: '/charaktere/mein-charakter.html' },
       { label: 'Spielercharaktere', href: '/charaktere/spielercharaktere.html' },
-      { label: 'NSC', href: '/charaktere/nsc.html' },
     ],
   },
   {
     id: 'tools', label: 'Spiel',
     items: [
+      { label: 'Kontakte', href: '/spiel/kontakte.html' },
       { label: 'Kollektikon', href: '/spiel/kollektikon.html' },
       { label: 'Karte', href: '/spiel/karte.html' },
       { label: 'Kalender', href: '/spiel/kalender.html' },
@@ -186,7 +186,6 @@ const NAV = [
       { label: 'Tarot', href: '/dm/tarot.html', locked: true },
       { label: 'Kampfsimulation', href: '/dm/kampfsimulation.html', locked: true },
       { label: 'Missionen', href: '/dm/missionen.html', locked: true },
-      { label: 'NSC-Verwaltung', href: '/dm/nsc-verwaltung.html', locked: true },
       { label: 'Charakterverwaltung', href: '/dm/charakterverwaltung.html', locked: true },
       { label: 'Kartenmanagement', href: '/dm/kartenmanagement.html', locked: true },
       { label: 'Kolonisierung & Bau', href: '/dm/kolonisierung-und-bau.html', locked: true },

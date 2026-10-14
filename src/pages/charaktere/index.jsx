@@ -41,7 +41,7 @@ const SECTIONS = [{
 }, {
   id: 'nsc',
   name: 'NSC',
-  href: '/charaktere/nsc.html',
+  href: '/spiel/kontakte.html',
   untertitel: 'Nichtspielercharaktere',
   beschreibung: 'Kontakte, Auftraggeber, Widersacher, Händler, Wirtsleute — alle Figuren, die der Spielleiter führt. Bekannte Gesichter aus Velundra und den fernen Außenposten, geordnet nach Begegnung.',
   icon: 'nsc',
