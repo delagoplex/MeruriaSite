@@ -232,8 +232,9 @@ function Nav({
 // Auswahlfläche: beide Flächen sehen im Ruhezustand gleich aus, beim Überfahren leuchtet eine auf.
 // locked: halbtransparentes Schloss (NSC-Erstellung braucht für Spieler ein Passwort).
 const NSC_UNLOCK_KEY = 'nsc_quiz_unlocked';
-function TypeCard({ label, sub, onClick, locked = false }) {
-  const [hov, setHov] = useState(false);
+function TypeCard({ label, sub, onClick, locked = false, aktiv = false }) {
+  const [hov0, setHov] = useState(false);
+  const hov = hov0 || aktiv;
   return (
     <button type="button" onClick={onClick} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       onFocus={() => setHov(true)} onBlur={() => setHov(false)}
@@ -1119,6 +1120,75 @@ function QuizPhase({
       onClick: () => onAnswer(currentQ, zufallAus(quizOptionen(currentQ, possible))) }, "\u2684 Entscheide f\xFCr mich")));
 }
 
+// ── ATTRIBUTE: Art des Würfelns ─────────────────────────────────────────────
+// Einmal würfeln (Standard), Zweimal würfeln (gesperrt: Würfelerlaubnis-Code der Spielleitung, wie die
+// NSC-Karte mit Schloss) oder „Mache ich später“ (z. B. mit echten Würfeln oder in Foundry).
+function WuerfelCodeDialog({ onOk, onCancel }) {
+  const [code, setCode] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState('');
+  useEffect(() => {
+    const k = e => { if (e.key === 'Escape') onCancel(); };
+    window.addEventListener('keydown', k);
+    return () => window.removeEventListener('keydown', k);
+  }, [onCancel]);
+  const submit = async (e) => {
+    e.preventDefault();
+    const c = code.replace(/-/g, '').trim().toUpperCase();
+    if (!c || busy) return;
+    setBusy(true); setErr('');
+    const { data: status, error } = await window._sb.rpc('check_roll_token', { p_code: c });
+    setBusy(false);
+    if (error) { setErr('Verbindungsfehler.'); return; }
+    if (status === 'used') { setErr('Dieser Code wurde bereits verwendet.'); return; }
+    if (status !== 'ok') { setErr('Code nicht gefunden.'); return; }
+    onOk(c);
+  };
+  const btn = { fontFamily:'var(--font-m)', fontSize:'11.5px', letterSpacing:'.18em', textTransform:'uppercase', cursor:'pointer', borderRadius:3, padding:'9px 16px' };
+  return (
+    <div role="dialog" aria-modal="true" aria-label="Zweimal würfeln entsperren" onMouseDown={e => { if (e.target === e.currentTarget) onCancel(); }}
+      style={{ position:'fixed', inset:0, zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center', padding:20, background:'rgba(var(--bg-rgb),.78)', backdropFilter:'blur(3px)', animation:'fadeIn .2s ease' }}>
+      <form onSubmit={submit} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:14, padding:'26px 28px', maxWidth:460, width:'100%',
+        background:'rgba(var(--panel-rgb),.98)', border:'1px solid rgba(var(--accent-rgb),calc(.45*var(--ka)))', borderRadius:4, boxShadow:'0 20px 60px rgba(var(--shadow-rgb),calc(.6*var(--shadow-k)))' }}>
+        <div style={{ fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.22em', textTransform:'uppercase', color:'rgba(var(--accent-rgb),calc(.6*var(--ka) + var(--tb)))' }}>
+          Zweimal würfeln · Würfelerlaubnis der Spielleitung
+        </div>
+        <input autoFocus value={code} placeholder="XXXX-XXXX" aria-label="Code"
+          onChange={e => setCode(e.target.value.toUpperCase().replace(/[^A-Z0-9\-]/g, '').slice(0, 9))}
+          style={{ width:'100%', fontFamily:'var(--font-m)', fontSize:'14px', letterSpacing:'.14em', color:'var(--white)', background:'rgba(var(--bg-rgb),.6)',
+            border:'1px solid rgba(var(--purple-rgb),calc(.4*var(--kp)))', borderRadius:3, padding:'9px 12px', outline:'none', textAlign:'center' }} />
+        <div style={{ display:'flex', gap:8 }}>
+          <button type="submit" disabled={busy || !code} style={{ ...btn, color:'var(--white)', background:'rgba(var(--purple-rgb),calc(.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(.6*var(--ka)))', opacity: busy || !code ? .6 : 1 }}>
+            {busy ? 'Prüfe …' : 'Entsperren'}
+          </button>
+          <button type="button" onClick={onCancel} style={{ ...btn, color:'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))', background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(.25*var(--kp)))' }}>Abbrechen</button>
+        </div>
+        {err && <div role="alert" style={{ fontFamily:'var(--font-b)', fontSize:'13px', color:'color-mix(in srgb, rgba(240,130,130,.95), rgb(var(--ink-rgb)) var(--cm))' }}>{err}</div>}
+      </form>
+    </div>
+  );
+}
+
+function AttributWahl({ zweimalFrei, spaeter, onEinmal, onZweimal, onUnlock, onSpaeter }) {
+  const [frage, setFrage] = useState(false);
+  return (
+    <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
+      <div style={{ display:'flex', gap:14, flexWrap:'wrap' }}>
+        <TypeCard label="Einmal würfeln" sub="4W6, der niedrigste fällt weg" onClick={onEinmal} />
+        <TypeCard label="Zweimal würfeln" sub="den besseren Satz wählen" locked={!zweimalFrei}
+          onClick={() => zweimalFrei ? onZweimal() : setFrage(true)} />
+        <TypeCard label="Mache ich später" sub="z. B. in Foundry" aktiv={spaeter} onClick={onSpaeter} />
+      </div>
+      {spaeter && (
+        <p style={{ fontFamily:'var(--font-b)', fontSize:'13px', lineHeight:1.7, color:'var(--silver)', margin:0 }}>
+          Der Charakter wird ohne Attributwerte angelegt. Trag sie nach dem Würfeln im Steckbrief ein.
+        </p>
+      )}
+      {frage && <WuerfelCodeDialog onCancel={() => setFrage(false)} onOk={c => { setFrage(false); onUnlock(c); }} />}
+    </div>
+  );
+}
+
 // ── OUTPUT PHASE ───────────────────────────────────────────────────────────
 function OutputPhase({
   tags,
@@ -1180,7 +1250,8 @@ function OutputPhase({
   const [validatedToken, setValidatedToken] = useState(null);
 
   // Stats mode — only unlocked after token validation
-  const [statsMode, setStatsMode] = useState(null); // null | 'roll' | 'manual'
+  const [statsMode, setStatsMode] = useState(null); // null | 'roll' | 'spaeter' (früher auch 'manual')
+  const [rollArt, setRollArt] = useState('einmal'); // 'einmal' | 'zweimal' (Würfelerlaubnis eingelöst)
   const [rollA, setRollA] = useState(null); // first roll set
   const [rollB, setRollB] = useState(null); // second roll set
   const [chosen, setChosen] = useState(null); // 'a' | 'b'
@@ -1631,149 +1702,14 @@ function OutputPhase({
       borderRadius: 4,
       background: 'rgba(var(--purple-rgb),calc(.02*var(--kp)))'
     }
-  }, tokenState !== 'valid' && /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 12
-    }
-  }, /*#__PURE__*/React.createElement("p", {
-    style: {
-      fontFamily: 'var(--font-b)',
-      fontWeight: 300,
-      fontSize: '13px',
-      color: 'rgba(var(--text-rgb),calc(.45*var(--kt) + var(--tb)))',
-      lineHeight: 1.75,
-      margin: 0
-    }
-  }, "F\xFCr Attributwerte ist eine ", /*#__PURE__*/React.createElement("strong", {
-    style: {
-      color: 'rgba(var(--accent-rgb),calc(.7*var(--ka) + var(--tb)))',
-      fontWeight: 400
-    }
-  }, "W\xFCrfelerlaubnis"), " des Spielleiters erforderlich. Ohne sie kann der Charakter trotzdem erstellt werden \u2014 die Attribute lassen sich sp\xE4ter nachtragen."), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 8,
-      flexWrap: 'wrap'
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    value: tokenInput,
-    onChange: e => {
-      setTokenInput(e.target.value.toUpperCase().replace(/[^A-Z0-9\-]/g, '').slice(0, 9));
-      if (tokenState === 'error') setTokenState('idle');
-    },
-    onKeyDown: e => {
-      if (e.key === 'Enter') handleRedeemToken();
-    },
-    placeholder: "XXXX-XXXX",
-    style: {
-      fontFamily: 'var(--font-m)',
-      fontSize: '12.5px',
-      letterSpacing: '.12em',
-      background: 'rgba(var(--bg-rgb),.5)',
-      border: '1px solid rgba(var(--accent-rgb),calc(.18*var(--ka)))',
-      borderRadius: '3px',
-      padding: '6px 10px',
-      color: 'var(--white)',
-      outline: 'none',
-      width: 120,
-      textTransform: 'uppercase'
-    }
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: handleRedeemToken,
-    disabled: tokenState === 'checking' || !tokenInput.trim(),
-    style: {
-      fontFamily: 'var(--font-m)',
-      fontSize: '11px',
-      letterSpacing: '.12em',
-      color: 'rgba(var(--accent-rgb),calc(.75*var(--ka) + var(--tb)))',
-      background: 'rgba(var(--purple-rgb),calc(.08*var(--kp)))',
-      border: '1px solid rgba(var(--purple-rgb),calc(.25*var(--kp)))',
-      borderRadius: '3px',
-      padding: '6px 12px',
-      cursor: tokenState === 'checking' ? 'not-allowed' : 'pointer',
-      textTransform: 'uppercase',
-      transition: 'all .2s'
-    }
-  }, tokenState === 'checking' ? '…' : 'Würfelerlaubnis einlösen'), tokenState === 'error' && /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontFamily: 'var(--font-m)',
-      fontSize: '11px',
-      color: 'color-mix(in srgb, rgba(255,100,100,.75), rgb(var(--ink-rgb)) var(--cm))',
-      letterSpacing: '.08em'
-    }
-  }, tokenError))), tokenState === 'valid' && statsMode === null && /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 14
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-m)',
-      fontSize: '11px',
-      color: 'color-mix(in srgb, rgba(94,232,208,.6), rgb(var(--ink-rgb)) var(--cm))',
-      letterSpacing: '.18em',
-      textTransform: 'uppercase'
-    }
-  }, "\u2713 W\xFCrfelerlaubnis aktiv"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: 10,
-      flexWrap: 'wrap'
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: () => {
-      setStatsMode('roll');
-      doFirstRoll();
-    },
-    style: {
-      fontFamily: 'var(--font-m)',
-      fontSize: '11.5px',
-      letterSpacing: '.15em',
-      color: 'rgba(var(--accent-rgb),calc(.85*var(--ka) + var(--tb)))',
-      background: 'rgba(var(--purple-rgb),calc(.08*var(--kp)))',
-      border: '1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))',
-      borderRadius: '3px',
-      padding: '10px 20px',
-      cursor: 'pointer',
-      textTransform: 'uppercase',
-      transition: 'all .2s'
-    },
-    onMouseEnter: e => {
-      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(.18*var(--kp)))';
-      e.currentTarget.style.color = 'var(--white)';
-    },
-    onMouseLeave: e => {
-      e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(.08*var(--kp)))';
-      e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(.85*var(--ka) + var(--tb)))';
-    }
-  }, "\u2684 W\xFCrfeln"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => setStatsMode('manual'),
-    style: {
-      fontFamily: 'var(--font-m)',
-      fontSize: '11.5px',
-      letterSpacing: '.15em',
-      color: 'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))',
-      background: 'transparent',
-      border: '1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))',
-      borderRadius: '3px',
-      padding: '10px 20px',
-      cursor: 'pointer',
-      textTransform: 'uppercase',
-      transition: 'all .2s'
-    },
-    onMouseEnter: e => {
-      e.currentTarget.style.color = 'var(--white)';
-      e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(.45*var(--ka)))';
-    },
-    onMouseLeave: e => {
-      e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))';
-      e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(.2*var(--ka)))';
-    }
-  }, "\u270E Manuell eingeben"))), statsMode === 'roll' && /*#__PURE__*/React.createElement("div", {
+  }, (statsMode === null || statsMode === 'spaeter') && /*#__PURE__*/React.createElement(AttributWahl, {
+    zweimalFrei: tokenState === 'valid',
+    spaeter: statsMode === 'spaeter',
+    onEinmal: () => { setRollArt('einmal'); setStatsMode('roll'); doFirstRoll(); },
+    onZweimal: () => { setRollArt('zweimal'); setStatsMode('roll'); doFirstRoll(); },
+    onUnlock: code => { setValidatedToken(code); setTokenState('valid'); setRollArt('zweimal'); setStatsMode('roll'); doFirstRoll(); },
+    onSpaeter: () => setStatsMode(statsMode === 'spaeter' ? null : 'spaeter')
+  }), statsMode === 'roll' && /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'column',
@@ -1900,7 +1836,7 @@ function OutputPhase({
       fontSize: '11px',
       color: 'rgba(var(--accent-rgb),calc(.35*var(--ka) + var(--tb)))'
     }
-  }, "\u03A3 ", rollB.reduce((s, r) => s + r.val, 0)))), !rollB && tokenState === 'valid' && /*#__PURE__*/React.createElement("button", {
+  }, "\u03A3 ", rollB.reduce((s, r) => s + r.val, 0)))), !rollB && rollArt === 'zweimal' && /*#__PURE__*/React.createElement("button", {
     onClick: doSecondRoll,
     style: {
       alignSelf: 'flex-start',
