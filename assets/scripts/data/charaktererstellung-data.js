@@ -243,8 +243,9 @@ window.CHAR_QUIZ = [
     ]
   },
   // Mehrfachauswahl (mehrfach:true): es bleiben die Klassen, die zu mindestens einer gewählten Schadensart passen.
+  // tag:'schaden': entfällt, wenn auf „Was weißt du schon?“ schon Schadensarten gewählt wurden (dieselbe Zuordnung).
   // Schadensarten wie auf /spielerhandbuch/informationen.html (Schadensarten), Feld schaden = Symbol (DamageIcon)
-  { id:'k4', kat:'klasse', mehrfach:true,
+  { id:'k4', kat:'klasse', mehrfach:true, tag:'schaden',
     frage:'Welche Schadensarten interessieren dich?',
     optionen:[
       { text:'Hieb',       schaden:'Hieb',       behalte:['Barbar','Kämpfer','Paladin','Waldläufer','Schurke'] },

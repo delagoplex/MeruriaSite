@@ -539,6 +539,42 @@ function CatBlock({
   ));
 }
 
+// ── SCHADENSARTEN ──────────────────────────────────────────────────────────
+// Mehrfachauswahl mit den Symbolen von /spielerhandbuch/informationen.html. Grenzt die Klassen ein
+// (Zuordnung aus der Quizfrage k4 in charaktererstellung-data.js); die Quizfrage entfällt dann.
+function schadenKlassen(arten) {
+  if (!arten || !arten.length) return null;
+  const q = (window.CHAR_QUIZ || []).find(x => x.id === 'k4');
+  if (!q) return null;
+  return [...new Set(q.optionen.filter(o => arten.includes(o.schaden)).flatMap(o => o.behalte))];
+}
+function SchadenBlock({ selected, onChange }) {
+  const arten = window.SCHADENSARTEN || [];
+  const DI = window.DamageIcon;
+  const umschalten = a => onChange(selected.includes(a) ? selected.filter(x => x !== a) : [...selected, a]);
+  const klassen = schadenKlassen(selected);
+  return /*#__PURE__*/React.createElement("div", { className: "cat-block" },
+    /*#__PURE__*/React.createElement("div", { className: "cat-head" }, "Welche Schadensarten interessieren dich?"),
+    /*#__PURE__*/React.createElement("div", { style:{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(118px,1fr))', gap:8 } },
+      arten.map(a => {
+        const an = selected.includes(a);
+        return /*#__PURE__*/React.createElement("button", { key: a, type: "button", "aria-pressed": an, onClick: () => umschalten(a), title: a,
+          style:{ display:'flex', flexDirection:'column', alignItems:'center', gap:6, padding:'12px 6px 10px', cursor:'pointer', borderRadius:4,
+            background: an ? 'rgba(var(--purple-rgb),calc(.22*var(--kp)))' : 'rgba(var(--purple-rgb),calc(.04*var(--kp)))',
+            border: '1px solid ' + (an ? 'rgba(var(--accent-rgb),calc(.75*var(--ka)))' : 'rgba(var(--purple-rgb),calc(.22*var(--kp)))'),
+            boxShadow: an ? '0 0 16px rgba(var(--purple-rgb),calc(.3*var(--kp)))' : 'none', transition:'all .15s' } },
+          DI ? /*#__PURE__*/React.createElement(DI, { type: a, size: 34, style:{ opacity: an || !selected.length ? 1 : .55 } }) : null,
+          /*#__PURE__*/React.createElement("span", { style:{ fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.14em', textTransform:'uppercase',
+            color: an ? 'var(--white)' : 'rgba(var(--text-rgb),calc(.7*var(--kt) + var(--tb)))' } }, a));
+      })),
+    /*#__PURE__*/React.createElement("div", { style:{ display:'flex', alignItems:'center', gap:10, flexWrap:'wrap', marginTop:10, minHeight:30 } },
+      /*#__PURE__*/React.createElement("span", { style:{ fontFamily:'var(--font-b)', fontSize:'13px', fontWeight:300, lineHeight:1.6, color:'var(--silver)', flex:1 } },
+        klassen ? "Passende Klassen: " + klassen.join(', ') : "Mehrere m\xF6glich. Grenzt die Klassen ein, die solchen Schaden typischerweise austeilen."),
+      selected.length > 0 && /*#__PURE__*/React.createElement("button", { type:"button", onClick: () => onChange([]), title:"Auswahl zur\xFCcksetzen", "aria-label":"Auswahl zur\xFCcksetzen",
+        style:{ display:'inline-flex', alignItems:'center', justifyContent:'center', width:34, height:30, padding:0, cursor:'pointer', borderRadius:4, fontSize:15, lineHeight:1,
+          background:'rgba(255,190,60,0.08)', border:'1px solid rgba(255,190,60,0.28)', color:'color-mix(in srgb, rgba(255,210,100,0.85), rgb(var(--ink-rgb)) var(--cm))' } }, "\u21A9")));
+}
+
 // ── GOTTHEIT ───────────────────────────────────────────────────────────────
 // Zweigeteilt: oben die Namen, unten Gesinnung und Titel, jeweils gruppiert (Merurisches Pantheon,
 // Dämonen, Naturgeister). Wird ein Name oder ein Titel gewählt, bleiben nur dieser Name und sein Titel stehen.
@@ -783,7 +819,7 @@ function TagPhase({
     } = window.GODS_DATA;
     return [...gods, ...demons, ...naturgeister].map(g => g.name);
   }, []);
-  const selCount = Object.entries(tags).filter(([k, v]) => k === 'werkzeuge' ? v instanceof Set && v.size > 0 : k === 'werkzeugeSicher' ? v.length > 0 : v !== null).length;
+  const selCount = Object.entries(tags).filter(([k, v]) => k === 'werkzeuge' ? v instanceof Set && v.size > 0 : Array.isArray(v) ? v.length > 0 : v !== null).length;
   return /*#__PURE__*/React.createElement("div", {
     style: {
       maxWidth: 920,
@@ -874,7 +910,10 @@ function TagPhase({
       selected: tags.subklasse,
       onSelect: v => setTag('subklasse', v)
     });
-  })(), /*#__PURE__*/React.createElement(CatBlock, {
+  })(), !(tags.klasse && tags.klasse !== 'unbekannt') && /*#__PURE__*/React.createElement(SchadenBlock, {
+    selected: tags.schaden || [],
+    onChange: v => setTag('schaden', v)
+  }), /*#__PURE__*/React.createElement(CatBlock, {
     title: "Hintergrund",
     items: window.ALLE_HINTERGRUENDE,
     selected: tags.hintergrund,
@@ -990,6 +1029,7 @@ function QuizPhase({
     if (!qd) return null;
     return qd.find(q => {
       if (quizAnswers.some(a => a.qId === q.id)) return false;
+      if (q.tag && (tags[q.tag] || []).length) return false;
       const tv = tags[q.kat];
       if (tv !== null && tv !== 'unbekannt') return false;
       return (possible[q.kat] || []).length > 1 && quizOptionen(q, possible).length > 1;
@@ -1004,6 +1044,7 @@ function QuizPhase({
   const answered = quizAnswers.length;
   const remaining = useMemo(() => ((quizData || window.CHAR_QUIZ) || []).filter(q => {
     if (quizAnswers.some(a => a.qId === q.id)) return false;
+    if (q.tag && (tags[q.tag] || []).length) return false;
     const tv = tags[q.kat];
     return (tv === null || tv === 'unbekannt') && (possible[q.kat] || []).length > 1 && quizOptionen(q, possible).length > 1;
   }).length, [quizAnswers, tags, possible, quizData]);
@@ -2420,7 +2461,7 @@ function App() {
   const [tags, setTagsState] = useState({
     rasse: null, klasse: null, subklasse: null, hintergrund: null, zauberwirker: null,
     samen: null, lebensstil: null, gottheit: null, werkzeuge: null, division: null,
-    geschlecht: null, gesinnung: null, sternzeichen: null, gottheitGesinnung: null, werkzeugeSicher: []
+    geschlecht: null, gesinnung: null, sternzeichen: null, gottheitGesinnung: null, werkzeugeSicher: [], schaden: []
   });
   // Kombinationen (Rasse/Talent/Klasse/Hintergrund), die die sicheren Werkzeuge liefern; null = keine Vorgabe
   const [wzKombis, setWzKombis] = useState(null);
@@ -2497,7 +2538,13 @@ function App() {
     const passendeHg = tags.werkzeuge instanceof Set && tags.werkzeuge.size && P ? P.hintergruendeFuer([...tags.werkzeuge]) : null;
     setPossible({
     rasse: kombis && kombis.length ? uniq('rasse') : (window.ALLE_RASSEN||[]),
-    klasse: kombis && kombis.length ? uniq('klasse') : (window.ALLE_KLASSEN||[]),
+    klasse: (() => {
+      const kl = kombis && kombis.length ? uniq('klasse') : (window.ALLE_KLASSEN||[]);
+      const passt = schadenKlassen(tags.schaden);
+      if (!passt) return kl;
+      const x = kl.filter(k => passt.includes(k));
+      return x.length ? x : kl;
+    })(),
     hintergrund: (() => {
       let hg = kombis && kombis.length ? uniq('hintergrund') : (window.ALLE_HINTERGRUENDE||[]);
       if (passendeHg && passendeHg.length) { const x = hg.filter(h => passendeHg.includes(h)); if (x.length) hg = x; }
