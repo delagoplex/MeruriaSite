@@ -4,6 +4,7 @@
                             ImageSlot, SecTitle, Card, Corners, IRow
    ═══════════════════════════════════════════════════════════════ */
 import './char-age.jsx';
+import './char-stufe.jsx';
 const { useState: useSteckbrief, useRef: useSteckRef, useEffect: useSteckEffect } = React;
 // mod, fmtMod, attrKey, skillBonus, ImageSlot, SecTitle, Card, Corners and IRow are defined by the
 // page entry (see its first section) and looked up as globals while rendering. Do NOT destructure
@@ -23,19 +24,11 @@ function AutoTextarea({ value, style, ...rest }) {
 
 /* ── Hilfsfunktionen ─────────────────────── */
 function calcProfBonus(level) { return Math.ceil((level||1)/4)+1; }
-// Erfahrungspunkte, ab denen eine Stufe erreicht ist (D&D 5e, Stufe 1–20)
-const EP_STUFEN = [0,300,900,2700,6500,14000,23000,34000,48000,64000,85000,100000,120000,140000,165000,195000,225000,265000,305000,355000];
-function stufeAusEp(xp) {
-  const ep = Math.max(0, Number(xp) || 0);
-  let st = 1;
-  EP_STUFEN.forEach((min, i) => { if (ep >= min) st = i + 1; });
-  return st;
-}
-// Die Stufe folgt den EP. Ältere Charaktere ohne EP behalten ihre eingetragene Stufe, bis EP eingetragen sind.
+// EP-Tabelle und Stufe aus den EP: char-stufe.jsx
+const { EP_STUFEN, stufeAusEp, charStufe } = window;
 function mitStufe(c) {
   if (!c) return c;
-  const ep = Number(c.xp) || 0;
-  const st = ep > 0 ? stufeAusEp(ep) : (c.level || 1);
+  const st = charStufe(c);
   return (c.level === st && c.profBonus === calcProfBonus(st)) ? c : { ...c, level: st, profBonus: calcProfBonus(st) };
 }
 // Zahlenfeld mit − / + im Seitenstil (wie NumStepper in ressourcen-ui.jsx) für die Erfahrungspunkte

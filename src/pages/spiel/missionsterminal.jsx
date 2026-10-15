@@ -3,6 +3,7 @@ import '../../components/nav.jsx';
 import '../../components/site-gate.jsx';
 import '../../components/page-hero.jsx';
 import '../../components/dm-mode.jsx';
+import '../../components/char-stufe.jsx';
 import '../parts/missionen-dm-host.jsx';
 
 ;(function () {
@@ -1153,7 +1154,7 @@ function CharPickerModal({
     style: {
       color: 'rgba(var(--purple-rgb),calc(0.7*var(--kp) + var(--tb)))'
     }
-  }, "Charakter erstellen \u2192")), myChars.map(ch => /*#__PURE__*/React.createElement("div", {
+  }, "Charakter erstellen \u2192")), myChars.map(ch => { const dv = window.charDivision(ch.char_data || {}, ch.division); const acc = dv?.div.accent; return /*#__PURE__*/React.createElement("div", {
     key: ch.id,
     onClick: () => setPickedId(ch.id),
     style: {
@@ -1181,9 +1182,13 @@ function CharPickerModal({
       justifyContent: 'center',
       fontFamily: 'var(--font-display)',
       fontSize: '14px',
-      color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))'
-    }
-  }, (ch.name || '?')[0]), /*#__PURE__*/React.createElement("div", {
+      color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))',
+      ...(acc ? { borderColor: acc + '88', background: acc + '1f' } : {})
+    },
+    title: dv ? dv.div.name : undefined
+  }, dv && dv.div.logo
+    ? /*#__PURE__*/React.createElement("img", { src: dv.div.logo, alt: "", style: { width: 24, height: 24, objectFit: 'contain', filter: `drop-shadow(0 0 4px ${acc})` } })
+    : (ch.name || '?')[0]), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1,
       minWidth: 0
@@ -1206,13 +1211,37 @@ function CharPickerModal({
       color: 'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
       marginTop: '1px'
     }
-  }, [ch.race, ch.class, ch.division, `Stufe ${ch.char_data?.level ?? 1}`].filter(Boolean).join(' · ') || '—')), pickedId === ch.id && /*#__PURE__*/React.createElement("span", {
+  }, [ch.race, ch.class].filter(v => v && v !== '—').join(' · ') || 'Rasse und Klasse offen'), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px',
+      letterSpacing: '.06em',
+      marginTop: '2px',
+      color: acc ? `color-mix(in srgb, ${acc}, rgb(var(--ink-rgb)) var(--cm))` : 'rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))'
+    }
+  }, dv ? [dv.div.nummer, dv.div.name, dv.rang && `Rang ${dv.rang.rang} \xB7 ${dv.rang.titel}`].filter(Boolean).join(' \xB7 ') : 'Keine Division')),
+  /*#__PURE__*/React.createElement("span", {
+    title: "Stufe",
+    style: {
+      flexShrink: 0,
+      fontFamily: 'var(--font-mono)',
+      fontSize: '11px',
+      letterSpacing: '.12em',
+      textTransform: 'uppercase',
+      padding: '3px 8px',
+      borderRadius: 2,
+      border: '1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))',
+      background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))',
+      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
+      whiteSpace: 'nowrap'
+    }
+  }, "Stufe ", window.charStufe(ch.char_data || {})), pickedId === ch.id && /*#__PURE__*/React.createElement("span", {
     style: {
       color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))',
       fontSize: '16px',
       flexShrink: 0
     }
-  }, "\u2713")))), /*#__PURE__*/React.createElement("div", {
+  }, "\u2713")); })), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '14px 22px',
       borderTop: '1px solid rgba(var(--purple-rgb),calc(0.12*var(--kp)))',
