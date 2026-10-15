@@ -240,30 +240,32 @@ function EditableDivisionRank({ char, upd }) {
           letterSpacing:".12em",marginBottom:10}}>— Keine Division gewählt —</div>
       )}
 
-      {/* Rang-Auswahl (wenn Division gewählt und Picker zu) */}
-      {div && !open && (
-        <div style={{display:"flex",flexDirection:"column",gap:2}}>
-          {div.raenge.slice().reverse().map(r => {
-            const sel = char.rank === r.titel;
-            return (
-              <button key={r.rang} onClick={()=>selectRang(r)}
-                style={{display:"flex",alignItems:"center",gap:8,padding:"3px 6px",
-                  background:sel?`${acc}22`:"transparent",
-                  border:`1px solid ${sel?acc:"transparent"}`,borderRadius:2,
-                  cursor:"pointer",textAlign:"left",transition:"all .12s"}}>
-                <span style={{fontFamily:"var(--font-mono)",fontSize:11,color:sel?acc:"rgba(var(--purple-rgb),calc(0.3*var(--kp)))",
-                  letterSpacing:".1em",flexShrink:0,width:14}}>
-                  {r.rang === 1 ? "★" : r.rang}
-                </span>
-                <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".08em",
-                  color:sel?"var(--white)":"rgba(var(--text-rgb),calc(0.55*var(--kt)))",textTransform:"uppercase"}}>
-                  {r.titel}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      )}
+      {/* Rang-Auswahl: Dropdown mit allen Rängen der Division (wenn Division gewählt und Picker zu) */}
+      {div && !open && (() => {
+        const aktuell = div.raenge.find(r => r.titel === char.rank) || div.raenge[div.raenge.length - 1];
+        const max = div.raenge.length, level = max - aktuell.rang + 1;
+        return (
+          <div>
+            <select value={aktuell.titel} aria-label="Rang"
+              onChange={e => { const r = div.raenge.find(x => x.titel === e.target.value); if (r) selectRang(r); }}
+              style={{fontFamily:"var(--font-mono)",fontSize:11.5,color:"rgba(var(--text-rgb),calc(0.8*var(--kt) + var(--tb)))",width:"100%",
+                background:"rgba(var(--panel-rgb),0.9)",border:`1px solid ${acc}`,borderRadius:2,
+                padding:"5px 6px",cursor:"pointer",outline:"none",marginBottom:8}}>
+              {div.raenge.slice().sort((x, y) => y.rang - x.rang).map(r => (
+                <option key={r.rang} value={r.titel}>{r.rang === 1 ? '★ ' : ''}Rang {r.rang} · {r.titel}</option>
+              ))}
+            </select>
+            <div style={{display:"flex",gap:4}} title={`Rang ${aktuell.rang} von ${max} (Stufe ${level})`}>
+              {Array.from({length:max},(_,i)=>{
+                const filled = i < level;
+                return <span key={i} style={{display:"inline-block",width:9,height:9,transform:"rotate(45deg)",flexShrink:0,
+                  background:filled?`${acc}aa`:"transparent",
+                  border:`1px solid ${filled?acc:"rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}`}} />;
+              })}
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Divisions-Picker */}
       {open && (
