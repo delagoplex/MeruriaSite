@@ -485,7 +485,7 @@ function CatBlock({
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "cat-block"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, title && /*#__PURE__*/React.createElement("div", {
     className: "cat-head"
   }, title), /*#__PURE__*/React.createElement("div", {
     className: "chip-wrap"
@@ -647,6 +647,83 @@ function GottheitBlock({ selected, gesinnung, onSelect, onGesinnung }) {
   );
 }
 
+// ── WERKZEUGÜBUNGEN ─────────────────────────────────────────────────────────
+// Oben: Werkzeuge, die der Charakter sicher bekommen soll (höchstens so viele, wie eine Kombination aus
+// Rasse, angeborenem Talent, Klasse und Hintergrund liefern kann; daraus ergibt sich diese Kombination).
+// Unten: Werkzeuge, die zum Hintergrund passen sollen – das Quiz ermittelt dann den Hintergrund.
+const WZ_FEST_KATS = [['rasse','Rasse'], ['klasse','Klasse'], ['hintergrund','Hintergrund']];
+const wzFest = tags => ({ rasse:tags.rasse, klasse:tags.klasse, hintergrund:tags.hintergrund });
+const wzGewaehlt = v => v != null && v !== 'unbekannt';
+
+function WerkzeugBlock({ tags, setTag, setWerkzeug }) {
+  const P = window.WERKZEUG_PLANER;
+  const sicher = tags.werkzeugeSicher || [];
+  const fest = wzFest(tags);
+  const festTags = WZ_FEST_KATS.filter(([k]) => wzGewaehlt(tags[k]));
+  const maxFrei = useMemo(() => P.maxAnzahl({}), []);
+  const maxFest = useMemo(() => P.maxAnzahl(fest), [fest.rasse, fest.klasse, fest.hintergrund]);
+  const kombis = useMemo(() => P.kombinationen(sicher, fest), [sicher.join('|'), fest.rasse, fest.klasse, fest.hintergrund]);
+  // Werkzeuge, die sich noch dazunehmen lassen (es bleibt eine passende Kombination)
+  const moeglich = useMemo(() => {
+    if (sicher.length >= maxFest) return new Set();
+    return new Set(P.ALLE.filter(w => !sicher.includes(w) && kombis.some(c => P.zuordnung([...sicher, w], c.plaetze) === sicher.length + 1)));
+  }, [kombis, maxFest]);
+  const blockiert = festTags.length > 0 && (maxFest === 0 || (sicher.length > 0 && kombis.length === 0));
+  const toggle = w => setTag('werkzeugeSicher', sicher.includes(w) ? sicher.filter(x => x !== w) : [...sicher, w]);
+  const allesUnbekannt = () => festTags.forEach(([k]) => setTag(k, 'unbekannt'));
+  const sub = { fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.2em', textTransform:'uppercase',
+    color:'rgba(var(--accent-rgb),calc(.45*var(--ka) + var(--tb)))', margin:'4px 0 8px' };
+  const hinweis = { fontFamily:'var(--font-b)', fontSize:'13px', lineHeight:1.6, color:'var(--silver)', margin:'0 0 10px' };
+  const nenne = festTags.map(([k]) => '„' + tags[k] + '“').join(', ');
+  const btn = { fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.14em', textTransform:'uppercase', cursor:'pointer', padding:'5px 10px', borderRadius:3,
+    color:'var(--white)', background:'rgba(var(--purple-rgb),calc(.2*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(.55*var(--ka)))' };
+
+  return (
+    <div className="cat-block">
+      <div className="cat-head">Werkzeugübungen</div>
+
+      <div style={sub}>Sicher bekommen · {sicher.length} / {blockiert ? 0 : maxFest}</div>
+      <p style={hinweis}>
+        Wähle bis zu {maxFrei} Werkzeuge, die dein Charakter auf jeden Fall beherrschen soll. Rasse, angeborenes Talent, Klasse und Hintergrund werden dann so gewählt, dass er genau diese bekommt.
+      </p>
+      {blockiert ? (
+        <div style={{ display:'flex', gap:10, alignItems:'center', flexWrap:'wrap', marginBottom:10 }}>
+          <span style={{ ...hinweis, margin:0, color:'color-mix(in srgb, rgba(255,190,90,.95), rgb(var(--ink-rgb)) var(--cm))' }}>
+            Diese Auswahlmethode ist nicht möglich aufgrund von {nenne}.
+          </span>
+          <button type="button" style={btn} onClick={allesUnbekannt}>Alle auf „Unbekannt“ setzen</button>
+        </div>
+      ) : festTags.length > 0 && maxFest < maxFrei && (
+        <div style={{ display:'flex', gap:10, alignItems:'center', flexWrap:'wrap', marginBottom:10 }}>
+          <span style={{ ...hinweis, margin:0 }}>Durch {nenne} sind höchstens {maxFest} möglich.</span>
+          <button type="button" style={btn} onClick={allesUnbekannt}>Alle auf „Unbekannt“ setzen</button>
+        </div>
+      )}
+      {!blockiert && (
+        <div className="chip-wrap">
+          {P.ALLE.filter(w => sicher.includes(w) || moeglich.has(w)).map(w => (
+            <Chip key={w} label={w} st={sicher.includes(w) ? 'selected' : 'default'} onClick={() => toggle(w)} />
+          ))}
+          {sicher.length > 0 && <RevertBtn onClick={() => setTag('werkzeugeSicher', [])} />}
+        </div>
+      )}
+
+      <div style={{ ...sub, marginTop:16 }}>Passend zum Hintergrund (Mehrfachauswahl)</div>
+      <p style={hinweis}>Diese Werkzeuge grenzen die Hintergründe ein; den Hintergrund ermittelt das Quiz.</p>
+      <CatBlock title={null}
+        items={P.ALLE.filter(w => !sicher.includes(w))}
+        selected={tags.werkzeuge === 'unbekannt' ? 'unbekannt' : null}
+        onSelect={v => { if (v === 'unbekannt') setTag('werkzeuge', 'unbekannt'); else setWerkzeug(new Set()); }}
+        multiSet={tags.werkzeuge instanceof Set ? tags.werkzeuge : null}
+        onMultiToggle={item => {
+          const s = new Set(tags.werkzeuge instanceof Set ? tags.werkzeuge : []);
+          s.has(item) ? s.delete(item) : s.add(item);
+          setWerkzeug(s);
+        }} />
+    </div>
+  );
+}
+
 // ── TAG PHASE ──────────────────────────────────────────────────────────────
 function TagPhase({
   tags,
@@ -663,7 +740,7 @@ function TagPhase({
     } = window.GODS_DATA;
     return [...gods, ...demons, ...naturgeister].map(g => g.name);
   }, []);
-  const selCount = Object.entries(tags).filter(([k, v]) => k === 'werkzeuge' ? v instanceof Set && v.size > 0 : v !== null).length;
+  const selCount = Object.entries(tags).filter(([k, v]) => k === 'werkzeuge' ? v instanceof Set && v.size > 0 : k === 'werkzeugeSicher' ? v.length > 0 : v !== null).length;
   return /*#__PURE__*/React.createElement("div", {
     style: {
       maxWidth: 920,
@@ -778,19 +855,10 @@ function TagPhase({
     gesinnung: tags.gottheitGesinnung,
     onSelect: v => setTag('gottheit', v),
     onGesinnung: v => setTag('gottheitGesinnung', v)
-  }), /*#__PURE__*/React.createElement(CatBlock, {
-    title: "Werkzeug\xFCbungen (Mehrfachauswahl)",
-    items: window.WERKZEUGE_LIST,
-    selected: tags.werkzeuge === 'unbekannt' ? 'unbekannt' : null,
-    onSelect: v => {
-      if (v === 'unbekannt') setTag('werkzeuge', 'unbekannt');else setWerkzeug(new Set());
-    },
-    multiSet: tags.werkzeuge instanceof Set ? tags.werkzeuge : null,
-    onMultiToggle: item => {
-      const s = new Set(tags.werkzeuge instanceof Set ? tags.werkzeuge : []);
-      s.has(item) ? s.delete(item) : s.add(item);
-      setWerkzeug(s);
-    }
+  }), /*#__PURE__*/React.createElement(WerkzeugBlock, {
+    tags,
+    setTag,
+    setWerkzeug
   }), /*#__PURE__*/React.createElement(CatBlock, {
     title: "Division",
     items: window.ALLE_DIVISIONEN,
@@ -1000,7 +1068,8 @@ function OutputPhase({
   tags,
   possible,
   quizAnswers,
-  charType
+  charType,
+  wzKombis = null
 }) {
   const [charName, setCharName] = useState('');
   const [showNameModal, setShowNameModal] = useState(false);
@@ -1189,7 +1258,13 @@ function OutputPhase({
       src: 'none'
     };
   };
-  const werkzeuge = tags.werkzeuge instanceof Set && tags.werkzeuge.size > 0 ? [...tags.werkzeuge].join(', ') : tags.werkzeuge === 'unbekannt' ? '— (unbekannt)' : '—';
+  // sichere Werkzeuge (Planer) plus die zum Hintergrund gewählten
+  const wzListe = [...(tags.werkzeugeSicher || []), ...(tags.werkzeuge instanceof Set ? [...tags.werkzeuge] : [])].filter((w, i, a) => a.indexOf(w) === i);
+  const werkzeuge = wzListe.length ? wzListe.join(', ') : tags.werkzeuge === 'unbekannt' ? '— (unbekannt)' : '—';
+  // angeborenes Talent aus der Kombination, die zu Rasse/Klasse/Hintergrund passt
+  const wzWert = kat => { const r = getFinal(kat); return r.src === 'multi' ? (finals[kat] || (possible[kat] || [])[0]) : r.val; };
+  const wzKombi = wzKombis ? (wzKombis.find(c => c.rasse === wzWert('rasse') && c.klasse === wzWert('klasse') && c.hintergrund === wzWert('hintergrund')) || null) : null;
+  const wzTalent = wzKombi ? wzKombi.talent : null;
 
   // Subklasse — alle Klassen, Empfehlung wenn Stufe > 1
   const finalKlasse = getFinal('klasse');
@@ -1234,8 +1309,12 @@ function OutputPhase({
   }, {
     lbl: 'Werkzeugübungen',
     val: werkzeuge,
-    src: tags.werkzeuge instanceof Set && tags.werkzeuge.size > 0 ? 'sel' : 'none'
-  }];
+    src: wzListe.length ? 'sel' : 'none'
+  }, ...(wzTalent ? [{
+    lbl: 'Angeborenes Talent',
+    val: wzTalent,
+    src: 'quiz'
+  }] : [])];
   const byKat = {};
   quizAnswers.forEach(a => {
     if (!byKat[a.kat]) byKat[a.kat] = [];
@@ -1278,10 +1357,11 @@ function OutputPhase({
       lebensstil:     g('lebensstil') || null,
       uebungen: {
         ruestungen: [], waffen: [], fahrzeuge: [], sprachen: [],
-        werkzeuge: tags.werkzeuge instanceof Set ? [...tags.werkzeuge] : [],
+        werkzeuge: wzListe,
       },
       // ── Persönlichkeit & Aussehen ───────────────────────────
       alignment:      tags.gesinnung    || null,
+      angeborenesTalent: wzTalent,
       zodiac:         birthDoy ? (window.CharAge.doyParts(birthDoy) || {}).sign || effSign : effSign,
       gender:         tags.geschlecht   || null,
       geburtstag_doy: birthDoy,
@@ -2869,8 +2949,10 @@ function App() {
   const [tags, setTagsState] = useState({
     rasse: null, klasse: null, subklasse: null, hintergrund: null, zauberwirker: null,
     samen: null, lebensstil: null, gottheit: null, werkzeuge: null, division: null,
-    geschlecht: null, gesinnung: null, sternzeichen: null, gottheitGesinnung: null
+    geschlecht: null, gesinnung: null, sternzeichen: null, gottheitGesinnung: null, werkzeugeSicher: []
   });
+  // Kombinationen (Rasse/Talent/Klasse/Hintergrund), die die sicheren Werkzeuge liefern; null = keine Vorgabe
+  const [wzKombis, setWzKombis] = useState(null);
   const [possible, setPossible] = useState({
     rasse: window.ALLE_RASSEN || [], klasse: window.ALLE_KLASSEN || [],
     hintergrund: window.ALLE_HINTERGRUENDE || [], division: window.ALLE_DIVISIONEN || [],
@@ -2914,7 +2996,17 @@ function App() {
     const prev = possible[q.kat] || [];
     const next = cut(prev, opt.behalte);
     const fin = next.length > 0 ? next : prev;
-    setPossible(p => ({ ...p, [q.kat]:fin }));
+    if (wzKombis && ['rasse','klasse','hintergrund'].includes(q.kat)) {
+      const rest = wzKombis.filter(c => fin.includes(c[q.kat]));
+      if (rest.length) {
+        setWzKombis(rest);
+        setPossible(p => ({ ...p,
+          rasse: [...new Set(rest.map(c => c.rasse))].filter(x => (p.rasse || []).includes(x)),
+          klasse: [...new Set(rest.map(c => c.klasse))].filter(x => (p.klasse || []).includes(x)),
+          hintergrund: [...new Set(rest.map(c => c.hintergrund))].filter(x => (p.hintergrund || []).includes(x)),
+          [q.kat]: fin }));
+      } else setPossible(p => ({ ...p, [q.kat]:fin }));
+    } else setPossible(p => ({ ...p, [q.kat]:fin }));
     setQuizAnswers(a => [...a, { qId:q.id, kat:q.kat, frage:q.frage, answerText:opt.text, prevList:prev, nextList:fin }]);
   };
   const handleNscAnswer = (q, opt) => {
@@ -2925,12 +3017,26 @@ function App() {
     setNscQuizAnswers(a => [...a, { qId:q.id, kat:q.kat, frage:q.frage, answerText:opt.text, prevList:prev, nextList:fin }]);
   };
 
-  const resetPossible = () => setPossible({
-    rasse: window.ALLE_RASSEN||[], klasse: window.ALLE_KLASSEN||[],
-    hintergrund: window.ALLE_HINTERGRUENDE||[], division: window.ALLE_DIVISIONEN||[],
+  const resetPossible = () => {
+    const P = window.WERKZEUG_PLANER;
+    const sicher = tags.werkzeugeSicher || [];
+    const kombis = sicher.length && P ? P.kombinationen(sicher, wzFest(tags)) : null;
+    setWzKombis(kombis && kombis.length ? kombis : null);
+    const uniq = k => [...new Set(kombis.map(c => c[k]))];
+    const passendeHg = tags.werkzeuge instanceof Set && tags.werkzeuge.size && P ? P.hintergruendeFuer([...tags.werkzeuge]) : null;
+    setPossible({
+    rasse: kombis && kombis.length ? uniq('rasse') : (window.ALLE_RASSEN||[]),
+    klasse: kombis && kombis.length ? uniq('klasse') : (window.ALLE_KLASSEN||[]),
+    hintergrund: (() => {
+      let hg = kombis && kombis.length ? uniq('hintergrund') : (window.ALLE_HINTERGRUENDE||[]);
+      if (passendeHg && passendeHg.length) { const x = hg.filter(h => passendeHg.includes(h)); if (x.length) hg = x; }
+      return hg;
+    })(),
+    division: window.ALLE_DIVISIONEN||[],
     lebensstil: window.ALLE_LEBENSSTILE||[], gottheit: gottNamen(tags.gottheitGesinnung), samen: window.ALLE_SAMEN||[],
     werkzeuge: window.WERKZEUGE_LIST||[], sternzeichen: window.ALLE_STERNZEICHEN||[],
   });
+  };
   const resetNscPossible = () => setNscPossible({
     rasse: window.ALLE_RASSEN||[], geschlecht: NSC_GESCHLECHT_LIST,
     status: NSC_STATUS_LIST, division: NSC_DIVISIONS_LIST,
@@ -2967,7 +3073,7 @@ function App() {
       tags:nscTags, possible:nscPossible, quizAnswers:nscQuizAnswers,
       onAnswer:handleNscAnswer, onFinish:()=>setPhase('output'), quizData:NSC_QUIZ_DATA
     }),
-    phase === 'output' && charType !== 'nsc' && /*#__PURE__*/React.createElement(OutputPhase, {tags,possible,quizAnswers,charType}),
+    phase === 'output' && charType !== 'nsc' && /*#__PURE__*/React.createElement(OutputPhase, {tags,possible,quizAnswers,charType,wzKombis}),
     phase === 'output' && charType === 'nsc' && /*#__PURE__*/React.createElement(NscOutputPhase, {nscTags,nscPossible,nscQuizAnswers})
   );
 }
