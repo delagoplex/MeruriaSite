@@ -4,6 +4,10 @@ import '../../components/char-age.jsx';
 import '../../components/site-gate.jsx';
 import '../parts/nsc-monster-flow.jsx';
 import '../parts/hade-rechner.jsx';
+import '../../components/school-icon.jsx';
+import '../../components/damage-icon.jsx';
+import '../parts/sc-meine.jsx';   // Helfer (IRow, Card, …) für die Steckbrief-Vorschau
+import '../../components/steckbrief-components.jsx';
 
 ;(function () {
 (function () {
@@ -1189,6 +1193,15 @@ function AttributWahl({ zweimalFrei, spaeter, onEinmal, onZweimal, onUnlock, onS
   );
 }
 
+// Steckbrief-Vorschau mit Herkunfts-Markierungen; neu aufgebaut, sobald sich der Entwurf ändert
+function NcVorschau({ draft, herkunft }) {
+  const SV = window.SteckbriefView, build = window.buildChar;
+  if (!SV || !build) return null;
+  const key = JSON.stringify(draft) + JSON.stringify(herkunft);
+  return /*#__PURE__*/React.createElement("div", { style:{ margin:'8px -24px 0', border:'1px solid rgba(var(--purple-rgb),calc(.2*var(--kp)))', borderRadius:4, overflow:'hidden' } },
+    /*#__PURE__*/React.createElement(SV, { key, char: build(draft), hideNav: true, vorschau: true, herkunft }));
+}
+
 // ── OUTPUT PHASE ───────────────────────────────────────────────────────────
 function OutputPhase({
   tags,
@@ -1466,7 +1479,7 @@ function OutputPhase({
     if (!byKat[a.kat]) byKat[a.kat] = [];
     byKat[a.kat].push(a);
   });
-  async function doSave(name) {
+  function makeDraft(name) {
     const g = k => {
       const r = getFinal(k);
       if (r.src === 'none') return null;
@@ -1529,6 +1542,26 @@ function OutputPhase({
       tier:  null,
       motto: null,
     };
+    return draft;
+  }
+  const herkunftVon = k => {
+    const r = getFinal(k);
+    if (r.src === 'sel') return 'sel';
+    if (r.src === 'quiz') return 'quiz';
+    if (r.src === 'multi' || r.src === 'emp') return zufall ? 'zufall' : (finals[k] ? 'sel' : null);
+    return null;
+  };
+  const herkunft = {
+    race: herkunftVon('rasse'), class: herkunftVon('klasse'), background: herkunftVon('hintergrund'),
+    division: herkunftVon('division'), deity: herkunftVon('gottheit'), lebensstil: herkunftVon('lebensstil'),
+    zodiac: herkunftVon('sternzeichen'),
+    subclass: tags.subklasse ? 'sel' : finals.subklasse ? (zufall ? 'zufall' : 'sel') : null,
+    alignment: tags.gesinnung ? 'sel' : null, gender: tags.geschlecht ? 'sel' : null,
+    werkzeuge: wzListe.length ? 'sel' : null,
+    stats: statsMode === 'roll' ? 'gewuerfelt' : null,
+  };
+  async function doSave(name) {
+    const draft = makeDraft(name);
     setSaving(true);
     try {
       const { error: insErr } = await window._sb.from('characters').insert({
@@ -1551,7 +1584,7 @@ function OutputPhase({
   }
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      maxWidth: 860,
+      maxWidth: 1240,
       margin: '0 auto',
       padding: '44px 32px 80px',
       animation: 'slideUp .4s ease'
@@ -1569,57 +1602,16 @@ function OutputPhase({
       textTransform: 'uppercase',
       marginBottom: 9
     }
-  }, "Charakterbogen"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 16,
-      flexWrap: 'wrap',
-      marginBottom: 18
-    }
+  }, "Charakterbogen \xB7 Vorschau"), /*#__PURE__*/React.createElement("div", {
+    style: { display:'flex', alignItems:'center', gap:16, flexWrap:'wrap', marginBottom:18 }
   }, /*#__PURE__*/React.createElement("input", {
     value: charName,
     onChange: e => setCharName(e.target.value),
-    placeholder: "Charaktername (optional)",
-    style: {
-      fontFamily: 'var(--font-d)',
-      fontSize: '22px',
-      fontWeight: 300,
-      letterSpacing: '.18em',
-      background: 'transparent',
-      border: 'none',
-      borderBottom: '1px solid rgba(var(--accent-rgb),calc(.2*var(--ka)))',
-      color: 'var(--white)',
-      outline: 'none',
-      padding: '6px 0',
-      minWidth: 260
-    }
-  }), /*#__PURE__*/React.createElement("button", {
-    className: "no-print",
-    onClick: () => window.print(),
-    style: {
-      marginLeft: 'auto',
-      fontFamily: 'var(--font-m)',
-      fontSize: '11px',
-      letterSpacing: '.17em',
-      color: 'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))',
-      background: 'transparent',
-      border: '1px solid rgba(var(--accent-rgb),calc(.18*var(--ka)))',
-      borderRadius: '3px',
-      padding: '8px 18px',
-      cursor: 'pointer',
-      textTransform: 'uppercase',
-      transition: 'all .2s'
-    },
-    onMouseEnter: e => {
-      e.currentTarget.style.color = 'var(--white)';
-      e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(.45*var(--ka)))';
-    },
-    onMouseLeave: e => {
-      e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))';
-      e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(.18*var(--ka)))';
-    }
-  }, "\u2B21 Drucken / PDF")), /*#__PURE__*/React.createElement("div", {
+    placeholder: "Name des Charakters *",
+    "aria-label": "Name des Charakters",
+    style: { fontFamily:'var(--font-d)', fontSize:'22px', fontWeight:300, letterSpacing:'.18em', background:'transparent', border:'none',
+      borderBottom:'1px solid rgba(var(--accent-rgb),calc(.35*var(--ka)))', color:'var(--white)', outline:'none', padding:'6px 0', minWidth:'min(480px, 100%)' }
+  })), /*#__PURE__*/React.createElement("div", {
     style: {
       height: 1,
       background: 'linear-gradient(90deg,rgba(var(--purple-rgb),calc(.45*var(--kp))) 0%,transparent 100%)'
@@ -1628,7 +1620,7 @@ function OutputPhase({
     style: {
       marginBottom: 44
     }
-  }, rows.map(({
+  }, rows.filter(r => (r.src === 'multi' || r.src === 'emp') && r.kat).map(({
     lbl,
     lbl2,
     val,
@@ -2003,79 +1995,19 @@ function OutputPhase({
     )
   ),
 
+  /*#__PURE__*/React.createElement(NcVorschau, { draft: makeDraft(charName.trim() || 'Unbenannt'), herkunft }),
   /*#__PURE__*/React.createElement("div", {
-    style: {
-      margin: '0 0 44px',
-      padding: '20px 24px',
-      border: '1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))',
-      borderRadius: 4,
-      background: 'rgba(var(--purple-rgb),calc(.04*var(--kp)))',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      flexWrap: 'wrap',
-      gap: 16
-    }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-d)',
-      fontSize: '12px',
-      letterSpacing: '.22em',
-      color: 'rgba(var(--accent-rgb),calc(.8*var(--ka) + var(--tb)))',
-      textTransform: 'uppercase',
-      marginBottom: 6
-    }
-  }, "Steckbrief erstellen"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-b)',
-      fontWeight: 300,
-      fontSize: '12.5px',
-      color: 'rgba(var(--text-rgb),calc(.45*var(--kt) + var(--tb)))',
-      lineHeight: 1.6
-    }
-  }, "Alle ermittelten Werte werden \xFCbernommen. Felder, die noch nicht bekannt sind, erhalten Platzhalter.")), /*#__PURE__*/React.createElement("button", {
-    disabled: saving,
-    onClick: () => {
-      if (!charName.trim()) {
-        setModalName('');
-        setShowNameModal(true);
-        return;
-      }
-      doSave(charName.trim());
-    },
-    style: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: 10,
-      padding: '12px 28px',
-      background: 'rgba(var(--purple-rgb),calc(.18*var(--kp)))',
-      border: '1px solid rgba(var(--purple-rgb),calc(.55*var(--kp)))',
-      borderRadius: 3,
-      color: 'rgba(var(--text-rgb),calc(.95*var(--kt) + var(--tb)))',
-      fontFamily: 'var(--font-d)',
-      fontSize: '12.5px',
-      letterSpacing: '.18em',
-      textTransform: 'uppercase',
-      cursor: saving ? 'not-allowed' : 'pointer',
-      opacity: saving ? 0.55 : 1,
-      transition: 'all .2s',
-      whiteSpace: 'nowrap'
-    },
-    onMouseEnter: e => {
-      if (!saving) {
-        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(.32*var(--kp)))';
-        e.currentTarget.style.borderColor = 'rgba(var(--accent-rgb),calc(.8*var(--ka)))';
-        e.currentTarget.style.color = 'var(--white)';
-      }
-    },
-    onMouseLeave: e => {
-      if (!saving) {
-        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(.18*var(--kp)))';
-        e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(.55*var(--kp)))';
-        e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(.95*var(--kt) + var(--tb)))';
-      }
-    }
-  }, saving ? 'Speichern…' : 'Steckbrief öffnen →')), quizAnswers.length > 0 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: { margin:'26px 0 44px', padding:'20px 24px', border:'1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))', borderRadius:4,
+      background:'rgba(var(--purple-rgb),calc(.04*var(--kp)))', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }
+  }, /*#__PURE__*/React.createElement("div", { style:{ fontFamily:'var(--font-b)', fontSize:'13px', lineHeight:1.6, color:'var(--silver)', maxWidth:520 } },
+    charName.trim() ? "Passt alles? Mit dem Absegnen wird der Charakterbogen ohne die Herkunfts-Markierungen angelegt und erscheint unter \u201EMeine Charaktere\u201C."
+      : "Gib deinem Charakter oben einen Namen, dann kannst du den Bogen absegnen."),
+    /*#__PURE__*/React.createElement("button", {
+      type: "button", disabled: saving || !charName.trim(), onClick: () => doSave(charName.trim()),
+      style: { padding:'12px 28px', background:'rgba(var(--purple-rgb),calc(.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(.65*var(--ka)))', borderRadius:3,
+        color:'var(--white)', fontFamily:'var(--font-d)', fontSize:'12.5px', letterSpacing:'.18em', textTransform:'uppercase', whiteSpace:'nowrap',
+        cursor: saving || !charName.trim() ? 'not-allowed' : 'pointer', opacity: saving || !charName.trim() ? .5 : 1 }
+    }, saving ? 'Speichern\u2026' : 'Charakterbogen absegnen \u2192')), quizAnswers.length > 0 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-d)',
       fontSize: '12px',

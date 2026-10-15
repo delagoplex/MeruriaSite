@@ -1878,7 +1878,27 @@ function EditablePersonality({ char, upd, taStyle }) {
    Edit mode:  <SteckbriefView entry={dbRow} onBack={fn} hasMultiple={bool} />
    ─────────────────────────────────────────────────────────── */
 
-function SteckbriefView({ char: charProp = null, entry = null, onBack = null, hasMultiple = false, hideNav = false, extraTopPadding = 0 }) {
+/* ── Herkunft eines Werts (Vorschau in der Charaktererstellung) ── */
+const HERKUNFT_ART = {
+  quiz:       { text:'\u21AF per Quiz',      farbe:'rgba(94,232,208,.75)' },
+  sel:        { text:'\u25C2 ausgew\xE4hlt', farbe:'rgba(190,175,255,.85)' },
+  zufall:     { text:'\u2684 ausgew\xFCrfelt', farbe:'rgba(255,205,110,.85)' },
+  gewuerfelt: { text:'\u2684 gew\xFCrfelt',   farbe:'rgba(255,205,110,.85)' },
+};
+function HerkunftBadge({ art }) {
+  const a = HERKUNFT_ART[art]; if (!a) return null;
+  return <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".08em",whiteSpace:"nowrap",
+    color:`color-mix(in srgb, ${a.farbe}, rgb(var(--ink-rgb)) var(--cm))`}}>{a.text}</span>;
+}
+
+function SteckbriefView({ char: charProp = null, entry = null, onBack = null, hasMultiple = false, hideNav = false, extraTopPadding = 0, herkunft = null, vorschau = false }) {
+  // Herkunfts-Markierungen (nur in der Vorschau der Charaktererstellung)
+  const HB = k => herkunft && herkunft[k] ? <HerkunftBadge art={herkunft[k]} /> : null;
+  const H = (v, k) => herkunft && herkunft[k] && v && v !== '—'
+    ? <span style={{display:"inline-flex",flexWrap:"wrap",alignItems:"baseline",columnGap:8,rowGap:2}}><span>{v}</span>{HB(k)}</span> : v;
+  const HW = (k, el) => herkunft && herkunft[k]
+    ? <div style={{position:"relative"}}>{el}<div style={{position:"absolute",top:-9,right:12,pointerEvents:"none",padding:"1px 8px",borderRadius:3,
+        background:"rgb(var(--bg-rgb))",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))"}}>{HB(k)}</div></div> : el;
   window.CharAge.useReady();
   const canEdit = !!entry;
   const [char, setChar]     = useSteckbrief(() => entry ? charFromEntry(entry) : (charProp || {}));
@@ -1932,7 +1952,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
                 ← Zurück
               </button>
             )}
-            {!canEdit && (
+            {!canEdit && !vorschau && (
               <a href="/spiel/charaktere.html" style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".18em",
                 color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textDecoration:"none",textTransform:"uppercase",transition:"color .15s"}}
                 onMouseEnter={e=>e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.85*var(--ka) + var(--tb)))"}
@@ -2000,12 +2020,12 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               <SelectERow label="Geschlecht"  field="gender"     char={char} upd={upd} options={["männlich","weiblich","divers","keine Angabe"]} />
               <ERow label="Herkunft"    field="birthplace" char={char} upd={upd} />
             </> : <>
-              <IRow label="Volk"        value={char.race}       bright />
-              <IRow label="Klasse"      value={char.class}      bright />
-              <IRow label="Subklasse"   value={char.subclass} />
-              <IRow label="Hintergrund" value={char.background} />
-              <IRow label="Gesinnung"   value={char.alignment}  bright />
-              <IRow label="Geschlecht"  value={char.gender} />
+              <IRow label="Volk"        value={H(char.race, 'race')}       bright />
+              <IRow label="Klasse"      value={H(char.class, 'class')}      bright />
+              <IRow label="Subklasse"   value={H(char.subclass, 'subclass')} />
+              <IRow label="Hintergrund" value={H(char.background, 'background')} />
+              <IRow label="Gesinnung"   value={H(char.alignment, 'alignment')}  bright />
+              <IRow label="Geschlecht"  value={H(char.gender, 'gender')} />
               <IRow label="Herkunft"    value={char.birthplace} />
             </>}
           </Card>
@@ -2022,7 +2042,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               <ERow label="Haut"         field="skin"     char={char} upd={upd} />
             </> : <>
               <IRow label="Geburtstag"   value={char.geburtstag_jahr != null && char.birthday && char.birthday !== '—' ? `${char.birthday}, ${window.CharAge.yearLabel(char.geburtstag_jahr)}` : char.birthday} />
-              <IRow label="Sternzeichen" value={char.zodiac}   bright />
+              <IRow label="Sternzeichen" value={H(char.zodiac, 'zodiac')}   bright />
               <IRow label="Alter"        value={`${window.CharAge.age(char.age, char.age_ref_abs, char.geburtstag_doy, char.geburtstag_jahr)} Jahre`} />
               <IRow label="Größe"   value={char.height && char.height !== '—' ? `${char.height} cm` : char.height} />
               <IRow label="Gewicht" value={char.weight && char.weight !== '—' ? `${char.weight} Pfund` : char.weight} />
@@ -2031,19 +2051,19 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               <IRow label="Haut"         value={char.skin} />
             </>}
           </Card>
-          {E ? <EditableLebensstilCard char={char} upd={upd} /> : <LebensstilCard char={char} />}
-          {E ? <EditableDivisionRank char={char} upd={upd} /> : <DivisionRank char={char} />}
-          {E ? <EditableDeityCard char={char} upd={upd} /> : <DeityCard char={char} />}
+          {E ? <EditableLebensstilCard char={char} upd={upd} /> : HW('lebensstil', <LebensstilCard char={char} />)}
+          {E ? <EditableDivisionRank char={char} upd={upd} /> : HW('division', <DivisionRank char={char} />)}
+          {E ? <EditableDeityCard char={char} upd={upd} /> : HW('deity', <DeityCard char={char} />)}
           {E ? <EditableCombatCompact char={char} upd={upd} /> : <CombatCompact char={char} />}
           {E ? <EditableWaffenCard char={char} upd={upd} /> : <WaffenCard char={char} />}
-          {E ? <EditableUebungenCard char={char} upd={upd} /> : <UebungenCard char={char} />}
+          {E ? <EditableUebungenCard char={char} upd={upd} /> : HW('werkzeuge', <UebungenCard char={char} />)}
           <InventarCard char={char} upd={upd} editing={E} />
           <HabeCard char={char} upd={upd} editing={E} />
         </div>
 
         {/* MITTE */}
         <div style={{display:"flex",flexDirection:"column",gap:11}}>
-          {E ? <EditableStatsGrid char={char} updStat={updStat} /> : <AttributeGrid char={char} />}
+          {E ? <EditableStatsGrid char={char} updStat={updStat} /> : HW('stats', <AttributeGrid char={char} />)}
           {E ? <EditableSavingThrows char={char} upd={upd} /> : <SavingThrows char={char} />}
           {E ? <EditableSkillPills char={char} upd={upd} /> : <SkillPills char={char} />}
           <KlassenmerkmaleCard char={char} />
