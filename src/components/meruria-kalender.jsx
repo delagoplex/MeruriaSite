@@ -194,7 +194,11 @@ function formatKurz(abs) {
 
 /* Alles, was eine Tagesanzeige braucht */
 function tagInfo(abs) {
-  const tag = abs === 0 ? 1 : abs;
+  if (abs === 0) return {
+    abs: 0, year: 0, doy: 0, monthIdx: -1, day: '★', month: 'Tag der Landung', monthRoman: '', sign: 'Die Landung', vibe: 'Ankunft auf Meruria',
+    weekday: WEEKDAYS[weekdayIdx(0)], yearLabel: 'Landung', goldDay: goldPhaseDay(0), ashDay: ashPhaseDay(0), feste: [],
+  };
+  const tag = abs;
   const { year, doy } = absToYearDoy(tag);
   const { monthIdx, dayInMonth } = dayOfYearToMonth(doy);
   const m = MONTHS[monthIdx];
@@ -219,10 +223,13 @@ var heuteCache = null;
 var heuteHoerer = new Set();
 var heuteGestartet = false;
 function heuteSetzen(v) { heuteCache = v; heuteHoerer.forEach(f => f(v)); }
-function heuteLaden() {
-  return window._sb.from('settings').select('value').eq('key', 'kalender_today').maybeSingle().then(({ data }) => {
+function heuteLaden(versuch = 0) {
+  return window._sb.from('settings').select('value').eq('key', 'kalender_today').maybeSingle().then(({ data, error }) => {
+    // Netz-/Rechtefehler: ein paar Mal erneut versuchen, erst dann auf den zuletzt bekannten Tag zurückfallen
+    if (error && versuch < 3) { setTimeout(() => heuteLaden(versuch + 1), 2000 * (versuch + 1)); return; }
     const n = parseInt(data && data.value, 10);
-    heuteSetzen(isNaN(n) ? (parseInt(localStorage.getItem('meruria-today-abs'), 10) || 14) : n);
+    if (!isNaN(n)) { try { localStorage.setItem('meruria-today-abs', String(n)); } catch (e) { /* privater Modus */ } heuteSetzen(n); return; }
+    if (heuteCache == null) heuteSetzen(parseInt(localStorage.getItem('meruria-today-abs'), 10) || 14);
   });
 }
 function heuteStarten() {

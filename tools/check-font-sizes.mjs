@@ -14,6 +14,8 @@ const RES = [
   /font-size\s*:\s*(\d+(?:\.\d+)?)px/g,
   /fontSize\s*:\s*['"](\d+(?:\.\d+)?)px['"]/g,
   /fontSize\s*:\s*(\d+(?:\.\d+)?)(?=\s*[,}\n\r])/g,
+  // Größen, die als Text an Beschriftungs-Helfer gehen, z. B. mono('Titel', '7.5px')
+  /\bmono\([^)]*?,\s*['"](\d+(?:\.\d+)?)px['"]/g,
 ];
 let found = 0;
 

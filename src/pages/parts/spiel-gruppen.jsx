@@ -30,10 +30,11 @@ function Bilderstreifen({ teilnehmer, grau }) {
   if (!teilnehmer.length) return <div className="grp-streifen leer"><span>Noch niemand angenommen</span></div>;
   return (
     <div className={'grp-streifen' + (grau ? ' grau' : '')}>
-      {teilnehmer.map(t => (
-        <a key={t.id} className="grp-zelle" href={`/charaktere/steckbrief.html?id=${t.id}`} title={t.name}>
+      {teilnehmer.map((t, i) => (
+        <a key={t.id || 'verborgen-' + i} className="grp-zelle" href={t.id ? `/charaktere/steckbrief.html?id=${t.id}` : undefined}
+          title={t.verborgen ? 'Noch nicht freigeschalteter Charakter' : t.name}>
           <span className="grp-zelle-innen">
-            {t.bild ? <img src={t.bild} alt="" loading="lazy" /> : <span className="grp-initiale">{(t.name || '?')[0]}</span>}
+            {t.bild ? <img src={t.bild} alt="" loading="lazy" /> : <span className="grp-initiale">{t.verborgen ? '?' : (t.name || '?')[0]}</span>}
           </span>
           <span className="grp-name">{t.name}</span>
         </a>

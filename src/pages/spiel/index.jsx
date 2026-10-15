@@ -89,7 +89,7 @@ function App() {
       <Abschnitt padding="48px 48px 24px"><KollektikonSection /></Abschnitt>
       <Abschnitt padding="56px 48px 64px">
         <Tageskarte />
-        <div style={{ marginTop:24 }}><CTAButton href="/dm/tarot.html" label="Komplettes Tarot-Deck" /></div>
+        {window.SITE_USER?.role === 'dm' && <div style={{ marginTop:24 }}><CTAButton href="/dm/tarot.html" label="Komplettes Tarot-Deck" /></div>}
       </Abschnitt>
       <SiteFooter />
     </div>

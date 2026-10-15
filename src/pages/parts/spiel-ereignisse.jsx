@@ -69,17 +69,25 @@ function relativ(tag, heute) {
 /* ── Bilder mit Vergrößerung ───────────────────────────────────────────── */
 function Bilder({ bilder, onEntfernen }) {
   const [gross, setGross] = useState(null);
+  useEffect(() => {
+    if (!gross) return;
+    const k = e => { if (e.key === 'Escape') setGross(null); };
+    window.addEventListener('keydown', k);
+    return () => window.removeEventListener('keydown', k);
+  }, [gross]);
   if (!bilder || !bilder.length) return null;
   return (
     <div className="erg-bilder">
       {bilder.map((b, i) => (
         <div key={b + i} className="erg-bild">
-          <img src={b} alt="" loading="lazy" onClick={() => setGross(b)} />
+          <button type="button" className="erg-bild-knopf" onClick={() => setGross(b)} aria-label={`Bild ${i + 1} vergrößern`}>
+            <img src={b} alt="" loading="lazy" />
+          </button>
           {onEntfernen && <button type="button" className="erg-bild-weg" onClick={() => onEntfernen(i)} aria-label="Bild entfernen">✕</button>}
         </div>
       ))}
       {gross && ReactDOM.createPortal(
-        <div className="erg-lightbox" onClick={() => setGross(null)} role="dialog" aria-label="Bild">
+        <div className="erg-lightbox" onClick={() => setGross(null)} role="dialog" aria-modal="true" aria-label="Bild (Escape schließt)">
           <img src={gross} alt="" />
         </div>, document.body)}
     </div>
@@ -107,7 +115,7 @@ function ladeRessourcen() {
   return resPromise;
 }
 
-function LinkDialog({ onWahl, onClose }) {
+function LinkDialog({ onWahl, onClose, istDm }) {
   const [art, setArt] = useState('sc');
   const [q, setQ] = useState('');
   const [listen, setListen] = useState({});
@@ -116,8 +124,11 @@ function LinkDialog({ onWahl, onClose }) {
     const setze = (k, v) => aktiv && setListen(l => ({ ...l, [k]: v }));
     if (art === 'sc' && !listen.sc) window._sb.from('characters').select('id,name,char_data').eq('type', 'spieler').order('name')
       .then(({ data }) => setze('sc', (data || []).map(c => ({ id: c.id, name: c.name, sub: c.char_data?.race || '', bild: c.char_data?.bild }))));
-    if (art === 'nsc' && !listen.nsc) window._sb.from('nsc_public_directory').select('id,name,division').order('name')
-      .then(({ data }) => setze('nsc', (data || []).filter(n => n.name).map(n => ({ id: n.id, name: n.name, sub: n.division || '' }))));
+    // Spieler sehen nur freigegebene NSC-Namen (nsc_public_directory); die Spielleitung alle (get_nsc_admin_data)
+    if (art === 'nsc' && !listen.nsc) (istDm
+      ? window._sb.rpc('get_nsc_admin_data')   // Spieler/Client dürfen nscs nicht direkt lesen (046), die SL nutzt die Admin-RPC
+      : window._sb.from('nsc_public_directory').select('id,name,division').order('name'))
+      .then(({ data }) => setze('nsc', (data || []).filter(n => n.name && n.name !== 'Unbekannt').sort((x, y) => x.name.localeCompare(y.name, 'de')).map(n => ({ id: n.id, name: n.name, sub: n.division || '' }))));
     if (art === 'mission' && !listen.mission) window._sb.from('missions').select('id,name,status').order('created_at', { ascending: false })
       .then(({ data }) => setze('mission', (data || []).map(m => ({ id: m.id, name: m.name, sub: m.status === 'archiviert' ? 'archiviert' : '' }))));
     if (art === 'res' && !listen.res) ladeRessourcen().then(l => setze('res', l));
@@ -224,7 +235,7 @@ function EreignisEditor({ start, heute, onGespeichert, onAbbrechen }) {
         <button type="button" className="erg-knopf" onClick={onAbbrechen}>Abbrechen</button>
         <button type="button" className="erg-knopf haupt" disabled={busy} onClick={speichern}>{busy ? 'Speichern …' : (start?.id ? 'Änderungen speichern' : 'Ereignis veröffentlichen')}</button>
       </div>
-      {link && <LinkDialog onWahl={einfuegen} onClose={() => setLink(false)} />}
+      {link && <LinkDialog onWahl={einfuegen} onClose={() => setLink(false)} istDm={window.SITE_USER?.role === 'dm'} />}
     </div>
   );
 }
@@ -376,9 +387,12 @@ function SpielEreignisse() {
   const [meineChars, setMeineChars] = useState([]);
   const [editor, setEditor] = useState(null); // null | {} (neu) | ereignis
 
+  const anfrage = useRef(0);
   const laden = useCallback(async (n = anzahl) => {
+    const nr = ++anfrage.current;   // nur die neueste Anfrage zählt
     const { data, error } = await window._sb.from('ereignisse').select('*')
       .order('tag_abs', { ascending: false }).order('created_at', { ascending: false }).limit(n + 1);
+    if (nr !== anfrage.current) return;
     if (error) { console.error(error); setEreignisse([]); return; }
     const liste = (data || []).slice(0, n);
     setMehr((data || []).length > n);
@@ -386,6 +400,7 @@ function SpielEreignisse() {
     const ids = liste.map(x => x.id);
     if (!ids.length) { setKommentare({}); return; }
     const { data: ks } = await window._sb.from('ereignis_kommentare').select('*').in('ereignis_id', ids).order('created_at');
+    if (nr !== anfrage.current) return;
     const map = {};
     (ks || []).forEach(k => { (map[k.ereignis_id] = map[k.ereignis_id] || []).push(k); });
     setKommentare(map);
@@ -398,10 +413,13 @@ function SpielEreignisse() {
     window._sb.from('characters').select('id,name').eq('owner_id', ich).eq('type', 'spieler').order('name')
       .then(({ data }) => setMeineChars(data || []));
   }, []);
+  // Realtime einmal abonnieren und immer das aktuelle laden() aufrufen (eigener Kanalname je Einbindung)
+  const ladenRef = useRef(laden); ladenRef.current = laden;
   useEffect(() => {
-    const ch = window._sb.channel('spiel-ereignisse').on('postgres_changes', { event: '*', schema: 'public', table: 'ereignisse' }, () => laden()).subscribe();
+    const ch = window._sb.channel('spiel-ereignisse-' + Math.random().toString(36).slice(2))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'ereignisse' }, () => ladenRef.current()).subscribe();
     return () => { window._sb.removeChannel(ch); };
-  }, [laden]);
+  }, []);
 
   const loeschen = async e => {
     if (!window.confirm(`„${e.titel || 'Ereignis'}“ löschen? Kommentare werden mit gelöscht.`)) return;

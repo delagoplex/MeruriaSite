@@ -527,7 +527,7 @@ function MissionsterminalSection() {
       </div>
 
       {/* Two-panel grid */}
-      <div style={{
+      <div className="mt-raster" style={{
         display:'grid', gridTemplateColumns:'1fr 1fr', gap:'18px',
         height:'540px',
       }}>

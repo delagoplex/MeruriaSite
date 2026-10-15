@@ -107,11 +107,12 @@ function Btn({
     }
   }, children);
 }
-function mono(txt, size = '8px', color = 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))') {
+// Monospace-Beschriftung; nie unter der Mindestgröße von 11px (CLAUDE.md)
+function mono(txt, size = '11px', color = 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))') {
   return /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: 'var(--font-mono)',
-      fontSize: size,
+      fontSize: Math.max(11, parseFloat(size) || 11) + 'px',
       letterSpacing: '.2em',
       color,
       textTransform: 'uppercase'
@@ -222,7 +223,7 @@ function MissionRow({
       gap: '8px',
       marginTop: '2px'
     }
-  }, mono(m.auftraggeber || '—', '8px', 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))'), m.status === 'neu' && /*#__PURE__*/React.createElement("span", {
+  }, mono(m.auftraggeber || '—', '11px', 'rgba(var(--accent-rgb),calc(0.45*var(--ka)))'), m.status === 'neu' && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: '11px',
       padding: '1px 5px',
@@ -781,7 +782,7 @@ function MissionGruppeDm({ mission, angenommen }) {
     background:'transparent', border:'1px solid rgba(var(--accent-rgb),calc(0.3*var(--ka)))', color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))' };
   return (
     <div style={{ marginLeft:'auto', display:'flex', flexDirection:'column', alignItems:'flex-end', gap:4 }}>
-      {mono('Gruppe', '7.5px')}
+      {mono('Gruppe', '11px')}
       {tag == null ? (
         <button type="button" style={{ ...knopf, opacity: angenommen ? 1 : .45 }} disabled={busy || !angenommen}
           title={angenommen ? 'Die angenommenen Charaktere brechen am heutigen Kalendertag auf' : 'Erst Bewerbungen annehmen'}
@@ -932,21 +933,21 @@ function MissionDetail({
       gap: '20px',
       flexShrink: 0
     }
-  }, /*#__PURE__*/React.createElement("div", null, mono('Bewerbungen', '7.5px'), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", null, mono('Bewerbungen', '11px'), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '16px',
       color: 'var(--white)',
       marginTop: '2px'
     }
-  }, apps.length)), /*#__PURE__*/React.createElement("div", null, mono('Ausstehend', '7.5px', 'rgba(127,184,255,0.6)'), /*#__PURE__*/React.createElement("div", {
+  }, apps.length)), /*#__PURE__*/React.createElement("div", null, mono('Ausstehend', '11px', 'rgba(127,184,255,0.6)'), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '16px',
       color: '#7fb8ff',
       marginTop: '2px'
     }
-  }, pending)), /*#__PURE__*/React.createElement("div", null, mono('Angenommen', '7.5px', 'rgba(100,220,140,0.6)'), /*#__PURE__*/React.createElement("div", {
+  }, pending)), /*#__PURE__*/React.createElement("div", null, mono('Angenommen', '11px', 'rgba(100,220,140,0.6)'), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-mono)',
       fontSize: '16px',

@@ -310,3 +310,14 @@
   .grp-streifen { overflow-x: auto; }
   .grp-mission { min-width: 0; width: 100%; }
 }
+
+.erg-bild-knopf { display: block; padding: 0; border: none; background: none; cursor: zoom-in; border-radius: 10px; }
+.erg-bild-knopf:focus-visible { outline: 2px solid rgba(var(--accent-rgb), calc(0.8*var(--ka))); outline-offset: 2px; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Handy: Tageskarte und Missionsterminal untereinander statt nebeneinander */
+@media (max-width: 760px) {
+  .tk-raster[style] { grid-template-columns: 1fr !important; gap: 24px !important; padding: 18px 0 !important; justify-items: center; }
+  .tk-raster[style] > div[style] { text-align: center !important; }
+  .mt-raster[style] { grid-template-columns: 1fr !important; }
+}

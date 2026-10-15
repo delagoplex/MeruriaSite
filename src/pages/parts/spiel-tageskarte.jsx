@@ -202,7 +202,7 @@ function Tageskarte() {
         }}>Große Arkana · 22 Karten</span>
       </div>
 
-      <div style={{
+      <div className="tk-raster" style={{
         display:'grid', gridTemplateColumns:'1fr auto 1fr', gap:56,
         alignItems:'center', padding:'30px 36px',
         background:'radial-gradient(ellipse at center, rgba(var(--panel-rgb),0.55) 0%, transparent 70%)',
