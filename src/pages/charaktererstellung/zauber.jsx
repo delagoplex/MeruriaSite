@@ -146,17 +146,17 @@ function ZaubertypFilters({ filters, setFilters }) {
     borderRadius: '2px', transition: 'all 0.15s', ...extra
   });
   const label = active => ({ fontFamily: 'var(--font-body)', fontSize: '12.5px', fontWeight: '300', color: active ? 'var(--white)' : 'var(--silver)', letterSpacing: '0.03em' });
-  const typen = [['heil', 'Heilzauber', '💚'], ['schaden', 'Schadenszauber', null]];
+  const typen = [['heil', 'Heilzauber'], ['schaden', 'Schadenszauber']];
   return <>
     <FilterGroup title="Zaubertyp" active={filters.typ.length > 0}
       onReset={() => setFilters(f => ({ ...f, typ: [], schadensart: [] }))} collapsible>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-        {typen.map(([id, name, emoji]) => {
+        {typen.map(([id, name]) => {
           const active = filters.typ.includes(id);
           return (
             <button key={id} onClick={() => toggleTyp(id)} style={row(active)}>
-              <span style={{ width: 18, display: 'flex', justifyContent: 'center', fontSize: '12.5px', opacity: active ? 1 : 0.6 }}>
-                {emoji || <window.DamageIcon type="Feuer" size={16} />}
+              <span style={{ width: 18, display: 'flex', justifyContent: 'center', opacity: active ? 1 : 0.6 }}>
+                {id === 'heil' ? <window.HeilIcon size={18} /> : <window.DamageIcon type="Feuer" size={16} />}
               </span>
               <span style={label(active)}>{name}</span>
             </button>

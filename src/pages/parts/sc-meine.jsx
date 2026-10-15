@@ -260,7 +260,7 @@ function SpellPicker({ onAdd, onClose, defaultKlasse = '' }) {
               onMouseLeave={e=>e.currentTarget.style.background='transparent'}
               onClick={() => handleAdd(z)}>
               {mode === 'heilung'
-                ? <div style={{width:26,height:26,borderRadius:'50%',background:'rgba(80,200,120,0.08)',border:'1px solid rgba(80,200,120,0.2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.7rem',flexShrink:0}}>💚</div>
+                ? <div style={{width:26,height:26,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><window.HeilIcon size={24} /></div>
                 : <div style={{width:26,height:26,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
                     {mode==='schaden' ? <window.DamageIcon type={z.schadenTyp} size={24} /> : <window.SchoolIcon school={z.schule} size={26} />}
                   </div>
@@ -479,14 +479,14 @@ function ZauberSection({ zauber, updZauber, editing, charKlasse = '' }) {
                 background: isHeil ? 'rgba(80,200,120,0.08)' : 'transparent',
                 border: isHeil ? '1px solid rgba(80,200,120,0.2)' : 'none',
                 color: isHeil ? 'color-mix(in srgb, #4ade80, rgb(var(--ink-rgb)) var(--cm))' : (isKampf ? typeColor : 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))')}}>
-                {isHeil ? '💚' : <window.SchoolIcon school={z.schule} size={26} />}
+                {isHeil ? <window.HeilIcon size={24} /> : <window.SchoolIcon school={z.schule} size={26} />}
               </div>
               <div style={{flex:1,minWidth:0}}>
                 <div style={{fontFamily:'var(--font-body)',fontSize:13,color:'var(--white)',fontWeight:400}}>{z.name}</div>
                 <div style={{fontFamily:'var(--font-mono)',fontSize:11,color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',marginTop:1}}>
                   {gradBadge(z.grad)}
                   {z.schule && ` · ${z.schule}`}
-                  {isHeil && z.heilung && ` · 💚 ${z.heilung} TP`}
+                  {isHeil && z.heilung && <>{' · '}<window.HeilIcon size={14} style={{margin:'0 3px 0 1px'}} />{`${z.heilung} TP`}</>}
                   {isKampf && z.schaden && <>{' · '}<window.DamageIcon type={z.schadenTyp} size={14} style={{margin:'0 3px 0 1px'}} />{`${z.schaden} ${z.schadenTyp||''}`}</>}
                 </div>
               </div>

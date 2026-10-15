@@ -339,4 +339,17 @@ function DamageIcon({ type, size = 16, style }) {
 const SCHADENSARTEN = ['Hieb', 'Wucht', 'Stich', 'Feuer', 'Kälte', 'Blitz', 'Schall', 'Säure', 'Energie', 'Strahlend', 'Nekrotisch', 'Gift', 'Psychisch'];
 // damage types a spell can deal; "Variabel" spells list theirs in schadenTypen
 const spellDamageTypes = z => z.schadenTyp === 'Variabel' ? (z.schadenTypen || []) : z.schadenTyp ? [z.schadenTyp] : [];
-Object.assign(window, { DamageIcon, damageColor, SCHADEN_GLYPHS, SCHADENSARTEN, spellDamageTypes });
+// Heilzauber: Tropfen mit Plus (Vorlage der Spielleitung), im Stil der Schadens-Icons
+const HEIL_FARBE = 'color-mix(in srgb, #5ee8c8, rgb(var(--ink-rgb)) var(--cm))';
+function HeilIcon({ size = 16, style }) {
+  return (
+    <svg viewBox="0 0 40 40" width={size} height={size} aria-hidden="true"
+      style={{ flexShrink: 0, color: HEIL_FARBE, verticalAlign: 'middle', ...style }}>
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 4.5 C17 9 9.5 17.5 9.5 25 a10.5 10.5 0 0 0 21 0 C30.5 17.5 23 9 20 4.5 Z"/>
+        <path d="M20 19.5 V30.5 M14.5 25 H25.5"/>
+      </g>
+    </svg>
+  );
+}
+Object.assign(window, { DamageIcon, damageColor, SCHADEN_GLYPHS, SCHADENSARTEN, spellDamageTypes, HeilIcon, HEIL_FARBE });
