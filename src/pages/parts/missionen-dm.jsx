@@ -1,6 +1,7 @@
 // Missionsverwaltung der Spielleitung (früher die Seite /dm/missionen.html).
 // Wird von /spiel/missionsterminal.html nur für die Spielleitung nachgeladen und als Overlay gezeigt.
 // Exposes: window.MissionenDmApp ({ initialId, initialTab, startCreate })
+import '../../components/meruria-kalender.jsx';
 
 ;(function () {
 (function () {
@@ -757,6 +758,47 @@ function EditForm({ mission, onSaved, onCancel, nscOptions }) {
 }
 
 // ─── MISSION DETAIL (DM view) ─────────────────────────────────────────────────
+// Gruppe dieser Mission (angenommene Bewerbungen): aufbrechen lassen, Spieltag verschieben, zurückholen.
+// missions.spieltag_abs (Migration 062); die Spiel-Seite zeigt daraus „In der Zeit“ / „X Tage zurück“ / BLOCKIERT.
+function MissionGruppeDm({ mission, angenommen }) {
+  const [tag, setTag] = useState(mission.spieltag_abs ?? null);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => { setTag(mission.spieltag_abs ?? null); }, [mission.id]);
+  const heute = async () => {
+    const { data } = await window._sb.from('settings').select('value').eq('key', 'kalender_today').maybeSingle();
+    const n = parseInt(data && data.value, 10);
+    return isNaN(n) ? 14 : n;
+  };
+  const setzen = async wert => {
+    setBusy(true);
+    const { error } = await window._sb.from('missions').update({ spieltag_abs: wert }).eq('id', mission.id);
+    setBusy(false);
+    if (error) { alert('Fehlgeschlagen: ' + error.message); return; }
+    setTag(wert); mission.spieltag_abs = wert;
+  };
+  const datum = t => window.MeruriaKalender ? window.MeruriaKalender.formatKurz(t) : 'Tag ' + t;
+  const knopf = { fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'.1em', padding:'3px 8px', borderRadius:2, cursor:'pointer',
+    background:'transparent', border:'1px solid rgba(var(--accent-rgb),calc(0.3*var(--ka)))', color:'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))' };
+  return (
+    <div style={{ marginLeft:'auto', display:'flex', flexDirection:'column', alignItems:'flex-end', gap:4 }}>
+      {mono('Gruppe', '7.5px')}
+      {tag == null ? (
+        <button type="button" style={{ ...knopf, opacity: angenommen ? 1 : .45 }} disabled={busy || !angenommen}
+          title={angenommen ? 'Die angenommenen Charaktere brechen am heutigen Kalendertag auf' : 'Erst Bewerbungen annehmen'}
+          onClick={async () => setzen(await heute())}>Aufbrechen lassen</button>
+      ) : (
+        <div style={{ display:'flex', alignItems:'center', gap:6, flexWrap:'wrap', justifyContent:'flex-end' }}>
+          <span style={{ fontFamily:'var(--font-body)', fontSize:'12.5px', color:'var(--white)' }}>unterwegs · {datum(tag)}</span>
+          <button type="button" style={knopf} disabled={busy} onClick={() => setzen(tag - 1)} aria-label="Einen Tag zurück">−1</button>
+          <button type="button" style={knopf} disabled={busy} onClick={() => setzen(tag + 1)} aria-label="Einen Tag weiter">+1</button>
+          <button type="button" style={knopf} disabled={busy} onClick={async () => setzen(await heute())}>Heute</button>
+          <button type="button" style={knopf} disabled={busy} onClick={() => { if (window.confirm('Gruppe zurückholen?')) setzen(null); }}>Zurückholen</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function MissionDetail({
   mission,
   onDelete,
@@ -911,7 +953,7 @@ function MissionDetail({
       color: 'color-mix(in srgb, rgba(100,220,140,0.9), rgb(var(--ink-rgb)) var(--cm))',
       marginTop: '2px'
     }
-  }, accepted))), /*#__PURE__*/React.createElement("div", {
+  }, accepted)), /*#__PURE__*/React.createElement(MissionGruppeDm, { mission: mission, angenommen: accepted })), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1,
       overflowY: 'auto'

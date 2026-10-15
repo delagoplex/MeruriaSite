@@ -1315,7 +1315,7 @@ function App() {
         ascending: false
       }), uid ? window._sb.from('mission_applications').select('*').eq('player_id', uid) : {
         data: []
-      }, uid ? window._sb.from('characters').select('id,name,race,class,division,char_data').eq('type', 'spieler') : {
+      }, uid ? window._sb.from('characters').select('id,name,race,class,division,char_data').eq('type', 'spieler').eq('owner_id', uid) : {
         data: []
       }, window._sb.from('nsc_public_directory').select('name,division,bild')]);
       const nscMap = {};

@@ -142,17 +142,17 @@ CREATE TRIGGER ereignis_beitritt AFTER UPDATE OF app_status ON public.mission_ap
 -- Gruppe bricht auf (Spieltag wird gesetzt)
 CREATE OR REPLACE FUNCTION public.ereignis_gruppe() RETURNS TRIGGER
 LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, pg_temp AS $$
-DECLARE namen TEXT;
+DECLARE namen TEXT; anzahl INTEGER;
 BEGIN
   IF NEW.spieltag_abs IS NOT NULL AND OLD.spieltag_abs IS NULL AND public.ereignis_auto_an('gruppe') THEN
-    SELECT string_agg('[[sc:' || c.id || '|' || public.ereignis_name(c.name) || ']]', ', ' ORDER BY a.created_at) INTO namen
+    SELECT string_agg('[[sc:' || c.id || '|' || public.ereignis_name(c.name) || ']]', ', ' ORDER BY a.created_at), count(*) INTO namen, anzahl
     FROM public.mission_applications a JOIN public.characters c ON c.id = a.character_id
     WHERE a.mission_id = NEW.id AND a.app_status = 'accepted';
     INSERT INTO public.ereignisse (tag_abs, titel, text, art, bezug, erstellt_von)
     VALUES (NEW.spieltag_abs, 'Eine Gruppe bricht auf',
             CASE WHEN namen IS NULL
               THEN 'Eine Gruppe bricht zu [[mission:' || NEW.id || '|' || public.ereignis_name(NEW.name) || ']] auf.'
-              ELSE namen || ' brechen zu [[mission:' || NEW.id || '|' || public.ereignis_name(NEW.name) || ']] auf.' END,
+              ELSE namen || CASE WHEN anzahl = 1 THEN ' bricht' ELSE ' brechen' END || ' zu [[mission:' || NEW.id || '|' || public.ereignis_name(NEW.name) || ']] auf.' END,
             'gruppe', jsonb_build_object('mission_id', NEW.id), NULL);
   END IF;
   RETURN NEW;
