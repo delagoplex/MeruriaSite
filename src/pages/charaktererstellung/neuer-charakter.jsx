@@ -577,7 +577,7 @@ function TagPhase({
     style: {
       color: 'color-mix(in srgb, rgba(140,180,255,.7), rgb(var(--ink-rgb)) var(--cm))'
     }
-  }, "Unbekannt"), " markierst, werden im n\xE4chsten Schritt durch gezielte Quizfragen eingegrenzt.", /*#__PURE__*/React.createElement("br", null), "W\xE4hlst du eine ", /*#__PURE__*/React.createElement("strong", {
+  }, "Unbekannt"), " markierst, werden im n\xE4chsten Schritt durch gezielte Quizfragen ermittelt.", /*#__PURE__*/React.createElement("br", null), "W\xE4hlst du eine ", /*#__PURE__*/React.createElement("strong", {
     style: {
       color: 'rgba(var(--text-rgb),calc(.6*var(--kt) + var(--tb)))',
       fontWeight: 400
@@ -2216,7 +2216,7 @@ function NscTagPhase({ nscTags, setNscTag, onNext }) {
       /*#__PURE__*/React.createElement("div", {style:{fontFamily:'var(--font-m)',fontSize:'11.5px',letterSpacing:'.28em',color:'rgba(var(--purple-rgb),calc(.5*var(--kp) + var(--tb)))',textTransform:'uppercase',marginBottom:9}}, "Schritt 1 · NSC-Tags"),
       /*#__PURE__*/React.createElement("h2", {style:{fontFamily:'var(--font-d)',fontSize:'clamp(16px,3vw,26px)',fontWeight:300,letterSpacing:'.18em',color:'var(--white)',marginBottom:11}}, "Was weißt du schon?"),
       /*#__PURE__*/React.createElement("p", {style:{fontFamily:'var(--font-b)',fontWeight:300,fontSize:'13px',color:'rgba(var(--text-rgb),calc(.4*var(--kt) + var(--tb)))',lineHeight:1.9,maxWidth:580}},
-        "Fülle alles aus, was du bereits über den NSC weißt. Leere Felder werden im nächsten Schritt durch gezielte Quizfragen eingegrenzt."
+        "Fülle alles aus, was du bereits über den NSC weißt. Leere Felder werden im nächsten Schritt durch gezielte Quizfragen ermittelt."
       )
     ),
     /*#__PURE__*/React.createElement("div", {className:"cat-block"},
