@@ -1891,7 +1891,7 @@ function HerkunftBadge({ art }) {
     color:`color-mix(in srgb, ${a.farbe}, rgb(var(--ink-rgb)) var(--cm))`}}>{a.text}</span>;
 }
 
-function SteckbriefView({ char: charProp = null, entry = null, onBack = null, hasMultiple = false, hideNav = false, extraTopPadding = 0, herkunft = null, vorschau = false }) {
+function SteckbriefView({ char: charProp = null, entry = null, onBack = null, hasMultiple = false, hideNav = false, extraTopPadding = 0, herkunft = null, vorschau = false, nameEdit = null }) {
   // Herkunfts-Markierungen (nur in der Vorschau der Charaktererstellung)
   const HB = k => herkunft && herkunft[k] ? <HerkunftBadge art={herkunft[k]} /> : null;
   const H = (v, k) => herkunft && herkunft[k] && v && v !== '—'
@@ -1983,6 +1983,11 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
                   style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:28,letterSpacing:".22em",
                     color:"var(--white)",textTransform:"uppercase",background:"transparent",border:"none",
                     borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.4*var(--kp)))",outline:"none",padding:"0 4px",width:"100%"}} />
+              : nameEdit
+              ? <input value={nameEdit.value} onChange={e=>nameEdit.onChange(e.target.value)} aria-label="Name des Charakters" placeholder="Name"
+                  title="Name ändern" style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:28,letterSpacing:".22em",
+                    color:"var(--white)",textTransform:"uppercase",background:"rgba(var(--purple-rgb),calc(0.05*var(--kp)))",border:"none",
+                    borderBottom:"1px dashed rgba(var(--accent-rgb),calc(0.5*var(--ka)))",outline:"none",padding:"2px 6px",width:"100%"}} />
               : <h1 className="sb-name" style={{fontFamily:"var(--font-display)",fontWeight:400,fontSize:28,letterSpacing:".22em",
                     color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 32px rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}}>{char.name}</h1>
             }
@@ -2093,7 +2098,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
                     style={{width:"100%",height:310,objectFit:"cover",objectPosition:"top",display:"block",cursor:"zoom-in"}} alt="" />
                 : <div style={{height:310,display:"flex",alignItems:"center",justifyContent:"center",
                     background:"linear-gradient(160deg,rgba(var(--panel-rgb),0.92),rgba(var(--panel-rgb),0.96))"}}>
-                    <span style={{fontFamily:"var(--font-display)",fontSize:64,color:"rgba(var(--purple-rgb),calc(0.2*var(--kp) + var(--tb)))"}}>{char.name?.[0]||'?'}</span>
+                    <span style={{fontFamily:"var(--font-display)",fontSize:64,color:"rgba(var(--purple-rgb),calc(0.2*var(--kp) + var(--tb)))"}}>{(nameEdit ? nameEdit.value : char.name)?.[0]||'?'}</span>
                   </div>
             }
           </div>

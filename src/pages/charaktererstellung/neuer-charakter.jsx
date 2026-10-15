@@ -8,6 +8,7 @@ import '../../components/school-icon.jsx';
 import '../../components/damage-icon.jsx';
 import '../parts/sc-meine.jsx';   // Helfer (IRow, Card, …) für die Steckbrief-Vorschau
 import '../../components/steckbrief-components.jsx';
+import '../parts/nc-namenwahl.jsx';
 
 ;(function () {
 (function () {
@@ -1202,6 +1203,15 @@ function NcVorschau({ draft, herkunft }) {
     /*#__PURE__*/React.createElement(SV, { key, char: build(draft), hideNav: true, vorschau: true, herkunft }));
 }
 
+// Fertiger Bogen ohne Markierungen; der Name bleibt im Bogen änderbar
+function NcFertig({ draft, name, setName }) {
+  const SV = window.SteckbriefView, build = window.buildChar;
+  if (!SV || !build) return null;
+  return /*#__PURE__*/React.createElement("div", { style:{ margin:'0 -24px', border:'1px solid rgba(var(--purple-rgb),calc(.2*var(--kp)))', borderRadius:4, overflow:'hidden' } },
+    /*#__PURE__*/React.createElement(SV, { key: JSON.stringify(draft), char: build(draft), hideNav: true, vorschau: true,
+      nameEdit: { value: name, onChange: setName } }));
+}
+
 // ── OUTPUT PHASE ───────────────────────────────────────────────────────────
 function OutputPhase({
   tags,
@@ -1213,7 +1223,7 @@ function OutputPhase({
 }) {
   const [charName, setCharName] = useState('');
   const [showNameModal, setShowNameModal] = useState(false);
-  const [modalName, setModalName] = useState('');
+  const [fertig, setFertig] = useState(false); // nach der Namenswahl: fertiger Bogen ohne Markierungen
   const [saving, setSaving] = useState(false);
 
   // ── Manuelle Auswahl bei mehreren Treffern ────────────────────
@@ -1582,6 +1592,29 @@ function OutputPhase({
     }
     window.location.href = '/spiel/charaktere.html?tab=meine';
   }
+  if (fertig) return /*#__PURE__*/React.createElement("div", {
+    style: { maxWidth: 1240, margin: '0 auto', padding: '44px 32px 80px', animation: 'slideUp .4s ease' }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: { fontFamily:'var(--font-m)', fontSize:'11.5px', letterSpacing:'.28em', textTransform:'uppercase', marginBottom:9,
+      color:'color-mix(in srgb, rgba(94,232,208,.55), rgb(var(--ink-rgb)) var(--cm))' }
+  }, "Charakterbogen"), /*#__PURE__*/React.createElement("p", {
+    style: { fontFamily:'var(--font-b)', fontSize:'13px', lineHeight:1.7, color:'var(--silver)', margin:'0 0 18px', maxWidth:720 }
+  }, "So sieht dein Charakterbogen aus. Den Namen kannst du oben im Bogen noch \xE4ndern, zum Beispiel einen kopierten Namen aus der Tabelle einf\xFCgen."),
+  /*#__PURE__*/React.createElement(NcFertig, { draft: makeDraft(''), name: charName, setName: setCharName }),
+  /*#__PURE__*/React.createElement("div", {
+    style: { margin:'26px 0 0', padding:'20px 24px', border:'1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))', borderRadius:4,
+      background:'rgba(var(--purple-rgb),calc(.04*var(--kp)))', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }
+  }, /*#__PURE__*/React.createElement("button", {
+      type: "button", onClick: () => { setFertig(false); window.scrollTo(0, 0); },
+      style: { padding:'10px 18px', background:'transparent', border:'1px solid rgba(var(--purple-rgb),calc(.25*var(--kp)))', borderRadius:3, cursor:'pointer',
+        color:'rgba(var(--purple-rgb),calc(.55*var(--kp) + var(--tb)))', fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.18em', textTransform:'uppercase' }
+    }, "\u2190 Zur\xFCck zur Vorschau"),
+    /*#__PURE__*/React.createElement("button", {
+      type: "button", disabled: saving || !charName.trim(), onClick: () => doSave(charName.trim()),
+      style: { padding:'12px 28px', background:'rgba(var(--purple-rgb),calc(.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(.65*var(--ka)))', borderRadius:3,
+        color:'var(--white)', fontFamily:'var(--font-d)', fontSize:'12.5px', letterSpacing:'.18em', textTransform:'uppercase', whiteSpace:'nowrap',
+        cursor: saving || !charName.trim() ? 'not-allowed' : 'pointer', opacity: saving || !charName.trim() ? .5 : 1 }
+    }, saving ? 'Speichern\u2026' : 'Charakter speichern \u2192')));
   return /*#__PURE__*/React.createElement("div", {
     style: {
       maxWidth: 1240,
@@ -1603,15 +1636,6 @@ function OutputPhase({
       marginBottom: 9
     }
   }, "Charakterbogen \xB7 Vorschau"), /*#__PURE__*/React.createElement("div", {
-    style: { display:'flex', alignItems:'center', gap:16, flexWrap:'wrap', marginBottom:18 }
-  }, /*#__PURE__*/React.createElement("input", {
-    value: charName,
-    onChange: e => setCharName(e.target.value),
-    placeholder: "Name des Charakters *",
-    "aria-label": "Name des Charakters",
-    style: { fontFamily:'var(--font-d)', fontSize:'22px', fontWeight:300, letterSpacing:'.18em', background:'transparent', border:'none',
-      borderBottom:'1px solid rgba(var(--accent-rgb),calc(.35*var(--ka)))', color:'var(--white)', outline:'none', padding:'6px 0', minWidth:'min(480px, 100%)' }
-  })), /*#__PURE__*/React.createElement("div", {
     style: {
       height: 1,
       background: 'linear-gradient(90deg,rgba(var(--purple-rgb),calc(.45*var(--kp))) 0%,transparent 100%)'
@@ -1995,19 +2019,17 @@ function OutputPhase({
     )
   ),
 
-  /*#__PURE__*/React.createElement(NcVorschau, { draft: makeDraft(charName.trim() || 'Unbenannt'), herkunft }),
+  /*#__PURE__*/React.createElement(NcVorschau, { draft: makeDraft('Name folgt'), herkunft }),
   /*#__PURE__*/React.createElement("div", {
     style: { margin:'26px 0 44px', padding:'20px 24px', border:'1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))', borderRadius:4,
       background:'rgba(var(--purple-rgb),calc(.04*var(--kp)))', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }
   }, /*#__PURE__*/React.createElement("div", { style:{ fontFamily:'var(--font-b)', fontSize:'13px', lineHeight:1.6, color:'var(--silver)', maxWidth:520 } },
-    charName.trim() ? "Passt alles? Mit dem Absegnen wird der Charakterbogen ohne die Herkunfts-Markierungen angelegt und erscheint unter \u201EMeine Charaktere\u201C."
-      : "Gib deinem Charakter oben einen Namen, dann kannst du den Bogen absegnen."),
+    "Passt alles? Beim Absegnen bekommt dein Charakter einen Namen aus der Namenstabelle seiner Rasse, danach siehst du den fertigen Bogen ohne die Markierungen."),
     /*#__PURE__*/React.createElement("button", {
-      type: "button", disabled: saving || !charName.trim(), onClick: () => doSave(charName.trim()),
+      type: "button", onClick: () => setShowNameModal(true),
       style: { padding:'12px 28px', background:'rgba(var(--purple-rgb),calc(.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(.65*var(--ka)))', borderRadius:3,
-        color:'var(--white)', fontFamily:'var(--font-d)', fontSize:'12.5px', letterSpacing:'.18em', textTransform:'uppercase', whiteSpace:'nowrap',
-        cursor: saving || !charName.trim() ? 'not-allowed' : 'pointer', opacity: saving || !charName.trim() ? .5 : 1 }
-    }, saving ? 'Speichern\u2026' : 'Charakterbogen absegnen \u2192')), quizAnswers.length > 0 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+        color:'var(--white)', fontFamily:'var(--font-d)', fontSize:'12.5px', letterSpacing:'.18em', textTransform:'uppercase', whiteSpace:'nowrap', cursor:'pointer' }
+    }, 'Absegnen & Namen bestimmen \u2192')), quizAnswers.length > 0 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-d)',
       fontSize: '12px',
@@ -2057,151 +2079,11 @@ function OutputPhase({
     className: "ans-a"
   }, a.answerText), /*#__PURE__*/React.createElement("div", {
     className: `trail ${a.nextList.length === 1 ? 'one' : ''}`
-  }, trail(a.nextList, 12))))))), showNameModal && /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'fixed',
-      inset: 0,
-      background: 'rgba(var(--bg-rgb),0.82)',
-      backdropFilter: 'blur(6px)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000
-    },
-    onClick: e => {
-      if (e.target === e.currentTarget) setShowNameModal(false);
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      background: 'rgba(var(--panel-rgb),0.98)',
-      border: '1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))',
-      borderRadius: 5,
-      padding: '36px 40px',
-      maxWidth: 420,
-      width: 'calc(100% - 48px)',
-      position: 'relative'
-    }
-  }, [['top:0,left:0', 'borderTop,borderLeft'], ['top:0,right:0', 'borderTop,borderRight'], ['bottom:0,left:0', 'borderBottom,borderLeft'], ['bottom:0,right:0', 'borderBottom,borderRight']].map(([pos, sides], i) => {
-    const p = Object.fromEntries(pos.split(',').map(s => s.split(':')));
-    const b = Object.fromEntries(sides.split(',').map(s => [s, '1.5px solid rgba(var(--purple-rgb),calc(0.55*var(--kp)))']));
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      style: {
-        position: 'absolute',
-        width: 14,
-        height: 14,
-        pointerEvents: 'none',
-        ...p,
-        ...b
-      }
-    });
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-m)',
-      fontSize: '11px',
-      letterSpacing: '.28em',
-      color: 'rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))',
-      textTransform: 'uppercase',
-      marginBottom: 10
-    }
-  }, "Charaktername"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: 'var(--font-d)',
-      fontWeight: 300,
-      fontSize: '18px',
-      letterSpacing: '.12em',
-      color: 'rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))',
-      marginBottom: 24,
-      lineHeight: 1.5
-    }
-  }, "Wie soll dein Charakter hei\xDFen?"), /*#__PURE__*/React.createElement("input", {
-    autoFocus: true,
-    value: modalName,
-    onChange: e => setModalName(e.target.value),
-    onKeyDown: e => {
-      if (e.key === 'Enter' && modalName.trim()) {
-        setCharName(modalName.trim());
-        setShowNameModal(false);
-        doSave(modalName.trim());
-      }
-    },
-    placeholder: "Name eingeben \u2026",
-    style: {
-      fontFamily: 'var(--font-d)',
-      fontSize: '20px',
-      fontWeight: 300,
-      letterSpacing: '.18em',
-      background: 'transparent',
-      border: 'none',
-      borderBottom: '1px solid rgba(var(--accent-rgb),calc(.35*var(--ka)))',
-      color: 'var(--white)',
-      outline: 'none',
-      padding: '6px 0',
-      width: '100%',
-      marginBottom: 28
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: 10,
-      justifyContent: 'flex-end'
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: () => setShowNameModal(false),
-    style: {
-      fontFamily: 'var(--font-m)',
-      fontSize: '11px',
-      letterSpacing: '.18em',
-      textTransform: 'uppercase',
-      padding: '9px 18px',
-      background: 'transparent',
-      border: '1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))',
-      borderRadius: 3,
-      cursor: 'pointer',
-      color: 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))',
-      transition: 'all .18s'
-    },
-    onMouseEnter: e => {
-      e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.45*var(--kp)))';
-      e.currentTarget.style.color = 'rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))';
-    },
-    onMouseLeave: e => {
-      e.currentTarget.style.borderColor = 'rgba(var(--purple-rgb),calc(0.2*var(--kp)))';
-      e.currentTarget.style.color = 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))';
-    }
-  }, "Abbrechen"), /*#__PURE__*/React.createElement("button", {
-    disabled: !modalName.trim() || saving,
-    onClick: () => {
-      setCharName(modalName.trim());
-      setShowNameModal(false);
-      doSave(modalName.trim());
-    },
-    style: {
-      fontFamily: 'var(--font-d)',
-      fontSize: '12.5px',
-      letterSpacing: '.18em',
-      textTransform: 'uppercase',
-      padding: '9px 24px',
-      background: modalName.trim() ? 'rgba(var(--purple-rgb),calc(.22*var(--kp)))' : 'rgba(var(--purple-rgb),calc(.06*var(--kp)))',
-      border: `1px solid rgba(var(--purple-rgb),${modalName.trim() ? '.6' : '.18'})`,
-      borderRadius: 3,
-      cursor: modalName.trim() ? 'pointer' : 'not-allowed',
-      color: modalName.trim() ? 'rgba(var(--text-rgb),calc(.95*var(--kt)))' : 'rgba(var(--purple-rgb),calc(.3*var(--kp)))',
-      transition: 'all .2s'
-    },
-    onMouseEnter: e => {
-      if (modalName.trim()) {
-        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(.35*var(--kp)))';
-        e.currentTarget.style.color = 'var(--white)';
-      }
-    },
-    onMouseLeave: e => {
-      if (modalName.trim()) {
-        e.currentTarget.style.background = 'rgba(var(--purple-rgb),calc(.22*var(--kp)))';
-        e.currentTarget.style.color = 'rgba(var(--text-rgb),calc(.95*var(--kt) + var(--tb)))';
-      }
-    }
-  }, "Zum Steckbrief \u2192")))));
+  }, trail(a.nextList, 12))))))), showNameModal && /*#__PURE__*/React.createElement(window.NcNamenWahl, {
+    rasse: getFinal('rasse').val, geschlecht: tags.geschlecht || null,
+    onCancel: () => setShowNameModal(false),
+    onConfirm: n => { setCharName(n); setShowNameModal(false); setFertig(true); window.scrollTo(0, 0); }
+  }));
 }
 
 // ── BIRTHDAY PICKER ────────────────────────────────────────────────────────
