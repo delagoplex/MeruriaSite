@@ -741,9 +741,9 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
   return (
     <div className="mc-page" style={{minHeight:"calc(var(--vh, 1vh) * 100)",padding:"0 32px 48px"}}>
       {/* Header */}
-      <div className="mc-head" style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"24px 0 20px",
+      <div className="mc-head" style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",padding:"24px 0 20px",
         borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.1*var(--kp)))",marginBottom:24}}>
-        <div className="mc-head-left" style={{display:"flex",alignItems:"center",gap:20}}>
+        <div className="mc-head-left" style={{display:"flex",flexDirection:"column",alignItems:"flex-start",gap:12}}>
           <button type="button" onClick={zurueck} style={toolBtn}
             onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.5*var(--kp)))";e.currentTarget.style.color="rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))";}}
             onMouseLeave={e=>{e.currentTarget.style.borderColor="rgba(var(--purple-rgb),calc(0.2*var(--kp)))";e.currentTarget.style.color="rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))";}}>
