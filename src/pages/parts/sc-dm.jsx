@@ -146,8 +146,8 @@ function ScDmSteckbrief({ row, playerName }) {
     return data;
   }
   async function patchChar(patch) {
-    const { error } = await window._sb.rpc('char_data_patch', { p_id: entry.id, p_patch: patch });
-    if (error) { alert('Speichern fehlgeschlagen: ' + error.message); return false; }
+    try { await window.charDataPatch(entry.id, patch); }
+    catch (error) { alert('Speichern fehlgeschlagen: ' + (error && error.message || error)); return false; }
     const neu = await aktuell();
     if (neu) setEntry(makeEntry(neu, neu.char_data));
     setVerKey(k => k + 1);

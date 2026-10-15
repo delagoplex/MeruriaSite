@@ -1644,6 +1644,24 @@ function charFromEntry(entry) {
 // geändert hat (stats, attributeFrei, …), bleiben, wie sie in der Datenbank stehen.
 const _sbSaveTimers = {};   // pro Charakter, damit ein Wechsel den Save des vorherigen nicht verwirft
 const _sbPatches = {};
+// Felder zusammenführen; ohne Migration 064 (RPC fehlt noch) aktuellen Stand lesen, ergänzen und zurückschreiben
+async function charDataPatch(id, patch) {
+  const { error } = await window._sb.rpc('char_data_patch', { p_id: id, p_patch: patch });
+  if (!error) return;
+  const fehlt = error.code === 'PGRST202' || /char_data_patch/.test(error.message || '');
+  if (!fehlt) throw error;
+  const { data: row, error: e1 } = await window._sb.from('characters').select('name,race,class,division,char_data').eq('id', id).single();
+  if (e1) throw e1;
+  const d = { ...(row.char_data || {}), ...patch };
+  const { error: e2 } = await window._sb.from('characters').update({
+    char_data: d,
+    name: ('name' in patch && String(patch.name || '').trim()) ? patch.name : row.name,
+    race: 'race' in patch ? (patch.race || null) : row.race,
+    class: 'class' in patch ? (patch.class || null) : row.class,
+    division: 'division' in patch ? (patch.division || null) : row.division,
+  }).eq('id', id);
+  if (e2) throw e2;
+}
 function charPatchSpeichern(id, patch) {
   _sbPatches[id] = { ...(_sbPatches[id] || {}), ...patch };
   clearTimeout(_sbSaveTimers[id]);
@@ -1651,8 +1669,7 @@ function charPatchSpeichern(id, patch) {
     const p = _sbPatches[id]; delete _sbPatches[id];
     if (!p || !Object.keys(p).length) return;
     try {
-      const { error } = await window._sb.rpc('char_data_patch', { p_id: id, p_patch: p });
-      if (error) throw error;
+      await charDataPatch(id, p);
     } catch(e) {
       console.error('charPatchSpeichern failed:', e);
       alert('Der Charakter konnte nicht gespeichert werden: ' + (e && e.message ? e.message : 'unbekannter Fehler'));
@@ -2474,7 +2491,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
 }
 
 Object.assign(window, {
-  SKILLS_DEFAULT, SAVES_DEFAULT, buildChar, charFromEntry, saveCharToDB,
+  SKILLS_DEFAULT, SAVES_DEFAULT, buildChar, charFromEntry, saveCharToDB, charDataPatch,
   DivisionRank, DeityCard, CombatCompact, EditableCombatCompact, AttributeGrid,
   SkillPills, SavingThrows, EditableSavingThrows, PersonalitySection,
   QuestCard, CompanionCard, FbCard, KontakteTablet,
