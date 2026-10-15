@@ -298,9 +298,21 @@ function EditableDivisionRank({ char, upd }) {
 }
 
 /* ── Gottheit ─────────────────────────────── */
-function findGod(id) {
-  if (!id || !window.GODS_DATA) return null;
-  return (window.GODS_DATA.gods || []).find(g => g.id === id) || null;
+const GOTT_GRUPPEN = [['gods','Götter'],['demons','Dämonen'],['naturgeister','Naturgeister']];
+function alleGoetter() {
+  const d = window.GODS_DATA || {};
+  return GOTT_GRUPPEN.flatMap(([k]) => d[k] || []);
+}
+// Ältere Charaktere haben nur den Namen gespeichert: dann über den Namen suchen
+function findGod(id, name) {
+  const alle = alleGoetter();
+  return (id && alle.find(g => g.id === id)) || (name && alle.find(g => g.name === name)) || null;
+}
+// Dämonen und Naturgeister tragen vorerst Aurelias Insignie als Platzhalter: dann kein Bild zeigen
+function godBild(god) {
+  if (!god || !god.insigniaSrc) return null;
+  if (god.id !== 'aurelia' && /Insignie_Aurelia\./.test(god.insigniaSrc)) return null;
+  return god.insigniaSrc;
 }
 
 function DeitySymbol({ god, size = 72 }) {
@@ -309,15 +321,18 @@ function DeitySymbol({ god, size = 72 }) {
   return (
     <div style={{width:size,height:size,flexShrink:0,borderRadius:3,overflow:"hidden",
       background:"rgba(var(--panel-rgb),0.9)",border:`1px solid ${clr}55`}}>
-      <img src={god.insigniaSrc} alt={god.name}
-        style={{width:"100%",height:"100%",objectFit:"contain",display:"block",
-          filter:`drop-shadow(0 0 6px ${clr}) drop-shadow(0 0 12px ${clr}88)`}}/>
+      {godBild(god)
+        ? <img src={godBild(god)} alt={god.name}
+            style={{width:"100%",height:"100%",objectFit:"contain",display:"block",
+              filter:`drop-shadow(0 0 6px ${clr}) drop-shadow(0 0 12px ${clr}88)`}}/>
+        : <div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",
+            fontFamily:"var(--font-display)",fontSize:Math.round(size*0.45),color:clr}}>{god.name[0]}</div>}
     </div>
   );
 }
 
 function DeityCard({ char }) {
-  const god  = findGod(char.deityId);
+  const god  = findGod(char.deityId, char.deity);
   const name = god ? god.name : (char.deity || '—');
   return (
     <Card style={{marginBottom:11}}>
@@ -338,73 +353,99 @@ function DeityCard({ char }) {
   );
 }
 
-/* ── Editierbare Gottheit ─────────────────── */
+/* ── Editierbare Gottheit: Auswahlfeld mit allen Gottheiten samt Bild ── */
 function EditableDeityCard({ char, upd }) {
   const [open, setOpen] = useSteckbrief(false);
-  const god = findGod(char.deityId);
-  const gods = window.GODS_DATA?.gods || [];
+  const [q, setQ] = useSteckbrief('');
+  const boxRef = useSteckRef(null);
+  const god = findGod(char.deityId, char.deity);
+  const d = window.GODS_DATA || {};
+
+  useSteckEffect(() => {
+    if (!open) return;
+    const zu = e => { if (boxRef.current && !boxRef.current.contains(e.target)) setOpen(false); };
+    const esc = e => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', zu); document.addEventListener('keydown', esc);
+    return () => { document.removeEventListener('mousedown', zu); document.removeEventListener('keydown', esc); };
+  }, [open]);
 
   function select(g) {
-    upd({ deity: g.name, deityId: g.id, deityDomain: g.domain, deityHue: 270 });
-    setOpen(false);
+    if (g) upd({ deity: g.name, deityId: g.id, deityDomain: g.domain, deityHue: 270 });
+    else   upd({ deity: '—', deityId: null, deityDomain: '—' });
+    setOpen(false); setQ('');
   }
 
+  const such = q.trim().toLowerCase();
+  const passt = g => !such || [g.name, g.title, g.domain].some(v => (v || '').toLowerCase().includes(such));
+  const zeile = (g, sel) => (
+    <button key={g.id} type="button" role="option" aria-selected={sel} onClick={()=>select(g)}
+      style={{display:"flex",alignItems:"center",gap:10,width:"100%",padding:"6px 8px",textAlign:"left",cursor:"pointer",
+        background:sel?"rgba(var(--purple-rgb),calc(0.18*var(--kp)))":"transparent",border:"none",borderRadius:3,transition:"background .12s"}}
+      onMouseEnter={e=>{ if(!sel) e.currentTarget.style.background="rgba(var(--purple-rgb),calc(0.09*var(--kp)))"; }}
+      onMouseLeave={e=>{ if(!sel) e.currentTarget.style.background="transparent"; }}>
+      <DeitySymbol god={g} size={34}/>
+      <span style={{minWidth:0}}>
+        <span style={{display:"block",fontFamily:"var(--font-display)",fontSize:12.5,letterSpacing:".12em",textTransform:"uppercase",
+          color:sel?"var(--white)":"rgba(var(--text-rgb),calc(0.85*var(--kt) + var(--tb)))"}}>{g.name}</span>
+        {g.title && <span style={{display:"block",fontFamily:"var(--font-body)",fontSize:12,fontWeight:300,lineHeight:1.4,
+          color:"rgba(var(--text-rgb),calc(0.5*var(--kt) + var(--tb)))",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{g.title}</span>}
+      </span>
+    </button>
+  );
+
   return (
-    <Card style={{marginBottom:11,position:"relative"}}>
-      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
-        <SecTitle label="Gottheit" />
-        <button onClick={()=>setOpen(v=>!v)}
-          style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".14em",textTransform:"uppercase",
-            padding:"3px 10px",background:open?"rgba(var(--purple-rgb),calc(0.18*var(--kp)))":"transparent",
-            border:"1px solid rgba(var(--purple-rgb),calc(0.3*var(--kp)))",borderRadius:2,cursor:"pointer",
-            color:"rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))",transition:"all .15s"}}>
-          {open ? "✕ Schließen" : "⊞ Wählen"}
+    <Card style={{marginBottom:11,position:"relative",overflow:"visible",zIndex:open?30:"auto"}}>
+      <SecTitle label="Gottheit" />
+      <div ref={boxRef} style={{position:"relative"}}>
+        <button type="button" onClick={()=>setOpen(v=>!v)} aria-haspopup="listbox" aria-expanded={open}
+          style={{display:"flex",alignItems:"center",gap:12,width:"100%",padding:"8px 10px",cursor:"pointer",textAlign:"left",
+            background:"rgba(var(--purple-rgb),calc(0.04*var(--kp)))",border:`1px solid rgba(var(--purple-rgb),calc(${open?0.5:0.25}*var(--kp)))`,borderRadius:3}}>
+          {god
+            ? <DeitySymbol god={god} size={56}/>
+            : <div style={{width:56,height:56,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",
+                background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:3,
+                fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))"}}>— —</div>}
+          <span style={{flex:1,minWidth:0}}>
+            <span style={{display:"block",fontFamily:"var(--font-display)",fontSize:13,letterSpacing:".16em",color:"var(--white)",textTransform:"uppercase"}}>
+              {god ? god.name : 'Gottheit wählen'}</span>
+            {god?.title && <span style={{display:"block",fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".06em",lineHeight:1.5,marginTop:3,
+              color:"rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))"}}>{god.title}</span>}
+          </span>
+          <span aria-hidden="true" style={{fontSize:12,color:"rgba(var(--accent-rgb),calc(0.7*var(--ka) + var(--tb)))",
+            transform:open?"rotate(180deg)":"none",transition:"transform .15s"}}>▾</span>
         </button>
-      </div>
 
-      {/* Aktuelle Gottheit */}
-      <div style={{display:"flex",gap:12,alignItems:"center",marginBottom: open ? 14 : 0}}>
-        {god
-          ? <DeitySymbol god={god} size={64}/>
-          : <div style={{width:64,height:64,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",
-              background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",borderRadius:3,
-              fontFamily:"var(--font-mono)",fontSize:11,color:"rgba(var(--purple-rgb),calc(0.3*var(--kp) + var(--tb)))",letterSpacing:".1em"}}>— —</div>
-        }
-        <div style={{minWidth:0}}>
-          <div style={{fontFamily:"var(--font-display)",fontSize:13,letterSpacing:".16em",color:"var(--white)",textTransform:"uppercase",marginBottom:3}}>
-            {god ? god.name : (char.deity || '—')}
+        {open && (
+          <div role="listbox" aria-label="Gottheit" style={{position:"absolute",left:0,right:0,top:"calc(100% + 4px)",zIndex:40,
+            background:"rgb(var(--panel-rgb))",border:"1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))",borderRadius:4,
+            boxShadow:"0 12px 32px rgba(var(--shadow-rgb),calc(0.6*var(--shadow-k)))",padding:6}}>
+            <input autoFocus value={q} onChange={e=>setQ(e.target.value)} placeholder="Suchen …" aria-label="Gottheit suchen"
+              style={{width:"100%",boxSizing:"border-box",marginBottom:6,padding:"6px 9px",fontFamily:"var(--font-body)",fontSize:13,
+                background:"rgba(var(--bg-rgb),0.5)",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",borderRadius:3,
+                color:"var(--white)",outline:"none"}}/>
+            <div style={{maxHeight:320,overflowY:"auto"}}>
+              {GOTT_GRUPPEN.map(([k, label]) => {
+                const liste = (d[k] || []).filter(passt);
+                if (!liste.length) return null;
+                return (
+                  <div key={k}>
+                    <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".22em",textTransform:"uppercase",padding:"8px 8px 4px",
+                      color:"rgba(var(--purple-rgb),calc(0.55*var(--kp) + var(--tb)))"}}>{label}</div>
+                    {liste.map(g => zeile(g, god?.id === g.id))}
+                  </div>
+                );
+              })}
+              {god && !such && (
+                <button type="button" onClick={()=>select(null)}
+                  style={{width:"100%",marginTop:6,padding:"7px 8px",cursor:"pointer",background:"transparent",textAlign:"left",
+                    border:"none",borderTop:"1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))",
+                    fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".14em",textTransform:"uppercase",
+                    color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))"}}>✕ Keine Gottheit</button>
+              )}
+            </div>
           </div>
-          {god?.title && <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".08em",color:"rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))",lineHeight:1.5}}>{god.title}</div>}
-        </div>
+        )}
       </div>
-
-      {/* Picker */}
-      {open && (
-        <div style={{borderTop:"1px solid rgba(var(--purple-rgb),calc(0.14*var(--kp)))",paddingTop:12}}>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(72px,1fr))",gap:6}}>
-            {gods.map(g => {
-              const sel = char.deityId === g.id;
-              const clr = g.palette?.[2] || "rgba(var(--purple-rgb),calc(0.7*var(--kp)))";
-              return (
-                <button key={g.id} onClick={()=>select(g)} title={g.name}
-                  style={{padding:"6px 4px",display:"flex",flexDirection:"column",alignItems:"center",gap:4,
-                    background:sel?"rgba(var(--purple-rgb),calc(0.18*var(--kp)))":"rgba(var(--panel-rgb),0.7)",
-                    border:`1px solid ${sel?clr:"rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}`,
-                    borderRadius:3,cursor:"pointer",transition:"all .15s"}}>
-                  <img src={g.insigniaSrc} alt={g.name}
-                    style={{width:36,height:36,objectFit:"contain",display:"block",
-                      filter:`drop-shadow(0 0 4px ${clr}) drop-shadow(0 0 8px ${clr}${sel?"bb":"55"})`}}/>
-                  <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".07em",
-                    color:sel?"var(--white)":"rgba(var(--text-rgb),calc(0.55*var(--kt)))",textTransform:"uppercase",
-                    whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",maxWidth:"100%"}}>
-                    {g.name}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
     </Card>
   );
 }
