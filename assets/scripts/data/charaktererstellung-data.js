@@ -127,6 +127,45 @@ window.ALLE_STERNZEICHEN = [
   'Die Brücke','Der Schleier','Das Labyrinth','Der Spalt',
 ];
 
+// Lebensstile mit Kosten pro Tag und Beschreibung (Text aus dem Spielerhandbuch, Seite Realismus)
+window.LEBENSSTIL_INFO = [
+  {
+    name: "Jämmerlich",
+    kosten: "—",
+    desc: "Du lebst unter unmenschlichen Bedingungen. Du hast kein Zuhause und suchst immer nach einem Dach über dem Kopf, wo immer du kannst. Du schleichst dich in Scheunen, kauerst in alten Kisten und bist auf das Wohlwollen der Menschen angewiesen, denen es besser geht als dir. Ein jämmerlicher Lebensstil birgt viele Gefahren. Gewalt, Krankheit und Hunger verfolgen dich, wohin du auch gehst. Andere arme Menschen begehren deine Rüstung, deine Waffen und deine Abenteuerausrüstung, die für ihre Verhältnisse ein Vermögen darstellen. Du fällst den meisten Menschen nicht auf."
+  },
+  {
+    name: "Ärmlich",
+    kosten: "10 Hade",
+    desc: "Du lebst in einem undichten Stall, in einer Lehmhütte am Stadtrand oder in einer von Ungeziefer verseuchten Pension im schlimmsten Teil der Stadt. Du hast Schutz vor den Elementen, aber du lebst in einer verzweifelten und oft gewalttätigen Umgebung, an Orten, die voller Krankheiten, Hunger und Unglück sind. Du wirst von den meisten Menschen nicht wahrgenommen und hast kaum rechtlichen Schutz. Die meisten Menschen, die sich in dieser Lebenssituation befinden, haben einen schrecklichen Rückschlag erlitten. Du könntest gestört sein, als Verbannter gezeichnet sein oder an Krankheiten leiden."
+  },
+  {
+    name: "Schlecht",
+    kosten: "20 Hade",
+    desc: "Ein schlechter Lebensstil bedeutet, dass man auf die Annehmlichkeiten einer stabilen Gemeinschaft verzichten muss. Einfache Verpflegung und Unterkunft, fadenscheinige Kleidung und unvorhersehbare Bedingungen führen zu einer ausreichenden, wenn auch wahrscheinlich unangenehmen Erfahrung. Du kannst in einem Zimmer in einer Absteige oder in einem Gemeinschaftsraum über einer Taverne unterkommen. Du genießt zwar einen gewissen rechtlichen Schutz, musst aber dennoch mit Gewalt, Verbrechen und Krankheiten rechnen. Leute dieses Lebensstils sind meist ungelernte Arbeiter, Krämer, Hausierer, Diebe, Söldner und andere anrüchige Typen."
+  },
+  {
+    name: "Einfach",
+    kosten: "100 Hade",
+    desc: "Ein einfacher Lebensstil hält dich von den Slums fern und sorgt dafür, dass du deine Ausrüstung instand halten kannst. Du wohnst in einem älteren Stadtteil und mietest ein Zimmer in einer Pension, einem Gasthaus oder einem Tempel. Du musst weder hungern noch dursten, und deine Lebensbedingungen sind sauber, wenn auch einfach. Zu den einfachen Leuten, die einen bescheidenen Lebensstil führen, gehören Soldaten mit Familie, Arbeiter, Studenten, Priester, selbstgelernte Magier und dergleichen."
+  },
+  {
+    name: "Komfortabel",
+    kosten: "200 Hade",
+    desc: "Wenn du dich für einen komfortablen Lebensstil entscheidest, kannst du dir schönere Kleidung leisten und deine Ausrüstung leicht instand halten. Du wohnst in einem kleinen Häuschen in einem bürgerlichen Viertel oder in einem Privatzimmer in einem feinen Gasthaus. Du verkehrst mit Kaufleuten, Handwerkern und Militäroffizieren."
+  },
+  {
+    name: "Wohlhabend",
+    kosten: "400 Hade",
+    desc: "Wenn du dich für einen wohlhabenden Lebensstil entscheidest, lebst du ein Leben in Luxus, auch wenn du vielleicht nicht den sozialen Status erreicht hast, der mit dem alten Geld des Adels verbunden ist. Du lebst einen Lebensstil vergleichbar mit dem eines sehr erfolgreichen Kaufmanns oder eines beliebten Dieners des Königshauses. Du hast eine respektable Unterkunft — in der Regel ein geräumiges Haus in einem guten Viertel oder eine komfortable Suite in einem feinen Gasthaus. Wahrscheinlich hast du einen kleinen Mitarbeiterstab von Dienern."
+  },
+  {
+    name: "Edel",
+    kosten: "mind. 1.000 Hade",
+    desc: "Du lebst ein Leben im Überfluss und mit Komfort. Du bewegst dich in Kreisen, die von den mächtigsten Leuten der Gesellschaft bevölkert sind. Du hast eine ausgezeichnete Unterkunft, vielleicht ein Stadthaus im schönsten Teil der Stadt oder ein Zimmer im besten Gasthaus. Du speist in den besten Restaurants, hast den fähigsten und modischsten Schneider und hast Diener, die sich um deine Bedürfnisse kümmern. Du erhältst Einladungen zu den gesellschaftlichen Zusammenkünften der Reichen und Mächtigen und verbringst Abende in der Gesellschaft von Politikern, Gildenführern, Hohepriestern und Adligen. Außerdem musst du dich mit Betrug und Verrat auf höchstem Niveau auseinandersetzen. Je reicher du bist, desto größer ist die Wahrscheinlichkeit, dass du als Spielfigur oder Teilnehmer in politische Intrigen hineingezogen wirst."
+  }
+];
+
 window.ALLE_GESCHLECHTER = ['Männlich','Weiblich','Divers','Keine Angabe'];
 
 // Lebensstil-Hints (statisch; Rassen/Klassen/Hintergründe/Divisionen werden

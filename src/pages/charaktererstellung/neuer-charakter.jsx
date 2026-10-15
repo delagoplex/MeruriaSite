@@ -450,12 +450,14 @@ function CatBlock({
   selected,
   onSelect,
   hideOthers = false,
+  details = null,
   grouped = null,
   multiSet = null,
   onMultiToggle = null
 }) {
   const isUnk = selected === 'unbekannt';
   const hasSel = selected && selected !== 'unbekannt';
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const chipSt = item => {
     if (multiSet != null) return multiSet.has(item) ? 'multi' : isUnk ? 'hidden' : 'default';
     if (isUnk) return 'hidden';
@@ -512,7 +514,23 @@ function CatBlock({
     },
     onMouseEnter: e => { e.currentTarget.style.background = 'rgba(255,190,60,0.16)'; e.currentTarget.style.borderColor = 'rgba(255,190,60,0.55)'; },
     onMouseLeave: e => { e.currentTarget.style.background = 'rgba(255,190,60,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,190,60,0.28)'; }
-  }, "\u21A9")));
+  }, "\u21A9")),
+  // Aufklappbare Beschreibungen (z. B. Lebensstile)
+  details && /*#__PURE__*/React.createElement("div", { style:{ marginTop:10 } },
+    /*#__PURE__*/React.createElement("button", {
+      type:"button", onClick:() => setDetailsOpen(o => !o), "aria-expanded":detailsOpen,
+      style:{ fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.18em', textTransform:'uppercase', cursor:'pointer', background:'transparent', border:'none', padding:'4px 0',
+        color:'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))' }
+    }, detailsOpen ? "\u25B2 Beschreibungen ausblenden" : "\u25BC Beschreibungen anzeigen"),
+    detailsOpen && /*#__PURE__*/React.createElement("div", { style:{ display:'flex', flexDirection:'column', gap:10, marginTop:8 } },
+      details.filter(x => !hasSel || x.name === selected).map(x => /*#__PURE__*/React.createElement("div", { key:x.name,
+        style:{ padding:'10px 14px', borderRadius:3, border:'1px solid rgba(var(--purple-rgb),calc(.2*var(--kp)))', background: x.name === selected ? 'rgba(var(--purple-rgb),calc(.12*var(--kp)))' : 'rgba(var(--purple-rgb),calc(.04*var(--kp)))' } },
+        /*#__PURE__*/React.createElement("div", { style:{ display:'flex', gap:10, alignItems:'baseline', marginBottom:4 } },
+          /*#__PURE__*/React.createElement("span", { style:{ fontFamily:'var(--font-d)', fontSize:'14px', letterSpacing:'.08em', color:'var(--white)' } }, x.name),
+          x.kosten && /*#__PURE__*/React.createElement("span", { style:{ fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.12em', color:'rgba(var(--accent-rgb),calc(.55*var(--ka) + var(--tb)))' } }, x.kosten === '\u2014' ? 'keine Kosten' : x.kosten + ' pro Tag')),
+        /*#__PURE__*/React.createElement("div", { style:{ fontFamily:'var(--font-b)', fontSize:'13px', lineHeight:1.7, color:'var(--silver)' } }, x.desc)))
+    )
+  ));
 }
 
 // ── TAG PHASE ──────────────────────────────────────────────────────────────
@@ -638,6 +656,7 @@ function TagPhase({
   }), /*#__PURE__*/React.createElement(CatBlock, {
     title: "Lebensstil",
     items: window.ALLE_LEBENSSTILE,
+    details: window.LEBENSSTIL_INFO,
     selected: tags.lebensstil,
     onSelect: v => setTag('lebensstil', v)
   }), /*#__PURE__*/React.createElement(CatBlock, {
