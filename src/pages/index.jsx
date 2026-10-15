@@ -4,10 +4,11 @@ import '../components/division-people.jsx';
 import '../components/site-gate.jsx';
 import '../components/footer.jsx';
 import '../components/carousel.jsx';
+import '../components/heute-strip.jsx';
 
 ;(function () {
 // top-level functions were global in the old classic-script setup
-Object.assign(window, { ParticleField, PortalCard, MoonIcon, SectionEyebrow, heuteDoyFor, heuteNextHoliday, heuteFromOffset, HeuteStrip, MTSchwierigkeit, MTKatTag, MTQuestRow, MTFilterChip, MTSigil, MTCategoryIcon, MTPanelHeader, MTRewardRow, MTDetailCard, MTPanel, MissionsterminalSection, RecentCard, RecentRow, KollektikonSection, VorgeschichteTeaser, _vg_unused, NeuerCharakterButton, _charHue, _daysAgo, RecentCharCard, RecentCharacters, Tageskarte, CTAButton, App });
+Object.assign(window, { ParticleField, PortalCard, SectionEyebrow, MTSchwierigkeit, MTKatTag, MTQuestRow, MTFilterChip, MTSigil, MTCategoryIcon, MTPanelHeader, MTRewardRow, MTDetailCard, MTPanel, MissionsterminalSection, RecentCard, RecentRow, KollektikonSection, VorgeschichteTeaser, _vg_unused, NeuerCharakterButton, _charHue, _daysAgo, RecentCharCard, RecentCharacters, Tageskarte, CTAButton, App });
 
 var { useState, useEffect, useRef, useCallback, useMemo } = React;
 
@@ -341,31 +342,6 @@ Object.assign(window, { PortalCard });
 
 var { useState:uSx, useEffect:uEx, useRef:uRx, useMemo:uMx } = React;
 
-/* ── Moon SVG (matches Kalender Interaktiv) ───── */
-function MoonIcon({ phaseDay=14, cycleLen=28, vollmondDay=16, color='#d9b06b', size=26 }) {
-  const D = phaseDay;
-  let ill;
-  if (D <= vollmondDay) ill = (D - 1) / Math.max(1, vollmondDay - 1);
-  else ill = 1 - (D - vollmondDay) / (cycleLen - vollmondDay + 1);
-  ill = Math.max(0, Math.min(1, ill));
-  const waxing = D <= vollmondDay;
-  const r = 9, cx = 11, cy = 11;
-  let body;
-  if (ill < 0.02) body = <circle cx={cx} cy={cy} r={r} fill="rgb(var(--panel-rgb))" stroke={color} strokeWidth="1.1"/>;
-  else if (ill > 0.98) body = <circle cx={cx} cy={cy} r={r} fill={color} stroke={color} strokeWidth="1.1"/>;
-  else {
-    const rx = r * Math.abs(1 - 2*ill);
-    const outer = waxing ? 1 : 0;
-    const inner = (ill < 0.5) ? (waxing ? 0 : 1) : (waxing ? 1 : 0);
-    const path = `M${cx},${cy-r} A${r},${r} 0 0,${outer} ${cx},${cy+r} A${rx},${r} 0 0,${inner} ${cx},${cy-r} Z`;
-    body = <React.Fragment>
-      <circle cx={cx} cy={cy} r={r} fill="rgb(var(--panel-rgb))" stroke={color} strokeWidth="1.1"/>
-      <path d={path} fill={color}/>
-    </React.Fragment>;
-  }
-  return <svg viewBox="0 0 22 22" width={size} height={size} style={{flexShrink:0,filter:`drop-shadow(0 0 6px ${color}66)`}}>{body}</svg>;
-}
-
 /* ── Section eyebrow header ─────────────────────── */
 function SectionEyebrow({ left, right }) {
   return (
@@ -381,250 +357,6 @@ function SectionEyebrow({ left, right }) {
         letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.4*var(--ka) + var(--tb)))',
         textTransform:'uppercase',
       }}>{right}</span>}
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────
-   HEUTE IN MERURIA — horizontal calendar strip
-   ───────────────────────────────────────────────── */
-var HEUTE_MONTHS = [
-  { name:'Janvar',  roman:'I',    days:19, sign:'Die Arche',     vibe:'Aufbruch · Hoffnung' },
-  { name:'Fevorn',  roman:'II',   days:18, sign:'Die Böe',       vibe:'Stürme · Mut' },
-  { name:'Mareth',  roman:'III',  days:19, sign:'Die Wurzel',    vibe:'Erwachen · Wachstum' },
-  { name:'Aprel',   roman:'IV',   days:19, sign:'Die Linse',     vibe:'Goldmondblüte · Helligkeit' },
-  { name:'Mairen',  roman:'V',    days:18, sign:'Die Stille',    vibe:'Besinnung · Innehalten' },
-  { name:'Junvar',  roman:'VI',   days:19, sign:'Das Irrlicht',  vibe:'Wandern · Sucht' },
-  { name:'Juval',   roman:'VII',  days:19, sign:'Die Klinge',    vibe:'Höhepunkt · Sonne' },
-  { name:'Auvar',   roman:'VIII', days:19, sign:'Die Glut',      vibe:'Hitze · Ernte' },
-  { name:'Septhar', roman:'IX',   days:19, sign:'Die Brücke',    vibe:'Übergang · Reise' },
-  { name:'Oktar',   roman:'X',    days:18, sign:'Der Schleier',  vibe:'Verhüllung · Geheimnis' },
-  { name:'Novren',  roman:'XI',   days:18, sign:'Das Labyrinth', vibe:'Suche · Verirren' },
-  { name:'Derath',  roman:'XII',  days:19, sign:'Der Spalt',     vibe:'Schwellen · Übergang' },
-];
-var HEUTE_WEEKDAYS = ['Aven', 'Eiru', 'Orun', 'Ulai', 'Ivar', 'Orel', 'Elu'];
-var HEUTE_YEAR_DAYS = 224;
-
-var HEUTE_HOLIDAYS = [
-  { name:'Tag der Landung',       monthIdx:0,  day:3 },
-  { name:'Der Erste Schritt',     monthIdx:0,  day:14 },
-  { name:'Aurelias Klinge',       monthIdx:1,  day:5 },
-  { name:'Selunara-Nacht',        monthIdx:1,  day:14 },
-  { name:'Das Erwachen',          monthIdx:2,  day:1 },
-  { name:'Wurzelfest',            monthIdx:2,  day:15 },
-  { name:'Elysarions Nacht',      monthIdx:3,  day:7 },
-  { name:'Hydeas Segen',          monthIdx:3,  day:18 },
-  { name:'Die Stille',            monthIdx:4,  day:9 },
-  { name:'Tag der Erinnerung',    monthIdx:4,  day:17 },
-  { name:'Siennas Zenit',         monthIdx:5,  day:11 },
-  { name:'Nacht der Irrlichter',  monthIdx:5,  day:18 },
-  { name:'Der Große Markt',       monthIdx:6,  day:5 },
-  { name:'Eiritha-Morgen',        monthIdx:6,  day:14 },
-  { name:'Avalastes Wende',       monthIdx:7,  day:2 },
-  { name:'Ferys-Abend',           monthIdx:7,  day:16 },
-  { name:'Aschenhauch-Ritual',    monthIdx:8,  day:8 },
-  { name:'Tag der Brücken',       monthIdx:8,  day:17 },
-  { name:'Nacht des Schleiers',   monthIdx:9,  day:6 },
-  { name:'Melions Ruf',           monthIdx:9,  day:15 },
-  { name:'Das Labyrinthfest',     monthIdx:10, day:9 },
-  { name:'Vindeahs Gabe',         monthIdx:10, day:17 },
-  { name:'Nacht der Naturgeister',monthIdx:11, day:5 },
-  { name:'Die Schwellennacht',    monthIdx:11, day:19 },
-];
-function heuteDoyFor(h) {
-  let d = h.day;
-  for (let m=0; m<h.monthIdx; m++) d += HEUTE_MONTHS[m].days;
-  return d;
-}
-var HEUTE_HOLIDAY_DOYS = HEUTE_HOLIDAYS.map(h => ({ ...h, doy: heuteDoyFor(h) })).sort((a,b)=>a.doy-b.doy);
-
-function heuteNextHoliday(doy) {
-  for (const h of HEUTE_HOLIDAY_DOYS) {
-    if (h.doy > doy) return { ...h, daysUntil: h.doy - doy };
-  }
-  const first = HEUTE_HOLIDAY_DOYS[0];
-  return { ...first, daysUntil: HEUTE_YEAR_DAYS - doy + first.doy };
-}
-
-// Baseline: Aprel 14, 237 n.d.L., Eiru, Goldmond Tag 16 (Vollmond), Aschmond Tag 8
-var HEUTE_BASE_DOY  = 19 + 18 + 19 + 14; // 70
-var HEUTE_BASE_YEAR = 237;
-var HEUTE_BASE_GOLD = 16;
-var HEUTE_BASE_ASH  = 8;
-var HEUTE_BASE_WD_IDX = 1; // Eiru
-
-function heuteFromOffset(offset) {
-  const total = HEUTE_BASE_DOY + offset;
-  const yearShift = Math.floor((total - 1) / HEUTE_YEAR_DAYS);
-  const doy = ((total - 1) % HEUTE_YEAR_DAYS + HEUTE_YEAR_DAYS) % HEUTE_YEAR_DAYS + 1;
-  let d = doy, mi = 0;
-  for (; mi < 12; mi++) {
-    if (d <= HEUTE_MONTHS[mi].days) break;
-    d -= HEUTE_MONTHS[mi].days;
-  }
-  const wd = HEUTE_WEEKDAYS[((HEUTE_BASE_WD_IDX + offset) % 7 + 7) % 7];
-  const goldDay = ((HEUTE_BASE_GOLD - 1 + offset) % 28 + 28) % 28 + 1;
-  const ashDay  = ((HEUTE_BASE_ASH  - 1 + offset) % 17 + 17) % 17 + 1;
-  const next = heuteNextHoliday(doy);
-  return {
-    weekday: wd,
-    day: d,
-    monthIdx: mi,
-    month: HEUTE_MONTHS[mi].name,
-    monthRoman: HEUTE_MONTHS[mi].roman,
-    sign: HEUTE_MONTHS[mi].sign,
-    vibe: HEUTE_MONTHS[mi].vibe,
-    year: `${HEUTE_BASE_YEAR + yearShift} n.d.L.`,
-    goldDay, ashDay,
-    nextHoliday: next.name,
-    daysUntil: next.daysUntil,
-  };
-}
-
-function HeuteStrip() {
-  const [offset, setOffset] = uSx(0);
-  const today = heuteFromOffset(offset);
-  const isToday = offset === 0;
-
-  const btnBase = {
-    width:30, height:30, padding:0,
-    display:'inline-flex', alignItems:'center', justifyContent:'center',
-    background:'rgba(var(--purple-rgb),calc(0.10*var(--kp)))',
-    border:'1px solid rgba(var(--purple-rgb),calc(0.35*var(--kp)))',
-    borderRadius:2,
-    color:'var(--white)', fontFamily:'var(--font-mono)', fontSize:14,
-    cursor:'pointer', transition:'all 0.18s',
-    lineHeight:1,
-  };
-  const onBtnEnter = e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.28*var(--kp)))'; e.currentTarget.style.borderColor='var(--lav2)'; e.currentTarget.style.color='#fff'; e.currentTarget.style.boxShadow='0 0 14px rgba(var(--purple-rgb),calc(0.4*var(--kp)))'; };
-  const onBtnLeave = e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.10*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.35*var(--kp)))'; e.currentTarget.style.color='var(--white)'; e.currentTarget.style.boxShadow='none'; };
-
-  return (
-    <div style={{
-      position:'relative', overflow:'hidden',
-      display:'grid',
-      gridTemplateColumns:'auto 1fr auto auto auto',
-      alignItems:'center', gap:32,
-      padding:'22px 28px 22px 36px',
-      background:'linear-gradient(90deg, rgba(var(--panel-rgb),0.85) 0%, rgba(var(--panel-rgb),0.75) 50%, rgba(var(--panel-rgb),0.85) 100%)',
-      border:'1px solid rgba(var(--purple-rgb),calc(0.22*var(--kp)))',
-      borderRadius:'4px',
-      boxShadow:'0 12px 36px rgba(var(--shadow-rgb),calc(0.4 * var(--shadow-k)))',
-      transition:'border-color 0.3s',
-    }}>
-      {/* Date block */}
-      <div style={{ display:'flex', alignItems:'baseline', gap:14, flexShrink:0 }}>
-        <span style={{
-          fontFamily:'var(--font-display)', fontWeight:300,
-          fontSize:'52px', color:'var(--white)', lineHeight:1,
-          textShadow:'0 0 30px rgba(var(--purple-rgb),calc(0.5*var(--kp)))',
-          transition:'opacity 0.2s',
-        }}>{today.day}</span>
-        <div>
-          <div style={{
-            fontFamily:'var(--font-display)', fontSize:'16px', fontWeight:400,
-            letterSpacing:'0.18em', color:'#d9b06b', textTransform:'uppercase',
-          }}>{today.month}</div>
-          <div style={{
-            fontFamily:'var(--font-mono)', fontSize:'11.5px',
-            letterSpacing:'0.25em', color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))',
-            textTransform:'uppercase', marginTop:3,
-          }}>{today.weekday} · {today.year}</div>
-        </div>
-      </div>
-
-      {/* Sign + vibe */}
-      <div style={{ minWidth:0 }}>
-        <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'11.5px',
-          letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
-          textTransform:'uppercase', marginBottom:4,
-        }}>Im Zeichen</div>
-        <div style={{
-          fontFamily:'var(--font-display)', fontWeight:400,
-          fontSize:'17px', letterSpacing:'0.14em',
-          color:'rgba(var(--text-hi-rgb),calc(0.92*var(--kt) + var(--tb)))', textTransform:'uppercase',
-        }}>{today.sign}</div>
-        <div style={{
-          fontFamily:'var(--font-body)', fontWeight:300,
-          fontSize:'12.5px', letterSpacing:'0.06em',
-          color:'rgba(var(--text-rgb),calc(0.55*var(--kt) + var(--tb)))', marginTop:3,
-        }}>{today.vibe}</div>
-      </div>
-
-      {/* Moons */}
-      <div style={{ display:'flex', alignItems:'center', gap:18, flexShrink:0, padding:'0 16px', borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))', borderRight:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))' }}>
-        <div style={{ textAlign:'center' }}>
-          <MoonIcon phaseDay={today.goldDay} cycleLen={28} vollmondDay={16} color="#d9b06b" size={30}/>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(217,176,107,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Goldmond</div>
-        </div>
-        <div style={{ textAlign:'center' }}>
-          <MoonIcon phaseDay={today.ashDay} cycleLen={17} vollmondDay={12} color="#a8b6d4" size={26}/>
-          <div style={{ fontFamily:'var(--font-mono)', fontSize:'11px', letterSpacing:'0.2em', color:'color-mix(in srgb, rgba(168,182,212,0.7), rgb(var(--ink-rgb)) var(--cm))', textTransform:'uppercase', marginTop:6 }}>Aschmond</div>
-        </div>
-      </div>
-
-      {/* Next holiday */}
-      <div style={{ textAlign:'right', flexShrink:0 }}>
-        <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'11.5px',
-          letterSpacing:'0.3em', color:'rgba(var(--purple-rgb),calc(0.6*var(--kp) + var(--tb)))',
-          textTransform:'uppercase', marginBottom:4,
-        }}>Nächstes Fest · in {today.daysUntil} {today.daysUntil === 1 ? 'Tag' : 'Tagen'}</div>
-        <div style={{
-          fontFamily:'var(--font-display)', fontSize:'15px', fontWeight:400,
-          letterSpacing:'0.14em', color:'var(--white)', textTransform:'uppercase',
-        }}>{today.nextHoliday}</div>
-      </div>
-
-      {/* Day controls */}
-      <div style={{
-        display:'flex', flexDirection:'column', alignItems:'center', gap:6,
-        flexShrink:0, paddingLeft:18, borderLeft:'1px solid rgba(var(--purple-rgb),calc(0.15*var(--kp)))',
-      }}>
-        <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'11px',
-          letterSpacing:'0.28em', color:'rgba(var(--accent-rgb),calc(0.55*var(--ka) + var(--tb)))',
-          textTransform:'uppercase',
-        }}>Tag steuern</div>
-        <div style={{ display:'flex', alignItems:'center', gap:6 }}>
-          <button
-            onClick={() => setOffset(o => o - 1)}
-            aria-label="Einen Tag zurück"
-            title="Einen Tag zurück"
-            style={btnBase}
-            onMouseEnter={onBtnEnter}
-            onMouseLeave={onBtnLeave}
-          >◀</button>
-          <button
-            onClick={() => setOffset(0)}
-            disabled={isToday}
-            title="Zurück zu heute"
-            style={{
-              ...btnBase,
-              width:'auto', padding:'0 12px', fontFamily:'var(--font-display)',
-              fontSize:12, letterSpacing:'0.22em', textTransform:'uppercase',
-              opacity: isToday ? 0.45 : 1,
-              cursor: isToday ? 'default' : 'pointer',
-            }}
-            onMouseEnter={e => { if (!isToday) onBtnEnter(e); }}
-            onMouseLeave={e => { if (!isToday) onBtnLeave(e); }}
-          >Heute</button>
-          <button
-            onClick={() => setOffset(o => o + 1)}
-            aria-label="Einen Tag weiter"
-            title="Einen Tag weiter"
-            style={btnBase}
-            onMouseEnter={onBtnEnter}
-            onMouseLeave={onBtnLeave}
-          >▶</button>
-        </div>
-        <div style={{
-          fontFamily:'var(--font-mono)', fontSize:'11px',
-          letterSpacing:'0.2em', color: isToday ? 'rgba(var(--accent-rgb),calc(0.4*var(--ka)))' : '#d9b06b',
-          textTransform:'uppercase', minHeight:10,
-        }}>{isToday ? '— Heute —' : (offset > 0 ? `+${offset} Tag${offset===1?'':'e'}` : `${offset} Tag${offset===-1?'':'e'}`)}</div>
-      </div>
     </div>
   );
 }
@@ -2388,7 +2120,7 @@ function CTAButton({ href, label, glyph='◈' }) {
   );
 }
 
-Object.assign(window, { HeuteStrip, VorgeschichteTeaser, Tageskarte, MissionsterminalSection, KollektikonSection, NeuerCharakterButton, RecentCharacters, CTAButton, SectionEyebrow });
+Object.assign(window, { VorgeschichteTeaser, Tageskarte, MissionsterminalSection, KollektikonSection, NeuerCharakterButton, RecentCharacters, CTAButton, SectionEyebrow });
 
 
 var { useState:uS5, useEffect:uE5, useCallback:uC5, useRef:uR5 } = React;
@@ -2832,6 +2564,19 @@ function App() {
         <DivisionStrip/>
       </section>
 
+      {/* ── HEUTE IN MERURIA strip ── */}
+      <section style={{
+          position:'relative', zIndex:5,
+        padding:'48px 48px 16px',
+        maxWidth:'1440px', margin:'0 auto',
+      }}>
+        <SectionHead label="Heute in Meruria" mb={18} baseline/>
+        <HeuteStrip/>
+        <div style={{ marginTop:24 }}>
+          <CTAButton href="/spiel/kalender.html" label="Zum Kalender"/>
+        </div>
+      </section>
+
       {/* ── NEUER CHARAKTER + RECENT CHARS (1×2) ── */}
       <section style={{
         position:'relative', zIndex:5,
@@ -2849,19 +2594,6 @@ function App() {
 
         <div style={{ marginTop:28 }}>
           <CTAButton href="/spiel/charaktere.html" label="Zu den Charakteren"/>
-        </div>
-      </section>
-
-      {/* ── HEUTE IN MERURIA strip ── */}
-      <section style={{
-          position:'relative', zIndex:5,
-        padding:'48px 48px 16px',
-        maxWidth:'1440px', margin:'0 auto',
-      }}>
-        <SectionHead label="Heute in Meruria" mb={18} baseline/>
-        <HeuteStrip/>
-        <div style={{ marginTop:24 }}>
-          <CTAButton href="/spiel/kalender.html" label="Zum Kalender"/>
         </div>
       </section>
 
