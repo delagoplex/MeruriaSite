@@ -160,7 +160,7 @@ const NAV = [
     ],
   },
   {
-    id: 'tools', label: 'Spiel',
+    id: 'tools', label: 'Spiel', href: '/spiel/index.html',
     items: [
       { label: 'SC', href: '/spiel/charaktere.html' },
       { label: 'Kontakte', href: '/spiel/kontakte.html' },
