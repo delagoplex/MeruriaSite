@@ -2,7 +2,7 @@
 --      dafür freigeschaltet hat (char_data.attributeFrei = true). Gewürfelt wird gemeinsam in Foundry.
 --
 -- characters_guard (041) wird erweitert. Für Nicht-DMs gilt:
---   INSERT: char_data.stats wird entfernt, attributeFrei ist false (neue Charaktere ohne Attribute)
+--   INSERT: char_data.stats wird entfernt, attributeFrei ist false (neue Charaktere ohne Attribute), type ist spieler
 --   UPDATE ohne Freigabe: stats und attributeFrei bleiben wie vorher
 --   UPDATE mit Freigabe: stats dürfen geändert werden; attributeFrei darf nur zurück auf false (Abschluss)
 -- Die Spielleitung (is_dm) darf alles.
@@ -15,6 +15,7 @@ BEGIN
   IF NOT public.is_dm() THEN
     IF TG_OP = 'INSERT' THEN
       NEW.visible := FALSE;
+      NEW.type := 'spieler';
       NEW.char_data := (COALESCE(NEW.char_data, '{}'::jsonb) - 'stats') || jsonb_build_object('attributeFrei', false);
     ELSE
       NEW.visible  := OLD.visible;
@@ -39,3 +40,9 @@ BEGIN
   END IF;
   RETURN NEW;
 END $$;
+
+-- Trigger sicherstellen (er stammt aus 041; die echte Datenbank wurde vor der Migrationshistorie von Hand angelegt)
+DROP TRIGGER IF EXISTS characters_guard ON public.characters;
+CREATE TRIGGER characters_guard
+  BEFORE INSERT OR UPDATE ON public.characters
+  FOR EACH ROW EXECUTE FUNCTION public.characters_guard();

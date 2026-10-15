@@ -1,4 +1,4 @@
--- 063: Kommentare zeigen Name und Bild des Charakters. Spieler dürfen fremde, nicht freigeschaltete Charaktere
+-- 063: Kommentare zeigen Name und Bild des Charakters (und sind auf 10 pro Minute begrenzt). Spieler dürfen fremde, nicht freigeschaltete Charaktere
 --      nicht lesen (011); deshalb übernimmt ein Trigger Name und Bild beim Schreiben aus characters
 --      (nicht vom Client, damit niemand unter fremdem Namen kommentiert).
 
@@ -9,6 +9,11 @@ ALTER TABLE public.ereignis_kommentare
 CREATE OR REPLACE FUNCTION public.ereignis_kommentar_charakter() RETURNS TRIGGER
 LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, pg_temp AS $$
 BEGIN
+  -- Spam-Grenze: höchstens 10 Kommentare pro Minute und Person (Spielleitung ausgenommen)
+  IF NOT public.is_dm() AND (SELECT count(*) FROM public.ereignis_kommentare
+       WHERE autor_id = NEW.autor_id AND created_at > now() - interval '1 minute') >= 10 THEN
+    RAISE EXCEPTION 'Zu viele Kommentare in kurzer Zeit. Bitte kurz warten.';
+  END IF;
   SELECT c.name, c.char_data->>'bild' INTO NEW.char_name, NEW.char_bild
   FROM public.characters c WHERE c.id = NEW.character_id;
   NEW.char_name := COALESCE(NEW.char_name, '');

@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS public.karte_objective_monster (
   monster      TEXT[] NOT NULL DEFAULT '{}'
 );
 ALTER TABLE public.karte_objective_monster ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "dm all" ON public.karte_objective_monster;
 CREATE POLICY "dm all" ON public.karte_objective_monster FOR ALL
   USING (public.is_dm()) WITH CHECK (public.is_dm());
 GRANT SELECT, INSERT, UPDATE, DELETE ON public.karte_objective_monster TO authenticated;

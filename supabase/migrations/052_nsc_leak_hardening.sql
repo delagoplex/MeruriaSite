@@ -123,6 +123,12 @@ BEGIN
     FOREACH k IN ARRAY keys LOOP
       IF NOT k = ANY(unlocked) THEN row_data := public.nsc_mask_fact(row_data,k); END IF;
     END LOOP;
+    -- Begleitfelder nie ohne ihren freigeschalteten Hauptwert, auch wenn der Hauptwert selbst leer ist
+    -- (sonst gäbe z. B. ein NSC mit Geburtsjahr, aber ohne alter_jahre das Jahr preis)
+    IF NOT 'rasse' = ANY(unlocked) THEN row_data := jsonb_set(row_data,'{unterrasse}','null'::jsonb); END IF;
+    IF NOT 'alter' = ANY(unlocked) THEN
+      row_data := jsonb_set(jsonb_set(jsonb_set(row_data,'{geburtstag_jahr}','null'::jsonb),'{alter_ref_abs}','null'::jsonb),'{lebensphase}','null'::jsonb);
+    END IF;
 
     -- Geheimnisse ohne Freigabe der Spielleitung werden nie ausgeliefert
     geh := COALESCE(row_data->'geheimnisse','[]'::jsonb);
