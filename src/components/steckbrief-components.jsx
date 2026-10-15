@@ -107,6 +107,39 @@ function InspirationStars({ wert, onChange }) {
     </div>
   );
 }
+/* Attributsfestlegung: Spieler tragen Attribute nur ein, wenn die Spielleitung den Charakter dafür freigeschaltet hat
+   (char.attributeFrei). „Attribute festlegen“ schließt ab und sperrt wieder. Die Datenbank prüft das ebenso (characters_guard, 061). */
+function AttributFreigabe({ char, upd, istDm, editing }) {
+  const frei = !!char.attributeFrei;
+  const knopf = (aktiv) => ({fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".14em",textTransform:"uppercase",padding:"6px 12px",borderRadius:2,cursor:"pointer",
+    background: aktiv ? "rgba(var(--purple-rgb),calc(0.22*var(--kp)))" : "transparent",
+    border:"1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))",color:"rgba(var(--accent-rgb),calc(0.9*var(--ka) + var(--tb)))"});
+  const text = {fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,lineHeight:1.6,color:"var(--silver)",flex:1,minWidth:200};
+  if (istDm) return (
+    <div style={{display:"flex",alignItems:"center",gap:12,flexWrap:"wrap",margin:"-4px 0 11px",padding:"8px 12px",borderRadius:3,
+      border:"1px dashed rgba(var(--accent-rgb),calc(0.35*var(--ka)))",background:"rgba(var(--purple-rgb),calc(0.05*var(--kp)))"}}>
+      <span style={text}>{frei ? "Zur Attributsfestlegung freigeschaltet: der Spieler kann die Werte einmal eintragen."
+        : "Als Spielleitung kannst du die Attribute jederzeit selbst eintragen."}</span>
+      <button type="button" style={knopf(frei)} onClick={() => upd({ attributeFrei: !frei })}>
+        {frei ? "Freigabe zurücknehmen" : "Zur Attributsfestlegung freischalten"}</button>
+    </div>
+  );
+  if (!frei) return null;
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:12,flexWrap:"wrap",margin:"-4px 0 11px",padding:"8px 12px",borderRadius:3,
+      border:"1px solid rgba(var(--accent-rgb),calc(0.45*var(--ka)))",background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))"}}>
+      <span style={text}>{editing
+        ? "Trage die in Foundry gewürfelten Werte ein und schließe dann ab. Danach sind die Attribute wieder gesperrt."
+        : "Die Spielleitung hat deine Attribute freigeschaltet. Klicke auf „Bearbeiten“, um die in Foundry gewürfelten Werte einzutragen."}</span>
+      {editing && (
+        <button type="button" style={knopf(true)} disabled={char.attributeFehlen}
+          title={char.attributeFehlen ? "Erst Werte eintragen" : undefined}
+          onClick={() => { if (window.confirm("Attribute festlegen? Danach kannst du sie nicht mehr selbst ändern.")) upd({ attributeFrei: false }); }}>
+          ✓ Attribute festlegen</button>
+      )}
+    </div>
+  );
+}
 const leerWert = v => !v || ['—','–','-'].includes(String(v).trim());
 
 function getTrefferwuerfel(charClass) {
@@ -168,6 +201,8 @@ function buildChar(d) {
     deityDomain: d.deityDomain || '—',
     deityHue:    55,
     stats:       d.stats       || {str:10,dex:10,con:10,int:10,wis:10,cha:10},
+    attributeFehlen: !d.stats,
+    attributeFrei: !!d.attributeFrei,
 
     // ── Persönlichkeit & Aussehen ──────────────────────────────
     alignment:      d.alignment      || '—',
@@ -1225,6 +1260,19 @@ function AttrBlock({ def, char, hi, lo }) {
 }
 
 function AttributeGrid({ char }) {
+  if (char.attributeFehlen) return (
+    <Card style={{marginBottom:11}}>
+      <SecTitle label="Attribute" />
+      <div style={{padding:"14px 4px 6px",display:"flex",alignItems:"center",gap:12}}>
+        <span aria-hidden="true" style={{fontFamily:"var(--font-mono)",fontSize:20,color:"rgba(var(--accent-rgb),calc(0.5*var(--ka) + var(--tb)))"}}>⚄</span>
+        <div>
+          <div style={{fontFamily:"var(--font-display)",fontSize:13,letterSpacing:".16em",textTransform:"uppercase",color:"var(--white)"}}>Attribute folgen</div>
+          <div style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,lineHeight:1.6,color:"var(--silver)"}}>
+            Werden zusammen mit der Spielleitung in Foundry ausgewürfelt.</div>
+        </div>
+      </div>
+    </Card>
+  );
   const vals = ATTR_DEFS.map(d => char.stats[d.key]);
   const max = Math.max(...vals), min = Math.min(...vals);
   return (
@@ -1586,12 +1634,14 @@ function FbCard({ item, index, onChange }) {
 /* ── charFromEntry / saveCharToDB ───────────────────────────── */
 function charFromEntry(entry) {
   const d = entry._char || entry.char_data || entry;
-  if (d && d.hp !== undefined) return { ...d };
+  if (d && d.hp !== undefined) return { ...d, stats: d.stats || {str:10,dex:10,con:10,int:10,wis:10,cha:10}, attributeFehlen: !d.stats };
   return buildChar(d || entry);
 }
 
 const _sbSaveTimers = {};   // pro Charakter, damit ein Wechsel den Save des vorherigen nicht verwirft
-function saveCharToDB(id, char) {
+function saveCharToDB(id, charIn) {
+  const { attributeFehlen, ...char } = charIn;
+  if (attributeFehlen) delete char.stats;
   clearTimeout(_sbSaveTimers[id]);
   _sbSaveTimers[id] = setTimeout(async () => {
     try {
@@ -2085,6 +2135,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
         background:"rgb(var(--bg-rgb))",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))"}}>{HB(k)}</div></div> : el;
   window.CharAge.useReady();
   const canEdit = !!entry;
+  const istDm = window.SITE_USER?.role === 'dm';
   const [charRoh, setChar]  = useSteckbrief(() => entry ? charFromEntry(entry) : (charProp || {}));
   const char = mitStufe(charRoh);
   const divFarben = divisionsFarben(char.divisionId);
@@ -2114,7 +2165,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
     saveCharToDB(entry.id, { ...charRef.current, zauber: newZauber });
   }
   function updStat(key, val) {
-    upd({ stats: { ...char.stats, [key]: Math.max(1, Math.min(30, parseInt(val)||1)) } });
+    upd({ stats: { ...char.stats, [key]: Math.max(1, Math.min(30, parseInt(val)||1)) }, attributeFehlen: false });
   }
 
   const { SiteNav, ImageUpload } = window;
@@ -2264,7 +2315,8 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
 
         {/* MITTE */}
         <div style={{display:"flex",flexDirection:"column",gap:11}}>
-          {E ? <EditableStatsGrid char={char} updStat={updStat} /> : HW('stats', <AttributeGrid char={char} />)}
+          {canEdit && <AttributFreigabe char={char} upd={upd} istDm={istDm} editing={E} />}
+          {E && (istDm || char.attributeFrei) ? <EditableStatsGrid char={char} updStat={updStat} /> : HW('stats', <AttributeGrid char={char} />)}
           {E ? <EditableSavingThrows char={char} upd={upd} /> : <SavingThrows char={char} />}
           {E ? <EditableSkillPills char={char} upd={upd} /> : <SkillPills char={char} />}
           <KlassenmerkmaleCard char={char} />
