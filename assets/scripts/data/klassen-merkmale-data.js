@@ -6984,7 +6984,7 @@ window.KLASSEN_MERKMALE = {
     quelle: "Weg der Barmherzigkeit",
     beschreibung: [
       "Du bist in den Fertigkeiten Heilkunde und Motiv erkennen sowie mit Kräuterkunde-Ausrüstung geübt.",
-      "Außerdem besitzt du eine Maske, die du oft trägst, wenn du die Merkmale dieser Unterklasse anwendest. Mögliche Aussehen (W6): 1 Rabe, 2 Schwarzweiß, 3 Weinendes Antlitz, 4 Lachendes Antlitz, 5 Totenschädel, 6 Schmetterling."
+      "Außerdem besitzt du eine Maske, die du oft trägst, wenn du die Merkmale dieser Spezialisierung anwendest. Mögliche Aussehen (W6): 1 Rabe, 2 Schwarzweiß, 3 Weinendes Antlitz, 4 Lachendes Antlitz, 5 Totenschädel, 6 Schmetterling."
     ]
   },
 

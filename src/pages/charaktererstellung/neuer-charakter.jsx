@@ -869,7 +869,7 @@ function TagPhase({
     if (!subs.length) return null;
     const stufeHint = meta.subStufe > 1 ? ` (ab Stufe ${meta.subStufe})` : '';
     return /*#__PURE__*/React.createElement(CatBlock, {
-      title: 'Unterklasse' + stufeHint,
+      title: 'Spezialisierung' + stufeHint,
       items: subs,
       selected: tags.subklasse,
       onSelect: v => setTag('subklasse', v)
@@ -1445,7 +1445,7 @@ function OutputPhase({
     const chosen = tags.subklasse || finals['subklasse'] || null;
     const isEmp = klassenMeta.subStufe > 1;
     return {
-      lbl: isEmp ? `Unterklasse · Empfehlung` : 'Unterklasse',
+      lbl: isEmp ? `Spezialisierung · Empfehlung` : 'Spezialisierung',
       lbl2: isEmp ? `Wahl ab Stufe ${klassenMeta.subStufe}` : null,
       kat: 'subklasse',
       val: chosen || (subklassenListe.length > 1

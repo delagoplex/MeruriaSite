@@ -953,7 +953,7 @@ function KlasseDetail({
   },
     React.createElement("div", {
       style: { fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.25em', color: accent + '77', textTransform: 'uppercase', marginBottom: '12px' }
-    }, "Unterklassen"),
+    }, "Spezialisierungen"),
     /* Tab-Leiste */
     React.createElement("div", {
       style: { display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }

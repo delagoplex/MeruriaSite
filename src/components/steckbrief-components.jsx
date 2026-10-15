@@ -1623,6 +1623,9 @@ function BirthdayPickerRow({ char, upd }) {
 
 /* ── Auswahlfeld für die Identitäts-Zeilen: der gewählte Wert bricht um statt abgeschnitten zu werden,
       die Liste klappt darunter auf (mit Suche bei langen Listen) ── */
+// weiche Trennung, damit das lange Wort in die 80-px-Beschriftungsspalte passt
+const SPEZ_LABEL = "Speziali\u00ADsierung";
+const ohneTrennung = t => String(t).replace(/\u00AD/g, '');
 const ROW_LABEL = {fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".12em",color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))",textTransform:"uppercase",flex:"0 0 80px"};
 function AuswahlRow({ label, value, options, onChange, bright, leer = "— wählen —", gesperrt = null }) {
   const [open, setOpen] = useSteckbrief(false);
@@ -1646,7 +1649,7 @@ function AuswahlRow({ label, value, options, onChange, bright, leer = "— wähl
       {gesperrt
         ? <span title={gesperrt} style={{flex:1,minWidth:0,fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".06em",lineHeight:1.5,paddingTop:2,
             color:"rgba(var(--text-rgb),calc(0.4*var(--kt) + var(--tb)))"}}>{hatWert ? value + ' · ' : ''}{gesperrt}</span>
-        : <button type="button" onClick={()=>setOpen(v=>!v)} aria-haspopup="listbox" aria-expanded={open} aria-label={label}
+        : <button type="button" onClick={()=>setOpen(v=>!v)} aria-haspopup="listbox" aria-expanded={open} aria-label={ohneTrennung(label)}
             style={{flex:1,minWidth:0,display:"block",padding:"1px 2px 3px",cursor:"pointer",textAlign:"left",
               background:"transparent",border:"none",borderBottom:`1px solid rgba(var(--purple-rgb),calc(${open?0.55:0.25}*var(--kp)))`}}>
             <span lang="de" style={{overflowWrap:"break-word",hyphens:"auto",WebkitHyphens:"auto",fontFamily:"var(--font-body)",fontSize:12.5,lineHeight:1.4,
@@ -1656,11 +1659,11 @@ function AuswahlRow({ label, value, options, onChange, bright, leer = "— wähl
               transform:open?"rotate(180deg)":"none",transition:"transform .15s"}}>▾</span>
           </button>}
       {open && (
-        <div role="listbox" aria-label={label} style={{position:"absolute",left:0,top:"calc(100% + 2px)",zIndex:40,
+        <div role="listbox" aria-label={ohneTrennung(label)} style={{position:"absolute",left:0,top:"calc(100% + 2px)",zIndex:40,
           width:"max(100%, 260px)",background:"rgb(var(--panel-rgb))",border:"1px solid rgba(var(--purple-rgb),calc(0.45*var(--kp)))",borderRadius:4,
           boxShadow:"0 12px 32px rgba(var(--shadow-rgb),calc(0.6*var(--shadow-k)))",padding:5}}>
           {options.length > 12 && (
-            <input autoFocus value={q} onChange={e=>setQ(e.target.value)} placeholder="Suchen …" aria-label={label + ' suchen'}
+            <input autoFocus value={q} onChange={e=>setQ(e.target.value)} placeholder="Suchen …" aria-label={ohneTrennung(label) + ' suchen'}
               style={{width:"100%",boxSizing:"border-box",marginBottom:5,padding:"5px 8px",fontFamily:"var(--font-body)",fontSize:13,
                 background:"rgba(var(--bg-rgb),0.5)",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",borderRadius:3,
                 color:"var(--white)",outline:"none"}}/>
@@ -1721,14 +1724,14 @@ function SubklasseSelectRow({ char, upd }) {
   if (klasseObj && !unterklassen.length) {
     return (
       <div style={{display:"flex",alignItems:"center",gap:6,padding:"3px 0",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.06*var(--kp)))"}}>
-        <span style={ROW_LABEL}>Subklasse</span>
-        <input value={char.subclass??''} onChange={e => upd({subclass: e.target.value})} aria-label="Subklasse"
+        <span style={ROW_LABEL}>{SPEZ_LABEL}</span>
+        <input value={char.subclass??''} onChange={e => upd({subclass: e.target.value})} aria-label="Spezialisierung"
           style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,color:"var(--white)",background:"transparent",border:"none",
             borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))",padding:"2px 4px",flex:1,outline:"none",minWidth:0}} />
       </div>
     );
   }
-  return <AuswahlRow label="Subklasse" value={char.subclass} options={unterklassen.map(uk => uk.name)} gesperrt={gesperrt}
+  return <AuswahlRow label={SPEZ_LABEL} value={char.subclass} options={unterklassen.map(uk => uk.name)} gesperrt={gesperrt}
     onChange={v => upd({ subclass: v })} />;
 }
 
@@ -2167,7 +2170,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
             </> : <>
               <IRow label="Volk"        value={H(char.race, 'race')}       bright />
               <IRow label="Klasse"      value={H(char.class, 'class')}      bright />
-              <IRow label="Subklasse"   value={H(char.subclass, 'subclass')} />
+              <IRow label={SPEZ_LABEL} value={H(char.subclass, 'subclass')} />
               <IRow label="Hintergrund" value={H(char.background, 'background')} />
               <IRow label="Gesinnung"   value={H(char.alignment, 'alignment')}  bright />
               <IRow label="Geschlecht"  value={H(char.gender, 'gender')} />
