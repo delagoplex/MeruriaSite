@@ -10,6 +10,7 @@ import '../../components/footer.jsx';
 import '../parts/spiel-missionsterminal.jsx';
 import '../parts/spiel-kollektikon.jsx';
 import '../parts/spiel-tageskarte.jsx';
+import '../parts/spiel-ereignisse.jsx';
 
 ;(function () {
 const { useState, useCallback } = React;
