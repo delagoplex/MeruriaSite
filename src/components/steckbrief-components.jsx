@@ -23,6 +23,22 @@ function AutoTextarea({ value, style, ...rest }) {
 
 /* ── Hilfsfunktionen ─────────────────────── */
 function calcProfBonus(level) { return Math.ceil((level||1)/4)+1; }
+// Erfahrungspunkte, ab denen eine Stufe erreicht ist (D&D 5e, Stufe 1–20)
+const EP_STUFEN = [0,300,900,2700,6500,14000,23000,34000,48000,64000,85000,100000,120000,140000,165000,195000,225000,265000,305000,355000];
+function stufeAusEp(xp) {
+  const ep = Math.max(0, Number(xp) || 0);
+  let st = 1;
+  EP_STUFEN.forEach((min, i) => { if (ep >= min) st = i + 1; });
+  return st;
+}
+// Die Stufe folgt den EP. Ältere Charaktere ohne EP behalten ihre eingetragene Stufe, bis EP eingetragen sind.
+function mitStufe(c) {
+  if (!c) return c;
+  const ep = Number(c.xp) || 0;
+  const st = ep > 0 ? stufeAusEp(ep) : (c.level || 1);
+  return (c.level === st && c.profBonus === calcProfBonus(st)) ? c : { ...c, level: st, profBonus: calcProfBonus(st) };
+}
+const leerWert = v => !v || ['—','–','-'].includes(String(v).trim());
 
 function getTrefferwuerfel(charClass) {
   const k = (window.KLASSEN_DATA?.klassen||[]).find(k=>k.name===charClass);
@@ -523,15 +539,7 @@ function EditableCombatCompact({ char, upd }) {
         ))}
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:6,marginBottom:6}}>
-        <div style={{background:"rgba(var(--panel-rgb),0.9)",border:"1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))",borderRadius:3,
-          padding:"6px 8px",display:"flex",flexDirection:"column",alignItems:"center"}}>
-          <input type="number" min={1} max={20} value={char.level||1}
-            onChange={e=>{const l=Math.min(20,Math.max(1,parseInt(e.target.value)||1));upd({level:l,profBonus:calcProfBonus(l)});}}
-            style={{fontFamily:"var(--font-mono)",fontSize:18,color:"var(--white)",lineHeight:1,
-              background:"transparent",border:"none",textAlign:"center",width:"100%",
-              outline:"none",WebkitAppearance:"none",MozAppearance:"textfield"}}/>
-          <span style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".18em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase",marginTop:2}}>Stufe</span>
-        </div>
+        {autoCell('Stufe', char.level||1)}
         {autoCell('TW', tw||'—')}
         {autoCell('Übungsb.', fmtMod(pb))}
       </div>
@@ -2005,7 +2013,8 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
         background:"rgb(var(--bg-rgb))",border:"1px solid rgba(var(--purple-rgb),calc(0.25*var(--kp)))"}}>{HB(k)}</div></div> : el;
   window.CharAge.useReady();
   const canEdit = !!entry;
-  const [char, setChar]     = useSteckbrief(() => entry ? charFromEntry(entry) : (charProp || {}));
+  const [charRoh, setChar]  = useSteckbrief(() => entry ? charFromEntry(entry) : (charProp || {}));
+  const char = mitStufe(charRoh);
   const [editing, setEditing] = useSteckbrief(false);
   const [zauber, setZauber] = useSteckbrief(() => entry?._char?.zauber || entry?.char_data?.zauber || []);
   const [lightboxBild, setLightboxBild] = useSteckbrief(null);
@@ -2096,7 +2105,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
                     color:"var(--white)",textTransform:"uppercase",textShadow:"0 0 32px rgba(var(--purple-rgb),calc(0.2*var(--kp)))"}}>{char.name}</h1>
             }
             <div className="sb-tags" style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
-              {[(char.subclass && char.subclass !== '—' ? `${char.class} · ${char.subclass}` : char.class),`Stufe ${char.level}`,char.race,char.background,
+              {[(!leerWert(char.subclass) ? `${char.class} · ${char.subclass}` : char.class),`Stufe ${char.level}`,char.race,char.background,
                 (rankInfo(char) ? [rankInfo(char).div.nummer, char.division, `Rang ${rankInfo(char).rang.rang}`, rankInfo(char).rang.titel].filter(Boolean).join(" · ") : (char.division && char.division !== '—' ? char.division : null))]
                 .filter(t => t && t !== '—').map((t,i)=>(
                   <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"2px 9px",
@@ -2107,7 +2116,17 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
           </div>
           <div className="sb-xp" style={{textAlign:"right"}}>
             <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:2}}>Erfahrungspunkte</div>
-            <div style={{fontFamily:"var(--font-mono)",fontSize:22,color:"rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))"}}>{(char.xp||0).toLocaleString("de-DE")}</div>
+            {E
+              ? <input type="number" min={0} step={50} value={char.xp||0} aria-label="Erfahrungspunkte"
+                  onChange={e=>{const xp=Math.max(0,parseInt(e.target.value)||0);const l=stufeAusEp(xp);upd({xp,level:l,profBonus:calcProfBonus(l)});}}
+                  style={{fontFamily:"var(--font-mono)",fontSize:22,color:"var(--white)",background:"rgba(var(--purple-rgb),calc(0.05*var(--kp)))",
+                    border:"none",borderBottom:"1px dashed rgba(var(--accent-rgb),calc(0.5*var(--ka)))",outline:"none",textAlign:"right",width:140,padding:"0 4px"}}/>
+              : <div style={{fontFamily:"var(--font-mono)",fontSize:22,color:"rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))"}}>{(char.xp||0).toLocaleString("de-DE")}</div>}
+            {(char.level||1) < 20 && (
+              <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".06em",marginTop:3,color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))"}}>
+                Stufe {(char.level||1)+1} ab {EP_STUFEN[char.level||1].toLocaleString("de-DE")} EP
+              </div>
+            )}
           </div>
         </div>
         <div style={{marginTop:10,width:36,height:1,background:"rgba(var(--purple-rgb),calc(0.55*var(--kp)))"}} />
