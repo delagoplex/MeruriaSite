@@ -100,7 +100,7 @@ function rowToCard(row, profileMap) {
     spieler: profileMap[row.owner_id] || 'Spieler',
     rasse: d.race || '—',
     klasse: d.class || '—',
-    stufe: d.level || 1,
+    stufe: window.charStufe ? window.charStufe(d) : (d.level || 1),
     hintergrund: d.background || '—',
     division: d.division || '—',
     gesinnung: d.alignment || '—',

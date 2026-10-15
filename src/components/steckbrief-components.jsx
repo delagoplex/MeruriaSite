@@ -29,6 +29,7 @@ const { EP_STUFEN, stufeAusEp, charStufe } = window;
 function mitStufe(c) {
   if (!c) return c;
   const st = charStufe(c);
+  if (!(Number(c.xp) > 0) && st > 1) return { ...c, xp: EP_STUFEN[st - 1], level: st, profBonus: calcProfBonus(st) };
   return (c.level === st && c.profBonus === calcProfBonus(st)) ? c : { ...c, level: st, profBonus: calcProfBonus(st) };
 }
 // Zahlenfeld mit − / + im Seitenstil (wie NumStepper in ressourcen-ui.jsx) für die Erfahrungspunkte
@@ -132,9 +133,8 @@ function AttributFreigabe({ char, upd, istDm, editing }) {
         ? "Trage die in Foundry gewürfelten Werte ein und schließe dann ab. Danach sind die Attribute wieder gesperrt."
         : "Die Spielleitung hat deine Attribute freigeschaltet. Klicke auf „Bearbeiten“, um die in Foundry gewürfelten Werte einzutragen."}</span>
       {editing && (
-        <button type="button" style={knopf(true)} disabled={char.attributeFehlen}
-          title={char.attributeFehlen ? "Erst Werte eintragen" : undefined}
-          onClick={() => { if (window.confirm("Attribute festlegen? Danach kannst du sie nicht mehr selbst ändern.")) upd({ attributeFrei: false }); }}>
+        <button type="button" style={knopf(true)}
+          onClick={() => { if (window.confirm("Attribute festlegen? Danach kannst du sie nicht mehr selbst ändern.")) upd({ stats: char.stats, attributeFehlen: false, attributeFrei: false }); }}>
           ✓ Attribute festlegen</button>
       )}
     </div>
@@ -192,6 +192,7 @@ function buildChar(d) {
     // ── Aus Quiz ───────────────────────────────────────────────
     name:        d.name        || 'Neuer Charakter',
     race:        d.race        || '—',
+    rassentalent: d.rassentalent || d.angeborenesTalent || null,
     class:       d.class       || '—',
     background:  d.background  || '—',
     division:    d.division    || '—',
@@ -1634,30 +1635,35 @@ function FbCard({ item, index, onChange }) {
 /* ── charFromEntry / saveCharToDB ───────────────────────────── */
 function charFromEntry(entry) {
   const d = entry._char || entry.char_data || entry;
-  if (d && d.hp !== undefined) return { ...d, stats: d.stats || {str:10,dex:10,con:10,int:10,wis:10,cha:10}, attributeFehlen: !d.stats };
+  if (d && d.hp !== undefined) return { ...d, stats: d.stats || {str:10,dex:10,con:10,int:10,wis:10,cha:10}, attributeFehlen: d.attributeFehlen ?? !d.stats };
   return buildChar(d || entry);
 }
 
+// Speichern: nur die geänderten Felder werden in char_data zusammengeführt (RPC char_data_patch, Migration 064).
+// So überschreiben sich zwei offene Tabs (Spieler und Spielleitung) nicht, und Felder, die dieser Tab nicht
+// geändert hat (stats, attributeFrei, …), bleiben, wie sie in der Datenbank stehen.
 const _sbSaveTimers = {};   // pro Charakter, damit ein Wechsel den Save des vorherigen nicht verwirft
-function saveCharToDB(id, charIn) {
-  const { attributeFehlen, ...char } = charIn;
-  if (attributeFehlen) delete char.stats;
+const _sbPatches = {};
+function charPatchSpeichern(id, patch) {
+  _sbPatches[id] = { ...(_sbPatches[id] || {}), ...patch };
   clearTimeout(_sbSaveTimers[id]);
   _sbSaveTimers[id] = setTimeout(async () => {
+    const p = _sbPatches[id]; delete _sbPatches[id];
+    if (!p || !Object.keys(p).length) return;
     try {
-      const { error } = await window._sb.from('characters').update({
-        name: char.name || 'Unbenannt',
-        race: char.race || null,
-        class: char.class || null,
-        division: char.division || null,
-        char_data: char,
-      }).eq('id', id);
+      const { error } = await window._sb.rpc('char_data_patch', { p_id: id, p_patch: p });
       if (error) throw error;
     } catch(e) {
-      console.error('saveCharToDB failed:', e);
+      console.error('charPatchSpeichern failed:', e);
       alert('Der Charakter konnte nicht gespeichert werden: ' + (e && e.message ? e.message : 'unbekannter Fehler'));
     }
   }, 500);
+}
+// ganzer Bogen (z. B. erster Save eines neu erstellten Charakters); Platzhalter-Attribute und Freigabe bleiben außen vor
+function saveCharToDB(id, charIn) {
+  const { attributeFehlen, attributeFrei, ...char } = charIn;
+  if (attributeFehlen) delete char.stats;
+  charPatchSpeichern(id, char);
 }
 
 /* ── Divider ─────────────────────────────── */
@@ -1794,7 +1800,9 @@ function AuswahlRow({ label, value, options, onChange, bright, leer = "— wähl
 
 /* ── SelectERow (generic dropdown ERow) ─── */
 function SelectERow({ label, field, char, upd, options, bright }) {
-  return <AuswahlRow label={label} value={char[field]} options={options} bright={bright} onChange={v => upd({[field]: v})} />;
+  // ältere Werte in anderer Schreibweise (z. B. „männlich“) der Option zuordnen
+  const wert = options.find(o => o.toLowerCase() === String(char[field] || '').toLowerCase()) || char[field];
+  return <AuswahlRow label={label} value={wert} options={options} bright={bright} onChange={v => upd({[field]: v})} />;
 }
 
 /* ── KlasseSelectRow ─────────────────────── */
@@ -2136,7 +2144,9 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
   window.CharAge.useReady();
   const canEdit = !!entry;
   const istDm = window.SITE_USER?.role === 'dm';
-  const [charRoh, setChar]  = useSteckbrief(() => entry ? charFromEntry(entry) : (charProp || {}));
+  const [charRoh, setChar]  = useSteckbrief(() => entry ? charFromEntry(entry) : charFromEntry({ char_data: charProp || {} }));
+  // Steht in der Datenbank noch kein vollständiger Bogen (neu erstellter Charakter), schreibt der erste Save alles.
+  const vollRef = useSteckRef(!!(entry && (entry._char || entry.char_data || {}).hp !== undefined));
   const char = mitStufe(charRoh);
   const divFarben = divisionsFarben(char.divisionId);
   const [editing, setEditing] = useSteckbrief(false);
@@ -2153,16 +2163,28 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
     padding:"7px 9px",width:"100%",resize:"vertical",outline:"none",minHeight:58,boxSizing:"border-box",
   };
 
+  // nur die geänderten Felder speichern (beim ersten Save eines neuen Charakters den ganzen Bogen)
+  function speichern(updates, zauberNeu) {
+    const { attributeFehlen, ...patch } = updates;
+    if (!vollRef.current) {
+      vollRef.current = true;
+      const alles = { ...charRef.current, ...updates, zauber: zauberNeu || zauberRef.current };
+      saveCharToDB(entry.id, alles);
+      if ('attributeFrei' in updates) charPatchSpeichern(entry.id, { attributeFrei: updates.attributeFrei });
+      return;
+    }
+    charPatchSpeichern(entry.id, patch);
+  }
   function upd(updates) {
     if (!canEdit) return;
     const next = { ...charRef.current, ...updates };
     setChar(next);
-    saveCharToDB(entry.id, { ...next, zauber: zauberRef.current });
+    speichern(updates);
   }
   function updZauber(newZauber) {
     if (!canEdit) return;
     setZauber(newZauber);
-    saveCharToDB(entry.id, { ...charRef.current, zauber: newZauber });
+    speichern({ zauber: newZauber }, newZauber);
   }
   function updStat(key, val) {
     upd({ stats: { ...char.stats, [key]: Math.max(1, Math.min(30, parseInt(val)||1)) }, attributeFehlen: false });
@@ -2269,7 +2291,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
               <SubklasseSelectRow char={char} upd={upd} />
               <SelectERow label="Hintergrund" field="background" char={char} upd={upd} options={window.ALLE_HINTERGRUENDE||[]} />
               <SelectERow label="Gesinnung" field="alignment" char={char} upd={upd} bright options={["Rechtschaffen gut","Neutral gut","Chaotisch gut","Rechtschaffen neutral","Neutral","Chaotisch neutral","Rechtschaffen böse","Neutral böse","Chaotisch böse","Gesinnungslos"]} />
-              <SelectERow label="Geschlecht"  field="gender"     char={char} upd={upd} options={["männlich","weiblich","divers","keine Angabe"]} />
+              <SelectERow label="Geschlecht"  field="gender"     char={char} upd={upd} options={["Männlich","Weiblich","Divers","Keine Angabe"]} />
               <ERow label="Herkunft"    field="birthplace" char={char} upd={upd} />
             </> : <>
               <IRow label="Volk"        value={H(char.race, 'race')}       bright />

@@ -573,7 +573,7 @@ function CharCard({ ch, onSelect, onDelete, onExport }) {
   const [hover, setHover] = useApp(false);
   const [delConfirm, setDelConfirm] = useApp(false);
   const bild = ch._char?.bild || null;
-  const level = ch._char?.level || null;
+  const level = ch._char ? (window.charStufe ? window.charStufe(ch._char) : ch._char.level) : null;
   const subclass = ch._char?.subclass && ch._char.subclass !== '—' ? ch._char.subclass : null;
 
   if (delConfirm) return (
@@ -709,7 +709,8 @@ function CharSelection({ chars, onSelect, onNew, onReload }) {
     if (sortBy === 'name') {
       cmp = (a.name || '').localeCompare(b.name || '', 'de');
     } else if (sortBy === 'level') {
-      cmp = (Number(a._char?.level) || 0) - (Number(b._char?.level) || 0);
+      const st = c => c ? (window.charStufe ? window.charStufe(c) : Number(c.level) || 0) : 0;
+      cmp = st(a._char) - st(b._char);
     } else {
       cmp = new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
     }

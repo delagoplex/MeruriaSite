@@ -14,12 +14,12 @@ function DMBar({ entry, playerName, visible, status, onBack, onStatusChange, onV
   const char      = entry._char || {};
   const [delOpen, setDelOpen] = useState(false);
   const [delBusy, setDelBusy] = useState(false);
-  const level     = char.level || 1;
+  const level     = window.charStufe ? window.charStufe(char) : (char.level || 1); // Stufe folgt den EP (char-stufe.jsx)
   const [lvlInput, setLvlInput] = useState(level);
   React.useEffect(() => setLvlInput(level), [level]);
   function commitLevel() {
     const n = parseInt(lvlInput, 10);
-    if (n >= 1 && n <= 30 && n !== level) onLevelSet(n);
+    if (n >= 1 && n <= 20 && n !== level) onLevelSet(n);
     else setLvlInput(level);
   }
   const div       = (window.DIVISIONS_DATA || []).find(d => d.name === char.division);
@@ -139,15 +139,30 @@ function ScDmSteckbrief({ row, playerName }) {
   const [status, setStatus]   = useState(row.char_data?.status || 'Aktiv');
   const [verKey, setVerKey]   = useState(0);
 
-  async function patchChar(newChar) {
-    const { error } = await window._sb.from('characters').update({ char_data: newChar }).eq('id', entry.id);
+  // nur die geänderten Felder zusammenführen (RPC char_data_patch, Migration 064) und den Bogen neu laden,
+  // damit Änderungen, die inzwischen im Bogen gespeichert wurden, nicht überschrieben werden
+  async function aktuell() {
+    const { data } = await window._sb.from('characters').select('*').eq('id', entry.id).single();
+    return data;
+  }
+  async function patchChar(patch) {
+    const { error } = await window._sb.rpc('char_data_patch', { p_id: entry.id, p_patch: patch });
     if (error) { alert('Speichern fehlgeschlagen: ' + error.message); return false; }
-    setEntry(e => ({ ...e, _char: newChar }));
+    const neu = await aktuell();
+    if (neu) setEntry(makeEntry(neu, neu.char_data));
     setVerKey(k => k + 1);
     return true;
   }
   async function handleStatusChange(newStatus) {
-    if (await patchChar({ ...entry._char, status: newStatus })) setStatus(newStatus);
+    if (await patchChar({ status: newStatus })) setStatus(newStatus);
+  }
+  // Stufe setzen = EP auf den Beginn dieser Stufe (die Stufe ergibt sich aus den EP)
+  async function handleLevelSet(n) {
+    const neu = await aktuell();
+    const d = (neu && neu.char_data) || {};
+    const ep = Number(d.xp) || 0;
+    const xp = window.stufeAusEp && window.stufeAusEp(ep) === n ? ep : (window.EP_STUFEN ? window.EP_STUFEN[n - 1] : 0);
+    await patchChar({ level: n, xp });
   }
   async function handleVisibilityToggle() {
     const next = !visible;
@@ -162,14 +177,15 @@ function ScDmSteckbrief({ row, playerName }) {
     return true;
   }
   async function handleUprank() {
-    const char = entry._char || {};
+    const neu = await aktuell();
+    const char = (neu && neu.char_data) || entry._char || {};
     const div  = (window.DIVISIONS_DATA || []).find(d => d.name === char.division);
     if (!div) return;
     const newLvl = (char.rankLevel || 1) + 1;
     if (newLvl > div.raenge.length) return;
     const rankObj = div.raenge.find(r => r.rang === div.raenge.length - newLvl + 1);
     if (!rankObj) return;
-    await patchChar({ ...char, rankLevel: newLvl, rank: rankObj.titel });
+    await patchChar({ rankLevel: newLvl, rank: rankObj.titel });
   }
 
   const SV = window.SteckbriefView;
@@ -180,7 +196,7 @@ function ScDmSteckbrief({ row, playerName }) {
         onBack={() => { window.location.href = SC_URL; }}
         onStatusChange={handleStatusChange}
         onVisibilityToggle={handleVisibilityToggle}
-        onLevelSet={(n) => patchChar({ ...entry._char, level: n })}
+        onLevelSet={handleLevelSet}
         onUprank={handleUprank}
         onDelete={handleDelete}
       />
