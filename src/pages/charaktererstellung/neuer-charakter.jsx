@@ -435,18 +435,41 @@ function NscArtPhase({ onWahl }) {
 }
 
 // ── CHIP ───────────────────────────────────────────────────────────────────
+// Auswahlkarte: Bezeichnung, darüber ein Bild, wenn es eins gibt (Text, Bildpfad oder fertiges Element)
 function Chip({
   label,
   st,
   onClick,
   isUnk,
-  isGroupLabel
+  isGroupLabel,
+  bild = null
 }) {
-  const cls = ['chip', isUnk ? 'unk' : '', isGroupLabel ? 'group-label' : '', st === 'selected' ? 'selected' : '', st === 'grayed' ? 'grayed' : '', st === 'multi' ? 'multi' : ''].filter(Boolean).join(' ');
-  return /*#__PURE__*/React.createElement("span", {
+  const cls = ['chip', bild && !isGroupLabel ? 'mit-bild' : '', isUnk ? 'unk' : '', isGroupLabel ? 'group-label' : '', st === 'selected' ? 'selected' : '', st === 'grayed' ? 'grayed' : '', st === 'multi' ? 'multi' : ''].filter(Boolean).join(' ');
+  const text = isUnk ? '? Unbekannt' : label;
+  if (isGroupLabel) return /*#__PURE__*/React.createElement("span", { className: cls }, text);
+  return /*#__PURE__*/React.createElement("button", {
+    type: "button",
     className: cls,
-    onClick: onClick
-  }, isUnk ? '? Unbekannt' : label);
+    onClick: onClick,
+    "aria-pressed": st === 'selected' || st === 'multi'
+  }, bild && /*#__PURE__*/React.createElement("span", { className: "chip-bild", "aria-hidden": "true" },
+    typeof bild === 'string' ? /*#__PURE__*/React.createElement("img", { src: bild, alt: "", loading: "lazy" }) : bild),
+  /*#__PURE__*/React.createElement("span", { className: "chip-text" }, text));
+}
+
+// Bilder für Auswahlkarten und Quizantworten (Rassen haben nur große Illustrationen und bleiben ohne Bild)
+const GOTT_PLATZHALTER = /Insignie_Aurelia\./;
+function tagBild(kat, name) {
+  if (!name) return null;
+  if (kat === 'klasse') return (window.ALLE_KLASSEN || []).includes(name) ? `assets/images/classes/${name}_Form.png` : null;
+  if (kat === 'division') { const d = (window.DIVISIONS_DATA || []).find(x => x.name === name); return d && d.logo || null; }
+  if (kat === 'gottheit') {
+    const G = window.GODS_DATA || {};
+    const g = [...(G.gods || []), ...(G.demons || []), ...(G.naturgeister || [])].find(x => x.name === name);
+    if (!g || !g.insigniaSrc || (g.id !== 'aurelia' && GOTT_PLATZHALTER.test(g.insigniaSrc))) return null;
+    return g.insigniaSrc;
+  }
+  return null;
 }
 
 // ── CATEGORY BLOCK ─────────────────────────────────────────────────────────
@@ -459,7 +482,8 @@ function CatBlock({
   details = null,
   grouped = null,
   multiSet = null,
-  onMultiToggle = null
+  onMultiToggle = null,
+  bildKat = null
 }) {
   const isUnk = selected === 'unbekannt';
   const hasSel = selected && selected !== 'unbekannt';
@@ -486,6 +510,7 @@ function CatBlock({
       key: item,
       label: item,
       st: s,
+      bild: bildKat ? tagBild(bildKat, item) : null,
       onClick: () => handleChip(item)
     });
   };
@@ -646,13 +671,13 @@ function GottheitBlock({ selected, gesinnung, onSelect, onGesinnung }) {
   const passt = g => sel ? g === sel : (!gesinnung || gottGesinnung(g.alignment) === gesinnung);
   const sub = { fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.2em', textTransform:'uppercase',
     color:'rgba(var(--accent-rgb),calc(.45*var(--ka) + var(--tb)))', margin:'4px 0 8px' };
-  const gruppenChips = (label) => gruppen.map(gr => {
+  const gruppenChips = (label, mitBild = false) => gruppen.map(gr => {
     const goetter = gr.goetter.filter(passt);
     if (!goetter.length || isUnk) return null;
     return (
       <React.Fragment key={gr.gruppe}>
         {!sel && <Chip label={gr.gruppe} isGroupLabel={true} />}
-        {goetter.map(g => <Chip key={g.name} label={label(g)} st={sel ? 'selected' : 'default'}
+        {goetter.map(g => <Chip key={g.name} label={label(g)} st={sel ? 'selected' : 'default'} bild={mitBild ? (tagBild('gottheit', g.name) || <span className="chip-initial">{g.name[0]}</span>) : null}
           onClick={() => onSelect(sel ? null : g.name)} />)}
       </React.Fragment>
     );
@@ -664,7 +689,7 @@ function GottheitBlock({ selected, gesinnung, onSelect, onGesinnung }) {
       <div style={sub}>Name</div>
       <div className="chip-wrap">
         {!sel && <Chip label="Unbekannt" isUnk={true} st={isUnk ? 'selected' : 'default'} onClick={() => onSelect(isUnk ? null : 'unbekannt')} />}
-        {gruppenChips(g => g.name)}
+        {gruppenChips(g => g.name, true)}
         {(sel || isUnk) && <RevertBtn onClick={() => onSelect(null)} />}
       </div>
 
@@ -787,7 +812,7 @@ function DivisionBlock({ items, selected, onSelect }) {
       <div style={sub}>Name</div>
       <div className="chip-wrap">
         {!sel && <Chip label="Unbekannt" isUnk={true} st={isUnk ? 'selected' : 'default'} onClick={() => onSelect(isUnk ? null : 'unbekannt')} />}
-        {!isUnk && liste.map(n => <Chip key={n} label={n} st={sel ? 'selected' : 'default'} onClick={() => onSelect(sel ? null : n)} />)}
+        {!isUnk && liste.map(n => <Chip key={n} label={n} st={sel ? 'selected' : 'default'} bild={tagBild('division', n)} onClick={() => onSelect(sel ? null : n)} />)}
         {(sel || isUnk) && <RevertBtn onClick={() => onSelect(null)} />}
       </div>
       {!isUnk && (
@@ -894,6 +919,7 @@ function TagPhase({
     hideOthers: true
   }), /*#__PURE__*/React.createElement(CatBlock, {
     title: "Klasse",
+    bildKat: "klasse",
     items: window.ALLE_KLASSEN,
     selected: tags.klasse,
     onSelect: v => setTag('klasse', v),
@@ -1012,6 +1038,16 @@ function kombiniereAntworten(opts) {
 function zufallsAuswahl(opts) {
   const n = 1 + Math.floor(Math.random() * Math.min(3, opts.length));
   return [...opts].sort(() => Math.random() - 0.5).slice(0, n);
+}
+
+// Bilder zu einer Quizantwort: die Kandidaten, die sie übrig lässt (höchstens vier, sonst keine Bilder)
+function antwortBilder(q, opt, possible) {
+  if (!['klasse', 'division', 'gottheit'].includes(q.kat)) return [];
+  const pos = possible[q.kat] || [];
+  const bleiben = (opt.behalte || []).filter(x => pos.includes(x));
+  if (!bleiben.length || bleiben.length > 4) return [];
+  const b = bleiben.map(x => tagBild(q.kat, x)).filter(Boolean);
+  return b.length === bleiben.length ? b : [];
 }
 
 // ── QUIZ PHASE ─────────────────────────────────────────────────────────────
@@ -1175,11 +1211,17 @@ function QuizPhase({
   }, currentQ.mehrfach
     ? /*#__PURE__*/React.createElement(MehrfachAntworten, { opts: quizOptionen(currentQ, possible), sel: mehrSel, setSel: setMehrSel,
         onWeiter: () => onAnswer(currentQ, kombiniereAntworten(quizOptionen(currentQ, possible).filter((_, i) => mehrSel.includes(i)))) })
-    : quizOptionen(currentQ, possible).map((opt, i) => /*#__PURE__*/React.createElement("button", {
-    key: i,
-    className: "quiz-opt",
-    onClick: () => onAnswer(currentQ, opt)
-  }, opt.text))), /*#__PURE__*/React.createElement("div", { style:{ display:'flex', justifyContent:'center', marginTop:22 } },
+    : /*#__PURE__*/React.createElement("div", { className: "quiz-grid" }, quizOptionen(currentQ, possible).map((opt, i) => {
+      const bilder = antwortBilder(currentQ, opt, possible);
+      return /*#__PURE__*/React.createElement("button", {
+        key: i,
+        type: "button",
+        className: "quiz-opt" + (bilder.length ? " mit-bild" : ""),
+        onClick: () => onAnswer(currentQ, opt)
+      }, bilder.length > 0 && /*#__PURE__*/React.createElement("span", { className: "quiz-bilder", "aria-hidden": "true" },
+        bilder.map(b => /*#__PURE__*/React.createElement("img", { key: b, src: b, alt: "", loading: "lazy" }))),
+      /*#__PURE__*/React.createElement("span", null, opt.text));
+    }))), /*#__PURE__*/React.createElement("div", { style:{ display:'flex', justifyContent:'center', marginTop:22 } },
     /*#__PURE__*/React.createElement("button", { type:"button", style:ZUFALL_STIL, onMouseEnter:zufallHover(true), onMouseLeave:zufallHover(false),
       onClick: () => beantworteZufall(currentQ) }, "\u2684 Entscheide f\xFCr mich")));
 }
