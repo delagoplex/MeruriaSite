@@ -533,6 +533,120 @@ function CatBlock({
   ));
 }
 
+// ── GOTTHEIT ───────────────────────────────────────────────────────────────
+// Zweigeteilt: oben die Namen, unten Gesinnung und Titel, jeweils gruppiert (Merurisches Pantheon,
+// Dämonen, Naturgeister). Wird ein Name oder ein Titel gewählt, bleiben nur dieser Name und sein Titel stehen.
+// Eine Gesinnung grenzt Namen und Titel ein; den Rest ermittelt das Quiz.
+const GOTT_GESINNUNGEN = [
+  { id:'gut',        label:'Gut' },
+  { id:'eher-gut',   label:'Neutral – eher gut' },
+  { id:'neutral',    label:'Neutral' },
+  { id:'eher-boese', label:'Neutral – eher böse' },
+  { id:'boese',      label:'Böse' },
+];
+// Gesinnung einer Gottheit (deutsch „rechtschaffen-gut“ oder englisch „Lawful Evil“) → eine der fünf Stufen
+function gottGesinnung(a) {
+  const s = String(a || '').toLowerCase().replace(/lawful/g, 'rechtschaffen').replace(/chaotic/g, 'chaotisch')
+    .replace(/true neutral/g, 'neutral').replace(/evil/g, 'böse').replace(/good/g, 'gut').replace(/[-_]/g, ' ').trim();
+  if (/^neutral gut$/.test(s)) return 'eher-gut';
+  if (/gut/.test(s)) return 'gut';
+  if (/^neutral böse$/.test(s)) return 'eher-boese';
+  if (/böse/.test(s)) return 'boese';
+  return 'neutral';
+}
+function gottGruppen() {
+  const G = window.GODS_DATA || {};
+  return [
+    { gruppe:'Merurisches Pantheon', goetter:G.gods || [] },
+    { gruppe:'Dämonen',              goetter:G.demons || [] },
+    { gruppe:'Naturgeister',         goetter:G.naturgeister || [] },
+  ];
+}
+const gottAlle = () => gottGruppen().flatMap(g => g.goetter);
+// Namen aller Gottheiten, optional nur einer Gesinnungsstufe
+const gottNamen = ges => gottAlle().filter(g => !ges || gottGesinnung(g.alignment) === ges).map(g => g.name);
+
+// Quizfragen zur Gottheit aus den Götterdaten; Antworten ohne passende Gottheit blendet das Quiz aus
+function gottQuizFragen() {
+  const gruppen = gottGruppen();
+  const domaenen = {};
+  (gruppen[0].goetter).forEach(g => String(g.domain || '').split('·').map(x => x.trim()).filter(Boolean)
+    .forEach(d => { (domaenen[d] = domaenen[d] || []).push(g.name); }));
+  return [
+    { id:'gt-ges', kat:'gottheit', frage:'Welche Gesinnung hat die Gottheit deines Charakters?',
+      optionen: GOTT_GESINNUNGEN.map(o => ({ text:o.label, behalte:gottNamen(o.id) })) },
+    { id:'gt-art', kat:'gottheit', frage:'Wem gilt der Glaube deines Charakters?',
+      optionen: gruppen.map(g => ({ text:g.gruppe, behalte:g.goetter.map(x => x.name) })) },
+    { id:'gt-dom', kat:'gottheit', frage:'Welche Domäne liegt seinem Glauben am nächsten?',
+      optionen: Object.keys(domaenen).sort((a, b) => a.localeCompare(b, 'de')).map(d => ({ text:d, behalte:domaenen[d] })) },
+    { id:'gt-titel', kat:'gottheit', frage:'Welcher dieser Titel spricht deinen Charakter am meisten an?',
+      optionen: gottAlle().map(g => ({ text:g.title || g.name, behalte:[g.name] })) },
+  ];
+}
+
+function RevertBtn({ onClick }) {
+  return (
+    <button type="button" onClick={onClick} title="Auswahl zurücksetzen" aria-label="Auswahl zurücksetzen"
+      style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', alignSelf:'center', width:34, height:30, padding:0, cursor:'pointer',
+        borderRadius:4, fontSize:15, lineHeight:1, background:'rgba(255,190,60,0.08)', border:'1px solid rgba(255,190,60,0.28)',
+        color:'color-mix(in srgb, rgba(255,210,100,0.85), rgb(var(--ink-rgb)) var(--cm))', transition:'all .15s' }}
+      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,190,60,0.16)'; e.currentTarget.style.borderColor = 'rgba(255,190,60,0.55)'; }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,190,60,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,190,60,0.28)'; }}>
+      ↩
+    </button>
+  );
+}
+
+function GottheitBlock({ selected, gesinnung, onSelect, onGesinnung }) {
+  const isUnk = selected === 'unbekannt';
+  const sel = selected && !isUnk ? gottAlle().find(g => g.name === selected) : null;
+  const gruppen = gottGruppen();
+  const passt = g => sel ? g === sel : (!gesinnung || gottGesinnung(g.alignment) === gesinnung);
+  const sub = { fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.2em', textTransform:'uppercase',
+    color:'rgba(var(--accent-rgb),calc(.45*var(--ka) + var(--tb)))', margin:'4px 0 8px' };
+  const gruppenChips = (label) => gruppen.map(gr => {
+    const goetter = gr.goetter.filter(passt);
+    if (!goetter.length || isUnk) return null;
+    return (
+      <React.Fragment key={gr.gruppe}>
+        {!sel && <Chip label={gr.gruppe} isGroupLabel={true} />}
+        {goetter.map(g => <Chip key={g.name} label={label(g)} st={sel ? 'selected' : 'default'}
+          onClick={() => onSelect(sel ? null : g.name)} />)}
+      </React.Fragment>
+    );
+  });
+  return (
+    <div className="cat-block">
+      <div className="cat-head">Gottheit</div>
+
+      <div style={sub}>Name</div>
+      <div className="chip-wrap">
+        {!sel && <Chip label="Unbekannt" isUnk={true} st={isUnk ? 'selected' : 'default'} onClick={() => onSelect(isUnk ? null : 'unbekannt')} />}
+        {gruppenChips(g => g.name)}
+        {(sel || isUnk) && <RevertBtn onClick={() => onSelect(null)} />}
+      </div>
+
+      {!isUnk && (
+        <React.Fragment>
+          <div style={{ ...sub, marginTop:14 }}>Gesinnung &amp; Titel</div>
+          {!sel && (
+            <div className="chip-wrap" style={{ marginBottom:8 }}>
+              {GOTT_GESINNUNGEN.filter(o => !gesinnung || o.id === gesinnung).map(o => (
+                <Chip key={o.id} label={o.label} st={gesinnung === o.id ? 'selected' : 'default'}
+                  onClick={() => onGesinnung(gesinnung === o.id ? null : o.id)} />
+              ))}
+              {gesinnung && <RevertBtn onClick={() => onGesinnung(null)} />}
+            </div>
+          )}
+          <div className="chip-wrap">
+            {gruppenChips(g => g.title || g.name)}
+          </div>
+        </React.Fragment>
+      )}
+    </div>
+  );
+}
+
 // ── TAG PHASE ──────────────────────────────────────────────────────────────
 function TagPhase({
   tags,
@@ -659,11 +773,11 @@ function TagPhase({
     details: window.LEBENSSTIL_INFO,
     selected: tags.lebensstil,
     onSelect: v => setTag('lebensstil', v)
-  }), /*#__PURE__*/React.createElement(CatBlock, {
-    title: "Gottheit",
-    items: GOETTER,
+  }), /*#__PURE__*/React.createElement(GottheitBlock, {
     selected: tags.gottheit,
-    onSelect: v => setTag('gottheit', v)
+    gesinnung: tags.gottheitGesinnung,
+    onSelect: v => setTag('gottheit', v),
+    onGesinnung: v => setTag('gottheitGesinnung', v)
   }), /*#__PURE__*/React.createElement(CatBlock, {
     title: "Werkzeug\xFCbungen (Mehrfachauswahl)",
     items: window.WERKZEUGE_LIST,
@@ -725,6 +839,12 @@ function TagPhase({
   })));
 }
 
+// Antworten, die die Kandidaten wirklich eingrenzen (mindestens einer passt, nicht alle bleiben gleich)
+function quizOptionen(q, possible) {
+  const pos = possible[q.kat] || [];
+  return (q.optionen || []).filter(o => (o.behalte || []).some(x => pos.includes(x)));
+}
+
 // ── QUIZ PHASE ─────────────────────────────────────────────────────────────
 function QuizPhase({
   tags,
@@ -741,14 +861,14 @@ function QuizPhase({
       if (quizAnswers.some(a => a.qId === q.id)) return false;
       const tv = tags[q.kat];
       if (tv !== null && tv !== 'unbekannt') return false;
-      return (possible[q.kat] || []).length > 1;
+      return (possible[q.kat] || []).length > 1 && quizOptionen(q, possible).length > 1;
     });
   }, [quizAnswers, tags, possible, quizData]);
   const answered = quizAnswers.length;
   const remaining = useMemo(() => ((quizData || window.CHAR_QUIZ) || []).filter(q => {
     if (quizAnswers.some(a => a.qId === q.id)) return false;
     const tv = tags[q.kat];
-    return (tv === null || tv === 'unbekannt') && (possible[q.kat] || []).length > 1;
+    return (tv === null || tv === 'unbekannt') && (possible[q.kat] || []).length > 1 && quizOptionen(q, possible).length > 1;
   }).length, [quizAnswers, tags, possible, quizData]);
   const total = answered + remaining;
   useEffect(() => {
@@ -868,7 +988,7 @@ function QuizPhase({
       flexDirection: 'column',
       gap: 7
     }
-  }, currentQ.optionen.map((opt, i) => /*#__PURE__*/React.createElement("button", {
+  }, quizOptionen(currentQ, possible).map((opt, i) => /*#__PURE__*/React.createElement("button", {
     key: i,
     className: "quiz-opt",
     onClick: () => onAnswer(currentQ, opt)
@@ -2154,6 +2274,8 @@ const NSC_RASSE_FLIEGT = nscRassenMit(d => Object.keys(d.bewegung || {}).some(k 
 const NSC_RASSE_RESIST = nscRassenMit(d => (d.resistenzen || []).length > 0 || (d.immunitaeten || []).length > 0);
 const nscOhne = liste => (window.ALLE_RASSEN || []).filter(r => !liste.includes(r));
 
+const SC_QUIZ_DATA = [...(window.CHAR_QUIZ || []).filter(q => q.kat !== 'gottheit'), ...gottQuizFragen()];
+
 const NSC_QUIZ_DATA = [
   { id:'nsc-gs-1', kat:'gesinnung', frage:'Welche Gesinnung hat dein NSC?',
     optionen:[
@@ -2170,6 +2292,7 @@ const NSC_QUIZ_DATA = [
     optionen:[ { text:'Ja', behalte:NSC_RASSE_RESIST }, { text:'Nein', behalte:nscOhne(NSC_RASSE_RESIST) } ]
   },
   ...(window.CHAR_QUIZ ? window.CHAR_QUIZ.filter(q => q.kat === 'rasse') : []),
+  ...gottQuizFragen(),
   { id:'nsc-g-1', kat:'geschlecht', frage:'Welches Geschlecht hat dieser NSC?',
     optionen:[{text:'Männlich',behalte:['Männlich']},{text:'Weiblich',behalte:['Weiblich']},{text:'Divers',behalte:['Divers']},{text:'Keine Angabe',behalte:['Keine Angabe']}]
   },
@@ -2269,7 +2392,7 @@ function NscTagPhase({ nscTags, setNscTag, onNext }) {
     /*#__PURE__*/React.createElement(CatBlock, {title:"Status",items:NSC_STATUS_LIST,selected:t.status,onSelect:v=>setNscTag('status',v)}),
     /*#__PURE__*/React.createElement(CatBlock, {title:"Division",items:NSC_DIVISIONS_LIST,selected:t.division,onSelect:v=>setNscTag('division',v)}),
     /*#__PURE__*/React.createElement(CatBlock, {title:"Lebensphase",items:NSC_LEBENSPHASE_LIST,selected:t.lebensphase,onSelect:v=>setNscTag('lebensphase',v)}),
-    /*#__PURE__*/React.createElement(CatBlock, {title:"Gottheit",items:GOETTER,selected:t.gottheit,onSelect:v=>setNscTag('gottheit',v)}),
+    /*#__PURE__*/React.createElement(GottheitBlock, {selected:t.gottheit,gesinnung:t.gottheitGesinnung,onSelect:v=>setNscTag('gottheit',v),onGesinnung:v=>setNscTag('gottheitGesinnung',v)}),
     /*#__PURE__*/React.createElement(CatBlock, {title:"Gesinnung",items:window.ALLE_GESINNUNGEN||[],selected:t.gesinnung,onSelect:v=>setNscTag('gesinnung',v)}),
     /*#__PURE__*/React.createElement("div", {style:{marginTop:44,display:'flex',alignItems:'center',justifyContent:'flex-end',gap:14},className:"no-print"},
       /*#__PURE__*/React.createElement("span", {style:{fontFamily:'var(--font-m)',fontSize:'11.5px',color:'rgba(var(--accent-rgb),calc(.38*var(--ka) + var(--tb)))',letterSpacing:'.1em'}},
@@ -2746,7 +2869,7 @@ function App() {
   const [tags, setTagsState] = useState({
     rasse: null, klasse: null, subklasse: null, hintergrund: null, zauberwirker: null,
     samen: null, lebensstil: null, gottheit: null, werkzeuge: null, division: null,
-    geschlecht: null, gesinnung: null, sternzeichen: null
+    geschlecht: null, gesinnung: null, sternzeichen: null, gottheitGesinnung: null
   });
   const [possible, setPossible] = useState({
     rasse: window.ALLE_RASSEN || [], klasse: window.ALLE_KLASSEN || [],
@@ -2758,7 +2881,7 @@ function App() {
 
   // ── NSC state ──
   const [nscTags, setNscTagsState] = useState({
-    name:'', beruf:'', rasse:null, geschlecht:null, status:null, division:null, lebensphase:null, gottheit:null, gesinnung:null
+    name:'', beruf:'', rasse:null, geschlecht:null, status:null, division:null, lebensphase:null, gottheit:null, gesinnung:null, gottheitGesinnung:null
   });
   const [nscPossible, setNscPossible] = useState({
     rasse: window.ALLE_RASSEN || [],
@@ -2805,13 +2928,13 @@ function App() {
   const resetPossible = () => setPossible({
     rasse: window.ALLE_RASSEN||[], klasse: window.ALLE_KLASSEN||[],
     hintergrund: window.ALLE_HINTERGRUENDE||[], division: window.ALLE_DIVISIONEN||[],
-    lebensstil: window.ALLE_LEBENSSTILE||[], gottheit: possible.gottheit, samen: window.ALLE_SAMEN||[],
+    lebensstil: window.ALLE_LEBENSSTILE||[], gottheit: gottNamen(tags.gottheitGesinnung), samen: window.ALLE_SAMEN||[],
     werkzeuge: window.WERKZEUGE_LIST||[], sternzeichen: window.ALLE_STERNZEICHEN||[],
   });
   const resetNscPossible = () => setNscPossible({
     rasse: window.ALLE_RASSEN||[], geschlecht: NSC_GESCHLECHT_LIST,
     status: NSC_STATUS_LIST, division: NSC_DIVISIONS_LIST,
-    lebensphase: NSC_LEBENSPHASE_LIST, gottheit: nscPossible.gottheit,
+    lebensphase: NSC_LEBENSPHASE_LIST, gottheit: gottNamen(nscTags.gottheitGesinnung),
     gesinnung: window.ALLE_GESINNUNGEN||[],
   });
 
@@ -2839,7 +2962,7 @@ function App() {
     phase === 'monster' && /*#__PURE__*/React.createElement(window.NscMonsterFlow, { onDone: () => setPhase('typeSelect') }),
     phase === 'tags' && charType !== 'nsc' && /*#__PURE__*/React.createElement(TagPhase, {tags,setTag,setWerkzeug,onNext:goToQuiz}),
     phase === 'tags' && charType === 'nsc' && /*#__PURE__*/React.createElement(NscTagPhase, {nscTags,setNscTag,onNext:goToNscQuiz}),
-    phase === 'quiz' && charType !== 'nsc' && /*#__PURE__*/React.createElement(QuizPhase, {tags,possible,quizAnswers,onAnswer:handleAnswer,onFinish:()=>setPhase('output')}),
+    phase === 'quiz' && charType !== 'nsc' && /*#__PURE__*/React.createElement(QuizPhase, {tags,possible,quizAnswers,onAnswer:handleAnswer,onFinish:()=>setPhase('output'),quizData:SC_QUIZ_DATA}),
     phase === 'quiz' && charType === 'nsc' && /*#__PURE__*/React.createElement(QuizPhase, {
       tags:nscTags, possible:nscPossible, quizAnswers:nscQuizAnswers,
       onAnswer:handleNscAnswer, onFinish:()=>setPhase('output'), quizData:NSC_QUIZ_DATA
