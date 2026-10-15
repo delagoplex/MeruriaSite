@@ -457,9 +457,9 @@ function CatBlock({
   const isUnk = selected === 'unbekannt';
   const hasSel = selected && selected !== 'unbekannt';
   const chipSt = item => {
-    if (multiSet != null) return multiSet.has(item) ? 'multi' : isUnk ? 'grayed' : 'default';
-    if (isUnk) return 'grayed';
-    if (hasSel) return item === selected ? 'selected' : hideOthers ? 'hidden' : 'grayed';
+    if (multiSet != null) return multiSet.has(item) ? 'multi' : isUnk ? 'hidden' : 'default';
+    if (isUnk) return 'hidden';
+    if (hasSel) return item === selected ? 'selected' : 'hidden';
     return 'default';
   };
   const handleChip = item => {
@@ -487,19 +487,32 @@ function CatBlock({
     className: "cat-head"
   }, title), /*#__PURE__*/React.createElement("div", {
     className: "chip-wrap"
-  }, /*#__PURE__*/React.createElement(Chip, {
+  }, !hasSel && /*#__PURE__*/React.createElement(Chip, {
     label: "Unbekannt",
     isUnk: true,
-    st: isUnk ? 'selected' : hasSel ? 'grayed' : 'default',
-    onClick: () => {
-      if (!hasSel) onSelect(selected === 'unbekannt' ? null : 'unbekannt');
-    }
+    st: isUnk ? 'selected' : 'default',
+    onClick: () => onSelect(selected === 'unbekannt' ? null : 'unbekannt')
   }), grouped ? grouped.map((grp, gi) => /*#__PURE__*/React.createElement(React.Fragment, {
     key: gi
-  }, grp.gruppe && !hasSel && /*#__PURE__*/React.createElement(Chip, {
+  }, grp.gruppe && !hasSel && !isUnk && /*#__PURE__*/React.createElement(Chip, {
     label: grp.gruppe,
     isGroupLabel: true
-  }), grp.rassen.map(renderItem))) : items.map(renderItem)));
+  }), grp.rassen.map(renderItem))) : items.map(renderItem),
+  // Zurücksetzen, sobald die übrigen Tags ausgeblendet sind (Stil wie „Rückgängig“ in der Kampfsimulation)
+  (isUnk || (hasSel && multiSet == null)) && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: () => onSelect(null),
+    title: "Auswahl zurücksetzen",
+    "aria-label": "Auswahl zur\xFCcksetzen",
+    style: {
+      display: 'inline-flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'center',
+      width: 34, height: 30, padding: 0, cursor: 'pointer', borderRadius: 4, fontSize: 15, lineHeight: 1,
+      background: 'rgba(255,190,60,0.08)', border: '1px solid rgba(255,190,60,0.28)',
+      color: 'color-mix(in srgb, rgba(255,210,100,0.85), rgb(var(--ink-rgb)) var(--cm))', transition: 'all .15s'
+    },
+    onMouseEnter: e => { e.currentTarget.style.background = 'rgba(255,190,60,0.16)'; e.currentTarget.style.borderColor = 'rgba(255,190,60,0.55)'; },
+    onMouseLeave: e => { e.currentTarget.style.background = 'rgba(255,190,60,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,190,60,0.28)'; }
+  }, "\u21A9")));
 }
 
 // ── TAG PHASE ──────────────────────────────────────────────────────────────
@@ -577,12 +590,12 @@ function TagPhase({
     style: {
       color: 'color-mix(in srgb, rgba(140,180,255,.7), rgb(var(--ink-rgb)) var(--cm))'
     }
-  }, "Unbekannt"), " markierst, werden im n\xE4chsten Schritt durch gezielte Quizfragen ermittelt.", /*#__PURE__*/React.createElement("br", null), "W\xE4hlst du eine ", /*#__PURE__*/React.createElement("strong", {
+  }, "Unbekannt"), " markierst, werden im n\xE4chsten Schritt durch gezielte Quizfragen ermittelt.", /*#__PURE__*/React.createElement("br", null), "W\xE4hlst du in einer Kategorie ", /*#__PURE__*/React.createElement("strong", {
     style: {
       color: 'rgba(var(--text-rgb),calc(.6*var(--kt) + var(--tb)))',
       fontWeight: 400
     }
-  }, "Rasse oder Klasse"), " aus, verschwinden alle anderen \u2014 so bleibt die \xDCbersicht sauber.")), /*#__PURE__*/React.createElement(CatBlock, {
+  }, "einen Tag"), " aus, verschwinden die anderen \u2014 mit \u21a9 holst du sie zur\xFCck.")), /*#__PURE__*/React.createElement(CatBlock, {
     title: "Rasse",
     grouped: window.RASSEN_GRUPPEN,
     items: window.ALLE_RASSEN,
