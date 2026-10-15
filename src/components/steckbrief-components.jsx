@@ -38,6 +38,26 @@ function mitStufe(c) {
   const st = ep > 0 ? stufeAusEp(ep) : (c.level || 1);
   return (c.level === st && c.profBonus === calcProfBonus(st)) ? c : { ...c, level: st, profBonus: calcProfBonus(st) };
 }
+// Zahlenfeld mit − / + im Seitenstil (wie NumStepper in ressourcen-ui.jsx) für die Erfahrungspunkte
+function EpStepper({ value, onChange, schritt = 100 }) {
+  const n = Math.max(0, parseInt(value, 10) || 0);
+  const line = 'rgba(var(--purple-rgb),calc(0.3*var(--kp)))';
+  const btn = { width: 30, flexShrink: 0, background: 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))', border: 'none',
+    color: 'rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))', fontSize: 16, lineHeight: 1, cursor: 'pointer',
+    display: 'flex', alignItems: 'center', justifyContent: 'center' };
+  const hov = on => e => { e.currentTarget.style.background = on ? 'rgba(var(--purple-rgb),calc(0.25*var(--kp)))' : 'rgba(var(--purple-rgb),calc(0.1*var(--kp)))'; };
+  return (
+    <div style={{ display: 'inline-flex', alignItems: 'stretch', border: '1px solid ' + line, borderRadius: 2, overflow: 'hidden', background: 'rgba(var(--panel-rgb),0.5)' }}>
+      <button type="button" aria-label={schritt + ' EP weniger'} title={'− ' + schritt + ' EP'} style={{ ...btn, borderRight: '1px solid ' + line }}
+        onClick={() => onChange(Math.max(0, n - schritt))} onMouseEnter={hov(true)} onMouseLeave={hov(false)}>−</button>
+      <input type="text" inputMode="numeric" value={n} aria-label="Erfahrungspunkte"
+        onChange={e => onChange(parseInt(e.target.value.replace(/[^0-9]/g, ''), 10) || 0)}
+        style={{ width: 110, border: 'none', outline: 'none', background: 'transparent', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 20, color: 'var(--white)', padding: '3px 0' }} />
+      <button type="button" aria-label={schritt + ' EP mehr'} title={'+ ' + schritt + ' EP'} style={{ ...btn, borderLeft: '1px solid ' + line }}
+        onClick={() => onChange(n + schritt)} onMouseEnter={hov(true)} onMouseLeave={hov(false)}>+</button>
+    </div>
+  );
+}
 const leerWert = v => !v || ['—','–','-'].includes(String(v).trim());
 
 function getTrefferwuerfel(charClass) {
@@ -2117,10 +2137,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
           <div className="sb-xp" style={{textAlign:"right"}}>
             <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:2}}>Erfahrungspunkte</div>
             {E
-              ? <input type="number" min={0} step={50} value={char.xp||0} aria-label="Erfahrungspunkte"
-                  onChange={e=>{const xp=Math.max(0,parseInt(e.target.value)||0);const l=stufeAusEp(xp);upd({xp,level:l,profBonus:calcProfBonus(l)});}}
-                  style={{fontFamily:"var(--font-mono)",fontSize:22,color:"var(--white)",background:"rgba(var(--purple-rgb),calc(0.05*var(--kp)))",
-                    border:"none",borderBottom:"1px dashed rgba(var(--accent-rgb),calc(0.5*var(--ka)))",outline:"none",textAlign:"right",width:140,padding:"0 4px"}}/>
+              ? <EpStepper value={char.xp||0} onChange={xp=>{const l=stufeAusEp(xp);upd({xp,level:l,profBonus:calcProfBonus(l)});}} />
               : <div style={{fontFamily:"var(--font-mono)",fontSize:22,color:"rgba(var(--purple-rgb),calc(0.65*var(--kp) + var(--tb)))"}}>{(char.xp||0).toLocaleString("de-DE")}</div>}
             {(char.level||1) < 20 && (
               <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".06em",marginTop:3,color:"rgba(var(--purple-rgb),calc(0.4*var(--kp) + var(--tb)))"}}>
