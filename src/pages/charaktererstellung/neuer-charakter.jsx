@@ -765,7 +765,8 @@ function TagPhase({
   tags,
   setTag,
   setWerkzeug,
-  onNext
+  onNext,
+  onZufall
 }) {
   const GOETTER = useMemo(() => {
     if (!window.GODS_DATA) return [];
@@ -820,7 +821,9 @@ function TagPhase({
       },
       onMouseEnter: e => { e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(.45*var(--kp)))'; e.currentTarget.style.color='rgba(var(--text-rgb),calc(.75*var(--kt) + var(--tb)))'; },
       onMouseLeave: e => { e.currentTarget.style.borderColor='rgba(var(--accent-rgb),calc(.2*var(--ka)))'; e.currentTarget.style.color='rgba(var(--accent-rgb),calc(.4*var(--ka) + var(--tb)))'; },
-    }, "Direkt zum Quiz →")
+    }, "Direkt zum Quiz →"),
+    onZufall && /*#__PURE__*/React.createElement("button", { type:"button", style:{ ...ZUFALL_STIL, marginTop:2 }, onMouseEnter:zufallHover(true), onMouseLeave:zufallHover(false),
+      title:"Alles, was du nicht festgelegt hast, wird ausgewürfelt", onClick:onZufall }, "\u2684 Entscheide f\xFCr mich")
   ),
   /*#__PURE__*/React.createElement("p", {
     style: {
@@ -942,6 +945,15 @@ function TagPhase({
   })));
 }
 
+// Knopf „Entscheide für mich“: würfelt eine Antwort bzw. alles Offene aus
+const ZUFALL_STIL = {
+  fontFamily:'var(--font-b)', fontStyle:'italic', fontSize:'13.5px', letterSpacing:'.04em', cursor:'pointer',
+  padding:'9px 20px', borderRadius:999, background:'rgba(255,190,60,0.06)', border:'1px dashed rgba(255,190,60,0.45)',
+  color:'color-mix(in srgb, rgba(255,210,100,0.9), rgb(var(--ink-rgb)) var(--cm))', transition:'all .15s',
+};
+const zufallHover = on => e => { e.currentTarget.style.background = on ? 'rgba(255,190,60,0.14)' : 'rgba(255,190,60,0.06)'; e.currentTarget.style.borderStyle = on ? 'solid' : 'dashed'; };
+const zufallAus = arr => arr[Math.floor(Math.random() * arr.length)];
+
 // Antworten, die die Kandidaten wirklich eingrenzen (mindestens einer passt, nicht alle bleiben gleich)
 function quizOptionen(q, possible) {
   const pos = possible[q.kat] || [];
@@ -955,7 +967,8 @@ function QuizPhase({
   quizAnswers,
   onAnswer,
   onFinish,
-  quizData
+  quizData,
+  auto = false
 }) {
   const currentQ = useMemo(() => {
     const qd = quizData || window.CHAR_QUIZ;
@@ -974,9 +987,15 @@ function QuizPhase({
     return (tv === null || tv === 'unbekannt') && (possible[q.kat] || []).length > 1 && quizOptionen(q, possible).length > 1;
   }).length, [quizAnswers, tags, possible, quizData]);
   const total = answered + remaining;
+  // „Entscheide für mich“ am Anfang: alle Fragen werden zufällig beantwortet
+  useEffect(() => {
+    if (!auto || !currentQ) return;
+    const t = setTimeout(() => onAnswer(currentQ, zufallAus(quizOptionen(currentQ, possible))), 90);
+    return () => clearTimeout(t);
+  }, [auto, currentQ]);
   useEffect(() => {
     if (!currentQ) {
-      const t = setTimeout(onFinish, 400);
+      const t = setTimeout(onFinish, auto ? 150 : 400);
       return () => clearTimeout(t);
     }
   }, [currentQ]);
@@ -1095,7 +1114,9 @@ function QuizPhase({
     key: i,
     className: "quiz-opt",
     onClick: () => onAnswer(currentQ, opt)
-  }, opt.text))));
+  }, opt.text))), /*#__PURE__*/React.createElement("div", { style:{ display:'flex', justifyContent:'center', marginTop:22 } },
+    /*#__PURE__*/React.createElement("button", { type:"button", style:ZUFALL_STIL, onMouseEnter:zufallHover(true), onMouseLeave:zufallHover(false),
+      onClick: () => onAnswer(currentQ, zufallAus(quizOptionen(currentQ, possible))) }, "\u2684 Entscheide f\xFCr mich")));
 }
 
 // ── OUTPUT PHASE ───────────────────────────────────────────────────────────
@@ -1104,7 +1125,8 @@ function OutputPhase({
   possible,
   quizAnswers,
   charType,
-  wzKombis = null
+  wzKombis = null,
+  zufall = false
 }) {
   const [charName, setCharName] = useState('');
   const [showNameModal, setShowNameModal] = useState(false);
@@ -1114,6 +1136,20 @@ function OutputPhase({
   // ── Manuelle Auswahl bei mehreren Treffern ────────────────────
   const [finals, setFinals] = useState({});
   const setFinal = (kat, val) => setFinals(p => ({...p, [kat]: val}));
+  // „Entscheide für mich“: bei mehreren Treffern je einen auswürfeln (Werkzeug-Kombination zuerst, damit sie gültig bleibt)
+  useEffect(() => {
+    if (!zufall) return;
+    const offen = k => !(tags[k] && tags[k] !== 'unbekannt') && (possible[k] || []).length > 1;
+    const neu = {};
+    if (wzKombis && wzKombis.length) {
+      const c = zufallAus(wzKombis);
+      ['rasse','klasse','hintergrund'].forEach(k => { if (offen(k)) neu[k] = c[k]; });
+    }
+    ['rasse','klasse','hintergrund','division','lebensstil','samen','gottheit','sternzeichen'].forEach(k => {
+      if (!(k in neu) && offen(k)) neu[k] = zufallAus(possible[k]);
+    });
+    setFinals(p => ({ ...neu, ...p }));
+  }, []);
 
   // ── Detail-Felder (Erscheinung + Persönlichkeit) ──────────────
   const [showDetails, setShowDetails] = useState(false);
@@ -1303,10 +1339,14 @@ function OutputPhase({
 
   // Subklasse — alle Klassen, Empfehlung wenn Stufe > 1
   const finalKlasse = getFinal('klasse');
-  const klassenMeta = (window.KLASSEN_META || {})[finalKlasse.val];
+  const klassenMeta = (window.KLASSEN_META || {})[finalKlasse.src === 'multi' ? finals.klasse : finalKlasse.val];
   const subklassenListe = klassenMeta
     ? ((window.KLASSEN_DETAIL || {})[klassenMeta.id]?.unterklassen || []).map(s => s.name || s)
     : [];
+  // „Entscheide für mich“: auch die Unterklasse auswürfeln
+  useEffect(() => {
+    if (zufall && !tags.subklasse && !finals.subklasse && subklassenListe.length > 1) setFinal('subklasse', zufallAus(subklassenListe));
+  }, [zufall, subklassenListe.join('|')]);
   const subklasseRow = subklassenListe.length > 0 ? (() => {
     const chosen = tags.subklasse || finals['subklasse'] || null;
     const isEmp = klassenMeta.subStufe > 1;
@@ -3079,12 +3119,15 @@ function App() {
     gesinnung: window.ALLE_GESINNUNGEN||[],
   });
 
-  const goToQuiz = () => { setQuizAnswers([]); resetPossible(); setPhase('quiz'); };
+  const [zufall, setZufall] = useState(false);   // „Entscheide für mich“: Quiz und offene Ergebnisse auswürfeln
+  const goToQuiz = () => { setZufall(false); setQuizAnswers([]); resetPossible(); setPhase('quiz'); };
+  const goToZufall = () => { setQuizAnswers([]); resetPossible(); setZufall(true); setPhase('quiz'); };
   const goToNscQuiz = () => {
     if (!nscTags.name.trim()) return;
     setNscQuizAnswers([]); resetNscPossible(); setPhase('quiz');
   };
   const goBack = () => {
+    setZufall(false);
     if (phase === 'output' || phase === 'quiz') {
       if (charType === 'nsc') { setNscQuizAnswers([]); resetNscPossible(); }
       else { setQuizAnswers([]); resetPossible(); }
@@ -3101,14 +3144,14 @@ function App() {
     }),
     phase === 'nscArt' && /*#__PURE__*/React.createElement(NscArtPhase, { onWahl: monster => setPhase(monster ? 'monster' : 'tags') }),
     phase === 'monster' && /*#__PURE__*/React.createElement(window.NscMonsterFlow, { onDone: () => setPhase('typeSelect') }),
-    phase === 'tags' && charType !== 'nsc' && /*#__PURE__*/React.createElement(TagPhase, {tags,setTag,setWerkzeug,onNext:goToQuiz}),
+    phase === 'tags' && charType !== 'nsc' && /*#__PURE__*/React.createElement(TagPhase, {tags,setTag,setWerkzeug,onNext:goToQuiz,onZufall:goToZufall}),
     phase === 'tags' && charType === 'nsc' && /*#__PURE__*/React.createElement(NscTagPhase, {nscTags,setNscTag,onNext:goToNscQuiz}),
-    phase === 'quiz' && charType !== 'nsc' && /*#__PURE__*/React.createElement(QuizPhase, {tags,possible,quizAnswers,onAnswer:handleAnswer,onFinish:()=>setPhase('output'),quizData:SC_QUIZ_DATA}),
+    phase === 'quiz' && charType !== 'nsc' && /*#__PURE__*/React.createElement(QuizPhase, {tags,possible,quizAnswers,onAnswer:handleAnswer,onFinish:()=>setPhase('output'),quizData:SC_QUIZ_DATA,auto:zufall}),
     phase === 'quiz' && charType === 'nsc' && /*#__PURE__*/React.createElement(QuizPhase, {
       tags:nscTags, possible:nscPossible, quizAnswers:nscQuizAnswers,
       onAnswer:handleNscAnswer, onFinish:()=>setPhase('output'), quizData:NSC_QUIZ_DATA
     }),
-    phase === 'output' && charType !== 'nsc' && /*#__PURE__*/React.createElement(OutputPhase, {tags,possible,quizAnswers,charType,wzKombis}),
+    phase === 'output' && charType !== 'nsc' && /*#__PURE__*/React.createElement(OutputPhase, {tags,possible,quizAnswers,charType,wzKombis,zufall}),
     phase === 'output' && charType === 'nsc' && /*#__PURE__*/React.createElement(NscOutputPhase, {nscTags,nscPossible,nscQuizAnswers})
   );
 }
