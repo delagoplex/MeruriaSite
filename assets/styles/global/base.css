@@ -451,3 +451,11 @@ img, video, canvas, svg { max-width: 100%; }
   .sc-card .sc-chip[style] { position: relative !important; top: auto !important; right: auto !important; align-self: flex-start; width: fit-content; max-width: 100%; margin: 0 0 14px; }
   .sc-card .sc-headtext[style] { padding-right: 0 !important; padding-top: 4px !important; }
 }
+
+/* Kalenderstreifen „Heute in Meruria“ (components/heute-strip.jsx) auf schmalen Bildschirmen: zwei Spalten */
+@media (max-width: 760px) {
+  .heute-strip[style] { grid-template-columns: 1fr 1fr !important; gap: 18px 14px !important; padding: 18px 16px !important; }
+  .heute-strip > :nth-child(3)[style] { border: none !important; padding: 0 !important; justify-content: flex-start; }
+  .heute-strip > :nth-child(4)[style] { text-align: left !important; }
+  .heute-strip > :nth-child(5)[style] { grid-column: 1 / -1; border-left: none !important; padding-left: 0 !important; }
+}

@@ -59,7 +59,7 @@ function HeuteStrip() {
   const onBtnLeave = e => { e.currentTarget.style.background='rgba(var(--purple-rgb),calc(0.10*var(--kp)))'; e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.35*var(--kp)))'; e.currentTarget.style.color='var(--white)'; e.currentTarget.style.boxShadow='none'; };
 
   return (
-    <div style={{
+    <div className="heute-strip" style={{
       position:'relative', overflow:'hidden',
       display:'grid',
       gridTemplateColumns:'auto 1fr auto auto auto',

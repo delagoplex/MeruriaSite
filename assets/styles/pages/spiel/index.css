@@ -291,7 +291,7 @@
 .grp-zelle:hover .grp-zelle-innen img { transform: scale(1.06); transition: transform .3s; }
 .grp-streifen.grau .grp-zelle { filter: grayscale(1) brightness(.55); }
 .grp-sperre { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 8px; pointer-events: none; white-space: nowrap;
-  padding: 6px 14px; border-radius: 6px; background: rgba(10,4,8,.82); border: 1px solid currentColor; box-shadow: 0 0 18px rgba(255,60,60,.35);
+  padding: 6px 14px; border-radius: 6px; background: rgba(var(--panel-rgb), 0.92); border: 1px solid currentColor; box-shadow: 0 0 18px rgba(255,60,60,calc(0.35*var(--shadow-k)));
   font-family: var(--font-display); font-size: 15px; letter-spacing: .24em; font-weight: 600; text-shadow: 0 0 18px rgba(0,0,0,.9); }
 .grp-mission { margin-left: auto; display: flex; flex-direction: column; gap: 3px; padding: 10px 16px; border-radius: 6px; text-decoration: none; min-width: 200px;
   border: 1px solid color-mix(in srgb, #7fb8ff 60%, transparent); background: color-mix(in srgb, #7fb8ff 8%, transparent); }
