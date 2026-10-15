@@ -20,6 +20,15 @@ function startTab() {
   return TABS.some(([k]) => k === t) ? t : 'alle';
 }
 
+// zurück zur vorherigen Seite der Website; nach der Charaktererstellung (oder ohne Vorgänger) zur Startseite
+function zurueck() {
+  let ref = null;
+  try { ref = document.referrer ? new URL(document.referrer) : null; } catch (e) {}
+  if (ref && ref.origin === location.origin && !ref.pathname.includes('neuer-charakter') && history.length > 1) history.back();
+  else location.href = '/index.html';
+}
+const ZURUECK_FARBE = 'rgba(var(--purple-rgb),calc(0.45*var(--kp) + var(--tb)))';
+
 function Tabs() {
   const [tab, setTab] = useState(startTab);
   const pick = (k) => {
@@ -31,8 +40,16 @@ function Tabs() {
   return (
     <div>
       <SiteNav />
-      <div role="tablist" aria-label="Charaktere" style={{ position:'relative', zIndex:20, display:'flex', justifyContent:'center', gap:4, padding:'14px 16px 0',
+      <div className="sc-tabbar" style={{ position:'relative', zIndex:20, display:'grid', gridTemplateColumns:'1fr auto 1fr', alignItems:'center', columnGap:12, padding:'14px 32px 0',
         borderBottom:'1px solid rgba(var(--purple-rgb),calc(0.18*var(--kp)))', background:'rgba(var(--bg-rgb),0.6)' }}>
+        <button type="button" onClick={zurueck} style={{ justifySelf:'start', marginBottom:4, padding:'6px 14px', cursor:'pointer', background:'transparent',
+            border:'1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))', borderRadius:3, color:ZURUECK_FARBE, transition:'all .18s',
+            fontFamily:'var(--font-mono)', fontSize:11, letterSpacing:'.16em', textTransform:'uppercase', whiteSpace:'nowrap' }}
+          onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.5*var(--kp)))';e.currentTarget.style.color='rgba(var(--accent-rgb),calc(0.8*var(--ka) + var(--tb)))';}}
+          onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(var(--purple-rgb),calc(0.2*var(--kp)))';e.currentTarget.style.color=ZURUECK_FARBE;}}>
+          ← Zurück
+        </button>
+        <div role="tablist" aria-label="Charaktere" style={{ display:'flex', justifyContent:'center', gap:4 }}>
         {TABS.map(([k, label]) => (
           <button key={k} type="button" role="tab" aria-selected={tab === k} onClick={() => pick(k)}
             style={{ padding:'10px 22px', cursor:'pointer', background:'transparent', border:'none',
@@ -42,6 +59,7 @@ function Tabs() {
             {label}
           </button>
         ))}
+        </div>
       </div>
       {tab === 'alle' ? <ScUebersicht /> : <ScMeine />}
     </div>
