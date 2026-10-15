@@ -9,6 +9,18 @@ const { useState: useSteckbrief, useRef: useSteckRef, useEffect: useSteckEffect 
 // page entry (see its first section) and looked up as globals while rendering. Do NOT destructure
 // them from window here: this module runs before the page code.
 
+/* ── Textfeld, das mit dem Inhalt mitwächst (Bearbeiten im Steckbrief) ── */
+function AutoTextarea({ value, style, ...rest }) {
+  const ref = useSteckRef(null);
+  useSteckEffect(() => {
+    const el = ref.current; if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 2 + 'px';
+  }, [value]);
+  return <textarea ref={ref} value={value} rows={1} {...rest}
+    style={{ ...style, resize:"none", overflow:"hidden", overflowWrap:"anywhere" }} />;
+}
+
 /* ── Hilfsfunktionen ─────────────────────── */
 function calcProfBonus(level) { return Math.ceil((level||1)/4)+1; }
 
@@ -1269,7 +1281,7 @@ function PersonalitySection({ char }) {
       {items.map(({l,t,acc})=>(
         <div key={l} style={{marginBottom:10}}>
           <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".22em",color:`rgba(var(--purple-rgb),${acc?0.65:0.38})`,textTransform:"uppercase",marginBottom:4}}>{l}</div>
-          <p style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,color:"var(--silver)",lineHeight:1.72,fontStyle:"italic"}}>„{t}"</p>
+          <p style={{fontFamily:"var(--font-body)",fontSize:12.5,fontWeight:300,color:"var(--silver)",lineHeight:1.72,fontStyle:"italic",overflowWrap:"anywhere"}}>„{t}"</p>
         </div>
       ))}
     </Card>
@@ -1438,13 +1450,13 @@ function FbCard({ item, index, onChange }) {
       <div style={{ width:22, height:1, background:`rgba(var(--purple-rgb),${hov?0.45:0.22})`,
         marginBottom:12, transition:"background .25s" }} />
       {onChange
-        ? <textarea value={item.antwort||''} onChange={e=>onChange({...item,antwort:e.target.value})}
+        ? <AutoTextarea value={item.antwort||''} onChange={e=>onChange({...item,antwort:e.target.value})}
             style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,lineHeight:1.78,
               fontStyle:"italic",color:"var(--silver)",width:"100%",background:"transparent",
               border:"none",borderBottom:"1px solid rgba(var(--purple-rgb),calc(0.2*var(--kp)))",outline:"none",
               resize:"vertical",padding:"2px 0",minHeight:60}} />
         : <p style={{ fontFamily:"var(--font-body)", fontSize:13, fontWeight:300,
-            lineHeight:1.78, fontStyle:"italic",
+            lineHeight:1.78, fontStyle:"italic", overflowWrap:"anywhere",
             color:hov?"var(--white)":"var(--silver)",
             transition:"color .25s ease" }}>{item.antwort}</p>
       }
@@ -1866,7 +1878,7 @@ function EditablePersonality({ char, upd, taStyle }) {
       {items.map(({l,f})=>(
         <div key={f} style={{marginBottom:10}}>
           <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".22em",color:"rgba(var(--purple-rgb),calc(0.5*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:4}}>{l}</div>
-          <textarea value={char[f]||''} onChange={e=>upd({[f]:e.target.value})} style={taStyle} />
+          <AutoTextarea value={char[f]||''} onChange={e=>upd({[f]:e.target.value})} style={taStyle} />
         </div>
       ))}
     </Card>
@@ -2108,16 +2120,16 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
             borderRadius:"0 4px 4px 0",padding:"13px 14px",position:"relative"}}>
             <SecTitle label="Meine ersten Tage auf Meruria" />
             {E
-              ? <textarea value={char.ersteTage||''} onChange={e=>upd({ersteTage:e.target.value})} style={{...taStyle,fontStyle:"italic"}} />
-              : <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.88,textWrap:"pretty",fontStyle:"italic"}}>„{char.ersteTage}"</p>
+              ? <AutoTextarea value={char.ersteTage||''} onChange={e=>upd({ersteTage:e.target.value})} style={{...taStyle,fontStyle:"italic"}} />
+              : <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.88,textWrap:"pretty",fontStyle:"italic",overflowWrap:"anywhere"}}>„{char.ersteTage}"</p>
             }
           </div>
           <Card style={{position:"relative"}}>
             <Corners op={0.28} />
             <SecTitle label="Über mich" />
             {E
-              ? <textarea value={char.story||''} onChange={e=>upd({story:e.target.value})} style={{...taStyle,minHeight:120,fontStyle:"normal"}} />
-              : <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.9,textWrap:"pretty"}}>{char.story}</p>
+              ? <AutoTextarea value={char.story||''} onChange={e=>upd({story:e.target.value})} style={{...taStyle,minHeight:120,fontStyle:"normal"}} />
+              : <p style={{fontFamily:"var(--font-body)",fontSize:13,fontWeight:300,color:"var(--silver)",lineHeight:1.9,textWrap:"pretty",overflowWrap:"anywhere"}}>{char.story}</p>
             }
           </Card>
           {canEdit && ZauberSect && (
