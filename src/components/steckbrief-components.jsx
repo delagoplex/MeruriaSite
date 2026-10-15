@@ -152,7 +152,6 @@ function rankInfo(char) {
   const max = div.raenge.length;
   return { div, rang: r, max, level: max - r.rang + 1 };
 }
-const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
 
 /* ── Division & Rang ──────────────────────── */
 function DivisionRank({ char }) {
@@ -2048,8 +2047,8 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
             }
             <div className="sb-tags" style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
               {[(char.subclass && char.subclass !== '—' ? `${char.class} · ${char.subclass}` : char.class),`Stufe ${char.level}`,char.race,char.background,
-                (rankInfo(char) ? `${char.division} · ${rankInfo(char).rang.titel} ${ROMAN[rankInfo(char).level-1]}` : (char.division && char.division !== '—' ? char.division : null))]
-                .filter(Boolean).map((t,i)=>(
+                (rankInfo(char) ? [rankInfo(char).div.nummer, char.division, `Rang ${rankInfo(char).rang.rang}`, rankInfo(char).rang.titel].filter(Boolean).join(" · ") : (char.division && char.division !== '—' ? char.division : null))]
+                .filter(t => t && t !== '—').map((t,i)=>(
                   <span key={i} style={{fontFamily:"var(--font-mono)",fontSize:11,padding:"2px 9px",
                     background:"rgba(var(--purple-rgb),calc(0.1*var(--kp)))",border:"1px solid rgba(var(--purple-rgb),calc(0.28*var(--kp)))",borderRadius:2,
                     color:"rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))",letterSpacing:".1em"}}>{t}</span>
