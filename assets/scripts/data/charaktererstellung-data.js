@@ -242,6 +242,26 @@ window.CHAR_QUIZ = [
                  'Plasmoid','Schleimling','Lotol'] },
     ]
   },
+  // Mehrfachauswahl (mehrfach:true): es bleiben die Klassen, die zu mindestens einer gewählten Schadensart passen.
+  // Schadensarten wie auf /spielerhandbuch/informationen.html (Schadensarten), Feld schaden = Symbol (DamageIcon)
+  { id:'k4', kat:'klasse', mehrfach:true,
+    frage:'Welche Schadensarten interessieren dich?',
+    optionen:[
+      { text:'Hieb',       schaden:'Hieb',       behalte:['Barbar','Kämpfer','Paladin','Waldläufer','Schurke'] },
+      { text:'Wucht',      schaden:'Wucht',      behalte:['Barbar','Kämpfer','Paladin','Mönch','Kleriker','Druide'] },
+      { text:'Stich',      schaden:'Stich',      behalte:['Kämpfer','Schurke','Waldläufer','Druide'] },
+      { text:'Feuer',      schaden:'Feuer',      behalte:['Magier','Zauberer','Hexenmeister','Druide','Magieschmied','Kleriker'] },
+      { text:'Kälte',      schaden:'Kälte',      behalte:['Magier','Zauberer','Hexenmeister','Druide','Magieschmied'] },
+      { text:'Blitz',      schaden:'Blitz',      behalte:['Magier','Zauberer','Druide','Kleriker','Magieschmied'] },
+      { text:'Schall',     schaden:'Schall',     behalte:['Barde','Druide','Kleriker','Zauberer','Magier'] },
+      { text:'Säure',      schaden:'Säure',      behalte:['Magier','Zauberer','Magieschmied','Druide'] },
+      { text:'Energie',    schaden:'Energie',    behalte:['Hexenmeister','Magier','Kleriker'] },
+      { text:'Strahlend',  schaden:'Strahlend',  behalte:['Kleriker','Paladin','Hexenmeister'] },
+      { text:'Nekrotisch', schaden:'Nekrotisch', behalte:['Hexenmeister','Kleriker','Magier','Zauberer'] },
+      { text:'Gift',       schaden:'Gift',       behalte:['Schurke','Druide','Zauberer','Magier','Magieschmied','Hexenmeister'] },
+      { text:'Psychisch',  schaden:'Psychisch',  behalte:['Barde','Hexenmeister','Magier','Zauberer'] },
+    ]
+  },
   { id:'k1', kat:'klasse',
     frage:'Was ist deine bevorzugte Rolle in Kampf und Gruppe?',
     optionen:[

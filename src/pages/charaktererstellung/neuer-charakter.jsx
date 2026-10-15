@@ -966,6 +966,15 @@ function quizOptionen(q, possible) {
   return (q.optionen || []).filter(o => (o.behalte || []).some(x => pos.includes(x)));
 }
 
+// Mehrfachauswahl: die gewählten Antworten zählen wie eine Antwort, die alle ihre Kandidaten behält
+function kombiniereAntworten(opts) {
+  return { text: opts.map(o => o.text).join(', '), behalte: [...new Set(opts.flatMap(o => o.behalte || []))] };
+}
+function zufallsAuswahl(opts) {
+  const n = 1 + Math.floor(Math.random() * Math.min(3, opts.length));
+  return [...opts].sort(() => Math.random() - 0.5).slice(0, n);
+}
+
 // ── QUIZ PHASE ─────────────────────────────────────────────────────────────
 function QuizPhase({
   tags,
@@ -986,6 +995,12 @@ function QuizPhase({
       return (possible[q.kat] || []).length > 1 && quizOptionen(q, possible).length > 1;
     });
   }, [quizAnswers, tags, possible, quizData]);
+  const [mehrSel, setMehrSel] = useState([]);
+  useEffect(() => { setMehrSel([]); }, [currentQ && currentQ.id]);
+  const beantworteZufall = q => {
+    const opts = quizOptionen(q, possible);
+    onAnswer(q, q.mehrfach ? kombiniereAntworten(zufallsAuswahl(opts)) : zufallAus(opts));
+  };
   const answered = quizAnswers.length;
   const remaining = useMemo(() => ((quizData || window.CHAR_QUIZ) || []).filter(q => {
     if (quizAnswers.some(a => a.qId === q.id)) return false;
@@ -996,7 +1011,7 @@ function QuizPhase({
   // „Entscheide für mich“ am Anfang: alle Fragen werden zufällig beantwortet
   useEffect(() => {
     if (!auto || !currentQ) return;
-    const t = setTimeout(() => onAnswer(currentQ, zufallAus(quizOptionen(currentQ, possible))), 90);
+    const t = setTimeout(() => beantworteZufall(currentQ), 90);
     return () => clearTimeout(t);
   }, [auto, currentQ]);
   useEffect(() => {
@@ -1116,13 +1131,41 @@ function QuizPhase({
       flexDirection: 'column',
       gap: 7
     }
-  }, quizOptionen(currentQ, possible).map((opt, i) => /*#__PURE__*/React.createElement("button", {
+  }, currentQ.mehrfach
+    ? /*#__PURE__*/React.createElement(MehrfachAntworten, { opts: quizOptionen(currentQ, possible), sel: mehrSel, setSel: setMehrSel,
+        onWeiter: () => onAnswer(currentQ, kombiniereAntworten(quizOptionen(currentQ, possible).filter((_, i) => mehrSel.includes(i)))) })
+    : quizOptionen(currentQ, possible).map((opt, i) => /*#__PURE__*/React.createElement("button", {
     key: i,
     className: "quiz-opt",
     onClick: () => onAnswer(currentQ, opt)
   }, opt.text))), /*#__PURE__*/React.createElement("div", { style:{ display:'flex', justifyContent:'center', marginTop:22 } },
     /*#__PURE__*/React.createElement("button", { type:"button", style:ZUFALL_STIL, onMouseEnter:zufallHover(true), onMouseLeave:zufallHover(false),
-      onClick: () => onAnswer(currentQ, zufallAus(quizOptionen(currentQ, possible))) }, "\u2684 Entscheide f\xFCr mich")));
+      onClick: () => beantworteZufall(currentQ) }, "\u2684 Entscheide f\xFCr mich")));
+}
+
+// Mehrfachauswahl im Quiz (z. B. Schadensarten): Antworten an- und abwählen, dann „Weiter“
+function MehrfachAntworten({ opts, sel, setSel, onWeiter }) {
+  const DI = window.DamageIcon;
+  const umschalten = i => setSel(s => s.includes(i) ? s.filter(x => x !== i) : [...s, i]);
+  return /*#__PURE__*/React.createElement("div", null,
+    /*#__PURE__*/React.createElement("div", { style:{ fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.16em', textTransform:'uppercase', marginBottom:10,
+      color:'rgba(var(--accent-rgb),calc(.5*var(--ka) + var(--tb)))' } }, "Mehrere Antworten m\xF6glich"),
+    /*#__PURE__*/React.createElement("div", { style:{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(150px,1fr))', gap:7 } },
+      opts.map((o, i) => {
+        const an = sel.includes(i);
+        return /*#__PURE__*/React.createElement("button", { key: i, type: "button", className: "quiz-opt", "aria-pressed": an, onClick: () => umschalten(i),
+          style: { display:'flex', alignItems:'center', gap:10,
+            ...(an ? { background:'rgba(var(--purple-rgb),calc(.22*var(--kp)))', borderColor:'rgba(var(--accent-rgb),calc(.75*var(--ka)))', color:'var(--white)' } : {}) } },
+          o.schaden && DI ? /*#__PURE__*/React.createElement(DI, { type: o.schaden, size: 22 }) : null,
+          /*#__PURE__*/React.createElement("span", { style:{ flex:1 } }, o.text),
+          /*#__PURE__*/React.createElement("span", { "aria-hidden": "true", style:{ fontFamily:'var(--font-m)', fontSize:'12px', color: an ? 'var(--white)' : 'rgba(var(--accent-rgb),calc(.35*var(--ka) + var(--tb)))' } }, an ? "\u2713" : "+"));
+      })),
+    /*#__PURE__*/React.createElement("div", { style:{ display:'flex', justifyContent:'flex-end', marginTop:14 } },
+      /*#__PURE__*/React.createElement("button", { type:"button", disabled: !sel.length, onClick: onWeiter,
+        style:{ padding:'10px 24px', borderRadius:3, fontFamily:'var(--font-d)', fontSize:'12.5px', letterSpacing:'.18em', textTransform:'uppercase',
+          background:'rgba(var(--purple-rgb),calc(.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(.65*var(--ka)))', color:'var(--white)',
+          cursor: sel.length ? 'pointer' : 'not-allowed', opacity: sel.length ? 1 : .45 } },
+        sel.length ? `Weiter (${sel.length}) \u2192` : "Weiter \u2192")));
 }
 
 // ── ATTRIBUTE: Art des Würfelns ─────────────────────────────────────────────
@@ -1484,7 +1527,7 @@ function OutputPhase({
     val: wzTalent,
     src: 'quiz'
   }] : [])];
-  const offeneWahl = rows.filter(r => r.src === 'multi' && r.kat).map(r => r.lbl);
+  const offeneWahl = rows.filter(r => r.src === 'multi' && r.kat && !finals[r.kat]).map(r => r.lbl);
   const byKat = {};
   quizAnswers.forEach(a => {
     if (!byKat[a.kat]) byKat[a.kat] = [];
@@ -2084,7 +2127,7 @@ function OutputPhase({
   }, a.answerText), /*#__PURE__*/React.createElement("div", {
     className: `trail ${a.nextList.length === 1 ? 'one' : ''}`
   }, trail(a.nextList, 12))))))), showNameModal && /*#__PURE__*/React.createElement(window.NcNamenWahl, {
-    rasse: getFinal('rasse').val, geschlecht: tags.geschlecht || null,
+    rasse: makeDraft('').race, geschlecht: tags.geschlecht || null,
     onCancel: () => setShowNameModal(false),
     onConfirm: n => { setCharName(n); setShowNameModal(false); setFertig(true); window.scrollTo(0, 0); }
   }));
