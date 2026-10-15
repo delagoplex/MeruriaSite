@@ -1,7 +1,7 @@
 // Namenswahl am Ende der Charaktererstellung: würfelt aus der Namenstabelle der Rasse
 // (wie der Namenswürfler auf /charaktererstellung/rassen-detail.html), Namen lassen sich kopieren.
 ;(function () {
-const { useState, useEffect } = React;
+const { useState, useEffect, useRef } = React;
 
 function namensPools(section) {
   if (!section || section.type !== 'nameRoller') return null;
@@ -40,6 +40,16 @@ function NcNamenWahl({ rasse, geschlecht, onConfirm, onCancel }) {
   const [idx, setIdx]           = useState(-1);
   const [kopiert, setKopiert]   = useState(null);
   const [eigener, setEigener]   = useState('');
+  const [kopierFehler, setKopierFehler] = useState(false);
+  const intervall = useRef(null);
+  const box = useRef(null);
+  // Escape schließt; Fokus ins Fenster; Würfel-Animation beim Schließen beenden
+  useEffect(() => {
+    const k = e => { if (e.key === 'Escape') onCancel(); };
+    window.addEventListener('keydown', k);
+    if (box.current && !box.current.contains(document.activeElement)) box.current.focus();
+    return () => { window.removeEventListener('keydown', k); clearInterval(intervall.current); };
+  }, []);
 
   useEffect(() => {
     let aktiv = true;
@@ -70,7 +80,8 @@ function NcNamenWahl({ rasse, geschlecht, onConfirm, onCancel }) {
     if (rolling || !liste.length) return;
     setRolling(true); setResult(null);
     let count = 0;
-    const iv = setInterval(() => {
+    clearInterval(intervall.current);
+    const iv = intervall.current = setInterval(() => {
       setResult(liste[Math.floor(Math.random() * liste.length)]);
       count++;
       if (count > 14) {
@@ -83,16 +94,17 @@ function NcNamenWahl({ rasse, geschlecht, onConfirm, onCancel }) {
 
   function kopieren(n, e) {
     e.stopPropagation();
-    const fertig = () => { setKopiert(n); setTimeout(() => setKopiert(k => k === n ? null : k), 1400); };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(n).then(fertig, fertig);
-    else fertig();
+    const fertig = () => { setKopierFehler(false); setKopiert(n); setTimeout(() => setKopiert(k => k === n ? null : k), 1400); };
+    const fehler = () => { setKopiert(null); setKopierFehler(true); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(n).then(fertig, fehler);
+    else fehler();
   }
 
   const name = pools ? (rolling ? null : result) : eigener.trim();
 
   return (
     <div className="nc-name-overlay" onClick={e => { if (e.target === e.currentTarget) onCancel(); }}>
-      <div className="nc-name-box" role="dialog" aria-label="Namen bestimmen">
+      <div className="nc-name-box" role="dialog" aria-modal="true" aria-label="Namen bestimmen" ref={box} tabIndex={-1}>
         <div className="nc-name-kicker">Charaktername</div>
         <div className="nc-name-title">{section?.label || 'Wie soll dein Charakter heißen?'}</div>
 
@@ -140,10 +152,12 @@ function NcNamenWahl({ rasse, geschlecht, onConfirm, onCancel }) {
               <div className="nc-name-list-wrap">
                 <div className="nc-name-grid">
                   {names.map((n, i) => (
-                    <div key={i} className={`nc-name-cell${i === idx ? ' active' : ''}`} title="Als Ergebnis übernehmen"
-                         onClick={() => { setIdx(i); setResult(n); setRoll(i + 1); }}>
-                      <span className="num">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="txt">{n}</span>
+                    <div key={i} className={`nc-name-cell${i === idx ? ' active' : ''}`}>
+                      <button type="button" className="nc-name-wahl" title="Als Ergebnis übernehmen" aria-pressed={i === idx}
+                        onClick={() => { setIdx(i); setResult(n); setRoll(i + 1); }}>
+                        <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                        <span className="txt">{n}</span>
+                      </button>
                       <button type="button" className={'nc-name-copy' + (kopiert === n ? ' ok' : '')} onClick={e => kopieren(n, e)}
                               title="In die Zwischenablage kopieren" aria-label={`${n} kopieren`}>
                         {kopiert === n ? '✓' : '⧉'}
@@ -153,6 +167,7 @@ function NcNamenWahl({ rasse, geschlecht, onConfirm, onCancel }) {
                 </div>
               </div>
             )}
+            {kopierFehler && <div className="nc-name-hint fehler">Kopieren ist hier nicht möglich. Merke dir den Namen und trage ihn im fertigen Bogen ein.</div>}
             {kopiert && <div className="nc-name-hint">„{kopiert}“ kopiert. Bestätige und füge ihn im fertigen Bogen anstelle des gewürfelten Namens ein.</div>}
           </div>
         )}

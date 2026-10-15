@@ -1387,7 +1387,9 @@ function OutputPhase({
     : [];
   // „Entscheide für mich“: auch die Unterklasse auswürfeln
   useEffect(() => {
-    if (zufall && !tags.subklasse && !finals.subklasse && subklassenListe.length > 1) setFinal('subklasse', zufallAus(subklassenListe));
+    if (tags.subklasse || finals.subklasse || !klassenMeta || klassenMeta.subStufe > 1) return;
+    if (subklassenListe.length === 1) setFinal('subklasse', subklassenListe[0]);
+    else if (zufall && subklassenListe.length > 1) setFinal('subklasse', zufallAus(subklassenListe));
   }, [zufall, subklassenListe.join('|')]);
   const subklasseRow = subklassenListe.length > 0 ? (() => {
     const chosen = tags.subklasse || finals['subklasse'] || null;
@@ -1614,7 +1616,7 @@ function OutputPhase({
     ? /*#__PURE__*/React.createElement("div", {
         style: { display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 }
       }, (_opts || possible[kat] || []).map(opt => {
-        const sel = (finals[kat] || (src === 'emp' ? null : (possible[kat] || [])[0])) === opt;
+        const sel = finals[kat] === opt;
         const hint = (window.OPTION_HINTS || {})[opt] || null;
         const isEmp = src === 'emp';
         return /*#__PURE__*/React.createElement("button", {
@@ -2554,10 +2556,12 @@ function App() {
       const rest = wzKombis.filter(c => fin.includes(c[q.kat]));
       if (rest.length) {
         setWzKombis(rest);
+        // Schnitt mit den verbleibenden Kombinationen; wäre er leer (z. B. wegen der Schadensarten), bleibt die Liste
+        const schnitt = (k, alt) => { const x = [...new Set(rest.map(c => c[k]))].filter(v => (alt || []).includes(v)); return x.length ? x : (alt || []); };
         setPossible(p => ({ ...p,
-          rasse: [...new Set(rest.map(c => c.rasse))].filter(x => (p.rasse || []).includes(x)),
-          klasse: [...new Set(rest.map(c => c.klasse))].filter(x => (p.klasse || []).includes(x)),
-          hintergrund: [...new Set(rest.map(c => c.hintergrund))].filter(x => (p.hintergrund || []).includes(x)),
+          rasse: schnitt('rasse', p.rasse),
+          klasse: schnitt('klasse', p.klasse),
+          hintergrund: schnitt('hintergrund', p.hintergrund),
           [q.kat]: fin }));
       } else setPossible(p => ({ ...p, [q.kat]:fin }));
     } else setPossible(p => ({ ...p, [q.kat]:fin }));
@@ -2574,7 +2578,10 @@ function App() {
   const resetPossible = () => {
     const P = window.WERKZEUG_PLANER;
     const sicher = tags.werkzeugeSicher || [];
-    const kombis = sicher.length && P ? P.kombinationen(sicher, wzFest(tags)) : null;
+    let kombis = sicher.length && P ? P.kombinationen(sicher, wzFest(tags)) : null;
+    // gewählte Schadensarten grenzen auch die Werkzeug-Kombinationen ein (sonst laufen beide Listen auseinander)
+    const schadenOk = schadenKlassen(tags.schaden);
+    if (kombis && schadenOk) { const x = kombis.filter(c => schadenOk.includes(c.klasse)); if (x.length) kombis = x; }
     setWzKombis(kombis && kombis.length ? kombis : null);
     const uniq = k => [...new Set(kombis.map(c => c[k]))];
     const passendeHg = tags.werkzeuge instanceof Set && tags.werkzeuge.size && P ? P.hintergruendeFuer([...tags.werkzeuge]) : null;

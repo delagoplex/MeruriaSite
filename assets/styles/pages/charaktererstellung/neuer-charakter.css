@@ -142,3 +142,10 @@ body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:
 .nc-name-btn.main { background:rgba(var(--purple-rgb),calc(.22*var(--kp))); border:1px solid rgba(var(--accent-rgb),calc(.65*var(--ka))); color:var(--white); }
 .nc-name-btn.main:hover:not(:disabled) { background:rgba(var(--purple-rgb),calc(.35*var(--kp))); }
 @media(max-width:640px){ .nc-name-grid { grid-template-columns:repeat(2,1fr); } .nc-name-box { padding:26px 18px; } .nc-roll-name { font-size:30px; } }
+
+.nc-name-box:focus { outline: none; }
+.nc-name-cell { cursor: default; padding: 0 6px 0 0; }
+.nc-name-wahl { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; padding: 5px 0 5px 10px; background: none; border: none; cursor: pointer;
+  text-align: left; font: inherit; color: inherit; }
+.nc-name-wahl:focus-visible { outline: 2px solid rgba(var(--accent-rgb), calc(0.7*var(--ka))); outline-offset: -2px; }
+.nc-name-hint.fehler { color: color-mix(in srgb, #ffb36b, rgb(var(--ink-rgb)) var(--cm)); }
