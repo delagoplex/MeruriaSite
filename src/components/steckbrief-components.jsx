@@ -83,6 +83,37 @@ function divisionsFarben(divisionId) {
     '--div-t2-l': rgb(mix([70, 70, 80], 0.72)),
   };
 }
+/* Inspiration: bis zu vier, als Sterne wie auf /spielerhandbuch/informationen.html.
+   Wer den Bogen bearbeiten darf, setzt sie per Klick (Klick auf den letzten vollen Stern nimmt ihn weg). */
+const INSPIRATION_MAX = 4;
+function InspirationStars({ wert, onChange }) {
+  const n = Math.max(0, Math.min(INSPIRATION_MAX, Number(wert) || 0));
+  return (
+    <div style={{display:"flex",flexDirection:"column",alignItems:"flex-end"}}>
+      <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:4}}>Inspiration</div>
+      <div style={{display:"flex",gap:4}} role={onChange ? "group" : undefined} aria-label={`Inspiration ${n} von ${INSPIRATION_MAX}`}>
+        {Array.from({length: INSPIRATION_MAX}, (_, i) => {
+          const voll = i < n;
+          const stern = (
+            <svg viewBox="0 0 40 40" width="24" height="24" aria-hidden="true" style={{display:"block"}}>
+              <polygon points="20,4 23,15 34,18 23,21 20,32 17,21 6,18 17,15"
+                fill={voll ? "rgba(var(--accent-rgb),calc(0.75*var(--ka)))" : "rgba(var(--accent-rgb),calc(0.06*var(--ka)))"}
+                stroke={voll ? "rgba(var(--accent-rgb),calc(0.95*var(--ka)))" : "rgba(var(--accent-rgb),calc(0.35*var(--ka)))"} strokeWidth="1.2"
+                style={voll ? {filter:"drop-shadow(0 0 4px rgba(var(--accent-rgb),calc(0.6*var(--ka))))"} : null}/>
+            </svg>
+          );
+          if (!onChange) return <span key={i}>{stern}</span>;
+          const ziel = (i + 1 === n) ? i : i + 1;
+          return (
+            <button key={i} type="button" onClick={() => onChange(ziel)} title={ziel < n ? 'Inspiration verbrauchen' : 'Inspiration erhalten'}
+              aria-label={`Inspiration auf ${ziel} setzen`} aria-pressed={voll}
+              style={{background:"none",border:"none",padding:0,cursor:"pointer",lineHeight:0}}>{stern}</button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 const leerWert = v => !v || ['—','–','-'].includes(String(v).trim());
 
 function getTrefferwuerfel(charClass) {
@@ -2162,6 +2193,9 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
                     color:"rgba(var(--text-rgb),calc(0.82*var(--kt) + var(--tb)))",letterSpacing:".1em"}}>{t}</span>
                 ))}
             </div>
+          </div>
+          <div className="sb-insp" style={{marginRight:24}}>
+            <InspirationStars wert={char.inspiration} onChange={canEdit ? (v => upd({ inspiration: v })) : null} />
           </div>
           <div className="sb-xp" style={{textAlign:"right"}}>
             <div style={{fontFamily:"var(--font-mono)",fontSize:11,letterSpacing:".2em",color:"rgba(var(--purple-rgb),calc(0.35*var(--kp) + var(--tb)))",textTransform:"uppercase",marginBottom:2}}>Erfahrungspunkte</div>
