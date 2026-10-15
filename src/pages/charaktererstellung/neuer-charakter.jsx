@@ -1484,6 +1484,7 @@ function OutputPhase({
     val: wzTalent,
     src: 'quiz'
   }] : [])];
+  const offeneWahl = rows.filter(r => r.src === 'multi' && r.kat).map(r => r.lbl);
   const byKat = {};
   quizAnswers.forEach(a => {
     if (!byKat[a.kat]) byKat[a.kat] = [];
@@ -2024,11 +2025,14 @@ function OutputPhase({
     style: { margin:'26px 0 44px', padding:'20px 24px', border:'1px solid rgba(var(--purple-rgb),calc(.35*var(--kp)))', borderRadius:4,
       background:'rgba(var(--purple-rgb),calc(.04*var(--kp)))', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:16 }
   }, /*#__PURE__*/React.createElement("div", { style:{ fontFamily:'var(--font-b)', fontSize:'13px', lineHeight:1.6, color:'var(--silver)', maxWidth:520 } },
-    "Passt alles? Beim Absegnen bekommt dein Charakter einen Namen aus der Namenstabelle seiner Rasse, danach siehst du den fertigen Bogen ohne die Markierungen."),
+    offeneWahl.length
+      ? "Entscheide oben zuerst: " + offeneWahl.join(', ') + ". Danach kannst du den Bogen absegnen."
+      : "Passt alles? Beim Absegnen bekommt dein Charakter einen Namen aus der Namenstabelle seiner Rasse, danach siehst du den fertigen Bogen ohne die Markierungen."),
     /*#__PURE__*/React.createElement("button", {
-      type: "button", onClick: () => setShowNameModal(true),
+      type: "button", disabled: offeneWahl.length > 0, onClick: () => setShowNameModal(true),
       style: { padding:'12px 28px', background:'rgba(var(--purple-rgb),calc(.22*var(--kp)))', border:'1px solid rgba(var(--accent-rgb),calc(.65*var(--ka)))', borderRadius:3,
-        color:'var(--white)', fontFamily:'var(--font-d)', fontSize:'12.5px', letterSpacing:'.18em', textTransform:'uppercase', whiteSpace:'nowrap', cursor:'pointer' }
+        color:'var(--white)', fontFamily:'var(--font-d)', fontSize:'12.5px', letterSpacing:'.18em', textTransform:'uppercase', whiteSpace:'nowrap',
+        cursor: offeneWahl.length ? 'not-allowed' : 'pointer', opacity: offeneWahl.length ? .5 : 1 }
     }, 'Absegnen & Namen bestimmen \u2192')), quizAnswers.length > 0 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--font-d)',
