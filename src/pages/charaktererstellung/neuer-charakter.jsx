@@ -724,6 +724,42 @@ function WerkzeugBlock({ tags, setTag, setWerkzeug }) {
   );
 }
 
+// ── DIVISION ───────────────────────────────────────────────────────────────
+// Wie bei der Gottheit: oben die Namen, unten die Titel (Aufgabe der Division). Wird eines von beiden
+// gewählt, bleiben nur dieser Name und sein Titel stehen.
+function divisionTitel(name) {
+  if (name === 'Keine') return 'Keiner Division zugehörig';
+  const d = (window.DIVISIONS_DATA || []).find(x => x.name === name);
+  return (d && d.subtitle) || name;
+}
+
+function DivisionBlock({ items, selected, onSelect }) {
+  const isUnk = selected === 'unbekannt';
+  const sel = selected && !isUnk ? selected : null;
+  const liste = (items || []).filter(n => !sel || n === sel);
+  const sub = { fontFamily:'var(--font-m)', fontSize:'11px', letterSpacing:'.2em', textTransform:'uppercase',
+    color:'rgba(var(--accent-rgb),calc(.45*var(--ka) + var(--tb)))', margin:'4px 0 8px' };
+  return (
+    <div className="cat-block">
+      <div className="cat-head">Division</div>
+      <div style={sub}>Name</div>
+      <div className="chip-wrap">
+        {!sel && <Chip label="Unbekannt" isUnk={true} st={isUnk ? 'selected' : 'default'} onClick={() => onSelect(isUnk ? null : 'unbekannt')} />}
+        {!isUnk && liste.map(n => <Chip key={n} label={n} st={sel ? 'selected' : 'default'} onClick={() => onSelect(sel ? null : n)} />)}
+        {(sel || isUnk) && <RevertBtn onClick={() => onSelect(null)} />}
+      </div>
+      {!isUnk && (
+        <React.Fragment>
+          <div style={{ ...sub, marginTop:14 }}>Titel</div>
+          <div className="chip-wrap">
+            {liste.map(n => <Chip key={n} label={divisionTitel(n)} st={sel ? 'selected' : 'default'} onClick={() => onSelect(sel ? null : n)} />)}
+          </div>
+        </React.Fragment>
+      )}
+    </div>
+  );
+}
+
 // ── TAG PHASE ──────────────────────────────────────────────────────────────
 function TagPhase({
   tags,
@@ -859,8 +895,7 @@ function TagPhase({
     tags,
     setTag,
     setWerkzeug
-  }), /*#__PURE__*/React.createElement(CatBlock, {
-    title: "Division",
+  }), /*#__PURE__*/React.createElement(DivisionBlock, {
     items: window.ALLE_DIVISIONEN,
     selected: tags.division,
     onSelect: v => setTag('division', v)
@@ -2470,7 +2505,7 @@ function NscTagPhase({ nscTags, setNscTag, onNext }) {
     /*#__PURE__*/React.createElement(CatBlock, {title:"Rasse",grouped:window.RASSEN_GRUPPEN,items:window.ALLE_RASSEN,selected:t.rasse,onSelect:v=>setNscTag('rasse',v),hideOthers:true}),
     /*#__PURE__*/React.createElement(CatBlock, {title:"Geschlecht",items:NSC_GESCHLECHT_LIST,selected:t.geschlecht,onSelect:v=>setNscTag('geschlecht',v)}),
     /*#__PURE__*/React.createElement(CatBlock, {title:"Status",items:NSC_STATUS_LIST,selected:t.status,onSelect:v=>setNscTag('status',v)}),
-    /*#__PURE__*/React.createElement(CatBlock, {title:"Division",items:NSC_DIVISIONS_LIST,selected:t.division,onSelect:v=>setNscTag('division',v)}),
+    /*#__PURE__*/React.createElement(DivisionBlock, {items:NSC_DIVISIONS_LIST,selected:t.division,onSelect:v=>setNscTag('division',v)}),
     /*#__PURE__*/React.createElement(CatBlock, {title:"Lebensphase",items:NSC_LEBENSPHASE_LIST,selected:t.lebensphase,onSelect:v=>setNscTag('lebensphase',v)}),
     /*#__PURE__*/React.createElement(GottheitBlock, {selected:t.gottheit,gesinnung:t.gottheitGesinnung,onSelect:v=>setNscTag('gottheit',v),onGesinnung:v=>setNscTag('gottheitGesinnung',v)}),
     /*#__PURE__*/React.createElement(CatBlock, {title:"Gesinnung",items:window.ALLE_GESINNUNGEN||[],selected:t.gesinnung,onSelect:v=>setNscTag('gesinnung',v)}),
