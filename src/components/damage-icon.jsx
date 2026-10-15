@@ -348,6 +348,7 @@ function HeilIcon({ size = 16, style }) {
       <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M20 4.5 C17 9 9.5 17.5 9.5 25 a10.5 10.5 0 0 0 21 0 C30.5 17.5 23 9 20 4.5 Z"/>
         <path d="M20 19.5 V30.5 M14.5 25 H25.5"/>
+        <path d="M4.5 13 V19 M1.5 16 H7.5 M35.5 13 V19 M32.5 16 H38.5" strokeWidth="1.6"/>
       </g>
     </svg>
   );
