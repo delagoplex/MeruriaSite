@@ -58,6 +58,31 @@ function EpStepper({ value, onChange, schritt = 100 }) {
     </div>
   );
 }
+/* Farbschema der Division: die Divisionsfarbe ersetzt im Steckbrief das Lila (Werte für Dunkel und Hell,
+   base.css wählt per .steckbrief-root.div-farben). Ohne Division bleibt es beim Lila. */
+function divisionsFarben(divisionId) {
+  const d = (window.DIVISIONS_DATA || []).find(x => x.id === divisionId);
+  const m = d && /^#?([0-9a-f]{6})$/i.exec(d.accent || '');
+  if (!m) return null;
+  const c = [0, 2, 4].map(i => parseInt(m[1].slice(i, i + 2), 16));
+  const mix = (b, t) => c.map((x, i) => Math.round(x * (1 - t) + b[i] * t));
+  const rgb = a => a.join(','), hex = a => '#' + a.map(x => x.toString(16).padStart(2, '0')).join('');
+  const W = [255, 255, 255], S = [0, 0, 0];
+  return {
+    '--div-p':   rgb(c),
+    '--div-a':   rgb(mix(W, 0.35)),
+    '--div-t':   rgb(mix([226, 226, 232], 0.75)),
+    '--div-t2':  rgb(mix([222, 222, 230], 0.78)),
+    '--div-white':  hex(mix(W, 0.9)),
+    '--div-silver': hex(mix([205, 205, 214], 0.72)),
+    '--div-lav':    hex(mix(W, 0.55)),
+    '--div-lav2':   hex(mix(W, 0.3)),
+    '--div-p-l':  rgb(mix(S, 0.2)),
+    '--div-a-l':  rgb(mix(S, 0.42)),
+    '--div-t-l':  rgb(mix([24, 24, 30], 0.82)),
+    '--div-t2-l': rgb(mix([70, 70, 80], 0.72)),
+  };
+}
 const leerWert = v => !v || ['—','–','-'].includes(String(v).trim());
 
 function getTrefferwuerfel(charClass) {
@@ -2038,6 +2063,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
   const canEdit = !!entry;
   const [charRoh, setChar]  = useSteckbrief(() => entry ? charFromEntry(entry) : (charProp || {}));
   const char = mitStufe(charRoh);
+  const divFarben = divisionsFarben(char.divisionId);
   const [editing, setEditing] = useSteckbrief(false);
   const [zauber, setZauber] = useSteckbrief(() => entry?._char?.zauber || entry?.char_data?.zauber || []);
   const [lightboxBild, setLightboxBild] = useSteckbrief(null);
@@ -2071,7 +2097,7 @@ function SteckbriefView({ char: charProp = null, entry = null, onBack = null, ha
   const ZauberSect = window.ZauberSection;
 
   return (
-    <div className="steckbrief-root" style={{minHeight:"calc(var(--vh, 1vh) * 100)"}}>
+    <div className={"steckbrief-root" + (divFarben ? " div-farben" : "")} style={{minHeight:"calc(var(--vh, 1vh) * 100)", ...(divFarben || {})}}>
       {!hideNav && SiteNav && <SiteNav />}
 
       {/* ── Kopf ── */}

@@ -104,6 +104,16 @@ html[data-theme="light"] {
   --kp: 1.65;
 }
 
+/* Steckbrief eines SC in den Farben seiner Division (die --div-* Werte setzt steckbrief-components.jsx) */
+.steckbrief-root.div-farben {
+  --purple-rgb: var(--div-p); --accent-rgb: var(--div-a); --text-rgb: var(--div-t); --text2-rgb: var(--div-t2);
+  --white: var(--div-white); --silver: var(--div-silver); --lav: var(--div-lav); --lav2: var(--div-lav2);
+}
+html[data-theme="light"] .steckbrief-root.div-farben {
+  --purple-rgb: var(--div-p-l); --accent-rgb: var(--div-a-l); --text-rgb: var(--div-t-l); --text2-rgb: var(--div-t2-l);
+  --white: rgb(var(--div-t-l)); --silver: rgb(var(--div-t2-l)); --lav: rgb(var(--div-a-l)); --lav2: rgb(var(--div-p-l));
+}
+
 /* regions that stay dark in the light theme (artwork banners): restore the dark token values inside */
 html[data-theme="light"] .dark-scope {
   --bg: #05040f; --white: #f0eeff; --silver: #c8c0e8; --lav: #c9b8ff; --lav2: #a78bff;
