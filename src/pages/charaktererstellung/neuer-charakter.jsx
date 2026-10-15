@@ -627,7 +627,7 @@ function TagPhase({
     onSelect: v => setTag('hintergrund', v)
   }), /*#__PURE__*/React.createElement(CatBlock, {
     title: "Zauberwirker",
-    items: ['Ja — Dieser Charakter wirkt Zauber', 'Nein — Kein Zauberwirker'],
+    items: ['Ja — Dein Charakter kann Zauber wirken.', 'Nein — Kein Zauberwirker'],
     selected: tags.zauberwirker,
     onSelect: v => setTag('zauberwirker', v)
   }), /*#__PURE__*/React.createElement(CatBlock, {
@@ -1028,7 +1028,7 @@ function OutputPhase({
   };
   const getZauberwirker = () => {
     const tv = tags.zauberwirker;
-    if (tv === 'Ja — Dieser Charakter wirkt Zauber') return {
+    if (tv === 'Ja — Dein Charakter kann Zauber wirken.') return {
       val: 'Ja',
       src: 'sel'
     };
